@@ -22,7 +22,7 @@ public class Currency {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String currency;
+    private String name;
 
     @ManyToMany(mappedBy = "currencies")
     private Set<User> users;
