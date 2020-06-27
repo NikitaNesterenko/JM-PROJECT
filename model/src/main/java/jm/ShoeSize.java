@@ -22,7 +22,7 @@ public class ShoeSize {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private Double shoeSize;
+    private Double size;
 
     @ManyToMany(mappedBy = "shoeSizes")
     private Set<User> users;
