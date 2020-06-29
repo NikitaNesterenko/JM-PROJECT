@@ -36,7 +36,7 @@ public class Item {
     private LocalDate dateRelease;
 
     //new or old
-    @Column(name = "condition")
+    @Column(name = "item_condition")
     private String condition;
 
 }
