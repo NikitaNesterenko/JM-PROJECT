@@ -3,7 +3,7 @@ package jm;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Item {
 
     @Id
-    @Column(name = "id", unique = true)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -24,10 +24,16 @@ public class Item {
     private String name;
 
     @Column(name = "price")
-    private Long price;
+    private Double price;
+
+    @Column(name = "lowest_ask")
+    private Double lowestAsk;
+
+    @Column(name = "highest_bid")
+    private Double highestBid;
 
     @Column(name = "date_release")
-    private LocalDateTime dateRelease;
+    private LocalDate dateRelease;
 
     //new or old
     @Column(name = "condition")
