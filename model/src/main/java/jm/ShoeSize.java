@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -23,7 +22,4 @@ public class ShoeSize {
 
     @Column(unique = true, nullable = false)
     private Double size;
-
-    @ManyToMany(mappedBy = "shoeSizes")
-    private Set<User> users;
 }

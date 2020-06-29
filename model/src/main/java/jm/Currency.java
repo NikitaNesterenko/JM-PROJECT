@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -23,7 +22,4 @@ public class Currency {
 
     @Column(unique = true, nullable = false)
     private String name;
-
-    @ManyToMany(mappedBy = "currencies")
-    private Set<User> users;
 }
