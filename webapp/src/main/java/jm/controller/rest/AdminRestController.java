@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/rest/api/admin")
+@RequestMapping(value = "/rest/api/admin")
 public class AdminRestController {
 
     private final UserService userService;
@@ -16,31 +18,36 @@ public class AdminRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addUser(User user) {
-        userService.addUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping(value = "/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateUser(User user) {
-        try {
-            userService.updateUser(user);
-            return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("An error occurred while updating the user", HttpStatus.NOT_MODIFIED);
+    @PostMapping(value = "/createUser")
+    public ResponseEntity<?> createUser(User user) {
+        if (userService.getUserByUserName(user.getUsername()) != null) {
+            return new ResponseEntity<>("This user already exists in database", HttpStatus.CONFLICT);
         }
-
+        userService.createUser(user);
+        return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(Long id) {
-        try {
-            userService.deleteUser(id);
-            return new ResponseEntity<>("User deleted successfully", HttpStatus.ACCEPTED);
-        } catch (Exception e) {
+    @PutMapping(value = "/updateUser")
+    public ResponseEntity<?> updateUser(User user) {
+        if (userService.getUserByUserName(user.getUsername()) == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
+        userService.updateUser(user);
+        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/deleteUser")
+    public ResponseEntity<?> deleteUser(Long id) {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        userService.deleteUser(id);
+        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+    }
 }
