@@ -4,34 +4,20 @@ import jm.dao.UserDaoImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.mockito.*;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
-import javax.persistence.EntityManager;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
 
     @InjectMocks
-    private UserDaoImpl userDao;
+    private UserServiceImpl userService;
 
     @Mock
-    private EntityManager entityManager;
+    private UserDaoImpl userDao;
 
-//    public UserServiceTest() {
-//        MockitoAnnotations.initMocks(this);
-//
-//    }
 
     private final String firstName = "TestName";
 
@@ -54,20 +40,11 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testAddUser() {
+    public void testGetUserByName() {
         User user = new User(firstName, lastName, email, username, password, sellerLevel, vacationMode);
-        List<User> list = new ArrayList<>();
-        list.add(user);
-        userDao.addUser(user);
-        Mockito.when(userDao.getAll())
-                .thenReturn(null);
-
-//        User fromServer = ;
-
-//        if ((!fromServer.getFirstName().equals(firstName)) ||
-//                !fromServer.getLastName().equals(lastName))
-//            Assert.fail("Ожидаемый пользователь отличается от добавленного");
-//        Assert.fail("При тестировании произошла ошибка");
-
+        Mockito.when(userDao.getUserByUsername(Mockito.anyString()))
+                .thenReturn(java.util.Optional.of(user));
+        User fromTest = userService.getUserByUserName("name");
+        Assert.assertEquals(username, fromTest.getUsername());
     }
 }
