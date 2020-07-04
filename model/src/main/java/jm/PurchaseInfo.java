@@ -23,26 +23,15 @@ public class PurchaseInfo {
     @Column(name = "purchase_time_stamp")
     private LocalDateTime purchaseTimeStamp;
 
-    @ManyToOne(targetEntity = Item.class, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "purchase_info_item",
-            joinColumns = @JoinColumn(
-                    name = "purchase_info_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "item_id",
-                    referencedColumnName = "id"
-            )
-    )
-    private Item item;
+    @Column(name = "item_id")
+    private Long itemId;
 
     @Column(name = "purchase_price")
     private Double purchasePrice;
 
     public PurchaseInfo(Item item) {
         this.purchaseTimeStamp = LocalDateTime.now();
-        this.item = item;
+        this.itemId = item.getId();
         this.purchasePrice = item.getPrice();
     }
 
