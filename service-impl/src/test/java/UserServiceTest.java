@@ -11,13 +11,11 @@ import org.mockito.MockitoAnnotations;
 
 public class UserServiceTest {
 
-
     @InjectMocks
     private UserServiceImpl userService;
 
     @Mock
     private UserDaoImpl userDao;
-
 
     private final String firstName = "TestName";
 
@@ -29,10 +27,9 @@ public class UserServiceTest {
 
     private final String password = "123";
 
-    private final Integer sellerLevel = 1;
+    private final byte sellerLevel = 1;
 
     private final boolean vacationMode = false;
-
 
     @Before
     public void init() {

@@ -14,7 +14,7 @@ public class UserDaoImpl extends AbstractDAO<User> implements UserDAO {
     @Override
     public Optional<User> getUserByUsername(String name) {
         try {
-            User user = (User) entityManager.createQuery("FROM User u where u.username = :username")
+            User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.username = :username")
                     .setParameter("username", name)
                     .getSingleResult();
             return Optional.of(user);
