@@ -22,7 +22,7 @@ public class UserDTO {
 
     private String password;
 
-    private Integer sellerLevel;
+    private byte sellerLevel;
 
     private boolean vacationMode;
 
@@ -42,7 +42,7 @@ public class UserDTO {
                    String email,
                    String username,
                    String password,
-                   Integer sellerLevel,
+                   byte sellerLevel,
                    boolean vacationMode) {
         this.firstName = firstName;
         this.lastName = lastName;
