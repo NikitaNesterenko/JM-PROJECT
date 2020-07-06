@@ -2,6 +2,8 @@ package jm;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,8 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
+    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -37,9 +41,12 @@ public class JwtFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(jwt);
+                logger.info("Пользователь токена: {}", username);
             } catch (SignatureException e) {
+                logger.info("Невозможно расшифровать токен");
                 throw new IOException("Unable to get JWT Token", e);
             } catch (ExpiredJwtException e) {
+                logger.info("Срок действия токена закончен");
                 throw new IOException("JWT Token has expired", e);
             }
         }
@@ -51,6 +58,9 @@ public class JwtFilter extends OncePerRequestFilter {
                                 userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                logger.info("Токен подтвержден");
+            } else {
+                logger.info("Токен не прошел валидацию");
             }
         }
         chain.doFilter(request, response);
