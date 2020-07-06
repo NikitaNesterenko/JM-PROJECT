@@ -101,9 +101,9 @@ public class AdminRestController {
     )
     public Response<Boolean> deleteUser(Long id) {
         if (userService.getUserById(id) == null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "User not found"); //нужно ли тут сообщение?
+            return Response.error(HttpStatus.BAD_REQUEST, "User not found");
         }
         userService.deleteUser(id);
-        return Response.ok(true); //почему тут так? почему нет статуса и строки?
+        return Response.ok(true);
     }
 }
