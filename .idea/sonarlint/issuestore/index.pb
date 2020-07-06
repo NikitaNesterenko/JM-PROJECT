@@ -1,0 +1,35 @@
+
+T
+$model/src/main/java/jm/Currency.java,d\d\dd4e50a93140fffd50d9edcd549192ad0d66ef0d
+P
+ model/src/main/java/jm/Item.java,e\2\e2f915569d6a94dc4d184fb19aff7fbb18ca4ca2
+T
+$model/src/main/java/jm/ShoeSize.java,8\f\8f136d10e8581d601558e3db6eb0ad12f4370f12
+P
+ model/src/main/java/jm/User.java,b\d\bd41435a0a07fcd3b65d3930b95a5d4c2b44c62f
+u
+Ewebapp/src/main/java/jm/config/initializer/EntityDataInitializer.java,1\1\11a1cadd32bda675f38e4069d1a97ec3095bb016
+h
+8webapp/src/main/java/jm/config/JMProjectApplication.java,0\1\01757cf3aafae0cc2e09ca6d21775f25189f62ac
+^
+.dao-impl/src/main/java/jm/dao/AbstractDAO.java,9\a\9a56862a8e05ff9bd35d9f376cdab2547f9e1672
+^
+.dao-impl/src/main/java/jm/dao/UserDaoImpl.java,e\1\e1ca3e55abb14b7c72b1c6ba0dcf61f3b98ae342
+b
+2service-abstract/src/main/java/jm/UserService.java,e\d\ed209e8bfa9debf1e04109974ee7a724f3131faa
+q
+Awebapp/src/main/java/jm/controller/admin/AdminRestController.java,b\2\b2cedc5d8595d68eed2122f68f8fda445634c8c4
+e
+5security/src/main/java/jm/UserDetailsServiceImpl.java,9\c\9c560d65a35774979051eca8dabc45381157c98b
+]
+-security/src/main/java/jm/SecurityConfig.java,d\7\d7c1f978ce75afee6bac4fcec93400efee3b8d1e
+X
+(model/src/main/java/jm/PurchaseInfo.java,9\6\96eb1030d6155960239cab39c1221908bbc95420
+W
+'model/src/main/java/jm/dto/UserDTO.java,1\e\1ec3f6c2edfa3589dd93209e45e9ee82b159231d
+a
+1dao-abstract/src/main/java/jm/UserRepository.java,b\a\ba691c83bb6ee43c1bb4d6a0d83680372f2e50ae
+b
+2dao-abstract/src/main/java/jm/api/dao/UserDAO.java,f\9\f929ec8cf77a65e5a9674d6162052a71b8090bbc
+b
+2service-impl/src/main/java/jm/UserServiceImpl.java,3\6\368208da8e0aec8b62b92c9902f664c3e0e25a53
