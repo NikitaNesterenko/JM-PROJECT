@@ -40,10 +40,10 @@ public class AdminRestController {
             })
     public Response<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        if (users != null) {
-            return Response.ok(users);
+        if (users == null) {
+            return Response.error(HttpStatus.BAD_REQUEST, "No list of users");
         }
-        return Response.error(HttpStatus.BAD_REQUEST, "No users found");
+        return Response.ok(users);
     }
 
     @Operation(
@@ -104,6 +104,6 @@ public class AdminRestController {
             return Response.error(HttpStatus.BAD_REQUEST, "User not found");
         }
         userService.deleteUser(id);
-        return Response.ok(true);
+        return Response.ok().build();
     }
 }
