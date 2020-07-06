@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EntityDataInitializer {
     private static final Logger logger = LoggerFactory.getLogger(EntityDataInitializer.class);
@@ -28,10 +27,6 @@ public class EntityDataInitializer {
 
 //    @Autowired
 //    private ShoeSizeDao shoeSizeDao;
-
-    public EntityDataInitializer(UserService userService) {
-        init();
-    }
 
     private void init() {
         logger.info("Data init has been started!!!");
