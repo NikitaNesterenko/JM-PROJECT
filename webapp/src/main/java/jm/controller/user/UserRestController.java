@@ -27,7 +27,8 @@ public class UserRestController {
                                     schema = @Schema(implementation = User.class)
                             ),
                             description = "OK: get logged-in user"
-                    )
+                    ),
+                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no users found")
             })
     public Response<User> getLoggedInUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
