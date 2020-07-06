@@ -28,7 +28,7 @@ public class UserRestController {
                             ),
                             description = "OK: get logged-in user"
                     ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no users found")
+                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no logged-in user found")
             })
     public Response<User> getLoggedInUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
