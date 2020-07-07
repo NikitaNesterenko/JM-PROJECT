@@ -7,9 +7,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.User;
 import jm.UserService;
+import jm.component.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jm.component.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping(value = "/rest/api/admin")
 @Tag(name = "admin", description = "Admin API")
 public class AdminRestController {
+
     private static final Logger logger = LoggerFactory.getLogger(AdminRestController.class);
 
     private final UserService userService;
@@ -44,9 +45,6 @@ public class AdminRestController {
     public Response<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         logger.info("Получен список пользователей. Всего {} записей.", users.size());
-        if (users == null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "No list of users");
-        }
         return Response.ok(users);
     }
 
