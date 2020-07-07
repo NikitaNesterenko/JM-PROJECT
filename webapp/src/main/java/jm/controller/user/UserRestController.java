@@ -9,7 +9,6 @@ import jm.User;
 import jm.component.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/rest/api/users")
 @Tag(name = "user", description = "User API")
 public class UserRestController {
+
     private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     @GetMapping(value = "/getLoggedInUser")
@@ -37,10 +37,7 @@ public class UserRestController {
             })
     public Response<User> getLoggedInUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("Получен пользователь: {}", user);
-        if (user == null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "Error login");
-        }
+        logger.info("Получен пользователь: {}", user.getUsername());
         return Response.ok(user);
     }
 }
