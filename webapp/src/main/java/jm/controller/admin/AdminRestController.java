@@ -24,10 +24,7 @@ public class AdminRestController {
     @GetMapping(value = "/getAllUsers")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        logger.info("Получение списка всех пользователей:");
-        for (User user : users) {
-            logger.info(user.toString());
-        }
+        logger.info("Получен список пользователей. Всего {} записей.", users.size());
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
