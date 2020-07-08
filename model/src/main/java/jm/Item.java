@@ -41,5 +41,6 @@ public class Item {
 
     @Column(name = "item_image")
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
 }
