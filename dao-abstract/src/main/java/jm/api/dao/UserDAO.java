@@ -5,9 +5,9 @@ import jm.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDAO {
+public interface UserDAO extends CrudDao<User>{
 
-    List<User> getAll();
+    /*List<User> getAll();
 
     User getById(Long id);
 
@@ -15,7 +15,7 @@ public interface UserDAO {
 
     void deleteById(Long id);
 
-    User merge(User user);
+    User merge(User user);*/
 
     Optional<User> getUserByUsername(String name);
 
