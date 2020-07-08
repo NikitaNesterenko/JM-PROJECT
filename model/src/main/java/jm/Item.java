@@ -39,4 +39,7 @@ public class Item {
     @Column(name = "item_condition")
     private String condition;
 
+    @Column(name = "item_image")
+    @Lob
+    private byte[] itemImage;
 }
