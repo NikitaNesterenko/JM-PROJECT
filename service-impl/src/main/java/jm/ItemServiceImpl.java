@@ -15,12 +15,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void addItemImage(byte[] array) {
-        itemDAO.addItemImage(array);
+    public void addItemImage(Long id, byte[] array) {
+        itemDAO.addItemImage(id, array);
     }
 
     @Override
-    public byte[] getItemImage() {
-        return itemDAO.getItemImage();
+    public byte[] getItemImage(Long id) {
+        return itemDAO.getItemImage(id);
     }
 }

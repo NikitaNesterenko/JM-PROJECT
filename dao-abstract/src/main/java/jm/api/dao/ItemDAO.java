@@ -2,7 +2,7 @@ package jm.api.dao;
 
 public interface ItemDAO {
 
-    void addItemImage(byte[] array);
+    void addItemImage(Long id, byte[] array);
 
-    byte[] getItemImage();
+    byte[] getItemImage(Long id);
 }

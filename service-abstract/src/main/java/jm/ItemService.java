@@ -2,7 +2,7 @@ package jm;
 
 public interface ItemService {
 
-    void addItemImage(byte[] array);
+    void addItemImage(Long id, byte[] array);
 
-    byte[] getItemImage();
+    byte[] getItemImage(Long id);
 }
