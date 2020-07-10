@@ -1,6 +1,6 @@
 package jm;
 
-import jm.api.dao.ItemDao;
+import jm.api.dao.ItemDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    private final ItemDao itemDao;
+    private final ItemDAO itemDao;
 
     @Autowired
-    public ItemServiceImpl(ItemDao itemDao) {
+    public ItemServiceImpl(ItemDAO itemDao) {
         this.itemDao = itemDao;
     }
 

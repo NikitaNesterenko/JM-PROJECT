@@ -1,14 +1,14 @@
 package jm.dao;
 
 import jm.Item;
-import jm.api.dao.ItemDao;
+import jm.api.dao.ItemDAO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDao{
+public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
 
     @Override
     public Optional<Item> getItemByName(String name) {
