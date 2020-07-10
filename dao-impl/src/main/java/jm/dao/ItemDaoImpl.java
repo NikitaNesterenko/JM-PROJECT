@@ -2,8 +2,6 @@ package jm.dao;
 
 import jm.Item;
 import jm.api.dao.ItemDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDao{
-
-    private static final Logger logger = LoggerFactory.getLogger(ItemDaoImpl.class);
 
     @Override
     public Optional<Item> getItemByName(String name) {
@@ -33,9 +29,7 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDao{
                     .setParameter("bytesOfImage", array)
                     .setParameter("id", id)
                     .executeUpdate();
-            logger.debug("ItemDaoImpl. Изображение товара добавлено в БД");
         } catch (Exception e) {
-            logger.debug("ItemDaoImpl. Изображение товара не добавлено в БД");
         }
     }
 
@@ -46,10 +40,8 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDao{
                 .setParameter("id", id)
                 .getResultList();
         if (list.size() == 0) {
-            logger.debug("ItemDaoImpl. Товар с таким id в БД не найден");
             return null;
         }
-        logger.debug("ItemDaoImpl. Товар с таким id в БД найден");
         return list.get(0).getItemImage();
     }
 }
