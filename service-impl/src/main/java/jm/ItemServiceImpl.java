@@ -10,53 +10,55 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    private final ItemDao itemdao;
+    private final ItemDao itemDao;
 
     @Autowired
-    public ItemServiceImpl(ItemDao itemdao) {
-        this.itemdao = itemdao;
+    public ItemServiceImpl(ItemDao itemDao) {
+        this.itemDao = itemDao;
     }
 
     @Override
     public Item getItemByName(String name) {
-        return itemdao.getItemByName(name).get();
+        return itemDao.getItemByName(name).get();
     }
 
     @Override
     public List<Item> getAll() {
-        return itemdao.getAll();
+        return itemDao.getAll();
     }
 
     @Override
     public Item get(Long id) {
-        return itemdao.getById(id);
+        return itemDao.getById(id);
     }
 
     @Transactional
     @Override
     public void create(Item item) {
-        itemdao.add(item);
+        itemDao.add(item);
     }
 
     @Transactional
     @Override
     public void update(Item item) {
-        itemdao.merge(item);
+        itemDao.merge(item);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        itemdao.deleteById(id);
+        itemDao.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void addItemImage(Long id, byte[] array) {
-        itemDAO.addItemImage(id, array);
+        itemDao.addItemImage(id, array);
     }
 
+    @Transactional
     @Override
     public byte[] getItemImage(Long id) {
-        return itemDAO.getItemImage(id);
+        return itemDao.getItemImage(id);
     }
 }

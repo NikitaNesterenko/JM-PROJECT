@@ -19,4 +19,7 @@ public interface ItemDao {
 
     Optional<Item> getItemByName(String name);
 
+    void addItemImage(Long id, byte[] array);
+
+    byte[] getItemImage(Long id);
 }
