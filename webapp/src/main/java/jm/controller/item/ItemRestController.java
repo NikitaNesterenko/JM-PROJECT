@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.Item;
 import jm.ItemService;
 import jm.component.Response;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/rest/api/items")
+@Tag(name = "item", description = "Item API")
 public class ItemRestController {
     private static final Logger logger = LoggerFactory.getLogger(ItemRestController.class);
 
@@ -27,7 +29,7 @@ public class ItemRestController {
         this.itemService = itemService;
     }
 
-    @GetMapping(value = "/get")
+    @GetMapping
     @Operation(
             operationId = "getAllItems",
             summary = "Get all items",
@@ -47,7 +49,7 @@ public class ItemRestController {
         return Response.ok(items);
     }
 
-    @GetMapping(value = "/get/{id}")
+    @GetMapping(value = "/{id}")
     @Operation(
             operationId = "getItemById",
             summary = "Get item by id",
@@ -71,7 +73,7 @@ public class ItemRestController {
         return Response.ok(item);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     @Operation(
             operationId = "createItem",
             summary = "Create item",
@@ -96,7 +98,7 @@ public class ItemRestController {
         return Response.ok().build();
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping
     @Operation(
             operationId = "updateItem",
             summary = "Update item",
@@ -121,7 +123,7 @@ public class ItemRestController {
         return Response.ok().build();
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     @Operation(
             operationId = "deleteItem",
             summary = "Delete item",
