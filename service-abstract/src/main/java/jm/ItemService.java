@@ -14,6 +14,9 @@ public interface ItemService {
 
     void delete(Long id);
 
-
     Item getItemByName(String name);
+
+    void addItemImage(Long id, byte[] array);
+
+    byte[] getItemImage(Long id);
 }

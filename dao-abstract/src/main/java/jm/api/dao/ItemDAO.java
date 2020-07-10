@@ -5,7 +5,11 @@ import jm.Item;
 import java.util.List;
 import java.util.Optional;
 
-public interface ItemDao {
+public interface ItemDAO {
+
+    void addItemImage(Long id, byte[] array);
+
+    byte[] getItemImage(Long id);
 
     List<Item> getAll();
 
@@ -18,5 +22,4 @@ public interface ItemDao {
     Item merge(Item item);
 
     Optional<Item> getItemByName(String name);
-
 }
