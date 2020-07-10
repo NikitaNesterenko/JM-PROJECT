@@ -26,6 +26,12 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public GroupedOpenApi itemOpenApi() {
+        String[] path = {"/rest/api/items/**"};
+        return getGroupedOpenApi(path, "item");
+    }
+
+    @Bean
     public OpenAPI customOpenAPI() {
         Contact contact = new Contact()
                 .url("https://github.com/NikitaNesterenko/JM-PROJECT");
