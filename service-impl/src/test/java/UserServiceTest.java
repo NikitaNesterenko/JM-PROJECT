@@ -1,6 +1,6 @@
-import jm.User;
-import jm.UserServiceImpl;
-import jm.dao.UserDaoImpl;
+import jm.stockx.entity.User;
+import jm.stockx.UserServiceImpl;
+import jm.stockx.api.dao.UserDaoImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
