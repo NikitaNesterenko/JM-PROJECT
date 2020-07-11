@@ -62,6 +62,10 @@ public class User implements UserDetails {
         this.vacationMode = vacationMode;
     }
 
+    public User(String firstName, String lastName, String password) {
+
+    }
+
     @Override
     public String getUsername() {
         return username;
