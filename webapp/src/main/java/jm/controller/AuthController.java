@@ -5,6 +5,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import jm.User;
 import jm.UserService;
 import jm.auth.VkAuthorisation;
+import jm.component.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,34 +24,36 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/authorization")
 public class AuthController {
 
-    private VkAuthorisation vkontakte;
+    private VkAuthorisation vkAuthorization;
     private UserService userService;
 
     @Autowired
-    public AuthController(VkAuthorisation vkontakte, UserService userService) {
-        this.vkontakte = vkontakte;
+    public AuthController(VkAuthorisation vkAuthorisation, UserService userService) {
+        this.vkAuthorization = vkAuthorisation;
         this.userService = userService;
     }
 
     @GetMapping("/vkAuth")
-    public ResponseEntity<Object> toVk() throws URISyntaxException {
-        URI vk = new URI(vkontakte.getAuthorizationUrl());
+    public Response<Object> toVk() throws URISyntaxException {
+        URI vk = new URI(vkAuthorization.getAuthorizationUrl());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(vk);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
     }
 
     @GetMapping("/returnCodeVK")
-    public ResponseEntity<Object> getCodeThird(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
-        OAuth2AccessToken token = vkontakte.toGetTokenVK(code);
+    public Response<Object> getCodeThird(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+        OAuth2AccessToken token = vkAuthorization.toGetTokenVK(code);
         String email = ((VKOAuth2AccessToken) token).getEmail();
-        User currentUser = vkontakte.toCreateUser(token, email);
+        User currentUser = vkAuthorization.toCreateUser(token, email);
         if (userService.getUserByUserName(email) == null) {
             userService.createUser(currentUser);
         }
         userService.login(currentUser.getUsername(), currentUser.getPassword(), currentUser.getAuthorities());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(new URI("/index"));
-        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
     }
 }

@@ -12,6 +12,8 @@ import jm.User;
 import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,10 +22,17 @@ import java.util.concurrent.ExecutionException;
 @Component
 public class VkAuthorisation {
 
-    public static final String PROTECTED_RESOURCE_URL = "https://api.vk.com/method/users.get?v=" + VkontakteApi.VERSION;
-    final String clientId = "7499839";
-    final String clientSecret = "yTAv4wjNeGubFJExIO72";
-    final String customScope = "email";
+    @Autowired
+    private Environment env;
+
+    public final String protected_resource_url = env.getProperty("PROTECTED_RESOURCE_URL");
+    final String clientId = env.getProperty("clientId");
+    final String clientSecret = env.getProperty("clientSecret");
+    final String customScope = env.getProperty("customScope");
+
+    public VkAuthorisation(Environment env) {
+        this.env = env;
+    }
 
     @Getter
     final OAuth20Service service = new ServiceBuilder(clientId)
@@ -44,7 +53,7 @@ public class VkAuthorisation {
     }
 
     public User toCreateUser(OAuth2AccessToken token, String email) throws InterruptedException, ExecutionException {
-        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
+        final OAuthRequest request = new OAuthRequest(Verb.GET, protected_resource_url);
         service.signRequest(token, request);
         User user = null;
 
@@ -54,7 +63,7 @@ public class VkAuthorisation {
             String password = jArray.getJSONObject(0).optString("id");
             String firstName = jArray.getJSONObject(0).optString("first_name");
             String lastName = jArray.getJSONObject(0).optString("last_name");
-            String username = firstName + " " + lastName;
+            String username = email;
             user = new User(firstName, lastName, password);
         } catch (IOException e) {
             e.printStackTrace();
