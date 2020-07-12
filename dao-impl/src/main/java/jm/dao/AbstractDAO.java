@@ -1,7 +1,5 @@
 package jm.dao;
 
-import jm.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -26,12 +24,12 @@ public class AbstractDAO<T> {
         return (T) entityManager.find(clazz, id);
     }
 
-    public void addUser(User user) {
-        entityManager.persist(user);
+    public void add(T t) {
+        entityManager.persist(t);
     }
 
-    public User merge(User user) {
-        return entityManager.merge(user);
+    public T merge(T t) {
+        return entityManager.merge(t);
     }
 
     public void deleteById(Long id) {

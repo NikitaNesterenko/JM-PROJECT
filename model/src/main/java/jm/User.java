@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -63,6 +62,10 @@ public class User implements UserDetails {
         this.vacationMode = vacationMode;
     }
 
+    public User(String firstName, String lastName, String password) {
+
+    }
+
     @Override
     public String getUsername() {
         return username;
@@ -97,5 +100,4 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
     }
-
 }
