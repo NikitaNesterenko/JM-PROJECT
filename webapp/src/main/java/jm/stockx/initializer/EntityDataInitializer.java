@@ -1,9 +1,9 @@
-package jm.config.initializer;
+package jm.stockx.initializer;
 
-import jm.Item;
-import jm.User;
-import jm.api.dao.ItemDAO;
-import jm.api.dao.UserDAO;
+import jm.stockx.entity.Item;
+import jm.stockx.entity.User;
+import jm.stockx.api.dao.ItemDAO;
+import jm.stockx.api.dao.UserDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
