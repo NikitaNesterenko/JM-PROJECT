@@ -20,5 +20,7 @@ public interface UserService {
 
     User getUserByUserName(String userName);
 
+    User getUserByEmail(String email);
+
     void login(String username, String password, Collection<? extends GrantedAuthority> authorities);
 }

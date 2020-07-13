@@ -12,8 +12,7 @@ import jm.stockx.entity.User;
 import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,17 +21,10 @@ import java.util.concurrent.ExecutionException;
 @Component
 public class VkAuthorisation {
 
-    @Autowired
-    private Environment env;
-
-    public final String protected_resource_url = env.getProperty("PROTECTED_RESOURCE_URL");
-    final String clientId = env.getProperty("clientId");
-    final String clientSecret = env.getProperty("clientSecret");
-    final String customScope = env.getProperty("customScope");
-
-    public VkAuthorisation(Environment env) {
-        this.env = env;
-    }
+    public final String protectedResourceUrl = "https://api.vk.com/method/users.get?v=5.92";
+    final String clientId = "7535082";
+    final String clientSecret = "2DVvAzRziipUlJ9AZXq9";
+    final String customScope = "email";
 
     @Getter
     final OAuth20Service service = new ServiceBuilder(clientId)
@@ -53,7 +45,7 @@ public class VkAuthorisation {
     }
 
     public User toCreateUser(OAuth2AccessToken token, String email) throws InterruptedException, ExecutionException {
-        final OAuthRequest request = new OAuthRequest(Verb.GET, protected_resource_url);
+        final OAuthRequest request = new OAuthRequest(Verb.GET, protectedResourceUrl);
         service.signRequest(token, request);
         User user = null;
 
