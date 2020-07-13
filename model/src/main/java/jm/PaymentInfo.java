@@ -12,6 +12,8 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "payment_info")
+
+/* Таблица хранит данные для покупки: карту и адрес доставки */
 public class PaymentInfo {
 
     @Id
@@ -56,4 +58,8 @@ public class PaymentInfo {
 
     @OneToOne(mappedBy = "paymentInfo")
     private PurchaseInfo purchaseInfo;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

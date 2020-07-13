@@ -29,21 +29,19 @@ public class PurchaseInfo {
     private Double purchasePrice;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @JoinColumn(name = "item_id")
     private Item item;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_info_id", referencedColumnName = "id")
+    @JoinColumn(name = "payment_id")
     private PaymentInfo paymentInfo;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public PurchaseInfo(Item item) {
         this.purchaseTimeStamp = LocalDateTime.now();
-//        this.itemId = item.getId();
         this.purchasePrice = item.getPrice();
     }
 }

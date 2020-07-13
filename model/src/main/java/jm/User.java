@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -45,8 +47,11 @@ public class User implements UserDetails {
     @Column(name = "vacation_mode")
     private boolean vacationMode;
 
-    @OneToOne(mappedBy = "user")
-    private PurchaseInfo purchaseInfo;
+    @OneToMany(mappedBy = "user")
+    private List<PurchaseInfo> purchases;
+
+    @OneToMany(mappedBy = "user")
+    private Set<PaymentInfo> payments;
 
     public User(String firstName,
                 String lastName,
