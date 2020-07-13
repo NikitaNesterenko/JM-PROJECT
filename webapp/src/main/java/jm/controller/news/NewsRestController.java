@@ -132,7 +132,7 @@ public class NewsRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no news with such id")
             }
     )
-    public Response<Boolean> deleteUser(Long id) {
+    public Response<Boolean> deleteNews(Long id) {
         if (newsService.get(id) == null) {
             logger.warn("Новость с id = {} в базе не найдена", id);
             return Response.error(HttpStatus.BAD_REQUEST, "News not found");
