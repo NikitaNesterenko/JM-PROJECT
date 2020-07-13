@@ -19,4 +19,6 @@ public interface UserDAO{
 
     Optional<User> getUserByUsername(String name);
 
+    Optional<User> getUserByEmail(String name);
+
 }

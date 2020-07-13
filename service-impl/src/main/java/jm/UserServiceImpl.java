@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userdao.getUserByEmail(email).get();
+    }
+
+    @Override
     public void login(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(username, password, authorities);
         SecurityContext sc = SecurityContextHolder.getContext();
