@@ -38,13 +38,8 @@ public class EntityDataInitializer {
     }
 
     private void saveEntity() {
-        if (userDao.getAll().size() == 0) {
-            createUsers().forEach(userDao::add);
-        }
-
-        if (itemDao.getAll().size() == 0) {
-            createItems().forEach(itemDao::add);
-        }
+        createUsers().forEach(userDao::add);
+        createItems().forEach(itemDao::add);
     }
 
     private List<User> createUsers() {
