@@ -43,4 +43,7 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
+
+    @OneToOne(mappedBy = "item")
+    private PurchaseInfo purchaseInfo;
 }

@@ -16,7 +16,6 @@ public class PaymentInfo {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "card_number")
@@ -54,4 +53,7 @@ public class PaymentInfo {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @OneToOne(mappedBy = "paymentInfo")
+    private PurchaseInfo purchaseInfo;
 }

@@ -1,6 +1,7 @@
 package jm;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -43,8 +45,8 @@ public class User implements UserDetails {
     @Column(name = "vacation_mode")
     private boolean vacationMode;
 
-    public User() {
-    }
+    @OneToOne(mappedBy = "user")
+    private PurchaseInfo purchaseInfo;
 
     public User(String firstName,
                 String lastName,
