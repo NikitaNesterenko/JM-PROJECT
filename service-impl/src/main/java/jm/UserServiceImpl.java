@@ -2,9 +2,14 @@ package jm;
 
 import jm.api.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -47,5 +52,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserName(String userName) {
         return userdao.getUserByUsername(userName).get();
+    }
+
+    @Override
+    public void login(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(username, password, authorities);
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(authReq);
     }
 }

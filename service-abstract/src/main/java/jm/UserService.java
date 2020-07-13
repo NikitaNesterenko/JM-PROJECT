@@ -1,5 +1,8 @@
 package jm;
 
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
@@ -15,4 +18,6 @@ public interface UserService {
     User getUserById(Long id);
 
     User getUserByUserName(String userName);
+
+    void login(String username, String password, Collection<? extends GrantedAuthority> authorities);
 }
