@@ -22,4 +22,16 @@ public class UserDaoImpl extends AbstractDAO<User> implements UserDAO {
             return Optional.empty();
         }
     }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        try {
+            User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.email = :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return Optional.of(user);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }
