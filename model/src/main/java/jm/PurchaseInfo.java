@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,9 +29,11 @@ public class PurchaseInfo {
     @Column(name = "purchase_price")
     private Double purchasePrice;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "purchase_item",
+            joinColumns = @JoinColumn(name = "purchase_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private Set<Item> items;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")
