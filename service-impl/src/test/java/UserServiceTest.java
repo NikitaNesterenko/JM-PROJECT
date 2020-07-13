@@ -1,3 +1,4 @@
+import jm.TokenRecovery;
 import jm.User;
 import jm.UserServiceImpl;
 import jm.dao.UserDaoImpl;
@@ -8,6 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UserServiceTest {
 
@@ -31,6 +37,9 @@ public class UserServiceTest {
 
     private final boolean vacationMode = false;
 
+    @Mock
+    private User mockUser;
+
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
@@ -43,5 +52,12 @@ public class UserServiceTest {
                 .thenReturn(java.util.Optional.of(user));
         User fromTest = userService.getUserByUserName("name");
         Assert.assertEquals(username, fromTest.getUsername());
+    }
+
+    @Test
+    public void getUserByEmailTest() {
+        when(userDao.getUserByEmail(any())).thenReturn(java.util.Optional.of(mockUser));
+        assertEquals(userService.getUserByEmail(any()), mockUser);
+        verify(userDao).getUserByEmail(any());
     }
 }
