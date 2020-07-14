@@ -36,9 +36,12 @@ public class PurchaseInfo {
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> purchasedItems;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id")
-    private PaymentInfo paymentInfo;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "purchase_payment",
+            joinColumns = @JoinColumn(name = "purchase_id"),
+            inverseJoinColumns = @JoinColumn(name = "payment_id"))
+    private Set<PaymentInfo> paymentsInfo;
 
     @ManyToMany(mappedBy = "purchases")
     private Set<User> users;

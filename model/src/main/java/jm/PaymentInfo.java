@@ -3,6 +3,7 @@ package jm;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -56,8 +57,8 @@ public class PaymentInfo {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "paymentInfo")
-    private PurchaseInfo purchaseInfo;
+    @ManyToMany(mappedBy = "paymentsInfo")
+    private Set<PurchaseInfo> purchasesInfo;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
