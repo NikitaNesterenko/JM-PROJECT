@@ -30,10 +30,11 @@ public class PurchaseInfo {
     private Double purchasePrice;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "purchase_item",
+    @JoinTable(
+            name = "purchase_item",
             joinColumns = @JoinColumn(name = "purchase_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> items;
+    private Set<Item> purchasedItems;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")

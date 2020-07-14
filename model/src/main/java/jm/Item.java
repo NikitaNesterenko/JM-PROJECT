@@ -45,6 +45,6 @@ public class Item {
     @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
 
-    @ManyToMany(mappedBy = "items")
+    @ManyToMany(mappedBy = "purchasedItems")
     private Set<PurchaseInfo> purchases;
 }
