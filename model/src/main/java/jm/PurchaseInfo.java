@@ -40,9 +40,8 @@ public class PurchaseInfo {
     @JoinColumn(name = "payment_id")
     private PaymentInfo paymentInfo;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "purchases")
+    private Set<User> users;
 
     public PurchaseInfo(Item item) {
         this.purchaseTimeStamp = LocalDateTime.now();

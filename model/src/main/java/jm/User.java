@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -47,8 +46,12 @@ public class User implements UserDetails {
     @Column(name = "vacation_mode")
     private boolean vacationMode;
 
-    @OneToMany(mappedBy = "user")
-    private List<PurchaseInfo> purchases;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_purchase",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
+    private Set<PurchaseInfo> purchases;
 
     @OneToMany(mappedBy = "user")
     private Set<PaymentInfo> payments;
