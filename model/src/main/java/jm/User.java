@@ -46,11 +46,8 @@ public class User implements UserDetails {
     @Column(name = "vacation_mode")
     private boolean vacationMode;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_purchase",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
+    /* покупка может быть совершена одним покупателем, но один покупатель может совершить много покупок */
+    @OneToMany(mappedBy = "user")
     private Set<PurchaseInfo> purchases;
 
     @OneToMany(mappedBy = "user")
