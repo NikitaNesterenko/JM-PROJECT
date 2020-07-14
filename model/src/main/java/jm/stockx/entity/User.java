@@ -37,11 +37,11 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "seller_level")
-    private byte sellerLevel;
+    @Column(name = "seller_level", columnDefinition = "default 1")
+    private Byte sellerLevel;
 
-    @Column(name = "vacation_mode")
-    private boolean vacationMode;
+    @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
+    private Boolean vacationMode;
 
     public User() {
     }
@@ -51,8 +51,8 @@ public class User implements UserDetails {
                 String email,
                 String username,
                 String password,
-                byte sellerLevel,
-                boolean vacationMode) {
+                Byte sellerLevel,
+                Boolean vacationMode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

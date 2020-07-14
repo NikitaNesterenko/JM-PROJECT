@@ -1,6 +1,7 @@
-package jm.mailservice;
+package jm.stockx;
 
-import jm.*;
+import jm.stockx.entity.TokenRecovery;
+import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

@@ -1,4 +1,6 @@
-package jm;
+package jm.stockx;
+
+import jm.stockx.entity.TokenRecovery;
 
 public interface TokenRecoveryService {
 
