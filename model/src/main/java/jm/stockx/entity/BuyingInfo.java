@@ -13,7 +13,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "purchase_info")
+@Table(name = "buying_info")
 
 /* Таблица хранит историю покупок для КАЖДОГО Item-а */
 public class BuyingInfo {
