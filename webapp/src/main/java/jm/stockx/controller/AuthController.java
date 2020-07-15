@@ -5,7 +5,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import jm.stockx.entity.User;
 import jm.stockx.UserService;
 import jm.stockx.auth.VkAuthorisation;
-import jm.stockx.Response;
+import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;

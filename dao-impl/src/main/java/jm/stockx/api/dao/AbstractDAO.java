@@ -35,4 +35,10 @@ public class AbstractDAO<T> {
     public void deleteById(Long id) {
         entityManager.remove(getById(id));
     }
+
+    public boolean doesItExistEntity(Long desiredId) {
+        Long existingValue = (Long) entityManager.createQuery("select count(id) from "
+                + clazz.getName() + " where id =" + desiredId).getSingleResult();
+        return existingValue > 0;
+    }
 }
