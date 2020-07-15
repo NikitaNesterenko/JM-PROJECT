@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.MailService;
 import jm.stockx.entity.User;
 import jm.stockx.UserService;
-import jm.stockx.Response;
+import jm.stockx.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
