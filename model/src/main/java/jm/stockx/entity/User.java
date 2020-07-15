@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "seller_level", columnDefinition = "default 1")
+    @Column(name = "seller_level")
     private Byte sellerLevel;
 
     @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
@@ -48,10 +48,10 @@ public class User implements UserDetails {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "user_purchase",
+            name = "user_buying",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
-    private Set<PurchaseInfo> purchasesInfo;
+            inverseJoinColumns = @JoinColumn(name = "buying_id"))
+    private Set<BuyingInfo> buyingInfo;
 
     public User(String firstName,
                 String lastName,
