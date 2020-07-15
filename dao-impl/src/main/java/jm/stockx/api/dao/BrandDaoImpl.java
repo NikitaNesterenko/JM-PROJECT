@@ -1,19 +1,12 @@
-package jm.dao;
+package jm.stockx.api.dao;
 
-import jm.api.dao.BrandDAO;
-import jm.stockx.api.dao.AbstractDAO;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Repository
 public class BrandDaoImpl extends AbstractDAO<Brand> implements BrandDAO {
-
-    @PersistenceContext
-    EntityManager entityManager;
 
     @Override
     public Optional<Brand> getBrandByName(String name) {

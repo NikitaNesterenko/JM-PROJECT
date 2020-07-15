@@ -1,6 +1,6 @@
-package jm;
+package jm.stockx;
 
-import jm.api.dao.BrandDAO;
+import jm.stockx.api.dao.BrandDAO;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
