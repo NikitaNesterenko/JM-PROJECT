@@ -1,6 +1,7 @@
-package jm;
+package jm.stockx;
 
-import jm.api.dao.NewsDAO;
+import jm.stockx.api.dao.NewsDAO;
+import jm.stockx.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

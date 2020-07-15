@@ -1,14 +1,14 @@
-package jm.controller.user;
+package jm.stockx.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jm.MailService;
-import jm.User;
-import jm.UserService;
-import jm.component.Response;
+import jm.stockx.MailService;
+import jm.stockx.entity.User;
+import jm.stockx.UserService;
+import jm.stockx.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

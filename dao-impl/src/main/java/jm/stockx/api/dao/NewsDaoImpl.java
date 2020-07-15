@@ -1,7 +1,6 @@
-package jm.dao;
+package jm.stockx.api.dao;
 
-import jm.News;
-import jm.api.dao.NewsDAO;
+import jm.stockx.entity.News;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

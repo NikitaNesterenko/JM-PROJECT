@@ -1,7 +1,6 @@
-package jm.dao;
+package jm.stockx.api.dao;
 
-import jm.TokenRecovery;
-import jm.api.dao.TokenRecoveryDAO;
+import jm.stockx.entity.TokenRecovery;
 import org.springframework.stereotype.Repository;
 
 @Repository

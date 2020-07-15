@@ -1,6 +1,7 @@
-package jm;
+package jm.stockx;
 
-import jm.api.dao.TokenRecoveryDAO;
+import jm.stockx.api.dao.TokenRecoveryDAO;
+import jm.stockx.entity.TokenRecovery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
