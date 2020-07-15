@@ -33,6 +33,11 @@
             <artifactId>scribejava-apis</artifactId>
             <version>6.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>4.9</version>
+        </dependency>
     </dependencies>
 
 
