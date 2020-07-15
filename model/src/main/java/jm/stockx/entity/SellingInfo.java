@@ -1,6 +1,6 @@
 package jm.stockx.entity;
 
-import jm.stockx.Status;
+import jm.stockx.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
