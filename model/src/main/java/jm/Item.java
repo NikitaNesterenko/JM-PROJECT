@@ -47,4 +47,8 @@ public class Item {
 
     @ManyToMany(mappedBy = "purchasedItems")
     private Set<PurchaseInfo> purchases;
+
+    @OneToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 }
