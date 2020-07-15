@@ -53,6 +53,13 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "payment_id"))
     private Set<PaymentInfo> paymentsInfo;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_purchase",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
+    private Set<PurchaseInfo> purchasesInfo;
+
     public User(String firstName,
                 String lastName,
                 String email,

@@ -44,9 +44,9 @@ public class PurchaseInfo {
     private Set<PaymentInfo> paymentsInfo;
 
     /* покупка может быть совершена ТОЛЬКО одним покупателем, но один покупатель может совершить много покупок */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     public PurchaseInfo(Item item) {
         this.purchaseTimeStamp = LocalDateTime.now();

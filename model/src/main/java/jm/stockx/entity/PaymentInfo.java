@@ -58,5 +58,4 @@ public class PaymentInfo {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-
 }
