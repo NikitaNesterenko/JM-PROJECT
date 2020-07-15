@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.entity.Item;
 import jm.stockx.ItemService;
-import jm.stockx.Response;
+import jm.stockx.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class ItemRestController {
                             ),
                             description = "OK: got items list"
                     ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no items found")
+                    @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no items found")
             })
     public Response<List<Item>> getAllItems() {
         List<Item> items = itemService.getAll();
@@ -61,7 +61,7 @@ public class ItemRestController {
                             ),
                             description = "OK: got item"
                     ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no items with this item id")
+                    @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no items with this item id")
             })
     public Response<Item> getItemById(@PathVariable("id") Long id) {
         Item item = itemService.get(id);
@@ -85,9 +85,9 @@ public class ItemRestController {
                             ),
                             description = "OK: item created"
                     ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: item was not created")
+                    @ApiResponse(responseCode = "400", description = "BAD_REQUEST: item was not created")
             })
-    public Response<?> createItem(Item item) {
+    public Response<?> createItem(@RequestBody Item item) {
         String itemName = item.getName();
         if (itemService.getItemByName(itemName) != null) {
             logger.warn("Товар {} уже существует в базе", itemName);
@@ -110,9 +110,9 @@ public class ItemRestController {
                             ),
                             description = "OK: item updated successfully"
                     ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update item")
+                    @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to update item")
             })
-    public Response<?> updateItem(Item item) {
+    public Response<?> updateItem(@RequestBody Item item) {
         String itemName = item.getName();
         if (itemService.getItemByName(itemName) == null) {
             logger.warn("Товар {} в базе не найден", itemName);
@@ -129,7 +129,7 @@ public class ItemRestController {
             summary = "Delete item",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK: item deleted successfully"),
-                    @ApiResponse(responseCode = "400", description = "NOT FOUND: no item with such id")
+                    @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no item with such id")
             }
     )
     public Response<?> deleteItem(@PathVariable("id") Long id) {
