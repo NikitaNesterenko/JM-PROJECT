@@ -44,11 +44,4 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
-
-    @ManyToMany
-    @JoinTable(
-            name = "brands_items",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "brand_id"))
-    private Set<Brand> brands;
 }

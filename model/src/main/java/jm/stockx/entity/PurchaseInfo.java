@@ -43,11 +43,6 @@ public class PurchaseInfo {
             inverseJoinColumns = @JoinColumn(name = "payment_id"))
     private Set<PaymentInfo> paymentsInfo;
 
-    /* покупка может быть совершена одним покупателем, но один покупатель может совершить много покупок */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     public PurchaseInfo(Item item) {
         this.purchaseTimeStamp = LocalDateTime.now();
         this.purchasePrice = item.getPrice();

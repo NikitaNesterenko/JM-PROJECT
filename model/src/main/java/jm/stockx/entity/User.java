@@ -46,12 +46,19 @@ public class User implements UserDetails {
     @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
     private Boolean vacationMode;
 
-    /* покупка может быть совершена одним покупателем, но один покупатель может совершить много покупок */
-    @OneToMany(mappedBy = "user")
-    private Set<PurchaseInfo> purchases;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_payment",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "payment_id"))
+    private Set<PaymentInfo> paymentsInfo;
 
-    @OneToMany(mappedBy = "user")
-    private Set<PaymentInfo> payments;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_purchase",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
+    private Set<PurchaseInfo> purchasesInfo;
 
     public User(String firstName,
                 String lastName,
@@ -70,7 +77,6 @@ public class User implements UserDetails {
     }
 
     public User(String firstName, String lastName, String password) {
-
     }
 
     @Override
