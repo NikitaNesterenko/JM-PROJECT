@@ -1,45 +1,48 @@
 package jm;
 
+import jm.api.dao.BrandDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class BrandServiceImpl implements BrandService {
 
-    private final BrandService brandService;
+    private final BrandDAO brandDAO;
 
-    public BrandServiceImpl(BrandService brandService) {
-        this.brandService = brandService;
+    public BrandServiceImpl(BrandDAO brandDAO) {
+        this.brandDAO = brandDAO;
     }
 
     @Override
     public List<Brand> getAll() {
-        return brandService.getAll();
+        return brandDAO.getAll();
     }
 
     @Override
     public Brand get(Long id) {
-        return brandService.get(id);
+        return brandDAO.getById(id);
     }
 
     @Override
     public void create(Brand brand) {
-        brandService.create(brand);
+        brandDAO.add(brand);
     }
 
     @Override
     public void update(Brand brand) {
-        brandService.update(brand);
+        brandDAO.merge(brand);
     }
 
     @Override
     public void delete(Long id) {
-        brandService.delete(id);
+        brandDAO.deleteById(id);
     }
 
     @Override
     public Brand getBrandByName(String name) {
-        return brandService.getBrandByName(name);
+        return brandDAO.getBrandByName(name).orElse(null);
     }
 }
