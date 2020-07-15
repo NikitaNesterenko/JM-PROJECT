@@ -1,8 +1,8 @@
-import jm.TokenRecovery;
-import jm.TokenRecoveryService;
-import jm.User;
-import jm.UserService;
-import jm.mailservice.MailServiceImpl;
+import jm.stockx.entity.TokenRecovery;
+import jm.stockx.TokenRecoveryService;
+import jm.stockx.entity.User;
+import jm.stockx.UserService;
+import jm.stockx.MailServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -34,7 +34,7 @@ public class UserDTO {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
-        this.vacationMode = user.isVacationMode();
+        this.vacationMode = user.getVacationMode();
     }
 
     public UserDTO(String firstName,
@@ -42,8 +42,8 @@ public class UserDTO {
                    String email,
                    String username,
                    String password,
-                   byte sellerLevel,
-                   boolean vacationMode) {
+                   Byte sellerLevel,
+                   Boolean vacationMode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

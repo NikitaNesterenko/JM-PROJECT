@@ -1,7 +1,7 @@
-package jm.api.dao;
+package jm.stockx.api.dao;
 
 
-import jm.TokenRecovery;
+import jm.stockx.entity.TokenRecovery;
 
 public interface TokenRecoveryDAO {
 

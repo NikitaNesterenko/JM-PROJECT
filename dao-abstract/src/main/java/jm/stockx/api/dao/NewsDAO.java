@@ -1,6 +1,6 @@
-package jm.api.dao;
+package jm.stockx.api.dao;
 
-import jm.News;
+import jm.stockx.entity.News;
 
 import java.util.List;
 import java.util.Optional;

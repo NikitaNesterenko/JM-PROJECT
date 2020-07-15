@@ -1,5 +1,7 @@
 package jm.stockx;
 
+import jm.stockx.entity.User;
+
 public interface MailService {
 
     void sendSimpleMessage(String to, String subject, String text);
