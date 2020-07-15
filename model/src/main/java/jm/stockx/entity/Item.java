@@ -45,10 +45,10 @@ public class Item {
     @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
 
-    @ManyToMany(mappedBy = "purchasedItems")
-    private Set<PurchaseInfo> purchases;
-
-    @OneToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
+    @ManyToMany
+    @JoinTable(
+            name = "brands_items",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "brand_id"))
+    private Set<Brand> brands;
 }

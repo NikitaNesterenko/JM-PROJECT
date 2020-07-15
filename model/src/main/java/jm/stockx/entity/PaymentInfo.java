@@ -1,4 +1,4 @@
-package jm;
+package jm.stockx.entity;
 
 import lombok.*;
 

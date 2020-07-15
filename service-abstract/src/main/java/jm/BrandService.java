@@ -1,5 +1,7 @@
 package jm;
 
+import jm.stockx.entity.Brand;
+
 import java.util.List;
 
 public interface BrandService {

@@ -1,6 +1,6 @@
 package jm.api.dao;
 
-import jm.Brand;
+import jm.stockx.entity.Brand;
 
 import java.util.List;
 import java.util.Optional;
