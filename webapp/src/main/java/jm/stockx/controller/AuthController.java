@@ -2,6 +2,7 @@ package jm.stockx.controller;
 
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import jm.stockx.auth.GoogleAuthorization;
 import jm.stockx.entity.User;
 import jm.stockx.UserService;
 import jm.stockx.auth.VkAuthorisation;
@@ -23,11 +24,13 @@ import java.util.concurrent.ExecutionException;
 public class AuthController {
 
     private VkAuthorisation vkAuthorization;
+    private GoogleAuthorization googleAuthorization;
     private UserService userService;
 
     @Autowired
-    public AuthController(VkAuthorisation vkAuthorisation, UserService userService) {
+    public AuthController(VkAuthorisation vkAuthorisation, GoogleAuthorization googleAuthorization, UserService userService) {
         this.vkAuthorization = vkAuthorisation;
+        this.googleAuthorization = googleAuthorization;
         this.userService = userService;
     }
 
@@ -45,6 +48,28 @@ public class AuthController {
         OAuth2AccessToken token = vkAuthorization.toGetTokenVK(code);
         String email = ((VKOAuth2AccessToken) token).getEmail();
         User currentUser = vkAuthorization.toCreateUser(token, email);
+        return returnOrCreateNewUser(email, currentUser);
+    }
+
+    @GetMapping("/googleAuth")
+    public Response<Object> toGoogle() throws URISyntaxException {
+        URI google = new URI(googleAuthorization.getAuthorizationUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(google);
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/returnCodeGoogle")
+    public Response<Object> getCodeGoogle (@RequestParam String code)
+            throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+        OAuth2AccessToken token = googleAuthorization.getGoogleOAuth2AccessToken(code);
+        String email = token.getParameter("email");
+        User currentUser = googleAuthorization.getGoogleUser(token, email);
+        return returnOrCreateNewUser(email, currentUser);
+    }
+
+    private Response<Object> returnOrCreateNewUser(String email, User currentUser) throws URISyntaxException {
         if (userService.getUserByUserName(email) == null) {
             userService.createUser(currentUser);
         }
