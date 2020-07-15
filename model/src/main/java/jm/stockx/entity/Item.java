@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -44,7 +43,4 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
-
-    @ManyToMany(mappedBy = "purchasedItems")
-    private Set<PurchaseInfo> purchases;
 }
