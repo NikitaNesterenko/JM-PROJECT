@@ -1,6 +1,7 @@
-package jm.stockx.controller.item;
+package jm.stockx.controller.rest.admin;
 
 import jm.stockx.ItemServiceImpl;
+import jm.stockx.controller.rest.TestUtils;
 import jm.stockx.entity.Item;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,22 +14,19 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
-public class ItemRestControllerTest {
-    private static final String url = "/rest/api/items/";
+public class AdminItemRestControllerTest {
+    private static final String url = "/rest/api/admin/items/";
 
     @InjectMocks
-    private ItemRestController itemRestController;
+    private AdminItemRestController adminItemRestController;
 
     private MockMvc mockMvc;
 
@@ -37,40 +35,7 @@ public class ItemRestControllerTest {
 
     @Before
     public void init(){
-        mockMvc = MockMvcBuilders.standaloneSetup(itemRestController).build();
-    }
-
-
-    @Test
-    public void getItemByIdTest() throws Exception {
-        Long testId_1 = 1L;
-        String testName = "Name";
-        Item item1 = new Item();
-        item1.setId(testId_1);
-        item1.setName(testName);
-
-        when(itemService.get(testId_1)).thenReturn(item1);
-        mockMvc.perform(get(url + "{id}", testId_1))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id").value(testId_1))
-                .andExpect(jsonPath("$.name").value(testName));
-
-        verify(itemService, times(1)).get(testId_1);
-        verifyNoMoreInteractions(itemService);
-    }
-
-    @Test
-    public void getAllItemsTest() throws Exception {
-        List<Item> items = Arrays.asList(new Item(), new Item());
-
-        when(itemService.getAll()).thenReturn(items);
-        mockMvc.perform(get(url))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(items.size())));
-
-        verify(itemService, times(1)).getAll();
+        mockMvc = MockMvcBuilders.standaloneSetup(adminItemRestController).build();
     }
 
     @Test
@@ -82,7 +47,8 @@ public class ItemRestControllerTest {
         mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(TestUtils.objectToJson(item)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(item.getName()));
         verify(itemService, times(1)).create(item);
     }
 
@@ -109,7 +75,8 @@ public class ItemRestControllerTest {
         mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(TestUtils.objectToJson(item)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(item.getName()));
         verify(itemService, times(1)).update(item);
     }
 
