@@ -1,6 +1,7 @@
 package jm.api.dao;
 
 import jm.Item;
+import jm.dto.ItemDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,6 @@ public interface ItemDAO {
     Item merge(Item item);
 
     Optional<Item> getItemByName(String name);
+
+    List<ItemDto> searchItem(String search, Integer page, Integer size);
 }

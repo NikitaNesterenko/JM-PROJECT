@@ -7,7 +7,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.Item;
 import jm.ItemService;
+import jm.Page;
 import jm.component.Response;
+import jm.dto.ItemDto;
+import jm.dto.PageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,5 +143,13 @@ public class ItemRestController {
         itemService.delete(id);
         logger.info("Товар с id = {} успешно удален", id);
         return Response.ok().build();
+    }
+
+    @GetMapping("/itemInfo")
+    public Response<PageDto<ItemDto>> getItemInformation(@RequestParam(name = "page") Integer page,
+                                                         @RequestParam(name = "search") String search,
+                                                         @RequestParam(required = false, defaultValue = "15") Integer size) {
+        PageDto<ItemDto> pageDto = itemService.getPageOfItems(page, search, size);
+        return Response.ok(pageDto);
     }
 }
