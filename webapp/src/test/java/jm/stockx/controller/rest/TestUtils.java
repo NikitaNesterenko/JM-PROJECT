@@ -1,4 +1,4 @@
-package jm.stockx.controller.item;
+package jm.stockx.controller.rest;
 
 import com.google.gson.Gson;
 

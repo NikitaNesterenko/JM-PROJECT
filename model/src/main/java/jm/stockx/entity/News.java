@@ -33,7 +33,7 @@ public class News {
     @Column(name = "description", length = 1000)
     private String description;
 
-    @Column(name = "text", length = 15000)
+    @Lob
     private String text;
 
     @Column(name = "image")

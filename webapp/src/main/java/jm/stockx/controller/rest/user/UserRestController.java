@@ -1,4 +1,4 @@
-package jm.stockx.controller.user;
+package jm.stockx.controller.rest.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -6,23 +6,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.MailService;
-import jm.stockx.entity.User;
 import jm.stockx.UserService;
+import jm.stockx.entity.User;
 import jm.stockx.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/rest/api/users")
+@RequestMapping(value = "/rest/api/user")
 @Tag(name = "user", description = "User API")
+@Slf4j
 public class UserRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
-
     private final UserService userService;
     private final MailService mailService;
 
@@ -48,7 +45,7 @@ public class UserRestController {
             })
     public Response<User> getLoggedInUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("Получен пользователь: {}", user.getUsername());
+        log.info("Получен пользователь: {}", user.getUsername());
         return Response.ok(user);
     }
 
@@ -64,10 +61,10 @@ public class UserRestController {
         User user= userService.getUserByEmail(email);
         if (user != null) {
             mailService.sendRecoveryLinkToUser(user);
-            logger.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
+            log.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
             return Response.ok().build();
         }
-        logger.warn("Не определен email {} для восстаноления пароля", email);
+        log.warn("Не определен email {} для восстаноления пароля", email);
         return Response.error(HttpStatus.BAD_REQUEST, "User with such mail does not exist");
     }
 
@@ -83,10 +80,10 @@ public class UserRestController {
                                         @RequestParam(name = "password") String newPassword) {
 
         if (mailService.changePasswordByToken(link, newPassword)) {
-            logger.info("Пароль по адресу {} восстановлен", link);
+            log.info("Пароль по адресу {} восстановлен", link);
             return Response.ok().build();
         }
-        logger.warn("Ошибка восстановления пароля по адресу {}", link);
+        log.warn("Ошибка восстановления пароля по адресу {}", link);
         return Response.error(HttpStatus.BAD_REQUEST, "Error recovery password");
     }
 }
