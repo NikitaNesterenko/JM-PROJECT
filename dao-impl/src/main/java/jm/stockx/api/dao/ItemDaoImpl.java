@@ -12,8 +12,8 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
     @Override
     public Optional<Item> getItemByName(String name) {
         try {
-            Item item = (Item) entityManager.createNativeQuery("SELECT * FROM items AS i WHERE i.name = :itemname")
-                    .setParameter("itemname", name)
+            Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
+                    .setParameter("itemName", name)
                     .getSingleResult();
             return Optional.of(item);
         } catch (Exception e) {
