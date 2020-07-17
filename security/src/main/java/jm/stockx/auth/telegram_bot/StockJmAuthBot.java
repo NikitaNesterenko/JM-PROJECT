@@ -1,47 +1,34 @@
 package jm.stockx.auth.telegram_bot;
 
-import org.telegram.telegrambots.bots.DefaultBotOptions;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import lombok.Setter;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class StockJmAuthBot extends TelegramWebhookBot {
-    private String botToken;
+@Setter
+public class StockJmAuthBot extends TelegramLongPollingBot {
     private String botUsername;
-    private String botPath;
-
-    public StockJmAuthBot(DefaultBotOptions options) {
-        super(options);
-    }
+    private String botToken;
 
     @Override
-    public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        if (update.getMessage() != null && update.getMessage().hasText()) {
-            long chat_id = update.getMessage().getChatId();
+    public void onUpdateReceived(Update update) {
+        // пока реализована зеркальная пересылка сообщений для проверки работоспособности бота,
+        // позже можно будет реализовать бизнес-логику
+        String message = update.getMessage().getText();
+        sendMsg(update.getMessage().getChatId().toString(), message);
+    }
 
-
-            try {
-                execute(new SendMessage(chat_id, "test message"));
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+    public synchronized void sendMsg(String chatId, String s) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(s);
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
-
-        return null;
-    }
-
-    public void setBotToken(String botToken) {
-        this.botToken = botToken;
-    }
-
-    public void setBotUsername(String botUsername) {
-        this.botUsername = botUsername;
-    }
-
-    public void setBotPath(String botPath) {
-        this.botPath = botPath;
     }
 
     @Override
@@ -54,8 +41,4 @@ public class StockJmAuthBot extends TelegramWebhookBot {
         return botToken;
     }
 
-    @Override
-    public String getBotPath() {
-        return botPath;
-    }
 }

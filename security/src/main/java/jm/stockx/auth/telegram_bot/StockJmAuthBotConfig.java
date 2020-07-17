@@ -1,33 +1,38 @@
 package jm.stockx.auth.telegram_bot;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
-import org.telegram.telegrambots.meta.ApiContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
-@Getter
-@Setter
-//@Configuration
-//@ConfigurationProperties(prefix = "telegrambot")
+@Component
 public class StockJmAuthBotConfig {
-    private String botUsername;
-    private String botToken;
-    private String botPath;
+    private final String botUsername;
+    private final String botToken;
 
-    @Bean
-    StockJmAuthBot stockJmAuthBot() {
+    @Autowired
+    public StockJmAuthBotConfig(Environment environment) {
+        botUsername = environment.getProperty("telegrambot.botUsername");
+        botToken = environment.getProperty("telegrambot.botToken");
+        startBot();
+    }
 
-        DefaultBotOptions options = ApiContext.getInstance(DefaultBotOptions.class);
+    void startBot() {
+        //TODO: Telegram бот в регистрации не участвует, его можно включить позже,
+        // раскомментировав строчки, и настроить логику в StockJmAuthBot и методе onUpdateReceived,
+        // имя и токен бота указываются в пропертях, а также имя указано на странице login-with-telegram
 
-        StockJmAuthBot stockJmAuthBot = new StockJmAuthBot(options);
-
-        stockJmAuthBot.setBotUsername(botUsername);
-        stockJmAuthBot.setBotToken(botToken);
-        stockJmAuthBot.setBotPath(botPath);
-
-        return stockJmAuthBot;
+//        ApiContextInitializer.init();
+//        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+//        try {
+//            StockJmAuthBot stockJmAuthBot = new StockJmAuthBot();
+//            stockJmAuthBot.setBotUsername(botUsername);
+//            stockJmAuthBot.setBotToken(botToken);
+//            telegramBotsApi.registerBot(stockJmAuthBot);
+//        } catch (TelegramApiRequestException e) {
+//            e.printStackTrace();
+//        }
     }
 }

@@ -11,6 +11,12 @@ public class ViewController {
         return "index";
     }
 
+    //TODO: кастыль для проверки
+    @GetMapping(value = "/login")
+    public String loginPage() {
+        return "login";
+    }
+
     @GetMapping(value = "/news")
     public String newsPage() {
         return "news";

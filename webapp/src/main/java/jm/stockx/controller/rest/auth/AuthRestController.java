@@ -1,4 +1,4 @@
-package jm.stockx.controller.rest;
+package jm.stockx.controller.rest.auth;
 
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -8,10 +8,7 @@ import jm.stockx.auth.VkAuthorisation;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -53,5 +50,12 @@ public class AuthRestController {
         httpHeaders.setLocation(new URI("/index"));
         Response.BodyBuilder bodyBuilder = Response.ok();
         return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @PostMapping("/telegramAuth")
+    public Response<Object> toTelegram(@RequestBody String auth) {
+        System.out.println("Telegram auth!!!");
+        System.out.println(auth);
+        return null;
     }
 }
