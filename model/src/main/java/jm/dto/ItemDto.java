@@ -20,7 +20,6 @@ public class ItemDto {
     private Double highestBid;
     private LocalDate dateRelease;
     private String condition;
-    private byte[] itemImage;
 
     public ItemDto(@NonNull Item item){
         this.id = item.getId();
@@ -30,6 +29,5 @@ public class ItemDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getDateRelease();
         this.condition = item.getCondition();
-        this.itemImage = item.getItemImage();
     }
 }

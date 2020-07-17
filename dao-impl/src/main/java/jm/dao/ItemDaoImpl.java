@@ -3,8 +3,6 @@ package jm.dao;
 import jm.Item;
 import jm.api.dao.ItemDAO;
 import jm.dto.ItemDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.stream.Collectors;
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
 
-    private static final Logger logger = LoggerFactory.getLogger(ItemDaoImpl.class);
 
     @Override
     public Optional<Item> getItemByName(String name) {
@@ -30,19 +27,14 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
 
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
-        List<ItemDto> foundItems = null;
-        try {
-            foundItems = entityManager.createQuery("SELECT i FROM Item i  WHERE " +
-                    "i.name LIKE '%" + search + "%'", Item.class)
-                    .setFirstResult(size * (page - 1) + 1)
-                    .setMaxResults(size)
-                    .getResultList()
-                    .stream()
-                    .map(ItemDto::new)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            logger.warn("Cannot find items");
-        }
+        List<ItemDto> foundItems = entityManager.createQuery("SELECT i FROM Item i  WHERE " +
+                "i.name LIKE '%" + search + "%'", Item.class)
+                .setFirstResult(size * (page - 1) + 1)
+                .setMaxResults(size)
+                .getResultList()
+                .stream()
+                .map(ItemDto::new)
+                .collect(Collectors.toList());
         return foundItems;
     }
 
