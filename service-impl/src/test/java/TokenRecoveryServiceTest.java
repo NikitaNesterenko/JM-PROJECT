@@ -1,6 +1,6 @@
-import jm.TokenRecovery;
-import jm.TokenRecoveryServiceImpl;
-import jm.api.dao.TokenRecoveryDAO;
+import jm.stockx.entity.TokenRecovery;
+import jm.stockx.TokenRecoveryServiceImpl;
+import jm.stockx.api.dao.TokenRecoveryDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
