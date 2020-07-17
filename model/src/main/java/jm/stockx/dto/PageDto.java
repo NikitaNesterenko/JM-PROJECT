@@ -1,4 +1,4 @@
-package jm.dto;
+package jm.stockx.dto;
 
 import jm.Page;
 import lombok.*;

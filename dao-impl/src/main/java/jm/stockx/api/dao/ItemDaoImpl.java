@@ -1,9 +1,8 @@
-package jm.dao;
+package jm.stockx.api.dao;
 
-import jm.stockx.entity.Item;
-import jm.Item;
 import jm.api.dao.ItemDAO;
-import jm.dto.ItemDto;
+import jm.stockx.dto.ItemDto;
+import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

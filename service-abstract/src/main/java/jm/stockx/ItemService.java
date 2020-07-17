@@ -2,8 +2,8 @@ package jm.stockx;
 
 import jm.stockx.entity.Item;
 
-import jm.dto.ItemDto;
-import jm.dto.PageDto;
+import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.PageDto;
 
 import java.util.List;
 

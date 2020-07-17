@@ -1,7 +1,7 @@
 package jm.api.dao;
 
 import jm.stockx.entity.Item;
-import jm.dto.ItemDto;
+import jm.stockx.dto.ItemDto;
 
 import java.util.List;
 import java.util.Optional;

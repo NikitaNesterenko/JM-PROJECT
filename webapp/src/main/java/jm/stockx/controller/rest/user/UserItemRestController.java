@@ -6,15 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.ItemService;
+import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Item;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -72,5 +71,13 @@ public class UserItemRestController {
         }
         log.info("Получен товар {} ", item);
         return Response.ok(item);
+    }
+
+    @GetMapping("/itemInfo")
+    public Response<PageDto<ItemDto>> getItemInformation(@RequestParam(name = "page") Integer page,
+                                                         @RequestParam(name = "search") String search,
+                                                         @RequestParam(required = false, defaultValue = "15") Integer size) {
+        PageDto<ItemDto> pageDto = itemService.getPageOfItems(page, search, size);
+        return Response.ok(pageDto);
     }
 }

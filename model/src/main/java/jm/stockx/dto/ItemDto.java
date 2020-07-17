@@ -1,6 +1,7 @@
-package jm.dto;
+package jm.stockx.dto;
 
-import jm.Item;
+
+import jm.stockx.entity.Item;
 import lombok.*;
 
 import java.time.LocalDate;

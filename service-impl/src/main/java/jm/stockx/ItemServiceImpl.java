@@ -1,10 +1,9 @@
-package jm;
+package jm.stockx;
 
-import jm.stockx.entity.Item;
-import jm.stockx.api.dao.ItemDAO;
 import jm.api.dao.ItemDAO;
-import jm.dto.ItemDto;
-import jm.dto.PageDto;
+import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.PageDto;
+import jm.stockx.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
