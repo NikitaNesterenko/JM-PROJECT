@@ -1,6 +1,7 @@
 package jm.stockx.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,10 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -37,14 +40,18 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "seller_level", columnDefinition = "default 1")
+    @Column(name = "seller_level")
     private Byte sellerLevel;
 
     @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
     private Boolean vacationMode;
 
-    public User() {
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_buying",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "buying_id"))
+    private Set<BuyingInfo> buyingInfo;
 
     public User(String firstName,
                 String lastName,
@@ -63,7 +70,6 @@ public class User implements UserDetails {
     }
 
     public User(String firstName, String lastName, String password) {
-
     }
 
     @Override
