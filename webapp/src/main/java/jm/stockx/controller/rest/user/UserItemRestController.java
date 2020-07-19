@@ -80,4 +80,11 @@ public class UserItemRestController {
         PageDto<ItemDto> pageDto = itemService.getPageOfItems(page, search, size);
         return Response.ok(pageDto);
     }
+
+    @GetMapping("/top")
+    public Response<List<Item>> getTopItemsByStyle(@RequestParam(name = "styleId") Long styleId,
+                                                   @RequestParam(name = "limit", required = false, defaultValue = "5") Integer limit) {
+        List<Item> items = itemService.getTopItemsByStyle(styleId, limit);
+        return Response.ok(items);
+    }
 }

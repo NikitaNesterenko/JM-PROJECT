@@ -74,4 +74,9 @@ public class ItemServiceImpl implements ItemService {
         return new PageDto<>(sizeItems, page, pageCount,
                 size, foundItems);
     }
+
+    @Override
+    public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
+        return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
+    }
 }

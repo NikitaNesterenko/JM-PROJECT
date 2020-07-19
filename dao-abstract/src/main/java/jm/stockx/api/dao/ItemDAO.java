@@ -25,4 +25,6 @@ public interface ItemDAO {
     Optional<Item> getItemByName(String name);
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
+
+    List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit);
 }

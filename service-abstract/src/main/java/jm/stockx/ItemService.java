@@ -26,4 +26,6 @@ public interface ItemService {
     byte[] getItemImage(Long id);
 
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
+
+    List<Item> getTopItemsByStyle(Long styleId, Integer topLimit);
 }
