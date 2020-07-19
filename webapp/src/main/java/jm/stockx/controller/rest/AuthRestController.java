@@ -2,6 +2,7 @@ package jm.stockx.controller.rest;
 
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import jm.stockx.auth.FacebookAuthorisation;
 import jm.stockx.entity.User;
 import jm.stockx.UserService;
 import jm.stockx.auth.VkAuthorisation;
@@ -23,11 +24,13 @@ import java.util.concurrent.ExecutionException;
 public class AuthRestController {
 
     private VkAuthorisation vkAuthorization;
+    private FacebookAuthorisation facebookAuthorisation;
     private UserService userService;
 
     @Autowired
-    public AuthRestController(VkAuthorisation vkAuthorisation, UserService userService) {
+    public AuthRestController(VkAuthorisation vkAuthorisation, FacebookAuthorisation facebookAuthorisation, UserService userService) {
         this.vkAuthorization = vkAuthorisation;
+        this.facebookAuthorisation = facebookAuthorisation;
         this.userService = userService;
     }
 
@@ -45,6 +48,30 @@ public class AuthRestController {
         OAuth2AccessToken token = vkAuthorization.toGetTokenVK(code);
         String email = ((VKOAuth2AccessToken) token).getEmail();
         User currentUser = vkAuthorization.toCreateUser(token, email);
+        if (userService.getUserByUserName(email) == null) {
+            userService.createUser(currentUser);
+        }
+        userService.login(currentUser.getUsername(), currentUser.getPassword(), currentUser.getAuthorities());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI("/index"));
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/facebookAuth")
+    public Response<Object> toFacebook() throws URISyntaxException {
+        URI facebook = new URI(facebookAuthorisation.getAuthorizationUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(facebook);
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/returnCodeFacebook")
+    public Response<Object> getCodeFacebook(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+        OAuth2AccessToken token = facebookAuthorisation.getFacebookOAuth2AccessToken(code);
+        String email = token.getParameter("email");
+        User currentUser = facebookAuthorisation.getFacebookUser(token, email);
         if (userService.getUserByUserName(email) == null) {
             userService.createUser(currentUser);
         }
