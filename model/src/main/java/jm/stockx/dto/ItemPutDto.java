@@ -3,8 +3,6 @@ package jm.stockx.dto;
 import jm.stockx.entity.Item;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @ToString
@@ -12,28 +10,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemPutDto {
 
-    private long id;
-
-    private double price;
-
-    private double lowestAsk;
-
-    private double highestBid;
-
-    private LocalDate dateRelease;
-
+    private Long id;
+    private Double price;
+    private Double lowestAsk;
+    private Double highestBid;
     private String condition;
-
-    private byte[] itemImage;
 
     public ItemPutDto(Item item) {
         this.id = item.getId();
         this.price = item.getPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
-        this.dateRelease = item.getDateRelease();
         this.condition = item.getCondition();
-        this.itemImage = item.getItemImage();
     }
-
 }

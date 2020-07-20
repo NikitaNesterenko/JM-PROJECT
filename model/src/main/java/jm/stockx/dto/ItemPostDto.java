@@ -12,17 +12,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemPostDto {
 
-    private double price;
-
-    private double lowestAsk;
-
-    private double highestBid;
-
+    private Double price;
+    private Double lowestAsk;
+    private Double highestBid;
     private LocalDate dateRelease;
-
     private String condition;
-
-    private byte[] itemImage;
 
     public ItemPostDto(Item item) {
         this.price = item.getPrice();
@@ -30,6 +24,5 @@ public class ItemPostDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getDateRelease();
         this.condition = item.getCondition();
-        this.itemImage = item.getItemImage();
     }
 }

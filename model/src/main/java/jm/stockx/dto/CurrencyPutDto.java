@@ -11,7 +11,6 @@ import lombok.*;
 public class CurrencyPutDto {
 
     private long id;
-
     private String name;
 
     public CurrencyPutDto(Currency currency) {
