@@ -1,7 +1,9 @@
 package jm.stockx;
 
+import jm.api.dao.ItemDAO;
+import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Item;
-import jm.stockx.api.dao.ItemDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,5 +63,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public byte[] getItemImage(Long id) {
         return itemDao.getItemImage(id);
+    }
+
+    @Override
+    public PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size) {
+        List<ItemDto> foundItems = itemDao.searchItem(search, page, size);
+        int sizeItems = foundItems.size();
+        int totalEntitiesCount = foundItems.size();
+        int pageCount = totalEntitiesCount / size;
+        return new PageDto<>(sizeItems, page, pageCount,
+                size, foundItems);
     }
 }
