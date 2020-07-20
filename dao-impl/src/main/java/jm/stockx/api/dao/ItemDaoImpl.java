@@ -1,10 +1,13 @@
 package jm.stockx.api.dao;
 
+import jm.api.dao.ItemDAO;
+import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
@@ -12,13 +15,26 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
     @Override
     public Optional<Item> getItemByName(String name) {
         try {
-            Item item = (Item) entityManager.createNativeQuery("SELECT * FROM items AS i WHERE i.name = :itemname")
-                    .setParameter("itemname", name)
+            Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
+                    .setParameter("itemName", name)
                     .getSingleResult();
             return Optional.of(item);
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<ItemDto> searchItem(String search, Integer page, Integer size) {
+        List<ItemDto> foundItems = entityManager.createQuery("SELECT i FROM Item i  WHERE " +
+                "i.name LIKE '%" + search + "%'", Item.class)
+                .setFirstResult(size * (page - 1) + 1)
+                .setMaxResults(size)
+                .getResultList()
+                .stream()
+                .map(ItemDto::new)
+                .collect(Collectors.toList());
+        return foundItems;
     }
 
     @Override
