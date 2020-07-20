@@ -39,10 +39,10 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
 
     @Override
     public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
-        String hql = "SELECT si.item FROM SellingInfo si LEFT JOIN Item as i " +
-                " WHERE i.style = :styleId" +
-                " GROUP BY si.item ORDER BY count(si.item) DESC";
-        return entityManager.createQuery(hql, Item.class)
+        String sql = "select i.* from selling_info as si left join items as i on si.item_id=i.id " +
+                " where i.style_id = :styleId" +
+                " group by si.item_id order by count(si.item_id) desc";
+        return entityManager.createNativeQuery(sql, Item.class)
                 .setParameter("styleId", styleId)
                 .setMaxResults(topLimit)
                 .getResultList();
