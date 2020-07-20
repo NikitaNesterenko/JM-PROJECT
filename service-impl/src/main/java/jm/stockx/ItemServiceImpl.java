@@ -91,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public boolean buyItem(BuyingDto buyingDto) {
+    public void buyItem(BuyingDto buyingDto) {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         Item item = itemDao.getById(buyingDto.getItemId());
@@ -113,6 +113,5 @@ public class ItemServiceImpl implements ItemService {
         sellingDAO.add(sellingInfo);
 
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
-        return true;
     }
 }

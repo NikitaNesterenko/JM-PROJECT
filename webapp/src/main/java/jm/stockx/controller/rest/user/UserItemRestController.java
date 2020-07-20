@@ -84,9 +84,7 @@ public class UserItemRestController {
 
     @GetMapping("/buy")
     public Response<?> buyItemNow(BuyingDto buyingDto) {
-        if (itemService.buyItem(buyingDto)) {
-            return Response.ok(buyingDto);
-        }
-        return Response.error(HttpStatus.PAYMENT_REQUIRED, "Try again");
+        itemService.buyItem(buyingDto);
+        return Response.ok(buyingDto);
     }
 }

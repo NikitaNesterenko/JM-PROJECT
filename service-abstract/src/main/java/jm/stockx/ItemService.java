@@ -28,5 +28,5 @@ public interface ItemService {
 
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
 
-    boolean buyItem(BuyingDto buyingDto);
+    void buyItem(BuyingDto buyingDto);
 }
