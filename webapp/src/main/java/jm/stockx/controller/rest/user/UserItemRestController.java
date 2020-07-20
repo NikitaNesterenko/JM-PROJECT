@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.ItemService;
+import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Item;
@@ -79,6 +80,12 @@ public class UserItemRestController {
                                                          @RequestParam(required = false, defaultValue = "15") Integer size) {
         PageDto<ItemDto> pageDto = itemService.getPageOfItems(page, search, size);
         return Response.ok(pageDto);
+    }
+
+    @GetMapping("/buy")
+    public Response<?> buyItemNow(BuyingDto buyingDto) {
+        itemService.buyItem(buyingDto);
+        return Response.ok(buyingDto);
     }
 
     @GetMapping("/top")
