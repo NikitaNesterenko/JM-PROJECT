@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -47,6 +48,8 @@ public class User implements UserDetails {
     private Boolean vacationMode;
 
     @OneToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    @NotNull
     private Role role;
 
     @ManyToMany(cascade = CascadeType.ALL)
