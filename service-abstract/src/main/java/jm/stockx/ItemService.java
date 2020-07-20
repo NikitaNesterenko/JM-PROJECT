@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.BuyingDto;
 import jm.stockx.entity.Item;
 
 import jm.stockx.dto.ItemDto;
@@ -26,4 +27,6 @@ public interface ItemService {
     byte[] getItemImage(Long id);
 
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
+
+    void buyItem(BuyingDto buyingDto);
 }
