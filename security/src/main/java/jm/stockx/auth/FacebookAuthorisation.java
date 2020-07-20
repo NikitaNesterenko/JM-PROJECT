@@ -13,11 +13,12 @@ import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-@Component
+@Service
 public class FacebookAuthorisation {
     public final String protectedResourceUrl = "https://graph.facebook.com/v3.2/me";
     final String clientId = "648701672656720";
