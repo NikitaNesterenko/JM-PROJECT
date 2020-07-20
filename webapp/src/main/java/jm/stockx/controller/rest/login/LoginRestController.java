@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.JwtUtil;
 import jm.stockx.UserService;
-import jm.stockx.dto.UserDTO;
+import jm.stockx.dto.AuthenticatedUserDTO;
 import jm.stockx.dto.UserLoginDTO;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
@@ -17,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,27 +48,26 @@ public class LoginRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user logged in"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user was not logged in")
             })
-    public Response<?> login(@RequestBody UserLoginDTO userLoginDTO) {
+    public Response<AuthenticatedUserDTO> login(@RequestBody UserLoginDTO userLoginDTO) {
         try {
             String email = userLoginDTO.getEmail();
             String password = userLoginDTO.getPassword();
-
-            UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(email, password);
-            Authentication authentication = authenticationManager.authenticate(authReq); // проверка аутентификации
-            SecurityContextHolder.getContext().setAuthentication(authentication); //устанавливается контекст безопасности для пользователя, прошедшего аутентификацию
 
             User user = userService.getUserByEmail(email);
             if (user == null) {
                 throw new UsernameNotFoundException("User with email: " + email + " not found");
             }
+
+            UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(email, password);
+            Authentication authentication = authenticationManager.authenticate(authReq); // проверка аутентификации
+            SecurityContextHolder.getContext().setAuthentication(authentication); //устанавливается контекст безопасности для пользователя, прошедшего аутентификацию
             String token = jwtUtil.generateToken(user);
 
-            UserDTO userDTO = new UserDTO(user);
-            ModelMap response = new ModelMap();
-            response.addAttribute("userDTO", userDTO);
-            response.addAttribute("token", token);
+            AuthenticatedUserDTO authenticatedUserDTO = new AuthenticatedUserDTO();
+            authenticatedUserDTO.setUserLoginDTO(userLoginDTO);
+            authenticatedUserDTO.setToken(token);
 
-            return Response.ok(response);
+            return Response.ok(authenticatedUserDTO);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid email or password");
         }
