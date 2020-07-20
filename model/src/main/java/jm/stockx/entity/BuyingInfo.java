@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,6 +43,10 @@ public class BuyingInfo {
             joinColumns = @JoinColumn(name = "buying_id"),
             inverseJoinColumns = @JoinColumn(name = "payment_id"))
     private Set<PaymentInfo> paymentsInfo;
+
+    @Column(name = "order_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public BuyingInfo(Item item) {
         this.buyingTimeStamp = LocalDateTime.now();
