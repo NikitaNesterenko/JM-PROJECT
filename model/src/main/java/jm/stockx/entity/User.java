@@ -46,6 +46,9 @@ public class User implements UserDetails {
     @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
     private Boolean vacationMode;
 
+    @OneToOne
+    private Role role;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_buying",
