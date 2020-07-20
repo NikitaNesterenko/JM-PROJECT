@@ -1,8 +1,6 @@
 package jm.stockx.controller.rest.login;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.JwtUtil;
@@ -48,13 +46,7 @@ public class LoginRestController {
             operationId = "signIn",
             summary = "Sign-in user",
             responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = UserDTO.class)
-                            ),
-                            description = "OK: user logged in"
-                    ),
+                    @ApiResponse(responseCode = "200", description = "OK: user logged in"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user was not logged in")
             })
     public Response<?> login(@RequestBody UserLoginDTO userLoginDTO) {
