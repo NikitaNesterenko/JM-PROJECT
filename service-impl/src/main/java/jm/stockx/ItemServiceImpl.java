@@ -110,6 +110,7 @@ public class ItemServiceImpl implements ItemService {
         SellingInfo sellingInfo = new SellingInfo(item);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
+        sellingDAO.add(sellingInfo);
 
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
         return true;
