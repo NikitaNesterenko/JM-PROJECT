@@ -1,4 +1,4 @@
-package jm.api.dao;
+package jm.stockx.api.dao;
 
 import jm.stockx.entity.Item;
 import jm.stockx.dto.ItemDto;

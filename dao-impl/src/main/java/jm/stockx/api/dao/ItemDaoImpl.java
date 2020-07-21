@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.api.dao.ItemDAO;
+import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;

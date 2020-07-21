@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.api.dao.ItemDAO;
+import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.BuyingDAO;
 import jm.stockx.api.dao.SellingDAO;
 import jm.stockx.api.dao.UserDAO;
