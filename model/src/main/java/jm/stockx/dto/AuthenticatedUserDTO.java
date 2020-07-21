@@ -11,5 +11,5 @@ public class AuthenticatedUserDTO {
 
     private String token;
 
-    private UserLoginDTO userLoginDTO;
+    private UserDTO userDTO;
 }
