@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -40,25 +41,23 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "seller_level", columnDefinition = "default 1")
+    @Column(name = "seller_level")
     private Byte sellerLevel;
 
     @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
     private Boolean vacationMode;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_payment",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "payment_id"))
-    private Set<PaymentInfo> paymentsInfo;
+    @OneToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    @NotNull
+    private Role role;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "user_purchase",
+            name = "user_buying",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
-    private Set<PurchaseInfo> purchasesInfo;
+            inverseJoinColumns = @JoinColumn(name = "buying_id"))
+    private Set<BuyingInfo> buyingInfo;
 
     public User(String firstName,
                 String lastName,

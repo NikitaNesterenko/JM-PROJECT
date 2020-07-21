@@ -33,10 +33,16 @@ public class SellingInfo {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @Column(name = "status_id", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "order_status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(name = "price")
     private Double price;
+
+    public SellingInfo(Item item) {
+        this.item = item;
+        this.price = item.getPrice();
+        this.orderDate = LocalDateTime.now();
+    }
 }
