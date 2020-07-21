@@ -7,6 +7,8 @@ import jm.stockx.entity.User;
 import jm.stockx.UserService;
 import jm.stockx.auth.VkAuthorisation;
 import jm.stockx.util.Response;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/authorization")
 public class AuthRestController {
+    private final Logger logger = LoggerFactory.getLogger(AuthRestController.class);
 
     private VkAuthorisation vkAuthorization;
     private UserService userService;
@@ -55,10 +58,14 @@ public class AuthRestController {
         return bodyBuilder.headers(httpHeaders).build();
     }
 
-    @PostMapping("/telegramAuth")
-    public ResponseEntity<TelegramUserDTO> toTelegram(@RequestBody TelegramUserDTO telegramUserDTO) {
-        System.out.println("Telegram auth!!!");
-        System.out.println(telegramUserDTO.toString());
+    @GetMapping("/telegramAuth")
+    public ResponseEntity<TelegramUserDTO> toTelegram(@RequestParam String id, String first_name,
+                                                      String last_name, String username, String photo_url,
+                                                      String auth_date, String hash) {
+        TelegramUserDTO telegramUserDTO = new TelegramUserDTO(Long.parseLong(id), first_name, last_name, username,
+                photo_url, Long.parseLong(auth_date), hash);
+        logger.info("Telegram auth!!!");
+        logger.info(telegramUserDTO.toString());
         return new ResponseEntity<>(telegramUserDTO, HttpStatus.OK);
     }
 }
