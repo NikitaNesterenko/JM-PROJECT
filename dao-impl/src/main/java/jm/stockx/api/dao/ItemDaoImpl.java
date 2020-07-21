@@ -1,6 +1,5 @@
 package jm.stockx.api.dao;
 
-import jm.api.dao.ItemDAO;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
@@ -10,10 +9,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
+public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
-    public Optional<Item> getItemByName(String name) {
+    public Optional<Item> getByName(String name) {
         try {
             Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
                     .setParameter("itemName", name)
@@ -26,7 +25,7 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
 
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
-        List<ItemDto> foundItems = entityManager.createQuery("SELECT i FROM Item i  WHERE " +
+        return entityManager.createQuery("SELECT i FROM Item i  WHERE " +
                 "i.name LIKE '%" + search + "%'", Item.class)
                 .setFirstResult(size * (page - 1) + 1)
                 .setMaxResults(size)
@@ -34,7 +33,6 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
                 .stream()
                 .map(ItemDto::new)
                 .collect(Collectors.toList());
-        return foundItems;
     }
 
     @Override

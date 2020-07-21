@@ -8,10 +8,10 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public class UserDaoImpl extends AbstractDAO<User> implements UserDAO {
+public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
-    public Optional<User> getUserByUsername(String name) {
+    public Optional<User> getByName(String name) {
         try {
             User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.username = :username")
                     .setParameter("username", name)
@@ -23,7 +23,7 @@ public class UserDaoImpl extends AbstractDAO<User> implements UserDAO {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         try {
             User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.email = :email")
                     .setParameter("email", email)

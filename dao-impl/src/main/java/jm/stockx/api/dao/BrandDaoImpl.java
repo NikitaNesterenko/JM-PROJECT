@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class BrandDaoImpl extends AbstractDAO<Brand> implements BrandDAO {
+public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
 
     @Override
-    public Optional<Brand> getBrandByName(String name) {
+    public Optional<Brand> getByName(String name) {
         try {
             Brand brand = entityManager.createQuery("FROM Brand WHERE name = :brandName", Brand.class)
                     .setParameter("brandName", name)
