@@ -1,7 +1,7 @@
 package jm.stockx;
 
-import jm.api.dao.ItemDAO;
 import jm.stockx.api.dao.BuyingDAO;
+import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.SellingDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.BuyingDto;
@@ -37,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItemByName(String name) {
-        return itemDao.getItemByName(name).get();
+        return itemDao.getByName(name).orElse(null);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     @Override
     public void update(Item item) {
-        itemDao.merge(item);
+        itemDao.update(item);
     }
 
     @Transactional
