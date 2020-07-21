@@ -3,7 +3,6 @@ package jm.stockx.dto;
 import jm.stockx.entity.News;
 import lombok.*;
 
-import java.sql.Blob;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,18 +13,11 @@ import java.time.LocalDateTime;
 public class NewsPutDto {
 
     private Long id;
-
     private String name;
-
     private LocalDateTime time;
-
     private String title;
-
     private String description;
-
     private String text;
-
-    private Blob image;
 
     public NewsPutDto(News news) {
         this.id = news.getId();
@@ -33,7 +25,6 @@ public class NewsPutDto {
         this.time = news.getTime();
         this.title = news.getTitle();
         this.description = news.getDescription();
-        this.image = news.getImage();
     }
 
 }

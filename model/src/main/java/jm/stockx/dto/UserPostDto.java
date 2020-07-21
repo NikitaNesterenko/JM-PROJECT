@@ -9,18 +9,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPostDto {
+
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String username;
-
     private String password;
-
     private byte sellerLevel;
-
     private boolean vacationMode;
 
     public UserPostDto(User user) {

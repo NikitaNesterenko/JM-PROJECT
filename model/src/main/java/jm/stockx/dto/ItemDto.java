@@ -1,11 +1,9 @@
 package jm.stockx.dto;
 
-
 import jm.stockx.entity.Item;
 import lombok.*;
 
 import java.time.LocalDate;
-
 
 @Getter
 @Setter

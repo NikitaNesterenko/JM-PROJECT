@@ -11,7 +11,6 @@ import lombok.*;
 public class ShoeSizePutDto {
 
     private Long id;
-
     private Double size;
 
     public ShoeSizePutDto(ShoeSize shoeSize) {
