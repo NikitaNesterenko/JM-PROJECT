@@ -2,6 +2,7 @@ package jm.stockx.controller.rest.auth;
 
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import jm.stockx.auth.TelegramAuthorisation;
 import jm.stockx.dto.TelegramUserDTO;
 import jm.stockx.entity.User;
 import jm.stockx.UserService;
@@ -27,11 +28,13 @@ public class AuthRestController {
 
     private VkAuthorisation vkAuthorization;
     private UserService userService;
+    private final TelegramAuthorisation telegramAuthorisation;
 
     @Autowired
-    public AuthRestController(VkAuthorisation vkAuthorisation, UserService userService) {
+    public AuthRestController(VkAuthorisation vkAuthorisation, UserService userService, TelegramAuthorisation telegramAuthorisation) {
         this.vkAuthorization = vkAuthorisation;
         this.userService = userService;
+        this.telegramAuthorisation = telegramAuthorisation;
     }
 
     @GetMapping("/vkAuth")
@@ -59,13 +62,19 @@ public class AuthRestController {
     }
 
     @GetMapping("/telegramAuth")
-    public ResponseEntity<TelegramUserDTO> toTelegram(@RequestParam String id, String first_name,
+    public ResponseEntity<TelegramUserDTO> telegramAuth(@RequestParam String id, String first_name,
                                                       String last_name, String username, String photo_url,
                                                       String auth_date, String hash) {
-        TelegramUserDTO telegramUserDTO = new TelegramUserDTO(Long.parseLong(id), first_name, last_name, username,
-                photo_url, Long.parseLong(auth_date), hash);
+        TelegramUserDTO telegramUserDTO = new TelegramUserDTO(id, first_name, last_name, username,
+                photo_url, auth_date, hash);
         logger.info("Telegram auth!!!");
         logger.info(telegramUserDTO.toString());
+        if(telegramAuthorisation.isTelegramAccountDataRight(telegramUserDTO)) {
+            logger.info("Telegram data Right!!!");
+        } else {
+            logger.info("Telegram data Fail!!!");
+        }
+
         return new ResponseEntity<>(telegramUserDTO, HttpStatus.OK);
     }
 }

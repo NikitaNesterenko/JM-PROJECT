@@ -8,11 +8,11 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class TelegramUserDTO {
-    private Long id;
+    private String id;
     private String first_name;
     private String last_name;
     private String username;
     private String photo_url;
-    private Long auth_date;
+    private String auth_date;
     private String hash;
 }
