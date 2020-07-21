@@ -14,8 +14,8 @@ public class StockJmAuthBotConfig {
 
     @Autowired
     public StockJmAuthBotConfig(Environment environment) {
-        botUsername = environment.getProperty("telegrambot.botUsername");
-        botToken = environment.getProperty("telegrambot.botToken");
+        botUsername = environment.getProperty("telegramBot.botUsername");
+        botToken = environment.getProperty("telegramBot.botToken");
         startBot();
     }
 

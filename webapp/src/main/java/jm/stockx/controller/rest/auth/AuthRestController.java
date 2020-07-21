@@ -26,8 +26,8 @@ import java.util.concurrent.ExecutionException;
 public class AuthRestController {
     private final Logger logger = LoggerFactory.getLogger(AuthRestController.class);
 
-    private VkAuthorisation vkAuthorization;
-    private UserService userService;
+    private final VkAuthorisation vkAuthorization;
+    private final UserService userService;
     private final TelegramAuthorisation telegramAuthorisation;
 
     @Autowired
@@ -63,17 +63,13 @@ public class AuthRestController {
 
     @GetMapping("/telegramAuth")
     public ResponseEntity<TelegramUserDTO> telegramAuth(@RequestParam String id, String first_name,
-                                                      String last_name, String username, String photo_url,
-                                                      String auth_date, String hash) {
+                                                        String last_name, String username, String photo_url,
+                                                        String auth_date, String hash) {
         TelegramUserDTO telegramUserDTO = new TelegramUserDTO(id, first_name, last_name, username,
                 photo_url, auth_date, hash);
         logger.info("Telegram auth!!!");
         logger.info(telegramUserDTO.toString());
-        if(telegramAuthorisation.isTelegramAccountDataRight(telegramUserDTO)) {
-            logger.info("Telegram data Right!!!");
-        } else {
-            logger.info("Telegram data Fail!!!");
-        }
+        telegramAuthorisation.isTelegramAccountDataRight(telegramUserDTO);
 
         return new ResponseEntity<>(telegramUserDTO, HttpStatus.OK);
     }

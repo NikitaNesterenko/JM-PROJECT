@@ -32,7 +32,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <div align="center">
             <br>
-            <script async src="https://telegram.org/js/telegram-widget.js?9" data-telegram-login="StockJmAuthBot"
+            <script async src="https://telegram.org/js/telegram-widget.js?9" th:data-telegram-login="${botUsername}"
                     data-size="large" data-auth-url="http://localhost:8080/authorization/telegramAuth"
                     data-request-access="write"></script>
         </div>

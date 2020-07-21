@@ -16,7 +16,7 @@ public class TelegramAuthorisation {
 
     @Autowired
     public TelegramAuthorisation(Environment environment) {
-        botToken = environment.getProperty("telegrambot.botToken");
+        botToken = environment.getProperty("telegramBot.botToken");
     }
 
     public Boolean isTelegramAccountDataRight(TelegramUserDTO telegramUserDTO) {
@@ -26,14 +26,20 @@ public class TelegramAuthorisation {
         byte[] secret = DigestUtils.sha256(botToken);
 
         String telegramUserHash = telegramUserDTO.getHash();
-        String checkHash = HmacUtils.hmacSha256Hex(secret, data);
+        String dataSecretHash = HmacUtils.hmacSha256Hex(secret, data);
 
         logger.info("Telegram user hash!!!");
         logger.info(telegramUserHash);
-        logger.info("Check Hash!!!");
-        logger.info(checkHash);
+        logger.info("Data secret hash!!!");
+        logger.info(dataSecretHash);
 
-        return checkHash.equals(telegramUserHash);
+        if (dataSecretHash.equals(telegramUserHash)) {
+            logger.info("Telegram data Right!!!");
+        } else {
+            logger.info("Telegram data Wrong!!!");
+        }
+
+        return dataSecretHash.equals(telegramUserHash);
     }
 
     private String toDataCheckString(TelegramUserDTO telegramUserDTO) {
