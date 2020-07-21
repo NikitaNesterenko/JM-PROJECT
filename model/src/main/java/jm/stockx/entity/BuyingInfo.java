@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,38 +14,42 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "purchase_info")
+@Table(name = "buying_info")
 
 /* Таблица хранит историю покупок для КАЖДОГО Item-а */
-public class PurchaseInfo {
+public class BuyingInfo {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "purchase_time_stamp")
-    private LocalDateTime purchaseTimeStamp;
+    @Column(name = "buying_time_stamp")
+    private LocalDateTime buyingTimeStamp;
 
-    @Column(name = "purchase_price")
-    private Double purchasePrice;
+    @Column(name = "buying_price")
+    private Double buyingPrice;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "purchase_item",
-            joinColumns = @JoinColumn(name = "purchase_id"),
+            name = "buying_item",
+            joinColumns = @JoinColumn(name = "buying_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> purchasedItems;
+    private Set<Item> boughtItems;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "purchase_payment",
-            joinColumns = @JoinColumn(name = "purchase_id"),
+            name = "buying_payment",
+            joinColumns = @JoinColumn(name = "buying_id"),
             inverseJoinColumns = @JoinColumn(name = "payment_id"))
     private Set<PaymentInfo> paymentsInfo;
 
-    public PurchaseInfo(Item item) {
-        this.purchaseTimeStamp = LocalDateTime.now();
-        this.purchasePrice = item.getPrice();
+    @Column(name = "order_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public BuyingInfo(Item item) {
+        this.buyingTimeStamp = LocalDateTime.now();
+        this.buyingPrice = item.getPrice();
     }
 }
