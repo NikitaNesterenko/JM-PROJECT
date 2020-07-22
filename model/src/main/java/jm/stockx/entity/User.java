@@ -1,6 +1,6 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.UserDTO;
+import jm.stockx.dto.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -79,7 +79,7 @@ public class User implements UserDetails {
     public User(String firstName, String lastName, String password) {
     }
 
-    public User(UserDTO userDto) {
+    public User(UserDto userDto) {
         this(userDto.getFirstName(),
                 userDto.getLastName(),
                 userDto.getEmail(),

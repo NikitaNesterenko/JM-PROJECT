@@ -1,7 +1,7 @@
 package jm.stockx.controller.rest;
 
 import jm.stockx.UserService;
-import jm.stockx.dto.UserDTO;
+import jm.stockx.dto.UserDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class RegistrationRestController {
     }
 
     @PostMapping
-    public Response<?> registerUser(@RequestBody UserDTO userDto){
+    public Response<?> registerUser(@RequestBody UserDto userDto) {
         if (userDto == null) {
             log.info("Ошибка регистрации пользователя. Не корректные регистрационные данные.");
             return Response.error(HttpStatus.BAD_REQUEST, "Invalid registration data");
