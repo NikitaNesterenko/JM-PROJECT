@@ -6,18 +6,14 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class StyleDaoImpl extends AbstractDAO<Style> implements StyleDAO {
+public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
 
     @Override
-    public Optional<Style> getStyleByName(String name) {
-        try {
-            Style style = entityManager.createQuery("FROM Style WHERE name = :name", Style.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
-            return Optional.of(style);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+    public Optional<Style> getByName(String name) {
+        Style style = entityManager.createQuery("FROM Style WHERE name = :name", Style.class)
+                .setParameter("name", name)
+                .getSingleResult();
+        return Optional.of(style);
     }
 
 }

@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.JwtUtil;
 import jm.stockx.UserService;
 import jm.stockx.dto.AuthenticatedUserDTO;
-import jm.stockx.dto.UserDTO;
+import jm.stockx.dto.UserDto;
 import jm.stockx.dto.UserLoginDTO;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
@@ -65,7 +65,7 @@ public class LoginRestController {
             String token = jwtUtil.generateToken(user);
 
             AuthenticatedUserDTO authenticatedUserDTO = new AuthenticatedUserDTO();
-            authenticatedUserDTO.setUserDTO(new UserDTO(user));
+            authenticatedUserDTO.setUserDTO(new UserDto(user));
             authenticatedUserDTO.setToken(token);
 
             return Response.ok(authenticatedUserDTO);

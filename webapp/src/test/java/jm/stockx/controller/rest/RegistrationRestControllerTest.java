@@ -1,7 +1,7 @@
 package jm.stockx.controller.rest;
 
 import jm.stockx.UserServiceImpl;
-import jm.stockx.dto.UserDTO;
+import jm.stockx.dto.UserDto;
 import jm.stockx.entity.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class RegistrationRestControllerTest {
 
     @Test
     public void registrationTest() throws Exception {
-        UserDTO userDTO = new UserDTO();
+        UserDto userDTO = new UserDto();
         userDTO.setFirstName("John");
         userDTO.setLastName("Snow");
         userDTO.setEmail("winterfell@mail.ru");

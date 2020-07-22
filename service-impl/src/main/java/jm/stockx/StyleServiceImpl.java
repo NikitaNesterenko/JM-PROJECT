@@ -29,7 +29,7 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public Style getStyleByName(String name) {
-        return styleDao.getStyleByName(name).orElse(null);
+        return styleDao.getByName(name).orElse(null);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public void update(Style style) {
-        styleDao.merge(style);
+        styleDao.update(style);
     }
 
     @Override

@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
+public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
-    public Optional<Item> getItemByName(String name) {
-            Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
-                    .setParameter("itemName", name)
-                    .getSingleResult();
-            return Optional.of(item);
+    public Optional<Item> getByName(String name) {
+        Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
+                .setParameter("itemName", name)
+                .getSingleResult();
+        return Optional.of(item);
     }
 
     @Override
@@ -43,11 +43,11 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
     }
 
     @Override
-    public void addItemImage(Long id, byte[] array) {
-            entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
-                    .setParameter("bytesOfImage", array)
-                    .setParameter("id", id)
-                    .executeUpdate();
+    public void addItemImage(Long id, Byte[] array) {
+        entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
+                .setParameter("bytesOfImage", array)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override

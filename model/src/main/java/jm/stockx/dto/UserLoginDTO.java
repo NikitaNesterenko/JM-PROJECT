@@ -21,7 +21,7 @@ public class UserLoginDTO {
         this.password = user.getPassword();
     }
 
-    public UserLoginDTO(UserDTO userDTO) {
+    public UserLoginDTO(UserDto userDTO) {
         this.email = userDTO.getEmail();
         this.password = userDTO.getPassword();
     }

@@ -2,23 +2,11 @@ package jm.stockx.api.dao;
 
 import jm.stockx.entity.User;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface UserDAO{
+public interface UserDAO extends GenericDao<User, Long> {
 
-    List<User> getAll();
+    Optional<User> getByName(String name);
 
-    User getById(Long id);
-
-    void add(User user);
-
-    void deleteById(Long id);
-
-    User merge(User user);
-
-    Optional<User> getUserByUsername(String name);
-
-    Optional<User> getUserByEmail(String name);
-
+    Optional<User> getByEmail(String name);
 }

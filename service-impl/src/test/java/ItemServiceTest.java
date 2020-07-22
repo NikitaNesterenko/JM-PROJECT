@@ -20,7 +20,7 @@ public class ItemServiceTest {
     private ItemServiceImpl itemService;
 
     @Mock
-    private jm.api.dao.ItemDAO itemDao;
+    private jm.stockx.api.dao.ItemDAO itemDao;
 
     @Test
     public void getTopItemsByStyle() {

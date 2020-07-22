@@ -1,10 +1,9 @@
 package jm.stockx;
 
 import jm.stockx.dto.BuyingDto;
-import jm.stockx.entity.Item;
-
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.entity.Item;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public interface ItemService {
 
     Item getItemByName(String name);
 
-    void addItemImage(Long id, byte[] array);
+    void addItemImage(Long id, Byte[] array);
 
     byte[] getItemImage(Long id);
 
