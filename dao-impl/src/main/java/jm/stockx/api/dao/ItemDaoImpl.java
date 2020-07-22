@@ -51,7 +51,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public byte[] getItemImage(Long id) {
+    public Byte[] getItemImage(Long id) {
         List<Item> list = entityManager
                 .createQuery("FROM Item WHERE id=:id", Item.class)
                 .setParameter("id", id)
