@@ -10,36 +10,28 @@ import jm.stockx.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class EntityDataInitializer {
     private static final Logger logger = LoggerFactory.getLogger(EntityDataInitializer.class);
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    private final ItemService itemService;
+    @Autowired
+    private ItemService itemService;
 
-    private final RoleService roleService;
+    @Autowired
+    private RoleService roleService;
 
     private List<Role> roleList = new ArrayList<>();
 
     private List<User> userList = new ArrayList<>();
 
     private List<Item> itemList = new ArrayList<>();
-
-    @Autowired
-    public EntityDataInitializer(UserService userService, ItemService itemService, RoleService roleService) {
-        this.userService = userService;
-        this.itemService = itemService;
-        this.roleService = roleService;
-
-        init();
-    }
 
     private void init() {
         logger.info("Data init has been started!!!");
