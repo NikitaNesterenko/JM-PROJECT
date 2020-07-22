@@ -2,6 +2,7 @@ package jm.stockx.controller.rest;
 
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import jm.stockx.auth.GoogleAuthorization;
 import jm.stockx.entity.User;
 import jm.stockx.UserService;
 import jm.stockx.auth.VkAuthorisation;
@@ -22,11 +23,15 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/authorization")
 public class AuthRestController {
 
+    private GoogleAuthorization googleAuthorization;
     private VkAuthorisation vkAuthorization;
     private UserService userService;
 
     @Autowired
-    public AuthRestController(VkAuthorisation vkAuthorisation, UserService userService) {
+    public AuthRestController(GoogleAuthorization googleAuthorization,
+                              VkAuthorisation vkAuthorisation,
+                              UserService userService) {
+        this.googleAuthorization = googleAuthorization;
         this.vkAuthorization = vkAuthorisation;
         this.userService = userService;
     }
@@ -48,6 +53,27 @@ public class AuthRestController {
         if (userService.getUserByUserName(email) == null) {
             userService.createUser(currentUser);
         }
+        userService.login(currentUser.getUsername(), currentUser.getPassword(), currentUser.getAuthorities());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI("/index"));
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/googleAuth")
+    public Response<?> toGoogle() throws URISyntaxException {
+        URI google = new URI(googleAuthorization.getAuthorizationUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(google);
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/returnCodeGoogle")
+    public Response<?> getCodeGoogle(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+        OAuth2AccessToken token = googleAuthorization.getGoogleOAuth2AccessToken(code);
+        String email = ((VKOAuth2AccessToken) token).getEmail();
+        User currentUser = googleAuthorization.getGoogleUser(token, email);
         userService.login(currentUser.getUsername(), currentUser.getPassword(), currentUser.getAuthorities());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(new URI("/index"));
