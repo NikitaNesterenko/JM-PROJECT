@@ -13,19 +13,15 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public Optional<Item> getByName(String name) {
-        try {
-            Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
-                    .setParameter("itemName", name)
-                    .getSingleResult();
-            return Optional.of(item);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
+                .setParameter("itemName", name)
+                .getSingleResult();
+        return Optional.of(item);
     }
 
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
-        return entityManager.createQuery("SELECT i FROM Item i  WHERE " +
+        List<ItemDto> foundItems = entityManager.createQuery("SELECT i FROM Item i  WHERE " +
                 "i.name LIKE '%" + search + "%'", Item.class)
                 .setFirstResult(size * (page - 1) + 1)
                 .setMaxResults(size)
@@ -33,17 +29,15 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .stream()
                 .map(ItemDto::new)
                 .collect(Collectors.toList());
+        return foundItems;
     }
 
     @Override
     public void addItemImage(Long id, Byte[] array) {
-        try {
-            entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
-                    .setParameter("bytesOfImage", array)
-                    .setParameter("id", id)
-                    .executeUpdate();
-        } catch (Exception e) {
-        }
+        entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
+                .setParameter("bytesOfImage", array)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override

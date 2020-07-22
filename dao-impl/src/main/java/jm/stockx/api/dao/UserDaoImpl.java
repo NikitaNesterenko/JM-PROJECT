@@ -12,25 +12,17 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
     public Optional<User> getByName(String name) {
-        try {
-            User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.username = :username")
-                    .setParameter("username", name)
-                    .getSingleResult();
-            return Optional.of(user);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.username = :username")
+                .setParameter("username", name)
+                .getSingleResult();
+        return Optional.of(user);
     }
 
     @Override
     public Optional<User> getByEmail(String email) {
-        try {
-            User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.email = :email")
-                    .setParameter("email", email)
-                    .getSingleResult();
-            return Optional.of(user);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.email = :email")
+                .setParameter("email", email)
+                .getSingleResult();
+        return Optional.of(user);
     }
 }
