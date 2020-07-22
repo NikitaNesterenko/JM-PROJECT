@@ -114,4 +114,9 @@ public class ItemServiceImpl implements ItemService {
 
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
     }
+
+    @Override
+    public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
+        return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
+    }
 }

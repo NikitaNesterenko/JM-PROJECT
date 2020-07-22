@@ -32,6 +32,17 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
     }
 
     @Override
+    public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
+        String sql = "select i.* from selling_info as si left join items as i on si.item_id=i.id " +
+                " where i.style_id = :styleId" +
+                " group by si.item_id order by count(si.item_id) desc";
+        return entityManager.createNativeQuery(sql, Item.class)
+                .setParameter("styleId", styleId)
+                .setMaxResults(topLimit)
+                .getResultList();
+    }
+
+    @Override
     public void addItemImage(Long id, byte[] array) {
             entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
                     .setParameter("bytesOfImage", array)
