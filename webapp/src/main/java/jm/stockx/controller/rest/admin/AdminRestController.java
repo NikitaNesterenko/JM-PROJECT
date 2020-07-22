@@ -1,15 +1,14 @@
-package jm.stockx.controller.admin;
+package jm.stockx.controller.rest.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jm.stockx.entity.User;
 import jm.stockx.UserService;
-import jm.stockx.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jm.stockx.entity.User;
+import jm.stockx.util.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/rest/api/admin")
 @Tag(name = "admin", description = "Admin API")
+@Slf4j
 public class AdminRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(AdminRestController.class);
-
     private final UserService userService;
 
     public AdminRestController(UserService userService) {
@@ -44,7 +41,7 @@ public class AdminRestController {
             })
     public Response<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        logger.info("Получен список пользователей. Всего {} записей.", users.size());
+        log.info("Получен список пользователей. Всего {} записей.", users.size());
         return Response.ok(users);
     }
 
@@ -62,14 +59,14 @@ public class AdminRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user created"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user not created")
             })
-    public Response<?> createUser(User user) {
+    public Response<?> createUser(@RequestBody User user) {
         String username = user.getUsername();
         if (userService.getUserByUserName(username) != null) {
-            logger.warn("Пользователь {} уже существует в базе", username);
+            log.warn("Пользователь {} уже существует в базе", username);
             return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a user");
         }
         userService.createUser(user);
-        logger.info("Пользователь {} успешно создан", username);
+        log.info("Пользователь {} успешно создан", username);
         return Response.ok(HttpStatus.OK, "User created successfully");
     }
 
@@ -87,14 +84,14 @@ public class AdminRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update user")
             })
-    public Response<?> updateUser(User user) {
+    public Response<?> updateUser(@RequestBody User user) {
         String username = user.getUsername();
         if (userService.getUserByUserName(user.getUsername()) == null) {
-            logger.warn("Пользователь {} в базе не найден", username);
+            log.warn("Пользователь {} в базе не найден", username);
             return Response.error(HttpStatus.BAD_REQUEST, "User not found");
         }
         userService.updateUser(user);
-        logger.info("Пользователь {} успешно обновлен", username);
+        log.info("Пользователь {} успешно обновлен", username);
         return Response.ok().build();
     }
 
@@ -109,11 +106,11 @@ public class AdminRestController {
     )
     public Response<Boolean> deleteUser(Long id) {
         if (userService.getUserById(id) == null) {
-            logger.warn("Пользователь с id = {} в базе не найден", id);
+            log.warn("Пользователь с id = {} в базе не найден", id);
             return Response.error(HttpStatus.BAD_REQUEST, "User not found");
         }
         userService.deleteUser(id);
-        logger.info("Пользователь с id = {} успешно удален", id);
+        log.info("Пользователь с id = {} успешно удален", id);
         return Response.ok().build();
     }
 }

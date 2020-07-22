@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Item;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface ItemDAO {
     Item merge(Item item);
 
     Optional<Item> getItemByName(String name);
+
+    List<ItemDto> searchItem(String search, Integer page, Integer size);
 }

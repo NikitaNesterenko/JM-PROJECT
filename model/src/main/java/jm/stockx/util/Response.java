@@ -1,4 +1,4 @@
-package jm.stockx;
+package jm.stockx.util;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
