@@ -12,12 +12,12 @@ import jm.stockx.entity.User;
 import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-@Component
+@Service
 public class GoogleAuthorization {
 
     public final String protectedResourceUrl = "https://www.googleapis.com/plus/v1/people/me";
