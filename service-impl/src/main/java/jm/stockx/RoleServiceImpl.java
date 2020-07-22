@@ -40,6 +40,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void updateRole(Role role) {
-        roleDAO.merge(role);
+        roleDAO.update(role);
     }
 }

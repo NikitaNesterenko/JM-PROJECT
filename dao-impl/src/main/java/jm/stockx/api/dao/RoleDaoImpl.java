@@ -6,5 +6,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class RoleDaoImpl extends AbstractDAO<Role> implements RoleDAO {
+public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
 }
