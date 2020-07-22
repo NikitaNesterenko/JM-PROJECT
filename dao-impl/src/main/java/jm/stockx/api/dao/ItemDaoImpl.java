@@ -21,7 +21,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
-        List<ItemDto> foundItems = entityManager.createQuery("SELECT i FROM Item i  WHERE " +
+        return entityManager.createQuery("SELECT i FROM Item i  WHERE " +
                 "i.name LIKE '%" + search + "%'", Item.class)
                 .setFirstResult(size * (page - 1) + 1)
                 .setMaxResults(size)
@@ -29,7 +29,17 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .stream()
                 .map(ItemDto::new)
                 .collect(Collectors.toList());
-        return foundItems;
+    }
+
+    @Override
+    public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
+        String sql = "select i.* from selling_info as si left join items as i on si.item_id=i.id " +
+                " where i.style_id = :styleId" +
+                " group by si.item_id order by count(si.item_id) desc";
+        return entityManager.createNativeQuery(sql, Item.class)
+                .setParameter("styleId", styleId)
+                .setMaxResults(topLimit)
+                .getResultList();
     }
 
     @Override

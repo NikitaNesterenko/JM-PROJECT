@@ -15,4 +15,6 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     byte[] getItemImage(Long id);
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
+
+    List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit);
 }

@@ -28,4 +28,6 @@ public interface ItemService {
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
 
     void buyItem(BuyingDto buyingDto);
+
+    List<Item> getTopItemsByStyle(Long styleId, Integer topLimit);
 }

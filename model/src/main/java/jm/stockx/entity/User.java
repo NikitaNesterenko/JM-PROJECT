@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.UserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -76,6 +77,16 @@ public class User implements UserDetails {
     }
 
     public User(String firstName, String lastName, String password) {
+    }
+
+    public User(UserDTO userDto) {
+        this(userDto.getFirstName(),
+                userDto.getLastName(),
+                userDto.getEmail(),
+                userDto.getUsername() != null ? userDto.getUsername() : "stockx" + System.currentTimeMillis(),
+                userDto.getPassword(),
+                userDto.getSellerLevel(),
+                userDto.isVacationMode());
     }
 
     @Override

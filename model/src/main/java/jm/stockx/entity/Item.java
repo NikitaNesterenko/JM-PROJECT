@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -44,4 +43,8 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] itemImage;
+
+    @OneToOne(targetEntity = Style.class)
+    @JoinColumn(name = "style_id")
+    private Style style;
 }
