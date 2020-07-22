@@ -87,4 +87,11 @@ public class UserItemRestController {
         itemService.buyItem(buyingDto);
         return Response.ok(buyingDto);
     }
+
+    @GetMapping("/top")
+    public Response<List<Item>> getTopItemsByStyle(@RequestParam(name = "styleId") Long styleId,
+                                                   @RequestParam(name = "limit", required = false, defaultValue = "5") Integer limit) {
+        List<Item> items = itemService.getTopItemsByStyle(styleId, limit);
+        return Response.ok(items);
+    }
 }

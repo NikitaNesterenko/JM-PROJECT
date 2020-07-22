@@ -37,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItemByName(String name) {
-        return itemDao.getItemByName(name).get();
+        return itemDao.getByName(name).orElse(null);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     @Override
     public void update(Item item) {
-        itemDao.merge(item);
+        itemDao.update(item);
     }
 
     @Transactional
@@ -70,7 +70,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public void addItemImage(Long id, byte[] array) {
+    public void addItemImage(Long id, Byte[] array) {
         itemDao.addItemImage(id, array);
     }
 
@@ -113,5 +113,10 @@ public class ItemServiceImpl implements ItemService {
         sellingDAO.add(sellingInfo);
 
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
+    }
+
+    @Override
+    public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
+        return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
     }
 }

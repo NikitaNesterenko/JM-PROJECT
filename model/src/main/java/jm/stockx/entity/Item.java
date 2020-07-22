@@ -54,4 +54,8 @@ public class Item {
         this.dateRelease = dateRelease;
         this.condition = condition;
     }
+
+    @OneToOne(targetEntity = Style.class)
+    @JoinColumn(name = "style_id")
+    private Style style;
 }

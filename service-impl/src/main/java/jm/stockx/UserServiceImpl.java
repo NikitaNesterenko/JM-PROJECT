@@ -1,7 +1,7 @@
 package jm.stockx;
 
-import jm.stockx.entity.User;
 import jm.stockx.api.dao.UserDAO;
+import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        userdao.merge(user);
+        userdao.update(user);
     }
 
     @Override
@@ -52,12 +52,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserName(String userName) {
-        return userdao.getUserByUsername(userName).get();
+        return userdao.getByName(userName).orElse(null);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userdao.getUserByEmail(email).get();
+        return userdao.getByEmail(email).orElse(null);
     }
 
     @Override

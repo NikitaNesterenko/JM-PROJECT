@@ -35,7 +35,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void update(News news) {
-        newsDAO.merge(news);
+        newsDAO.update(news);
     }
 
     @Override
@@ -45,6 +45,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News getNewsByName(String name) {
-        return newsDAO.getNewsByName(name).get();
+        return newsDAO.getByName(name).orElse(null);
     }
 }

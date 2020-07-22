@@ -10,19 +10,15 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDto {
+public class ItemPostDto {
 
-    private Long id;
-    private String name;
     private Double price;
     private Double lowestAsk;
     private Double highestBid;
     private LocalDate dateRelease;
     private String condition;
 
-    public ItemDto(@NonNull Item item) {
-        this.id = item.getId();
-        this.name = item.getName();
+    public ItemPostDto(Item item) {
         this.price = item.getPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
