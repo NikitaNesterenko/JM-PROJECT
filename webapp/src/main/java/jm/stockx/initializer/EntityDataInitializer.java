@@ -42,8 +42,8 @@ public class EntityDataInitializer {
     }
 
     private void saveEntity() {
-        createRoles().forEach(roleService::createRole);
-        roleList = roleService.getAllRoles();
+        createRoles().forEach(roleService::create);
+        roleList = roleService.getAll();
         createUsers().forEach(userService::createUser);
         createItems().forEach(itemService::create);
     }

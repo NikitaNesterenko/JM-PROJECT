@@ -19,27 +19,27 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAllRoles() {
+    public List<Role> getAll() {
         return roleDAO.getAll();
     }
 
     @Override
-    public Role getRoleById(Long id) {
+    public Role get(Long id) {
         return roleDAO.getById(id);
     }
 
     @Override
-    public void createRole(Role role) {
+    public void create(Role role) {
         roleDAO.add(role);
     }
 
     @Override
-    public void deleteRole(Long id) {
+    public void delete(Long id) {
         roleDAO.deleteById(id);
     }
 
     @Override
-    public void updateRole(Role role) {
+    public void update(Role role) {
         roleDAO.update(role);
     }
 }

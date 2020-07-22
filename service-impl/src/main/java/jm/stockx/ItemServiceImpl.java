@@ -76,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public byte[] getItemImage(Long id) {
+    public Byte[] getItemImage(Long id) {
         return itemDao.getItemImage(id);
     }
 

@@ -43,7 +43,7 @@ public class Item {
     @Column(name = "item_image")
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte[] itemImage;
+    private Byte[] itemImage;
 
     public Item(String name, Double price, Double lowestAsk, Double highestBid, LocalDate dateRelease,
                 String condition) {

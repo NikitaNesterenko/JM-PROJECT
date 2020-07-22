@@ -12,7 +12,7 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     void addItemImage(Long id, Byte[] array);
 
-    byte[] getItemImage(Long id);
+    Byte[] getItemImage(Long id);
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
 

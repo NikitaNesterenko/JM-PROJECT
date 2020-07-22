@@ -23,7 +23,7 @@ public interface ItemService {
 
     void addItemImage(Long id, Byte[] array);
 
-    byte[] getItemImage(Long id);
+    Byte[] getItemImage(Long id);
 
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
 
