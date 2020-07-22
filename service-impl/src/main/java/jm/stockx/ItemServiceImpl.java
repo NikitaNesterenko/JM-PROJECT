@@ -70,7 +70,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public void addItemImage(Long id, byte[] array) {
+    public void addItemImage(Long id, Byte[] array) {
         itemDao.addItemImage(id, array);
     }
 

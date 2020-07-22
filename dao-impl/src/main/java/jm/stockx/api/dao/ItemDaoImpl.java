@@ -36,7 +36,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public void addItemImage(Long id, byte[] array) {
+    public void addItemImage(Long id, Byte[] array) {
         try {
             entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
                     .setParameter("bytesOfImage", array)

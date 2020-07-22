@@ -10,7 +10,7 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     Optional<Item> getByName(String name);
 
-    void addItemImage(Long id, byte[] array);
+    void addItemImage(Long id, Byte[] array);
 
     byte[] getItemImage(Long id);
 
