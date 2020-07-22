@@ -1,6 +1,8 @@
 package jm.stockx.auth;
 
+import jm.stockx.UserService;
 import jm.stockx.dto.TelegramUserDTO;
+import jm.stockx.entity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.slf4j.Logger;
@@ -14,12 +16,15 @@ public class TelegramAuthorisation {
     Logger logger = LoggerFactory.getLogger(TelegramAuthorisation.class);
     private final String botToken;
 
+    private final UserService userService;
+
     @Autowired
-    public TelegramAuthorisation(Environment environment) {
+    public TelegramAuthorisation(Environment environment, UserService userService) {
         botToken = environment.getProperty("telegramBot.botToken");
+        this.userService = userService;
     }
 
-    public Boolean isTelegramAccountDataRight(TelegramUserDTO telegramUserDTO) {
+    private Boolean isTelegramAccountDataRight(TelegramUserDTO telegramUserDTO) {
         String dataCheckString = toDataCheckString(telegramUserDTO);
 
         byte[] data = dataCheckString.getBytes();
@@ -54,6 +59,32 @@ public class TelegramAuthorisation {
                 .append("username=").append(telegramUserDTO.getUsername());
 
         return stringBuilder.toString();
+    }
+
+    private User toTelegramUser(TelegramUserDTO telegramUserDTO) {
+        User telegramUser = null;
+
+        if (userService.getUserByUserName(telegramUserDTO.getUsername()) == null) {
+            //TODO: добавить роль новому юзеру, иначе возникнет ошибка при создании
+            telegramUser = new User(telegramUserDTO.getFirst_name(), telegramUserDTO.getLast_name(),
+                    telegramUserDTO.getUsername(), telegramUserDTO.getHash());
+
+            userService.createUser(telegramUser);
+        } else {
+            telegramUser = userService.getUserByUserName(telegramUserDTO.getUsername());
+        }
+
+        return telegramUser;
+    }
+
+    public boolean loginTelegramUser(TelegramUserDTO telegramUserDTO) {
+        if (isTelegramAccountDataRight(telegramUserDTO)) {
+            User telegramUser = toTelegramUser(telegramUserDTO);
+            userService.login(telegramUser.getUsername(), telegramUser.getPassword(), telegramUser.getAuthorities());
+            return true;
+        }
+
+        return false;
     }
 
 }

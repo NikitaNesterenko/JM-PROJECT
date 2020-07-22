@@ -78,6 +78,10 @@ public class User implements UserDetails {
     public User(String firstName, String lastName, String password) {
     }
 
+    public User(String firstName, String lastName, String username, String password) {
+
+    }
+
     @Override
     public String getUsername() {
         return username;

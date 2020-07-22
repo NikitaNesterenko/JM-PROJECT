@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -62,15 +61,22 @@ public class AuthRestController {
     }
 
     @GetMapping("/telegramAuth")
-    public ResponseEntity<TelegramUserDTO> telegramAuth(@RequestParam String id, String first_name,
+    public Response<Object> telegramAuth(@RequestParam String id, String first_name,
                                                         String last_name, String username, String photo_url,
-                                                        String auth_date, String hash) {
+                                                        String auth_date, String hash) throws URISyntaxException {
         TelegramUserDTO telegramUserDTO = new TelegramUserDTO(id, first_name, last_name, username,
                 photo_url, auth_date, hash);
         logger.info("Telegram auth!!!");
         logger.info(telegramUserDTO.toString());
-        telegramAuthorisation.isTelegramAccountDataRight(telegramUserDTO);
-
-        return new ResponseEntity<>(telegramUserDTO, HttpStatus.OK);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if (telegramAuthorisation.loginTelegramUser(telegramUserDTO)) {
+            httpHeaders.setLocation(new URI("/index"));
+            Response.BodyBuilder bodyBuilder = Response.ok();
+            return bodyBuilder.headers(httpHeaders).build();
+        } else {
+            httpHeaders.setLocation(new URI("/login"));
+            Response.BodyBuilder bodyBuilder = Response.error(HttpStatus.BAD_REQUEST);
+            return bodyBuilder.headers(httpHeaders).build();
+        }
     }
 }
