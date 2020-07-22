@@ -4,12 +4,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class AbstractDAO<T> {
+public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    private Class clazz;
+    private final Class clazz;
 
     public AbstractDAO() {
         clazz = (Class) ((java.lang.reflect.ParameterizedType)
@@ -20,7 +20,7 @@ public class AbstractDAO<T> {
         return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
-    public T getById(Long id) {
+    public T getById(PK id) {
         return (T) entityManager.find(clazz, id);
     }
 
@@ -28,17 +28,17 @@ public class AbstractDAO<T> {
         entityManager.persist(t);
     }
 
-    public T merge(T t) {
+    public T update(T t) {
         return entityManager.merge(t);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(PK id) {
         entityManager.remove(getById(id));
     }
 
     public boolean doesItExistEntity(Long desiredId) {
-        Long existingValue = (Long) entityManager.createQuery("select count(id) from "
-                + clazz.getName() + " where id =" + desiredId).getSingleResult();
+        Long existingValue = (Long) entityManager.createQuery("SELECT count(id) FROM "
+                + clazz.getName() + " WHERE id =" + desiredId).getSingleResult();
         return existingValue > 0;
     }
 }

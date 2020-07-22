@@ -1,11 +1,9 @@
 package jm.stockx.dto;
 
-
 import jm.stockx.entity.Item;
 import lombok.*;
 
 import java.time.LocalDate;
-
 
 @Getter
 @Setter
@@ -22,7 +20,7 @@ public class ItemDto {
     private LocalDate dateRelease;
     private String condition;
 
-    public ItemDto(@NonNull Item item){
+    public ItemDto(@NonNull Item item) {
         this.id = item.getId();
         this.name = item.getName();
         this.price = item.getPrice();

@@ -34,7 +34,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void update(Brand brand) {
-        brandDAO.merge(brand);
+        brandDAO.update(brand);
     }
 
     @Override
@@ -44,6 +44,6 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand getBrandByName(String name) {
-        return brandDAO.getBrandByName(name).orElse(null);
+        return brandDAO.getByName(name).orElse(null);
     }
 }

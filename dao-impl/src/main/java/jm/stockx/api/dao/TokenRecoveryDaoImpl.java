@@ -4,7 +4,7 @@ import jm.stockx.entity.TokenRecovery;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TokenRecoveryDaoImpl extends AbstractDAO<TokenRecovery> implements TokenRecoveryDAO {
+public class TokenRecoveryDaoImpl extends AbstractDAO<TokenRecovery, Long> implements TokenRecoveryDAO {
 
     @Override
     public TokenRecovery getByHashEmail(String hashEmail) {
@@ -12,5 +12,4 @@ public class TokenRecoveryDaoImpl extends AbstractDAO<TokenRecovery> implements 
                 .setParameter("hashEmail", hashEmail)
                 .getSingleResult();
     }
-
 }
