@@ -32,9 +32,9 @@ public class UserServiceTest {
 
     private final String password = "123";
 
-    private final byte sellerLevel = 1;
+    private final Byte sellerLevel = 1;
 
-    private final boolean vacationMode = false;
+    private final Boolean vacationMode = false;
 
     @Mock
     private User mockUser;

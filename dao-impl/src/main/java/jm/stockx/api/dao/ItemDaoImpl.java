@@ -38,7 +38,19 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
     }
 
     @Override
-    public void addItemImage(Long id, byte[] array) {
+    public List<Item> getMostPopularItems(String brand) {
+        List<Item> itemList =
+                entityManager.createNativeQuery("SELECT COUNT(i.id) AS i_count" +
+                        " FROM items as i " +
+                        "INNER JOIN buying_item bi on i.id = bi.item_id INNER JOIN brand AS b WHERE b.name =:brand ORDER BY i_count")
+                        .setParameter("brand", brand)
+                        .setMaxResults(10)
+                        .getResultList();
+        return itemList;
+    }
+
+    @Override
+    public void addItemImage(Long id, Byte[] array) {
         try {
             entityManager.createQuery("UPDATE Item i SET i.itemImage = :bytesOfImage WHERE id=:id", Item.class)
                     .setParameter("bytesOfImage", array)
@@ -49,7 +61,7 @@ public class ItemDaoImpl extends AbstractDAO<Item> implements ItemDAO {
     }
 
     @Override
-    public byte[] getItemImage(Long id) {
+    public Byte[] getItemImage(Long id) {
         List<Item> list = entityManager
                 .createQuery("FROM Item WHERE id=:id", Item.class)
                 .setParameter("id", id)

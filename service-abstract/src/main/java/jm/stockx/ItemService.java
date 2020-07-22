@@ -22,9 +22,9 @@ public interface ItemService {
 
     Item getItemByName(String name);
 
-    void addItemImage(Long id, byte[] array);
+    void addItemImage(Long id, Byte[] array);
 
-    byte[] getItemImage(Long id);
+    Byte[] getItemImage(Long id);
 
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
 

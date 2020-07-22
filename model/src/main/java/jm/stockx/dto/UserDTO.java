@@ -22,7 +22,7 @@ public class UserDTO {
 
     private String password;
 
-    private byte sellerLevel;
+    private Byte sellerLevel;
 
     private boolean vacationMode;
 

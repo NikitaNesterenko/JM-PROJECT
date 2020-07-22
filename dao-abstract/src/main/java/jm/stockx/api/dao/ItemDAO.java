@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface ItemDAO {
 
-    void addItemImage(Long id, byte[] array);
+    void addItemImage(Long id, Byte[] array);
 
-    byte[] getItemImage(Long id);
+    Byte[] getItemImage(Long id);
 
     List<Item> getAll();
 
@@ -25,4 +25,6 @@ public interface ItemDAO {
     Optional<Item> getItemByName(String name);
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
+
+    List<Item> getMostPopularItems(String brand);
 }
