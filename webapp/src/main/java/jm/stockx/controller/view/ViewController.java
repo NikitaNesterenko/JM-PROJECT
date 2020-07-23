@@ -1,21 +1,10 @@
 package jm.stockx.controller.view;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Objects;
 
 @Controller
 public class ViewController {
-    private final String botUsername;
-
-    @Autowired
-    public ViewController(Environment environment) {
-        botUsername = Objects.requireNonNull(environment.getProperty("telegramBot.botUsername")).replace("@", "");
-    }
 
     @GetMapping(value = "/")
     public String indexPage() {
@@ -23,8 +12,7 @@ public class ViewController {
     }
 
     @GetMapping(value = "/login")
-    public String loginPage(Model model) {
-        model.addAttribute("botUsername", botUsername);
+    public String loginPage() {
         return "login";
     }
 

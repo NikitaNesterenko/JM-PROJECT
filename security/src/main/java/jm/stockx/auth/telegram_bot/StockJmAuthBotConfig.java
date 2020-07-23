@@ -9,13 +9,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 @Component
 public class StockJmAuthBotConfig {
-    private final String botUsername;
-    private final String botToken;
+    //TODO: заглушка для имени и токена, указываем в пропертях
+    private final String botUsername = "";
+    private final String botToken = "";
 
     @Autowired
     public StockJmAuthBotConfig(Environment environment) {
-        botUsername = environment.getProperty("telegramBot.botUsername");
-        botToken = environment.getProperty("telegramBot.botToken");
+        //TODO: в пропертях указываем имя и токен бота
+//        botUsername = environment.getProperty("telegramBot.botUsername");
+//        botToken = environment.getProperty("telegramBot.botToken");
         startBot();
     }
 

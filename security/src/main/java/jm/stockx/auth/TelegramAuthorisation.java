@@ -1,5 +1,6 @@
 package jm.stockx.auth;
 
+import jm.stockx.RoleService;
 import jm.stockx.UserService;
 import jm.stockx.dto.TelegramUserDTO;
 import jm.stockx.entity.User;
@@ -14,14 +15,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class TelegramAuthorisation {
     Logger logger = LoggerFactory.getLogger(TelegramAuthorisation.class);
-    private final String botToken;
+    //TODO: заглушка для токена, указываем в пропертях
+    private final String botToken = "";
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public TelegramAuthorisation(Environment environment, UserService userService) {
-        botToken = environment.getProperty("telegramBot.botToken");
+    public TelegramAuthorisation(Environment environment, UserService userService, RoleService roleService) {
+        //TODO: в пропертях указываем токен бота
+//        botToken = environment.getProperty("telegramBot.botToken");
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     private Boolean isTelegramAccountDataRight(TelegramUserDTO telegramUserDTO) {
@@ -65,10 +70,9 @@ public class TelegramAuthorisation {
         User telegramUser = null;
 
         if (userService.getUserByUserName(telegramUserDTO.getUsername()) == null) {
-            //TODO: добавить роль новому юзеру, иначе возникнет ошибка при создании
             telegramUser = new User(telegramUserDTO.getFirst_name(), telegramUserDTO.getLast_name(),
                     telegramUserDTO.getUsername(), telegramUserDTO.getHash());
-
+            telegramUser.setRole(roleService.get(2L));
             userService.createUser(telegramUser);
         } else {
             telegramUser = userService.getUserByUserName(telegramUserDTO.getUsername());
