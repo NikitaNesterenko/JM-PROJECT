@@ -18,15 +18,18 @@ import java.util.UUID;
 @Service
 public class MailServiceImpl implements MailService {
 
+    public final JavaMailSender emailSender;
+
+    public final TokenRecoveryService tokenRecoveryService;
+
+    public final UserService userService;
+
     @Value("${recovery.url}")
     private String urlRecoveryLink;
 
     @Value("${recovery.expirationDays}")
     private int linkExpirationDays;
 
-    public final JavaMailSender emailSender;
-    public final TokenRecoveryService tokenRecoveryService;
-    public final UserService userService;
 
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService, UserService userService) {
@@ -66,18 +69,6 @@ public class MailServiceImpl implements MailService {
         return true;
     }
 
-    private Date getCurrentDate() {
-        return Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
-
-    private boolean isValidToken(Date startDay) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(startDay);
-        c.add(Calendar.DATE, linkExpirationDays);
-        Date validDateCreate = c.getTime();
-        return validDateCreate.after(getCurrentDate());
-    }
-
     @Transactional
     @Override
     public boolean changePasswordByToken(String link, String password) {
@@ -97,5 +88,17 @@ public class MailServiceImpl implements MailService {
             }
         }
         return false;
+    }
+
+    private Date getCurrentDate() {
+        return Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    private boolean isValidToken(Date startDay) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(startDay);
+        c.add(Calendar.DATE, linkExpirationDays);
+        Date validDateCreate = c.getTime();
+        return validDateCreate.after(getCurrentDate());
     }
 }

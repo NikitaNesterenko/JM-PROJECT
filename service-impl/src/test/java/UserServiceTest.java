@@ -1,6 +1,6 @@
-import jm.stockx.entity.User;
 import jm.stockx.UserServiceImpl;
 import jm.stockx.api.dao.UserDaoImpl;
+import jm.stockx.entity.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class UserServiceTest {
     @Test
     public void testGetUserByName() {
         User user = new User(firstName, lastName, email, username, password, sellerLevel, vacationMode);
-        Mockito.when(userDao.getUserByUsername(Mockito.anyString()))
+        Mockito.when(userDao.getByName(Mockito.anyString()))
                 .thenReturn(java.util.Optional.of(user));
         User fromTest = userService.getUserByUserName("name");
         Assert.assertEquals(username, fromTest.getUsername());
@@ -55,8 +55,8 @@ public class UserServiceTest {
 
     @Test
     public void getUserByEmailTest() {
-        when(userDao.getUserByEmail(any())).thenReturn(java.util.Optional.of(mockUser));
+        when(userDao.getByEmail(any())).thenReturn(java.util.Optional.of(mockUser));
         assertEquals(userService.getUserByEmail(any()), mockUser);
-        verify(userDao).getUserByEmail(any());
+        verify(userDao).getByEmail(any());
     }
 }

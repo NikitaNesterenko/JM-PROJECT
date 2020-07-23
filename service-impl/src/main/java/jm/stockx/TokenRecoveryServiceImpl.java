@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class TokenRecoveryServiceImpl implements TokenRecoveryService {
+
     private final TokenRecoveryDAO tokenDao;
 
     @Autowired

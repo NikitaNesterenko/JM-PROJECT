@@ -48,4 +48,18 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private Byte[] itemImage;
+
+    public Item(String name, Double price, Double lowestAsk, Double highestBid, LocalDate dateRelease,
+                String condition) {
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.dateRelease = dateRelease;
+        this.condition = condition;
+    }
+
+    @OneToOne(targetEntity = Style.class)
+    @JoinColumn(name = "style_id")
+    private Style style;
 }
