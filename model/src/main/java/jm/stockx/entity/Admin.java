@@ -7,12 +7,18 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @ToString
 @Entity
 public class Admin extends User {
 
-    public Admin(String firstName, String lastName, String email, String username, String password, Byte sellerLevel, Boolean vacationMode) {
+    public Admin(String firstName,
+                 String lastName,
+                 String email,
+                 String username,
+                 String password,
+                 Byte sellerLevel,
+                 Boolean vacationMode) {
         super(firstName, lastName, email, username, password, sellerLevel, vacationMode);
     }
 }
