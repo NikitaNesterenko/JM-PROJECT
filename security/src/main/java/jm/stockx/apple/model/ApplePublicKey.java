@@ -17,29 +17,19 @@ public final class ApplePublicKey {
      */
     private final String alg;
 
-    /**
-     * The exponent value for the RSA public key.
-     */
+    /** The exponent value for the RSA public key. */
     private final String e;
 
-    /**
-     * A 10-character identifier key, obtained from your developer account.
-     */
+    /** A 10-character identifier key, obtained from your developer account. */
     private final String kid;
 
-    /**
-     * The key type parameter setting. This must be set to "RSA".
-     */
+    /** The key type parameter setting. This must be set to "RSA". */
     private final String kty;
 
-    /**
-     * The modulus value for the RSA public key.
-     */
+    /** The modulus value for the RSA public key. */
     private final String n;
 
-    /**
-     * The intended use for the public key.
-     */
+    /** The intended use for the public key. */
     private final String use;
 
     public ApplePublicKey(@JsonProperty("alg") String alg,
