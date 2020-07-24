@@ -15,4 +15,6 @@ public interface BidService {
     void update(Bid bid);
 
     void delete(Long id);
+
+    Boolean isBidExist(Long id);
 }

@@ -41,11 +41,11 @@ public class UserBidRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no bid found")
             })
     public Response<Bid> getBidById(@PathVariable("id") Long id) {
-        Bid bid = bidService.get(id);
-        if (bid == null) {
+        if (!bidService.isBidExist(id)) {
             log.warn("Ставка с id = {} в базе не найдена", id);
             return Response.error(HttpStatus.BAD_REQUEST, "Bid not found");
         }
+        Bid bid = bidService.get(id);
         log.info("Получена ставка {} ", bid);
         return Response.ok(bid);
     }
@@ -105,7 +105,7 @@ public class UserBidRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update bid")
             })
     public Response<?> updateBid(Bid bid) {
-        if (bidService.get(bid.getId()) == null) {
+        if (!bidService.isBidExist(bid.getId())) {
             log.warn("Ставка в базе не найдена");
             return Response.error(HttpStatus.BAD_REQUEST, "Bid not found");
         }
@@ -124,7 +124,7 @@ public class UserBidRestController {
             }
     )
     public Response<?> deleteBid(@PathVariable("id") Long id) {
-        if (bidService.get(id) == null) {
+        if (!bidService.isBidExist(id)) {
             log.warn("Ставка с id = {} в базе не найдена", id);
             return Response.error(HttpStatus.BAD_REQUEST, "Bid not found");
         }

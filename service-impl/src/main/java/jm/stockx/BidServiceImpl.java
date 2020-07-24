@@ -41,4 +41,9 @@ public class BidServiceImpl implements BidService {
     public void delete(Long id) {
         bidDAO.deleteById(id);
     }
+
+    @Override
+    public Boolean isBidExist(Long id) {
+        return bidDAO.isStyleExist(id);
+    }
 }
