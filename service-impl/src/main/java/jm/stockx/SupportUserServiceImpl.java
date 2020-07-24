@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class HelpServiceImpl implements HelpService {
+public class SupportUserServiceImpl implements SupportUserService {
 
     private final MailService mailService;
     private final QuestionDAO questionDAO;
 
     @Autowired
-    public HelpServiceImpl(MailService mailService, QuestionDAO questionDAO) {
+    public SupportUserServiceImpl(MailService mailService, QuestionDAO questionDAO) {
         this.mailService = mailService;
         this.questionDAO = questionDAO;
     }

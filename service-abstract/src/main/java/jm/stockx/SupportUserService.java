@@ -2,6 +2,6 @@ package jm.stockx;
 
 import jm.stockx.dto.CallbackFormDto;
 
-public interface HelpService {
+public interface SupportUserService {
     void askQuestionByUser(CallbackFormDto callbackFormDto);
 }
