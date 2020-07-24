@@ -11,7 +11,6 @@ import lombok.*;
 public class BidPostDto {
 
     private Double price;
-
     private Boolean success;
 
     public BidPostDto(Bid bid) {

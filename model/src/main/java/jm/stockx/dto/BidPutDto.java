@@ -11,7 +11,6 @@ import lombok.*;
 public class BidPutDto {
 
     private Long id;
-
     private Boolean success;
 
     public BidPutDto(Bid bid) {

@@ -11,9 +11,7 @@ import lombok.*;
 public class BidDto {
 
         private Long id;
-
         private Double price;
-
         private Boolean success;
 
         public BidDto(@NonNull Bid bid) {
