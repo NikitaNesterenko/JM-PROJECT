@@ -89,4 +89,47 @@ public class UserBidRestController {
         log.info("Ставка успешно добавлена");
         return Response.ok().build();
     }
+
+    @PutMapping
+    @Operation(
+            operationId = "updateBid",
+            summary = "Update bid",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Bid.class)
+                            ),
+                            description = "OK: bid updated successfully"
+                    ),
+                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update bid")
+            })
+    public Response<?> updateBid(Bid bid) {
+        if (bidService.get(bid.getId()) == null) {
+            log.warn("Ставка в базе не найдена");
+            return Response.error(HttpStatus.BAD_REQUEST, "Bid not found");
+        }
+        bidService.update(bid);
+        log.info("Ставка успешно обновлен");
+        return Response.ok().build();
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @Operation(
+            operationId = "deleteBid",
+            summary = "Delete bid",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK: bid deleted successfully"),
+                    @ApiResponse(responseCode = "400", description = "NOT FOUND: no bid with such id")
+            }
+    )
+    public Response<?> deleteBid(@PathVariable("id") Long id) {
+        if (bidService.get(id) == null) {
+            log.warn("Ставка с id = {} в базе не найдена", id);
+            return Response.error(HttpStatus.BAD_REQUEST, "Bid not found");
+        }
+        bidService.delete(id);
+        log.info("Ставка с id = {} успешно удалена", id);
+        return Response.ok().build();
+    }
 }
