@@ -1,9 +1,8 @@
 package jm.stockx.controller.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import io.jsonwebtoken.Claims;
+import jm.stockx.auth.GoogleAuthorization;
 import jm.stockx.UserService;
 import jm.stockx.apple.AppleIdAuthorization;
 import jm.stockx.auth.VkAuthorisation;
@@ -19,24 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/authorization")
 public class AuthRestController {
 
+    private UserService userService;
+    private GoogleAuthorization googleAuthorization;
     private VkAuthorisation vkAuthorization;
     private AppleIdAuthorization appleIdAuthorization;
-    private UserService userService;
+
 
     @Autowired
-    public AuthRestController(VkAuthorisation vkAuthorisation, AppleIdAuthorization appleIdAuthorization,UserService userService) {
-        this.vkAuthorization = vkAuthorisation;
-        this.appleIdAuthorization = appleIdAuthorization;
+    public AuthRestController(UserService userService,
+                              GoogleAuthorization googleAuthorization,
+                              VkAuthorisation vkAuthorisation,
+                              AppleIdAuthorization appleIdAuthorization) {
         this.userService = userService;
+        this.vkAuthorization = vkAuthorisation;
+        this.googleAuthorization = googleAuthorization;
+        this.appleIdAuthorization = appleIdAuthorization;
     }
 
     @GetMapping("/vkAuth")
@@ -119,4 +121,25 @@ public class AuthRestController {
     }
 
 
+
+    @GetMapping("/googleAuth")
+    public Response<?> toGoogle() throws URISyntaxException {
+        URI google = new URI(googleAuthorization.getAuthorizationUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(google);
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/returnCodeGoogle")
+    public Response<?> getCodeGoogle(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+        OAuth2AccessToken token = googleAuthorization.getGoogleOAuth2AccessToken(code);
+        String email = ((VKOAuth2AccessToken) token).getEmail();
+        User currentUser = googleAuthorization.getGoogleUser(token, email);
+        userService.login(currentUser.getUsername(), currentUser.getPassword(), currentUser.getAuthorities());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI("/index"));
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
 }
