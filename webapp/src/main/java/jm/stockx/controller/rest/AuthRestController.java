@@ -1,10 +1,13 @@
 package jm.stockx.controller.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import jm.stockx.entity.User;
+import io.jsonwebtoken.Claims;
 import jm.stockx.UserService;
+import jm.stockx.apple.AppleIdAuthorization;
 import jm.stockx.auth.VkAuthorisation;
+import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -23,11 +29,13 @@ import java.util.concurrent.ExecutionException;
 public class AuthRestController {
 
     private VkAuthorisation vkAuthorization;
+    private AppleIdAuthorization appleIdAuthorization;
     private UserService userService;
 
     @Autowired
-    public AuthRestController(VkAuthorisation vkAuthorisation, UserService userService) {
+    public AuthRestController(VkAuthorisation vkAuthorisation, AppleIdAuthorization appleIdAuthorization,UserService userService) {
         this.vkAuthorization = vkAuthorisation;
+        this.appleIdAuthorization = appleIdAuthorization;
         this.userService = userService;
     }
 
@@ -54,4 +62,61 @@ public class AuthRestController {
         Response.BodyBuilder bodyBuilder = Response.ok();
         return bodyBuilder.headers(httpHeaders).build();
     }
+
+    @GetMapping("/appleAuth")
+    public Response<Object> toApple() throws Exception {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI(appleIdAuthorization.getAuthorizationUrl()));
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    @GetMapping("/appleReturnCode")
+    public Response<Object> authorizationResponseFromApple(@RequestParam("code") String code,
+                                                           @RequestParam("id_token") String idToken,
+                                                           @RequestParam("user") String jsonUser) throws Exception {
+        Claims claims = appleIdAuthorization.getClimesFromApple(code, getKeyIdFromIdToken(idToken));
+        User currentUser = findOrRegisterNewUser(jsonUser, claims);
+        userService.login(currentUser.getUsername(), currentUser.getPassword(), currentUser.getAuthorities());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(new URI("/index"));
+        Response.BodyBuilder bodyBuilder = Response.ok();
+        return bodyBuilder.headers(httpHeaders).build();
+    }
+
+    private User findOrRegisterNewUser(String jsonUser, Claims claims) throws IOException {
+        String appleIdentifier = claims.get("sub", String.class);
+        User currentUser = userService.getUserByAppleUserId(appleIdentifier);
+        if (currentUser == null) {
+            String appleEmail = claims.get("email", String.class);
+            Map<String, String> userInfo = new ObjectMapper().readValue(jsonUser, HashMap.class);
+            if (appleEmail == null) {
+                appleEmail = userInfo.get("email");
+            }
+            currentUser = userService.getUserByEmail(appleEmail);
+            if (currentUser != null) {
+                currentUser.setAppleUserId(appleIdentifier);
+                userService.updateUser(currentUser);
+            } else {
+                Map<String, String> userInfoDetails = new ObjectMapper().readValue(userInfo.get("name"), HashMap.class);
+                currentUser = new User();
+                currentUser.setFirstName(userInfoDetails.get("firstName"));
+                currentUser.setLastName(userInfoDetails.get("lastName"));
+                currentUser.setUsername(appleEmail);
+                currentUser.setEmail(appleEmail);
+                currentUser.setAppleUserId(appleIdentifier);
+                userService.createUser(currentUser);
+            }
+        }
+        return currentUser;
+    }
+
+    private String getKeyIdFromIdToken(String idToken) throws IOException {
+        String headerIdToken = idToken.split("\\.")[0];
+        String decodedHeader = new String(Base64.getDecoder().decode(headerIdToken));
+        Map<String, String> result = new ObjectMapper().readValue(decodedHeader, HashMap.class);
+        return result.get("kid");
+    }
+
+
 }

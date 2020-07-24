@@ -60,6 +60,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
 
+    @Column(name = "apple_user_id")
+    private String appleUserId;
+
     public User(String firstName,
                 String lastName,
                 String email,
