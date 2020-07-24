@@ -44,6 +44,6 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public Boolean isBidExist(Long id) {
-        return bidDAO.isStyleExist(id);
+        return bidDAO.doesItExistEntity(id);
     }
 }
