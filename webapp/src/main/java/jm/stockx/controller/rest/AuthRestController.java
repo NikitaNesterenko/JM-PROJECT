@@ -1,14 +1,15 @@
 package jm.stockx.controller.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import jm.stockx.auth.GoogleAuthorization;
+import io.jsonwebtoken.Claims;
 import jm.stockx.UserService;
 import jm.stockx.apple.AppleIdAuthorization;
+import jm.stockx.auth.GoogleAuthorization;
 import jm.stockx.auth.VkAuthorisation;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/authorization")
 public class AuthRestController {
 
-    private UserService userService;
-    private GoogleAuthorization googleAuthorization;
-    private VkAuthorisation vkAuthorization;
-    private AppleIdAuthorization appleIdAuthorization;
+    private final UserService userService;
+    private final GoogleAuthorization googleAuthorization;
+    private final VkAuthorisation vkAuthorization;
+    private final AppleIdAuthorization appleIdAuthorization;
 
-
-    @Autowired
     public AuthRestController(UserService userService,
                               GoogleAuthorization googleAuthorization,
                               VkAuthorisation vkAuthorisation,
@@ -41,6 +43,7 @@ public class AuthRestController {
         this.appleIdAuthorization = appleIdAuthorization;
     }
 
+    /* VK */
     @GetMapping("/vkAuth")
     public Response<Object> toVk() throws URISyntaxException {
         URI vk = new URI(vkAuthorization.getAuthorizationUrl());
@@ -65,6 +68,7 @@ public class AuthRestController {
         return bodyBuilder.headers(httpHeaders).build();
     }
 
+    /* APPLE */
     @GetMapping("/appleAuth")
     public Response<Object> toApple() throws Exception {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -120,8 +124,7 @@ public class AuthRestController {
         return result.get("kid");
     }
 
-
-
+    /* GOOGLE */
     @GetMapping("/googleAuth")
     public Response<?> toGoogle() throws URISyntaxException {
         URI google = new URI(googleAuthorization.getAuthorizationUrl());
