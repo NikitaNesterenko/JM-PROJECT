@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/rest/api/user/help/contactSupport")
-public class HelpRestController {
+public class ContactSupportRestController {
 
     private final SupportUserService supportUserService;
 
     @Autowired
-    public HelpRestController(SupportUserService supportUserService) {
+    public ContactSupportRestController(SupportUserService supportUserService) {
         this.supportUserService = supportUserService;
     }
 
