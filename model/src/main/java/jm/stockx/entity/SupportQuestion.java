@@ -19,7 +19,7 @@ public class SupportQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text")
+    @Column(name = "question_text", length = 2000)
     private String text;
 
     @Column(name = "order_number")
