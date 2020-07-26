@@ -32,6 +32,19 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
+    public List<Item> getMostPopularItems(String brand) {
+        String sql = "SELECT i.id " +
+                " FROM items as i " +
+                "INNER JOIN buying_item bi on i.id = bi.item_id INNER JOIN brand AS b" +
+                " WHERE b.name =:brand" +
+                " ORDER BY COUNT(i.id) DESC";
+
+        return entityManager.createNativeQuery(sql, Item.class)
+                .setParameter("brand", brand)
+                .setMaxResults(10)
+                .getResultList();
+    }
+
     public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
         String sql = "select i.* from selling_info as si left join items as i on si.item_id=i.id " +
                 " where i.style_id = :styleId" +

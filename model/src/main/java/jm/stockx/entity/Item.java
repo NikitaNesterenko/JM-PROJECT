@@ -40,6 +40,10 @@ public class Item {
     @Column(name = "item_condition")
     private String condition;
 
+    @ManyToOne (targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
     @Column(name = "item_image")
     @Lob
     @Basic(fetch = FetchType.LAZY)

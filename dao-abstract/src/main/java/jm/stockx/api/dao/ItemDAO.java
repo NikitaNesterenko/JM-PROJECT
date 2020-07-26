@@ -16,5 +16,7 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
 
+    List<Item> getMostPopularItems(String brand);
+
     List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit);
 }
