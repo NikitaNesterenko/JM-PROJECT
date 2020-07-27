@@ -23,4 +23,12 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
         return Optional.of(user);
     }
+
+    @Override
+    public Optional<User> getByAppleId(String appleId) {
+        User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.apple_user_id = :appleId")
+                .setParameter("appleId", appleId)
+                .getSingleResult();
+        return Optional.of(user);
+    }
 }
