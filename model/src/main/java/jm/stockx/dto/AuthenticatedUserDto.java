@@ -1,6 +1,5 @@
 package jm.stockx.dto;
 
-import jm.stockx.entity.Currency;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -11,16 +10,11 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CurrencyPutDto {
-
-    @NotNull                        // так как put для изменения, id должен быть
-    private Long id;
+public class AuthenticatedUserDto {
 
     @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
-    private String name;
+    private String token;
 
-    public CurrencyPutDto(Currency currency) {
-        this.id = currency.getId();
-        this.name = currency.getName();
-    }
+    @NotNull
+    private UserDto userDTO;
 }

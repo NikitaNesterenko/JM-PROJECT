@@ -4,6 +4,7 @@ import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -13,10 +14,15 @@ import java.util.Date;
 @AllArgsConstructor
 public class TokenRecoveryPutDto {
 
+    @NotNull                                // так как put для изменения, id должен быть
     private Long id;
+
     private User user;
+
     private String hash;
+
     private String hashEmail;
+
     private Date startTime;
 
     public TokenRecoveryPutDto(TokenRecovery tokenRecovery) {

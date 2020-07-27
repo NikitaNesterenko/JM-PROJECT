@@ -3,6 +3,9 @@ package jm.stockx.dto;
 import jm.stockx.entity.ShoeSize;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 @Getter
 @Setter
 @ToString
@@ -10,10 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 public class ShoeSizePostDto {
 
+    @Positive                               // значение положительное или null
+    @NotNull
     private Double size;
 
     public ShoeSizePostDto(ShoeSize shoeSize) {
         this.size = shoeSize.getSize();
     }
-
 }

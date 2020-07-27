@@ -3,6 +3,10 @@ package jm.stockx.dto;
 import jm.stockx.entity.Item;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 @Getter
 @Setter
 @ToString
@@ -10,10 +14,22 @@ import lombok.*;
 @AllArgsConstructor
 public class ItemPutDto {
 
+    @NotNull                        // так как put для изменения, id должен быть
     private Long id;
+
+    @Positive                       // значение положительное или null
+    @NotNull
     private Double price;
+
+    @Positive                       // значение положительное или null
+    @NotNull
     private Double lowestAsk;
+
+    @Positive                       // значение положительное или null
+    @NotNull
     private Double highestBid;
+
+    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
     private String condition;
 
     public ItemPutDto(Item item) {

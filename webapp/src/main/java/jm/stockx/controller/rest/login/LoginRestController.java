@@ -5,9 +5,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.JwtUtil;
 import jm.stockx.UserService;
-import jm.stockx.dto.AuthenticatedUserDTO;
+import jm.stockx.dto.AuthenticatedUserDto;
 import jm.stockx.dto.UserDto;
-import jm.stockx.dto.UserLoginDTO;
+import jm.stockx.dto.UserLoginDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class LoginRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user logged in"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user was not logged in")
             })
-    public Response<AuthenticatedUserDTO> login(@RequestBody UserLoginDTO userLoginDTO) {
+    public Response<AuthenticatedUserDto> login(@RequestBody UserLoginDto userLoginDTO) {
         try {
             String email = userLoginDTO.getEmail();
             String password = userLoginDTO.getPassword();
@@ -64,7 +64,7 @@ public class LoginRestController {
             SecurityContextHolder.getContext().setAuthentication(authentication); //устанавливается контекст безопасности для пользователя, прошедшего аутентификацию
             String token = jwtUtil.generateToken(user);
 
-            AuthenticatedUserDTO authenticatedUserDTO = new AuthenticatedUserDTO();
+            AuthenticatedUserDto authenticatedUserDTO = new AuthenticatedUserDto();
             authenticatedUserDTO.setUserDTO(new UserDto(user));
             authenticatedUserDTO.setToken(token);
 

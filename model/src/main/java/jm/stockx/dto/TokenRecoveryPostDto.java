@@ -14,8 +14,11 @@ import java.util.Date;
 public class TokenRecoveryPostDto {
 
     private User user;
+
     private String hash;
+
     private String hashEmail;
+
     private Date startTime;
 
     public TokenRecoveryPostDto(TokenRecovery tokenRecovery) {

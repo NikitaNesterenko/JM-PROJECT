@@ -13,9 +13,13 @@ import java.util.List;
 public class PageDto<T> {
 
     private Integer totalEntitiesCount;
+
     private Integer currentPage;
+
     private Integer pageCount;
+
     private Integer countOnPage;
+
     private List<T> entities;
 
     public PageDto(Page<T> page) {
