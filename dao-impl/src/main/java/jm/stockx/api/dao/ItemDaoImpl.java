@@ -74,4 +74,11 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
         }
         return list.get(0).getItemImage();
     }
+
+    @Override
+    public List<Item> getByColors(String itemColors) {
+        return entityManager.createQuery("FROM Item i WHERE i.itemColors = :itemColors", Item.class)
+                .setParameter("itemColors", itemColors)
+                .getResultList();
+    }
 }

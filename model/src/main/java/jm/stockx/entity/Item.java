@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.ItemColors;
 import lombok.*;
 
 import javax.persistence.*;
@@ -62,4 +63,8 @@ public class Item {
     @OneToOne(targetEntity = Style.class)
     @JoinColumn(name = "style_id")
     private Style style;
+
+    @Column(name = "item_colors")
+    @Enumerated(EnumType.STRING)
+    private ItemColors itemColors;
 }
