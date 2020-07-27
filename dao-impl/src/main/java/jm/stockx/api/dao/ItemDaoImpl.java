@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +33,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Item> getMostPopularItems(String brand) {
         String sql = "SELECT i.id " +
                 " FROM items as i " +
@@ -45,13 +47,32 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .getResultList();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
-        String sql = "select i.* from selling_info as si left join items as i on si.item_id=i.id " +
-                " where i.style_id = :styleId" +
-                " group by si.item_id order by count(si.item_id) desc";
+        String sql = "SELECT i.* FROM selling_info AS si LEFT JOIN items AS i ON si.item_id=i.id " +
+                " WHERE i.style_id = :styleId" +
+                " GROUP BY si.item_id ORDER BY count(si.item_id) DESC";
+
         return entityManager.createNativeQuery(sql, Item.class)
                 .setParameter("styleId", styleId)
                 .setMaxResults(topLimit)
+                .getResultList();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Item> getNotReleasedItems() {
+        String sql = "SELECT * FROM items WHERE release_date >= CURDATE()";
+        return entityManager.createNativeQuery(sql, Item.class).getResultList();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Item> getNotReleasedItemsByBrand(Brand brand) {
+        String sql = "SELECT * FROM items WHERE release_date >= CURDATE() AND brand_id =: brandId";
+        return entityManager.createNativeQuery(sql, Item.class)
+                .setParameter("brandId", brand.getId())
                 .getResultList();
     }
 
