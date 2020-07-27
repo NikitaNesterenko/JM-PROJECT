@@ -10,7 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.NoResultException;
 
 @Component
 public class TelegramAuthorisation {
@@ -29,7 +32,7 @@ public class TelegramAuthorisation {
         this.roleService = roleService;
     }
 
-    private Boolean isTelegramAccountDataRight(TelegramUserDTO telegramUserDTO) {
+    public Boolean isTelegramAccountDataRight(TelegramUserDTO telegramUserDTO) {
         String dataCheckString = toDataCheckString(telegramUserDTO);
 
         byte[] data = dataCheckString.getBytes();
@@ -66,29 +69,20 @@ public class TelegramAuthorisation {
         return stringBuilder.toString();
     }
 
-    private User toTelegramUser(TelegramUserDTO telegramUserDTO) {
-        User telegramUser = null;
+    public User toTelegramUser(TelegramUserDTO telegramUserDTO) {
+        User telegramUser;
 
-        if (userService.getUserByUserName(telegramUserDTO.getUsername()) == null) {
+        try {
+            telegramUser = userService.getUserByUserName(telegramUserDTO.getUsername());
+        } catch (NoResultException | EmptyResultDataAccessException ex) {
             telegramUser = new User(telegramUserDTO.getFirst_name(), telegramUserDTO.getLast_name(),
                     telegramUserDTO.getUsername(), telegramUserDTO.getHash());
             telegramUser.setRole(roleService.get(2L));
             userService.createUser(telegramUser);
-        } else {
             telegramUser = userService.getUserByUserName(telegramUserDTO.getUsername());
         }
 
         return telegramUser;
-    }
-
-    public boolean loginTelegramUser(TelegramUserDTO telegramUserDTO) {
-        if (isTelegramAccountDataRight(telegramUserDTO)) {
-            User telegramUser = toTelegramUser(telegramUserDTO);
-            userService.login(telegramUser.getUsername(), telegramUser.getPassword(), telegramUser.getAuthorities());
-            return true;
-        }
-
-        return false;
     }
 
 }

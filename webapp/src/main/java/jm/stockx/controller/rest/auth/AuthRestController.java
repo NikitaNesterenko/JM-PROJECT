@@ -1,4 +1,4 @@
-package jm.stockx.controller.rest;
+package jm.stockx.controller.rest.auth;
 
 import com.github.scribejava.apis.vk.VKOAuth2AccessToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -34,9 +34,9 @@ public class AuthRestController {
     @Autowired
     public AuthRestController(GoogleAuthorization googleAuthorization,
                               VkAuthorisation vkAuthorisation,
-                              UserService userService) {
+                              UserService userService,
+                              TelegramAuthorisation telegramAuthorisation) {
         this.googleAuthorization = googleAuthorization;
-    public AuthRestController(VkAuthorisation vkAuthorisation, UserService userService, TelegramAuthorisation telegramAuthorisation) {
         this.vkAuthorization = vkAuthorisation;
         this.userService = userService;
         this.telegramAuthorisation = telegramAuthorisation;
@@ -52,7 +52,8 @@ public class AuthRestController {
     }
 
     @GetMapping("/returnCodeVK")
-    public Response<Object> getCodeThird(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+    public Response<Object> getCodeThird(@RequestParam String code) throws
+            InterruptedException, ExecutionException, IOException, URISyntaxException {
         OAuth2AccessToken token = vkAuthorization.toGetTokenVK(code);
         String email = ((VKOAuth2AccessToken) token).getEmail();
         User currentUser = vkAuthorization.toCreateUser(token, email);
@@ -76,7 +77,8 @@ public class AuthRestController {
     }
 
     @GetMapping("/returnCodeGoogle")
-    public Response<?> getCodeGoogle(@RequestParam String code) throws InterruptedException, ExecutionException, IOException, URISyntaxException {
+    public Response<?> getCodeGoogle(@RequestParam String code) throws
+            InterruptedException, ExecutionException, IOException, URISyntaxException {
         OAuth2AccessToken token = googleAuthorization.getGoogleOAuth2AccessToken(code);
         String email = ((VKOAuth2AccessToken) token).getEmail();
         User currentUser = googleAuthorization.getGoogleUser(token, email);
@@ -88,21 +90,28 @@ public class AuthRestController {
     }
 
     @GetMapping("/telegramAuth")
-    public Response<Object> telegramAuth(@RequestParam String id, String first_name,
-                                                        String last_name, String username, String photo_url,
-                                                        String auth_date, String hash) throws URISyntaxException {
+    public Response<?> telegramAuth(@RequestParam String id, String first_name,
+                                         String last_name, String username, String photo_url,
+                                         String auth_date, String hash) throws URISyntaxException {
+
         TelegramUserDTO telegramUserDTO = new TelegramUserDTO(id, first_name, last_name, username,
                 photo_url, auth_date, hash);
+
         logger.info("Telegram auth!!!");
         logger.info(telegramUserDTO.toString());
+
         HttpHeaders httpHeaders = new HttpHeaders();
-        if (telegramAuthorisation.loginTelegramUser(telegramUserDTO)) {
+
+        if (telegramAuthorisation.isTelegramAccountDataRight(telegramUserDTO)) {
+            User telegramUser = telegramAuthorisation.toTelegramUser(telegramUserDTO);
+            userService.login(telegramUser.getUsername(), telegramUser.getPassword(), telegramUser.getAuthorities());
+
             httpHeaders.setLocation(new URI("/index"));
             Response.BodyBuilder bodyBuilder = Response.ok();
             return bodyBuilder.headers(httpHeaders).build();
         } else {
             httpHeaders.setLocation(new URI("/login"));
-            Response.BodyBuilder bodyBuilder = Response.error(HttpStatus.BAD_REQUEST);
+            Response.BodyBuilder bodyBuilder = Response.error(HttpStatus.UNAUTHORIZED);
             return bodyBuilder.headers(httpHeaders).build();
         }
     }
