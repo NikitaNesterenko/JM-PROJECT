@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class AuthenticatedUserDto {
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String token;
 
     @NotNull

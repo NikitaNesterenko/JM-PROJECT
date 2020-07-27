@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class BidPutDto {
 
-    @NotNull                                // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
     private Boolean success;

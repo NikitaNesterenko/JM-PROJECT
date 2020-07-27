@@ -14,21 +14,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class NewsPutDto {
 
-    @NotNull                        // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String name;
 
     private LocalDateTime time;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String title;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String description;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String text;
 
     public NewsPutDto(News news) {

@@ -13,7 +13,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class ShoeSizePostDto {
 
-    @Positive                               // значение положительное или null
+    @Positive
     @NotNull
     private Double size;
 

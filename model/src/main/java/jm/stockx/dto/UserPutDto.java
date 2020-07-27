@@ -4,6 +4,7 @@ import jm.stockx.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -14,23 +15,26 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class UserPutDto {
 
-    @NotNull                        // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String firstName;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String lastName;
 
-    @Email
+    @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String username;
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+
+    @NotBlank
     private String password;
 
+    @Min(1)
+    @NotNull
     private byte sellerLevel;
 
     private boolean vacationMode;

@@ -13,18 +13,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class NewsPostDto {
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String name;
 
     private LocalDateTime time;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String title;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String description;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String text;
 
     public NewsPostDto(News news) {

@@ -13,10 +13,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class CurrencyPutDto {
 
-    @NotNull                        // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank(message = "Имя не должно быть null, пустым или состоять из одних лишь пробельных символов")
     private String name;
 
     public CurrencyPutDto(Currency currency) {

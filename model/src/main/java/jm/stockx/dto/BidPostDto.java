@@ -13,7 +13,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class BidPostDto {
 
-    @Positive                               // значение положительное или null
+    @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double price;
 

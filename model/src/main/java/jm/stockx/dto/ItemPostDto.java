@@ -15,21 +15,22 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemPostDto {
 
-    @Positive                       // значение положительное или null
+    @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double price;
 
-    @Positive                       // значение положительное или null
+    @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double lowestAsk;
 
-    @Positive                       // значение положительное или null
+    @Positive(message = "Ставка должна быть положительной")
     @NotNull
     private Double highestBid;
 
+    @NotNull
     private LocalDate dateRelease;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String condition;
 
     public ItemPostDto(Item item) {

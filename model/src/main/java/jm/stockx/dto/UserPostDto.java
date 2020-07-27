@@ -4,7 +4,9 @@ import jm.stockx.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -13,21 +15,23 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UserPostDto {
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String firstName;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String lastName;
 
-    @Email
+    @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String username;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String password;
 
+    @Min(1)
+    @NotNull
     private byte sellerLevel;
 
     private boolean vacationMode;

@@ -12,7 +12,7 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 public class BuyingDto {
 
-    @Null                                   // автогенерация в БД
+    @Null
     private Long id;
 
     @NotNull

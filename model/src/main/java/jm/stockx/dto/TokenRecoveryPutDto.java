@@ -14,15 +14,19 @@ import java.util.Date;
 @AllArgsConstructor
 public class TokenRecoveryPutDto {
 
-    @NotNull                                // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
+    @NotNull
     private User user;
 
+    @NotNull
     private String hash;
 
+    @NotNull
     private String hashEmail;
 
+    @NotNull
     private Date startTime;
 
     public TokenRecoveryPutDto(TokenRecovery tokenRecovery) {

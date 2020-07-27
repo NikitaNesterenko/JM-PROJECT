@@ -14,12 +14,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BuyingInfoPutDto {
 
-    @NotNull                                // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
+    @NotNull
     private LocalDateTime buyingTimeStamp;
 
-    @Positive                               // значение положительное или null
+    @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double buyingPrice;
 

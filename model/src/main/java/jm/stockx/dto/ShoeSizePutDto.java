@@ -13,10 +13,10 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class ShoeSizePutDto {
 
-    @NotNull                                // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
-    @Positive                               // значение положительное или null
+    @Positive
     @NotNull
     private Double size;
 

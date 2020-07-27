@@ -14,22 +14,22 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class ItemPutDto {
 
-    @NotNull                        // так как put для изменения, id должен быть
+    @NotNull
     private Long id;
 
-    @Positive                       // значение положительное или null
+    @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double price;
 
-    @Positive                       // значение положительное или null
+    @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double lowestAsk;
 
-    @Positive                       // значение положительное или null
+    @Positive(message = "Ставка должна быть положительной")
     @NotNull
     private Double highestBid;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String condition;
 
     public ItemPutDto(Item item) {

@@ -14,14 +14,13 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class BidDto {
 
-        @Null                                   // автогенерация в БД
+        @Null
         private Long id;
 
-        @Positive                               // значение положительное или null
+        @Positive(message = "Цена должна быть положительной")
         @NotNull
         private Double price;
 
-        @NotNull
         private Boolean success;
 
         public BidDto(@NonNull Bid bid) {
