@@ -34,8 +34,15 @@
     </properties>
 
 
-
     <dependencies>
+
+        <!-- Зависимость для разрешения конфиликтов между telegrambots и еще чем-то,
+        что использует старую версию guava. -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.1-jre</version>
+        </dependency>
 
         <dependency>
             <groupId>org.json</groupId>
@@ -168,6 +175,12 @@
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
             <version>2.1.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>4.9</version>
         </dependency>
 
     </dependencies>
