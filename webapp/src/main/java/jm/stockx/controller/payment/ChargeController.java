@@ -19,9 +19,9 @@ public class ChargeController {
     StripePaymentServiceImpl stripePaymentServiceImpl;
 
     @PostMapping("/payment/charge")
-    public String charge(PaymentChargeRequest paymentChargeRequest, Model model) throws StripeException, AuthenticationException {
+    public String charge(PaymentChargeRequest paymentChargeRequest, Model model, String currency) throws StripeException, AuthenticationException {
         paymentChargeRequest.setDescription("JM charge");
-        paymentChargeRequest.setCurrency(PaymentChargeRequest.Currency.EUR);
+        paymentChargeRequest.setCurrency(PaymentChargeRequest.Currency.valueOf(currency));
         Charge charge = stripePaymentServiceImpl.charge(paymentChargeRequest);
         model.addAttribute("id", charge.getId());
         model.addAttribute("status", charge.getStatus());
