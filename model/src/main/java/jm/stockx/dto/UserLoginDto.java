@@ -13,10 +13,10 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UserLoginDto {
 
-    @Email
+    @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank                       // не должно быть null, пустым или состоять из одних лишь пробельных символов
+    @NotBlank
     private String password;
 
     private Boolean rememberMe;
