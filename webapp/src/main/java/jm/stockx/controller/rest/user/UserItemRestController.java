@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jm.stockx.BrandService;
 import jm.stockx.ItemService;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
@@ -23,11 +24,14 @@ import java.util.List;
 @Tag(name = "item", description = "Item API")
 @Slf4j
 public class UserItemRestController {
+
     private final ItemService itemService;
+    private final BrandService brandService;
 
     @Autowired
-    public UserItemRestController(ItemService itemService) {
+    public UserItemRestController(ItemService itemService, BrandService brandService) {
         this.itemService = itemService;
+        this.brandService = brandService;
     }
 
     @GetMapping
@@ -92,6 +96,18 @@ public class UserItemRestController {
     public Response<List<Item>> getTopItemsByStyle(@RequestParam(name = "styleId") Long styleId,
                                                    @RequestParam(name = "limit", required = false, defaultValue = "5") Integer limit) {
         List<Item> items = itemService.getTopItemsByStyle(styleId, limit);
+        return Response.ok(items);
+    }
+
+    @GetMapping("/unreleased")
+    public Response<List<Item>> getUnreleasedItems() {
+        List<Item> items = itemService.getNotReleasedItems();
+        return Response.ok(items);
+    }
+
+    @GetMapping("/unreleasedBrand")
+    public Response<List<Item>> getUnreleasedItemsByBrand(@RequestParam(name = "brandName") String brandName) {
+        List<Item> items = itemService.getNotReleasedItemsByBrand(brandService.getBrandByName(brandName));
         return Response.ok(items);
     }
 }
