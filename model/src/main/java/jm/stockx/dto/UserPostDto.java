@@ -21,7 +21,7 @@ public class UserPostDto {
     @NotBlank
     private String lastName;
 
-    @Email(message = "Email should be valid")
+    @Email(message = "Адрес электронной почты должен быть корректным")
     private String email;
 
     @NotBlank

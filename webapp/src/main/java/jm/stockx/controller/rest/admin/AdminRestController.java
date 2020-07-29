@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -59,7 +60,7 @@ public class AdminRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user created"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user not created")
             })
-    public Response<?> createUser(@RequestBody User user) {
+    public Response<?> createUser(@Valid @RequestBody User user) {
         String username = user.getUsername();
         if (userService.getUserByUserName(username) != null) {
             log.warn("Пользователь {} уже существует в базе", username);
@@ -84,7 +85,7 @@ public class AdminRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update user")
             })
-    public Response<?> updateUser(@RequestBody User user) {
+    public Response<?> updateUser(@Valid @RequestBody User user) {
         String username = user.getUsername();
         if (userService.getUserByUserName(user.getUsername()) == null) {
             log.warn("Пользователь {} в базе не найден", username);

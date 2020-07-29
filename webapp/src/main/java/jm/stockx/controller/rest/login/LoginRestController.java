@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/rest/api/auth/login")
 @Tag(name = "login", description = "Login API")
@@ -49,7 +51,7 @@ public class LoginRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user logged in"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user was not logged in")
             })
-    public Response<AuthenticatedUserDto> login(@RequestBody UserLoginDto userLoginDTO) {
+    public Response<AuthenticatedUserDto> login(@Valid @RequestBody UserLoginDto userLoginDTO) {
         try {
             String email = userLoginDTO.getEmail();
             String password = userLoginDTO.getPassword();
