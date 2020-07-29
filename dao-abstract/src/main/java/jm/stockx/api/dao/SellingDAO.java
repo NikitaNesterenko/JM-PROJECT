@@ -6,5 +6,7 @@ import jm.stockx.entity.User;
 import java.util.List;
 
 public interface SellingDAO extends GenericDao<SellingInfo, Long> {
-    List<User> getTop20SellingUsers();
+    List<User> getTopSellingUsers();
+
+    Integer getCountOfSellByUserId(Long id);
 }

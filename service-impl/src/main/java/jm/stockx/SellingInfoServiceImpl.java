@@ -19,10 +19,10 @@ public class SellingInfoServiceImpl implements SellingInfoService{
     }
 
     @Override
-    public List<SellerTopInfoDto> getTop20SellingUsers() {
-        return sellingDAO.getTop20SellingUsers()
+    public List<SellerTopInfoDto> getTopSellingUsers() {
+        return sellingDAO.getTopSellingUsers()
                 .stream()
-                .map(m -> new SellerTopInfoDto(m.getUsername()))
+                .map(m -> new SellerTopInfoDto(m.getUsername(), sellingDAO.getCountOfSellByUserId(m.getId())))
                 .collect(Collectors.toList());
     }
 }

@@ -13,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Tuple;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/api/selling")
@@ -41,8 +43,8 @@ public class UserTopSellingInfoRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no selling users with this request")
             })
-    public Response<List<SellerTopInfoDto>> getTop20SellingUsers(){
-        List<SellerTopInfoDto> sellers = sellingInfoService.getTop20SellingUsers();
+    public Response<List<SellerTopInfoDto>> getTopSellingUsers(){
+        List<SellerTopInfoDto> sellers = sellingInfoService.getTopSellingUsers();
         return Response.ok(sellers);
     }
 }
