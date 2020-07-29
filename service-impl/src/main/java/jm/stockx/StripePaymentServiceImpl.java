@@ -19,7 +19,7 @@ import java.util.Map;
 public class StripePaymentServiceImpl{
 
     @Value("${STRIPE_SECRET_KEY}")
-    String secretKey;
+    private String secretKey;
 
     @PostConstruct
     public void init() {

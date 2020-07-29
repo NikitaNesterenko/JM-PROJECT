@@ -4,14 +4,12 @@
     <title>Payment result</title>
 </head>
 <body>
-<h3 th:if='${error}' th:text='${error}' style='color: red;'></h3>
-<div th:unless='${error}'>
+<div>
     <h3 style='color: green;'>Payment is success!</h3>
     <div>Id.: <span th:text='${id}'/></div>
     <div>Status: <span th:text='${status}'/></div>
     <div>Charge id.: <span th:text='${chargeId}'/></div>
     <div>Balance transaction id.: <span th:text='${balance_transaction}'/></div>
 </div>
-<a href='/payment/checkout.html'>Checkout again</a>
 </body>
 </html>

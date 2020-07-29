@@ -4,22 +4,31 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import jm.stockx.StripePaymentServiceImpl;
 import jm.stockx.util.PaymentChargeRequest;
+import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
 
-@Controller
-public class ChargeController {
+@RestController
+public class ChargeRestController {
+
+    private final StripePaymentServiceImpl stripePaymentServiceImpl;
 
     @Autowired
-    StripePaymentServiceImpl stripePaymentServiceImpl;
+    public ChargeRestController(StripePaymentServiceImpl stripePaymentServiceImpl) {
+        this.stripePaymentServiceImpl = stripePaymentServiceImpl;
+    }
 
     @PostMapping("/payment/charge")
-    public String charge(PaymentChargeRequest paymentChargeRequest, Model model, String currency) throws StripeException, AuthenticationException {
+    public Response<Boolean> charge(PaymentChargeRequest paymentChargeRequest, Model model, String currency) throws StripeException, AuthenticationException {
+
+        if (paymentChargeRequest.getStripeToken() == null) {
+            return Response.error(HttpStatus.BAD_REQUEST, "Stripe token is null!");
+        }
         paymentChargeRequest.setDescription("JM charge");
         paymentChargeRequest.setCurrency(PaymentChargeRequest.Currency.valueOf(currency));
         Charge charge = stripePaymentServiceImpl.charge(paymentChargeRequest);
@@ -27,12 +36,6 @@ public class ChargeController {
         model.addAttribute("status", charge.getStatus());
         model.addAttribute("chargeId", charge.getId());
         model.addAttribute("balance_transaction", charge.getBalanceTransaction());
-        return "paymentResult";
-    }
-
-    @ExceptionHandler(StripeException.class)
-    public String handleError(Model model, StripeException ex) {
-        model.addAttribute("error", ex.getMessage());
-        return "result";
+        return Response.ok().build();
     }
 }
