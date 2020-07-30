@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.BrandDto;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,12 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
                 .getSingleResult();
         return Optional.of(brand);
     }
+
+    @Override
+    public BrandDto getBrandDtoById(Long id) {
+        BrandDto brandDto = entityManager.createQuery("SELECT new jm.stockx.dto.BrandDto(b.name) FROM Brand b where id =: id", BrandDto.class)
+                .setParameter("id", id).getSingleResult();
+        return brandDto;
+    }
+
 }
