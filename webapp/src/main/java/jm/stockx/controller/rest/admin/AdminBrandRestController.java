@@ -1,4 +1,4 @@
-package jm.stockx.controller.brand;
+package jm.stockx.controller.rest.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.BrandService;
 import jm.stockx.entity.Brand;
 import jm.stockx.util.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,15 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/rest/api/brand")
+@RequestMapping(value = "/rest/api/admin/brand")
 @Tag(name = "brand", description = "Brand API")
-public class BrandRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(BrandRestController.class);
+@Slf4j
+public class AdminBrandRestController {
+    private static final Logger logger = LoggerFactory.getLogger(AdminBrandRestController.class);
 
     private final BrandService brandService;
 
-    public BrandRestController(BrandService brandService) {
+    public AdminBrandRestController(BrandService brandService) {
         this.brandService = brandService;
     }
 

@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping(value = "/rest/api/admin")
 @Tag(name = "admin", description = "Admin API")
 @Slf4j
-public class AdminRestController {
+public class AdminUserRestController {
     private final UserService userService;
 
-    public AdminRestController(UserService userService) {
+    public AdminUserRestController(UserService userService) {
         this.userService = userService;
     }
 
