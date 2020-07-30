@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingDAO;
+import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.SellingDAO;
 import jm.stockx.api.dao.UserDAO;
@@ -23,15 +23,15 @@ public class ItemServiceImpl implements ItemService {
     private final ItemDAO itemDao;
     private final UserDAO userDAO;
     private final MailService mailService;
-    private final BuyingDAO buyingDAO;
+    private final BuyingInfoDAO buyingInfoDAO;
     private final SellingDAO sellingDAO;
 
     @Autowired
-    public ItemServiceImpl(ItemDAO itemDao, UserDAO userDAO, MailService mailService, BuyingDAO buyingDAO, SellingDAO sellingDAO) {
+    public ItemServiceImpl(ItemDAO itemDao, UserDAO userDAO, MailService mailService, BuyingInfoDAO buyingInfoDAO, SellingDAO sellingDAO) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
-        this.buyingDAO = buyingDAO;
+        this.buyingInfoDAO = buyingInfoDAO;
         this.sellingDAO = sellingDAO;
     }
 
@@ -104,7 +104,7 @@ public class ItemServiceImpl implements ItemService {
         buyingInfo.setBoughtItems(bougthItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
-        buyingDAO.add(buyingInfo);
+        buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
         SellingInfo sellingInfo = new SellingInfo(item);
