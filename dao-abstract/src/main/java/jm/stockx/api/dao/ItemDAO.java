@@ -11,6 +11,8 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     Optional<Item> getByName(String name);
 
+    ItemDto getItemDtoById(Long id);
+
     void addItemImage(Long id, Byte[] array);
 
     Byte[] getItemImage(Long id);

@@ -21,6 +21,23 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
+    public ItemDto getItemDtoById(Long id) {
+        String query =
+                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
+                        "i.name," +
+                        "i.price," +
+                        "i.lowestAsk," +
+                        "i.highestBid," +
+                        "i.releaseDate," +
+                        "i.condition)" +
+                        "FROM Item AS i " +
+                        "WHERE id =: id";
+
+        return entityManager.createQuery(query, ItemDto.class)
+                .setParameter("id", id).getSingleResult();
+    }
+
+    @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
         return entityManager.createQuery("SELECT i FROM Item i  WHERE " +
                 "i.name LIKE '%" + search + "%'", Item.class)
