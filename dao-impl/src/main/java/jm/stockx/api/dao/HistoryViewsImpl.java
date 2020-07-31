@@ -11,7 +11,7 @@ public class HistoryViewsImpl extends AbstractDAO<HistoryViews, Long> implements
     @Transactional
     public void clearHistoryViews() {
         String query = "DELETE FROM history_views " +
-                "WHERE item_id in " +
+                "WHERE item_id IN " +
                 "(SELECT item_id FROM " +
                 "(SELECT * FROM history_views) as h " +
                 "group by item_id " +
