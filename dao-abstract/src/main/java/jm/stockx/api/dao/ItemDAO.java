@@ -25,5 +25,5 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     List<Item> getNotReleasedItemsByBrand(Brand brand);
 
-    List<Item> getByColors(String itemColors);
+    List<ItemDto> getItemsByColors(String itemColors);
 }
