@@ -26,7 +26,7 @@ public class ItemDto {
         this.price = item.getPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
-        this.dateRelease = item.getDateRelease();
+        this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
     }
 }
