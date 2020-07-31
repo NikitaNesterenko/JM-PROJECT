@@ -3,8 +3,10 @@ package jm.stockx;
 import jm.stockx.api.dao.BuyingDAO;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.enums.Status;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class BuyServiceImpl implements BuyService {
     private final BuyingDAO buyingDAO;
 
