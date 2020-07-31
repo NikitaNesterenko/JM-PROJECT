@@ -7,16 +7,15 @@ import jm.stockx.entity.Admin;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.Role;
 import jm.stockx.entity.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class EntityDataInitializer {
-    private static final Logger logger = LoggerFactory.getLogger(EntityDataInitializer.class);
 
     @Autowired
     private UserService userService;
@@ -29,16 +28,16 @@ public class EntityDataInitializer {
 
     private List<Role> roleList = new ArrayList<>();
 
-    private List<User> userList = new ArrayList<>();
+    private final List<User> userList = new ArrayList<>();
 
-    private List<Item> itemList = new ArrayList<>();
+    private final List<Item> itemList = new ArrayList<>();
 
     private void init() {
-        logger.info("Data init has been started!!!");
+        log.info("Data init has been started!!!");
 
         saveEntity();
 
-        logger.info("Data init has been done!!!");
+        log.info("Data init has been done!!!");
     }
 
     private void saveEntity() {
