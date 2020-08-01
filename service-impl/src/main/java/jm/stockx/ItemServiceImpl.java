@@ -119,4 +119,9 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
         return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
     }
+
+    @Override
+    public boolean isItemExist(Long id) {
+        return itemDao.doesItExistEntity(id);
+    }
 }

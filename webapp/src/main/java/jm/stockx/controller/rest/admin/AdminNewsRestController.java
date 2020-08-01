@@ -41,7 +41,7 @@ public class AdminNewsRestController {
             })
     public Response<?> createNews(@RequestBody News news) {
         String newsName = news.getName();
-        if (newsService.getNewsByName(newsName) != null) {
+        if (newsService.isNewsExist(news.getId())) {
             log.warn("Новость {} уже существует в базе", newsName);
             return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a news");
         }
@@ -66,13 +66,13 @@ public class AdminNewsRestController {
             })
     public Response<?> updateNews(@RequestBody News news) {
         String newsName = news.getName();
-        if (newsService.getNewsByName(news.getName()) == null) {
-            log.warn("Новость {} в базе не найдена", newsName);
-            return Response.error(HttpStatus.BAD_REQUEST, "News not found");
+        if (newsService.isNewsExist(news.getId())) {
+            newsService.update(news);
+            log.info("новость {} успешно обновлена", newsName);
+            return Response.ok().build();
         }
-        newsService.update(news);
-        log.info("новость {} успешно обновлена", newsName);
-        return Response.ok().build();
+        log.warn("Новость {} в базе не найдена", newsName);
+        return Response.error(HttpStatus.BAD_REQUEST, "News not found");
     }
 
     @DeleteMapping(value = "/deleteNews")
@@ -85,12 +85,12 @@ public class AdminNewsRestController {
             }
     )
     public Response<Boolean> deleteNews(Long id) {
-        if (newsService.get(id) == null) {
-            log.warn("Новость с id = {} в базе не найдена", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "News not found");
+        if (newsService.isNewsExist(id)) {
+            newsService.delete(id);
+            log.info("Новость с id = {} успешно удалена", id);
+            return Response.ok().build();
         }
-        newsService.delete(id);
-        log.info("Новость с id = {} успешно удалена", id);
-        return Response.ok().build();
+        log.warn("Новость с id = {} в базе не найдена", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "News not found");
     }
 }

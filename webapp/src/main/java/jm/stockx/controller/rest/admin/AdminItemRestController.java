@@ -41,9 +41,9 @@ public class AdminItemRestController {
             })
     public Response<?> createItem(@RequestBody Item item) {
         String itemName = item.getName();
-        if (itemService.getItemByName(itemName) != null) {
+        if (itemService.isItemExist(item.getId())) {
             log.warn("Товар {} уже существует в базе", itemName);
-            return Response.error(HttpStatus.BAD_REQUEST,"This item already exists in database");
+            return Response.error(HttpStatus.BAD_REQUEST, "This item already exists in database");
         }
         itemService.create(item);
         log.info("Товар {} успешно создан", itemName);
@@ -66,13 +66,13 @@ public class AdminItemRestController {
             })
     public Response<?> updateItem(@RequestBody Item item) {
         String itemName = item.getName();
-        if (itemService.getItemByName(itemName) == null) {
-            log.warn("Товар {} в базе не найден", itemName);
-            return Response.error(HttpStatus.BAD_REQUEST,"Item not found");
+        if (itemService.isItemExist(item.getId())) {
+            itemService.update(item);
+            log.info("Товар {} успешно обновлен", itemName);
+            return Response.ok(item);
         }
-        itemService.update(item);
-        log.info("Товар {} успешно обновлен", itemName);
-        return Response.ok(item);
+        log.warn("Товар {} в базе не найден", itemName);
+        return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
     }
 
     @DeleteMapping(value = "/{id}")
@@ -85,12 +85,12 @@ public class AdminItemRestController {
             }
     )
     public Response<?> deleteItem(@PathVariable("id") Long id) {
-        if (itemService.get(id) == null) {
-            log.warn("Товар с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST,"Item not found");
+        if (itemService.isItemExist(id)) {
+            itemService.delete(id);
+            log.info("Товар с id = {} успешно удален", id);
+            return Response.ok().build();
         }
-        itemService.delete(id);
-        log.info("Товар с id = {} успешно удален", id);
-        return Response.ok().build();
+        log.warn("Товар с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
     }
 }

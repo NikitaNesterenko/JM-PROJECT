@@ -30,4 +30,6 @@ public interface ItemService {
     void buyItem(BuyingDto buyingDto);
 
     List<Item> getTopItemsByStyle(Long styleId, Integer topLimit);
+
+    boolean isItemExist(Long id);
 }
