@@ -45,11 +45,14 @@ public class User implements UserDetails {
     @Column(name = "seller_level")
     private Byte sellerLevel;
 
-    @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
+    @Column(name = "vacation_mode")
     private Boolean vacationMode;
 
+    @Column(name = "apple_user_id")
+    private String appleUserId;
+
     @OneToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id")
     @NotNull
     private Role role;
 
@@ -59,9 +62,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
-
-    @Column(name = "apple_user_id")
-    private String appleUserId;
 
     public User(String firstName,
                 String lastName,
@@ -79,6 +79,31 @@ public class User implements UserDetails {
         this.vacationMode = vacationMode;
     }
 
+    public User(String firstName,
+                String lastName,
+                String email,
+                String username,
+                String password,
+                Byte sellerLevel,
+                Boolean vacationMode,
+                String appleUserId) {
+        this(firstName, lastName, email, username, password, sellerLevel, vacationMode);
+        this.appleUserId = appleUserId;
+    }
+
+    public User(String firstName,
+                String lastName,
+                String email,
+                String username,
+                String password,
+                Byte sellerLevel,
+                Boolean vacationMode,
+                String appleUserId,
+                Set<BuyingInfo> buyingInfo) {
+        this(firstName, lastName, email, username, password, sellerLevel, vacationMode, appleUserId);
+        this.buyingInfo = buyingInfo;
+    }
+
     public User(String firstName, String lastName, String password) {
     }
 
@@ -89,7 +114,9 @@ public class User implements UserDetails {
                 userDto.getUsername() != null ? userDto.getUsername() : "stockx" + System.currentTimeMillis(),
                 userDto.getPassword(),
                 userDto.getSellerLevel(),
-                userDto.isVacationMode());
+                userDto.isVacationMode(),
+                userDto.getAppleUserId(),
+                userDto.getBuyingInfo());
     }
 
     @Override

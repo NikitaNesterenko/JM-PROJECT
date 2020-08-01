@@ -5,10 +5,12 @@ import jm.stockx.dto.CallbackFormDto;
 import jm.stockx.entity.SupportQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
+@Transactional
 public class SupportUserServiceImpl implements SupportUserService {
 
     private final MailService mailService;

@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
+
     private final RoleDAO roleDAO;
 
     @Autowired
@@ -41,5 +42,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void update(Role role) {
         roleDAO.update(role);
+    }
+
+    @Override
+    public Role getByRoleName(String roleName) {
+        return roleDAO.getByName(roleName).orElse(null);
     }
 }

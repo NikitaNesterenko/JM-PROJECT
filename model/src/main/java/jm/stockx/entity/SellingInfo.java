@@ -40,9 +40,21 @@ public class SellingInfo {
     @Column(name = "price")
     private Double price;
 
-    public SellingInfo(Item item) {
+    public SellingInfo(User user,
+                       Item item,
+                       Status status) {
+        this.user = user;
         this.item = item;
         this.price = item.getPrice();
         this.orderDate = LocalDateTime.now();
+        this.status = status;
+    }
+
+    public SellingInfo(User user,
+                       Item item,
+                       Long orderNumber,
+                       Status status) {
+        this(user, item, status);
+        this.orderNumber = orderNumber;
     }
 }

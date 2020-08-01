@@ -1,7 +1,10 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.User;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,6 +21,8 @@ public class UserDto {
     private String password;
     private byte sellerLevel;
     private boolean vacationMode;
+    private Set<BuyingInfo> buyingInfo;
+    private String appleUserId;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -27,6 +32,7 @@ public class UserDto {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
+        this.buyingInfo = user.getBuyingInfo();
         this.vacationMode = user.getVacationMode();
     }
 

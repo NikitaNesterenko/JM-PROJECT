@@ -40,4 +40,16 @@ public class News {
     @Lob
     private Blob image;
 
+    public News(
+            String name,
+            LocalDateTime time,
+            String title,
+            String description,
+            String text) {
+        this.name = name;
+        this.time = time;
+        this.title = title;
+        this.description = description;
+        this.text = text;
+    }
 }

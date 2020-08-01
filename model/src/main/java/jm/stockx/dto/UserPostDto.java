@@ -17,6 +17,7 @@ public class UserPostDto {
     private String password;
     private byte sellerLevel;
     private boolean vacationMode;
+    private String appleUserId;
 
     public UserPostDto(User user) {
         this.firstName = user.getFirstName();
@@ -26,5 +27,6 @@ public class UserPostDto {
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
         this.vacationMode = user.getVacationMode();
+        this.appleUserId = user.getAppleUserId();
     }
 }

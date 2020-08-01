@@ -17,52 +17,52 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userdao;
+    private final UserDAO userDao;
 
     @Autowired
-    public UserServiceImpl(UserDAO userdao) {
-        this.userdao = userdao;
+    public UserServiceImpl(UserDAO userDao) {
+        this.userDao = userDao;
     }
 
 
     @Override
     public List<User> getAllUsers() {
-        return userdao.getAll();
+        return userDao.getAll();
     }
 
     @Override
     public void createUser(User user) {
-        userdao.add(user);
+        userDao.add(user);
     }
 
     @Override
     public void deleteUser(Long id) {
-        userdao.deleteById(id);
+        userDao.deleteById(id);
     }
 
     @Override
     public void updateUser(User user) {
-        userdao.update(user);
+        userDao.update(user);
     }
 
     @Override
     public User getUserById(Long id) {
-        return userdao.getById(id);
+        return userDao.getById(id);
     }
 
     @Override
     public User getUserByUserName(String userName) {
-        return userdao.getByName(userName).orElse(null);
+        return userDao.getByName(userName).orElse(null);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userdao.getByEmail(email).orElse(null);
+        return userDao.getByEmail(email).orElse(null);
     }
 
     @Override
     public User getUserByAppleUserId(String appleId) {
-        return userdao.getByAppleId(appleId).orElse(null);
+        return userDao.getByAppleId(appleId).orElse(null);
     }
 
     @Override
