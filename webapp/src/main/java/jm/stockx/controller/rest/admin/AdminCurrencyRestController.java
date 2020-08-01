@@ -67,13 +67,14 @@ public class AdminCurrencyRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no currency with this currency-id")
             })
     public Response<Currency> getCurrencyById(@PathVariable("id") Long id) {
-        Currency currency = currencyService.get(id);
-        if (currency == null) {
-            logger.warn("Валюта с id = {} в базе не найдена", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
+
+        if (currencyService.doesItExistEntity(id)) {
+            Currency currency = currencyService.get(id);
+            logger.info("Получена валюта {} ", currency);
+            return Response.ok(currency);
         }
-        logger.info("Получена валюта {} ", currency);
-        return Response.ok(currency);
+        logger.warn("Валюта с id = {} в базе не найдена", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
     }
 
     @PostMapping
@@ -91,13 +92,13 @@ public class AdminCurrencyRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: currency was not created")
             })
     public Response<?> createCurrency(Currency currency) {
-        String currencyName = currency.getName();
-        if (currencyService.getCurrencyByName(currencyName) != null) {
-            logger.warn("Валюта> {} уже существует в базе", currencyName);
+
+        if (currencyService.doesItExistEntity(currency.getId())) {
+            logger.warn("Валюта> {} уже существует в базе", currency.getName());
             return Response.error(HttpStatus.BAD_REQUEST, "This currency already exists in database");
         }
         currencyService.create(currency);
-        logger.info("Валюта {} успешно создана", currencyName);
+        logger.info("Валюта {} успешно создана", currency);
         return Response.ok().build();
     }
 
@@ -117,13 +118,13 @@ public class AdminCurrencyRestController {
             })
     public Response<?> updateCurrency(Currency currency) {
         String currencyName = currency.getName();
-        if (currencyService.getCurrencyByName(currencyName) == null) {
-            logger.warn("Валюта {} в базе не найдена", currencyName);
-            return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
+        if (currencyService.doesItExistEntity(currency.getId())) {
+            currencyService.update(currency);
+            logger.info("Валюта {} успешно обновлена", currencyName);
+            return Response.ok().build();
         }
-        currencyService.update(currency);
-        logger.info("Валюта {} успешно обновлена", currencyName);
-        return Response.ok().build();
+        logger.warn("Валюта {} в базе не найдена", currencyName);
+        return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
     }
 
     @DeleteMapping(value = "/{id}")
@@ -136,12 +137,12 @@ public class AdminCurrencyRestController {
             }
     )
     public Response<?> deleteCurrency(@PathVariable("id") Long id) {
-        if (currencyService.get(id) == null) {
-            logger.warn("Валюта с id = {} в базе не найдена", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
+        if (currencyService.doesItExistEntity(id)) {
+            currencyService.delete(id);
+            logger.info("Валюта с id = {} успешно удалёна", id);
+            return Response.ok().build();
         }
-        currencyService.delete(id);
-        logger.info("Валюта с id = {} успешно удалёна", id);
-        return Response.ok().build();
+        logger.warn("Валюта с id = {} в базе не найдена", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
     }
 }

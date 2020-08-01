@@ -61,16 +61,16 @@ public class AdminBrandRestController {
                             ),
                             description = "OK: brand received"
                     ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no brand with this brand-id")
+                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: brand")
             })
     public Response<Brand> getBrandById(@PathVariable("id") Long id) {
-        Brand brand = brandService.get(id);
-        if (brand == null) {
-            logger.warn("Бренд с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
+        if (brandService.isBrandExist(id)) {
+            Brand brand = brandService.get(id);
+            logger.info("Получен бренд {} ", brand);
+            return Response.ok(brand);
         }
-        logger.info("Получен бренд {} ", brand);
-        return Response.ok(brand);
+        logger.warn("Бренд с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
     }
 
     @PostMapping
@@ -88,13 +88,12 @@ public class AdminBrandRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: brand was not created")
             })
     public Response<?> createBrand(Brand brand) {
-        String brandName = brand.getName();
-        if (brandService.getBrandByName(brandName) != null) {
-            logger.warn("Бренд> {} уже существует в базе", brandName);
+        if (brandService.isBrandExist(brand.getId())) {
+            logger.warn("Бренд> {} уже существует в базе", brand.getName());
             return Response.error(HttpStatus.BAD_REQUEST, "This brand already exists in database");
         }
         brandService.create(brand);
-        logger.info("Бренд {} успешно создан", brandName);
+        logger.info("Бренд {} успешно создан", brand);
         return Response.ok().build();
     }
 
@@ -114,13 +113,13 @@ public class AdminBrandRestController {
             })
     public Response<?> updateBrand(Brand brand) {
         String brandName = brand.getName();
-        if (brandService.getBrandByName(brandName) == null) {
-            logger.warn("Бренд {} в базе не найден", brandName);
-            return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
+        if (brandService.isBrandExist(brand.getId())) {
+            brandService.update(brand);
+            logger.info("Бренд {} успешно обновлен", brandName);
+            return Response.ok().build();
         }
-        brandService.update(brand);
-        logger.info("Бренд {} успешно обновлен", brandName);
-        return Response.ok().build();
+        logger.warn("Бренд {} в базе не найден", brandName);
+        return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
     }
 
     @DeleteMapping(value = "/{id}")
@@ -133,12 +132,12 @@ public class AdminBrandRestController {
             }
     )
     public Response<?> deleteBrand(@PathVariable("id") Long id) {
-        if (brandService.get(id) == null) {
-            logger.warn("Бренд с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
+        if (brandService.isBrandExist(id)) {
+            brandService.delete(id);
+            logger.info("Бренд с id = {} успешно удалён", id);
+            return Response.ok().build();
         }
-        brandService.delete(id);
-        logger.info("Бренд с id = {} успешно удалён", id);
-        return Response.ok().build();
+        logger.warn("Бренд с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
     }
 }

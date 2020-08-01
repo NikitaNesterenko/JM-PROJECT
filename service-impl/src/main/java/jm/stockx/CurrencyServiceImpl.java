@@ -49,4 +49,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     public Currency getCurrencyByName(String name) {
         return currencyDAO.getByName(name).orElse(null);
     }
+
+    @Override
+    public boolean doesItExistEntity(Long id) {
+        return currencyDAO.doesItExistEntity(id);
+    }
 }

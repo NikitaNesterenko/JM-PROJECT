@@ -1,6 +1,5 @@
 package jm.stockx;
 
-import jm.stockx.entity.Brand;
 import jm.stockx.entity.Currency;
 
 import java.util.List;
@@ -18,4 +17,6 @@ public interface CurrencyService {
     void delete(Long id);
 
     Currency getCurrencyByName(String name);
+
+    boolean doesItExistEntity(Long id);
 }
