@@ -61,13 +61,13 @@ public class AdminUserRestController {
             })
     public Response<?> createUser(@RequestBody User user) {
         String username = user.getUsername();
-        if (userService.getUserByUserName(username) != null) {
-            log.warn("Пользователь {} уже существует в базе", username);
-            return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a user");
+        if (userService.isUserExist(user.getId())) {
+            userService.createUser(user);
+            log.info("Пользователь {} успешно создан", username);
+            return Response.ok(HttpStatus.OK, "User created successfully");
         }
-        userService.createUser(user);
-        log.info("Пользователь {} успешно создан", username);
-        return Response.ok(HttpStatus.OK, "User created successfully");
+        log.warn("Пользователь {} уже существует в базе", username);
+        return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a user");
     }
 
     @PutMapping(value = "/updateUser")
@@ -86,13 +86,13 @@ public class AdminUserRestController {
             })
     public Response<?> updateUser(@RequestBody User user) {
         String username = user.getUsername();
-        if (userService.getUserByUserName(user.getUsername()) == null) {
-            log.warn("Пользователь {} в базе не найден", username);
-            return Response.error(HttpStatus.BAD_REQUEST, "User not found");
+        if (userService.isUserExist(user.getId())) {
+            userService.updateUser(user);
+            log.info("Пользователь {} успешно обновлен", username);
+            return Response.ok().build();
         }
-        userService.updateUser(user);
-        log.info("Пользователь {} успешно обновлен", username);
-        return Response.ok().build();
+        log.warn("Пользователь {} в базе не найден", username);
+        return Response.error(HttpStatus.BAD_REQUEST, "User not found");
     }
 
     @DeleteMapping(value = "/deleteUser")
@@ -105,12 +105,12 @@ public class AdminUserRestController {
             }
     )
     public Response<Boolean> deleteUser(Long id) {
-        if (userService.getUserById(id) == null) {
-            log.warn("Пользователь с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "User not found");
+        if (userService.isUserExist(id)) {
+            userService.deleteUser(id);
+            log.info("Пользователь с id = {} успешно удален", id);
+            return Response.ok().build();
         }
-        userService.deleteUser(id);
-        log.info("Пользователь с id = {} успешно удален", id);
-        return Response.ok().build();
+        log.warn("Пользователь с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "User not found");
     }
 }

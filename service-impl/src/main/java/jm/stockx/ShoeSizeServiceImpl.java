@@ -49,4 +49,9 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     public ShoeSize getShoeSizeByName(String name) {
         return shoeSizeDAO.getByName(name).orElse(null);
     }
+
+    @Override
+    public boolean isShoeSizeExist(Long id) {
+        return shoeSizeDAO.doesItExistEntity(id);
+    }
 }

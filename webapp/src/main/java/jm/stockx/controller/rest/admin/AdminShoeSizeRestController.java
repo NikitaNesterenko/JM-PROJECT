@@ -67,13 +67,13 @@ public class AdminShoeSizeRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no shoe_size with this shoe_size-id")
             })
     public Response<ShoeSize> getShoeSizeById(@PathVariable("id") Long id) {
-        ShoeSize shoeSize = shoeSizeService.get(id);
-        if (shoeSize == null) {
-            logger.warn("Размер обуви с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "Shoe_size not found");
+        if (shoeSizeService.isShoeSizeExist(id)) {
+            ShoeSize shoeSize = shoeSizeService.get(id);
+            logger.info("Получен размер обуви {} ", shoeSize);
+            return Response.ok(shoeSize);
         }
-        logger.info("Получен размер обуви {} ", shoeSize);
-        return Response.ok(shoeSize);
+        logger.warn("Размер обуви с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Shoe_size not found");
     }
 
     @PostMapping
@@ -92,7 +92,7 @@ public class AdminShoeSizeRestController {
             })
     public Response<?> createShoeSize(ShoeSize shoeSize) {
         String shoeSizeName = String.valueOf(shoeSize.getSize());
-        if (shoeSizeService.getShoeSizeByName(shoeSizeName) != null) {
+        if (shoeSizeService.isShoeSizeExist(shoeSize.getId())) {
             logger.warn("Размер обуви> {} уже существует в базе", shoeSizeName);
             return Response.error(HttpStatus.BAD_REQUEST, "This shoe_size already exists in database");
         }
@@ -117,13 +117,13 @@ public class AdminShoeSizeRestController {
             })
     public Response<?> updateShoeSize(ShoeSize shoeSize) {
         String shoeSizeName = String.valueOf(shoeSize.getSize());
-        if (shoeSizeService.getShoeSizeByName(shoeSizeName) == null) {
-            logger.warn("Размер обуви {} в базе не найден", shoeSizeName);
-            return Response.error(HttpStatus.BAD_REQUEST, "ShoeSize not found");
+        if (shoeSizeService.isShoeSizeExist(shoeSize.getId())) {
+            shoeSizeService.update(shoeSize);
+            logger.info("Размер обуви {} успешно обновлен", shoeSizeName);
+            return Response.ok().build();
         }
-        shoeSizeService.update(shoeSize);
-        logger.info("Размер обуви {} успешно обновлен", shoeSizeName);
-        return Response.ok().build();
+        logger.warn("Размер обуви {} в базе не найден", shoeSizeName);
+        return Response.error(HttpStatus.BAD_REQUEST, "ShoeSize not found");
     }
 
     @DeleteMapping(value = "/{id}")
@@ -136,12 +136,12 @@ public class AdminShoeSizeRestController {
             }
     )
     public Response<?> deleteShoeSize(@PathVariable("id") Long id) {
-        if (shoeSizeService.get(id) == null) {
-            logger.warn("Размер обуви с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "Shoe_size not found");
+        if (shoeSizeService.isShoeSizeExist(id)) {
+            shoeSizeService.delete(id);
+            logger.info("Размер обуви с id = {} успешно удалён", id);
+            return Response.ok().build();
         }
-        shoeSizeService.delete(id);
-        logger.info("Размер обуви с id = {} успешно удалён", id);
-        return Response.ok().build();
+        logger.warn("Размер обуви с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Shoe_size not found");
     }
 }

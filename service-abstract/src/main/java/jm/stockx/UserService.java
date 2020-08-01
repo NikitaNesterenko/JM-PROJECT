@@ -23,4 +23,6 @@ public interface UserService {
     User getUserByEmail(String email);
 
     void login(String username, String password, Collection<? extends GrantedAuthority> authorities);
+
+    boolean isUserExist(Long id);
 }

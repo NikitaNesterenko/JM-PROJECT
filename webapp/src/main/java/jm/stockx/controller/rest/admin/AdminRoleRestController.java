@@ -42,9 +42,9 @@ public class AdminRoleRestController {
             })
     public Response<?> createRole(@RequestBody Role role) {
         String roleName = role.getRoleName();
-        if (roleService.getRoleByName(roleName) != null) {
+        if (roleService.isRoleExist(role.getId())) {
             log.warn("Роль {} уже существует в базе", roleName);
-            return Response.error(HttpStatus.BAD_REQUEST,"This role already exists in database");
+            return Response.error(HttpStatus.BAD_REQUEST, "This role already exists in database");
         }
         roleService.create(role);
         log.info("Роль {} успешно создан", roleName);
@@ -67,13 +67,13 @@ public class AdminRoleRestController {
             })
     public Response<?> updateRole(@RequestBody Role role) {
         String roleName = role.getRoleName();
-        if (roleService.getRoleByName(roleName) == null) {
-            log.warn("Роль {} в базе не найден", roleName);
-            return Response.error(HttpStatus.BAD_REQUEST,"Role not found");
+        if (roleService.isRoleExist(role.getId())) {
+            roleService.update(role);
+            log.info("Роль {} успешно обновлен", roleName);
+            return Response.ok(role);
         }
-        roleService.update(role);
-        log.info("Роль {} успешно обновлен", roleName);
-        return Response.ok(role);
+        log.warn("Роль {} в базе не найден", roleName);
+        return Response.error(HttpStatus.BAD_REQUEST, "Role not found");
     }
 
     @DeleteMapping(value = "/{id}")
@@ -86,12 +86,12 @@ public class AdminRoleRestController {
             }
     )
     public Response<?> deleteRole(@PathVariable("id") Long id) {
-        if (roleService.get(id) == null) {
-            log.warn("Роль с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST,"Role not found");
+        if (roleService.isRoleExist(id)) {
+            roleService.delete(id);
+            log.info("Роль с id = {} успешно удалена", id);
+            return Response.ok().build();
         }
-        roleService.delete(id);
-        log.info("Роль с id = {} успешно удален", id);
-        return Response.ok().build();
+        log.warn("Роль с id = {} в базе не найдена", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Role not found");
     }
 }

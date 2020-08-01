@@ -17,5 +17,7 @@ public interface ShoeSizeService {
     void update(ShoeSize shoeSize);
 
     ShoeSize getShoeSizeByName(String name);
+
+    boolean isShoeSizeExist(Long id);
 }
 
