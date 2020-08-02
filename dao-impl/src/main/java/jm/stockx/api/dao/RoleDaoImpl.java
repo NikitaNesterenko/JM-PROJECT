@@ -7,12 +7,16 @@ import java.util.Optional;
 
 @Repository
 public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
+
     @Override
     public Optional<Role> getByName(String name) {
-        Role role = (Role) entityManager.createQuery("FROM Role AS r WHERE r.roleName = :roleName")
+        String query = "" +
+                "FROM Role AS r " +
+                "WHERE r.roleName = :roleName";
+        Role role = entityManager.createQuery(query, Role.class)
                 .setParameter("roleName", name)
                 .getSingleResult();
-        return Optional.of(role);
 
+        return Optional.of(role);
     }
 }
