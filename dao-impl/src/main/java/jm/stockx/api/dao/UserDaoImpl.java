@@ -10,25 +10,37 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
     public Optional<User> getByName(String name) {
-        User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.username = :username")
+        String query = "" +
+                "FROM User AS u " +
+                "WHERE u.username = :username";
+        User user = entityManager.createQuery(query, User.class)
                 .setParameter("username", name)
                 .getSingleResult();
+
         return Optional.of(user);
     }
 
     @Override
     public Optional<User> getByEmail(String email) {
-        User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.email = :email")
+        String query = "" +
+                "FROM User AS u " +
+                "WHERE u.email = :email";
+        User user = entityManager.createQuery(query, User.class)
                 .setParameter("email", email)
                 .getSingleResult();
+
         return Optional.of(user);
     }
 
     @Override
     public Optional<User> getByAppleId(String appleId) {
-        User user = (User) entityManager.createNativeQuery("SELECT * FROM users AS u WHERE u.apple_user_id = :appleId")
+        String query = "" +
+                "FROM User AS u " +
+                "WHERE u.appleUserId = :appleId";
+        User user = entityManager.createQuery(query, User.class)
                 .setParameter("appleId", appleId)
                 .getSingleResult();
+
         return Optional.of(user);
     }
 }

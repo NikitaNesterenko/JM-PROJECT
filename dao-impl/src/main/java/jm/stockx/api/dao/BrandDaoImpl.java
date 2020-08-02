@@ -17,17 +17,21 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
         Brand brand = entityManager.createQuery(query, Brand.class)
                 .setParameter("brandName", name)
                 .getSingleResult();
+
         return Optional.of(brand);
     }
 
     @Override
     public BrandDto getBrandDtoById(Long id) {
         String query =
-                "SELECT new jm.stockx.dto.BrandDto(b.id, b.name)" +
-                "FROM Brand AS b " +
-                "WHERE id =: id";
+                "SELECT new jm.stockx.dto.BrandDto(" +
+                        "b.id," +
+                        "b.name)" +
+                        "FROM Brand AS b " +
+                        "WHERE id =: id";
 
         return entityManager.createQuery(query, BrandDto.class)
-                .setParameter("id", id).getSingleResult();
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

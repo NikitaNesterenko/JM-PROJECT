@@ -17,7 +17,9 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     }
 
     public List<T> getAll() {
-        return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
+        return entityManager.createQuery(
+                "FROM " + clazz.getName())
+                .getResultList();
     }
 
     public T getById(PK id) {
@@ -37,8 +39,12 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     }
 
     public boolean doesItExistEntity(Long desiredId) {
-        Long existingValue = (Long) entityManager.createQuery("SELECT count(id) FROM "
-                + clazz.getName() + " WHERE id =" + desiredId).getSingleResult();
+        Long existingValue = (Long) entityManager.createQuery(
+                "SELECT count(c.id) " +
+                        "FROM " + clazz.getName() + " AS c" +
+                        "WHERE x.id =" + desiredId)
+                .getSingleResult();
+
         return existingValue > 0;
     }
 }

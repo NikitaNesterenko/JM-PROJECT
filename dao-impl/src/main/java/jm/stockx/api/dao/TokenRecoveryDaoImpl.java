@@ -8,7 +8,9 @@ public class TokenRecoveryDaoImpl extends AbstractDAO<TokenRecovery, Long> imple
 
     @Override
     public TokenRecovery getByHashEmail(String hashEmail) {
-        return entityManager.createQuery("FROM TokenRecovery where hashEmail = :hashEmail", TokenRecovery.class)
+        return entityManager.createQuery("" +
+                "FROM TokenRecovery AS t " +
+                "WHERE t.hashEmail = :hashEmail", TokenRecovery.class)
                 .setParameter("hashEmail", hashEmail)
                 .getSingleResult();
     }

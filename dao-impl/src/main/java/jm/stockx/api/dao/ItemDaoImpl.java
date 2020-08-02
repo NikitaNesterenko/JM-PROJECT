@@ -14,33 +14,42 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public Optional<Item> getByName(String name) {
-        Item item = entityManager.createQuery("FROM Item i WHERE i.name = :itemName", Item.class)
+        String query = "" +
+                "FROM Item i " +
+                "WHERE i.name = :itemName";
+        Item item = entityManager.createQuery(query, Item.class)
                 .setParameter("itemName", name)
                 .getSingleResult();
+
         return Optional.of(item);
     }
 
     @Override
     public ItemDto getItemDtoById(Long id) {
-        String query =
+        String query = "" +
                 "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
-                        "i.name," +
-                        "i.price," +
-                        "i.lowestAsk," +
-                        "i.highestBid," +
-                        "i.releaseDate," +
-                        "i.condition)" +
-                        "FROM Item AS i " +
-                        "WHERE id =: id";
+                "i.name," +
+                "i.price," +
+                "i.lowestAsk," +
+                "i.highestBid," +
+                "i.releaseDate," +
+                "i.condition)" +
+                "FROM Item AS i " +
+                "WHERE id =: id";
 
         return entityManager.createQuery(query, ItemDto.class)
-                .setParameter("id", id).getSingleResult();
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
-        return entityManager.createQuery("SELECT i FROM Item i  WHERE " +
-                "i.name LIKE '%" + search + "%'", Item.class)
+        String query = "" +
+                "SELECT i " +
+                "FROM Item i  " +
+                "WHERE i.name LIKE '%" + search + "%'";
+
+        return entityManager.createQuery(query, Item.class)
                 .setFirstResult(size * (page - 1) + 1)
                 .setMaxResults(size)
                 .getResultList()
@@ -52,10 +61,12 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getMostPopularItems(String brand) {
-        String sql =
+        String sql = "" +
                 "SELECT i.id " +
                 "FROM items as i " +
-                "INNER JOIN buying_item bi on i.id = bi.item_id INNER JOIN brand AS b " +
+                "INNER JOIN buying_item bi " +
+                "ON i.id = bi.item_id " +
+                "INNER JOIN brand AS b " +
                 "WHERE b.name =:brand " +
                 "ORDER BY COUNT(i.id) DESC";
 
@@ -68,10 +79,14 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
-        String sql =
-                "SELECT i.* FROM selling_info AS si LEFT JOIN items AS i ON si.item_id=i.id " +
+        String sql = "" +
+                "SELECT i.* " +
+                "FROM selling_info AS si " +
+                "LEFT JOIN items AS i " +
+                "ON si.item_id=i.id " +
                 "WHERE i.style_id = :styleId " +
-                "GROUP BY si.item_id ORDER BY count(si.item_id) DESC";
+                "GROUP BY si.item_id " +
+                "ORDER BY count(si.item_id) DESC";
 
         return entityManager.createNativeQuery(sql, Item.class)
                 .setParameter("styleId", styleId)
@@ -82,17 +97,19 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getNotReleasedItems() {
-        String sql =
+        String sql = "" +
                 "SELECT * " +
                 "FROM items " +
                 "WHERE release_date >= CURDATE()";
-        return entityManager.createNativeQuery(sql, Item.class).getResultList();
+
+        return entityManager.createNativeQuery(sql, Item.class)
+                .getResultList();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getNotReleasedItemsByBrand(Brand brand) {
-        String sql =
+        String sql = "" +
                 "SELECT * " +
                 "FROM items " +
                 "WHERE release_date >= CURDATE() " +
@@ -104,10 +121,11 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public void addItemImage(Long id, Byte[] array) {
-        entityManager.createQuery(
+        String query = "" +
                 "UPDATE Item i " +
                 "SET i.itemImage = :bytesOfImage " +
-                "WHERE id=:id", Item.class)
+                "WHERE id=:id";
+        entityManager.createQuery(query, Item.class)
                 .setParameter("bytesOfImage", array)
                 .setParameter("id", id)
                 .executeUpdate();
@@ -115,9 +133,10 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public Byte[] getItemImage(Long id) {
-        List<Item> list = entityManager.createQuery(
+        String query = "" +
                 "FROM Item " +
-                "WHERE id=:id", Item.class)
+                "WHERE id=:id";
+        List<Item> list = entityManager.createQuery(query, Item.class)
                 .setParameter("id", id)
                 .getResultList();
         if (list.size() == 0) {
