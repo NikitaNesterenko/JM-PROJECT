@@ -39,10 +39,10 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     }
 
     public boolean doesItExistEntity(Long desiredId) {
-        Long existingValue = (Long) entityManager.createQuery(
+        Long existingValue = (Long) entityManager.createQuery("" +
                 "SELECT count(c.id) " +
-                        "FROM " + clazz.getName() + " AS c" +
-                        "WHERE x.id =" + desiredId)
+                "FROM " + clazz.getName() + " AS c" +
+                "WHERE x.id =" + desiredId)
                 .getSingleResult();
 
         return existingValue > 0;
