@@ -66,7 +66,7 @@ public class AdminShoeSizeRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no shoe_size with this shoe_size-id")
             })
-    public Response<ShoeSize> getShoeSizeById(@PathVariable("id") Long id) {
+    public Response<ShoeSize> getShoeSizeById(@PathVariable Long id) {
         if (shoeSizeService.isShoeSizeExist(id)) {
             ShoeSize shoeSize = shoeSizeService.get(id);
             logger.info("Получен размер обуви {} ", shoeSize);
@@ -135,7 +135,7 @@ public class AdminShoeSizeRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no shoe_size with such id")
             }
     )
-    public Response<?> deleteShoeSize(@PathVariable("id") Long id) {
+    public Response<?> deleteShoeSize(@PathVariable Long id) {
         if (shoeSizeService.isShoeSizeExist(id)) {
             shoeSizeService.delete(id);
             logger.info("Размер обуви с id = {} успешно удалён", id);

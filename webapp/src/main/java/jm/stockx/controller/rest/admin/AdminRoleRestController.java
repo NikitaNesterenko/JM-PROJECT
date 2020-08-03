@@ -85,7 +85,7 @@ public class AdminRoleRestController {
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no role with such id")
             }
     )
-    public Response<?> deleteRole(@PathVariable("id") Long id) {
+    public Response<?> deleteRole(@PathVariable Long id) {
         if (roleService.isRoleExist(id)) {
             roleService.delete(id);
             log.info("Роль с id = {} успешно удалена", id);

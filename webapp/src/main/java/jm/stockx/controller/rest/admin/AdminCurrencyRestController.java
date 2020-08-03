@@ -66,7 +66,7 @@ public class AdminCurrencyRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no currency with this currency-id")
             })
-    public Response<Currency> getCurrencyById(@PathVariable("id") Long id) {
+    public Response<Currency> getCurrencyById(@PathVariable Long id) {
 
         if (currencyService.doesItExistEntity(id)) {
             Currency currency = currencyService.get(id);
@@ -136,7 +136,7 @@ public class AdminCurrencyRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no currency with such id")
             }
     )
-    public Response<?> deleteCurrency(@PathVariable("id") Long id) {
+    public Response<?> deleteCurrency(@PathVariable Long id) {
         if (currencyService.doesItExistEntity(id)) {
             currencyService.delete(id);
             logger.info("Валюта с id = {} успешно удалёна", id);

@@ -84,7 +84,7 @@ public class AdminItemRestController {
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no item with such id")
             }
     )
-    public Response<?> deleteItem(@PathVariable("id") Long id) {
+    public Response<?> deleteItem(@PathVariable Long id) {
         if (itemService.isItemExist(id)) {
             itemService.delete(id);
             log.info("Товар с id = {} успешно удален", id);

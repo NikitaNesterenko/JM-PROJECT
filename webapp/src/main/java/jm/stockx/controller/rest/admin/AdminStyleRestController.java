@@ -29,7 +29,7 @@ public class AdminStyleRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public Response<Style> getStyleById(@PathVariable("id") Long id) {
+    public Response<Style> getStyleById(@PathVariable Long id) {
         if (styleService.isStyleExist(id)) {
             Style style = styleService.get(id);
             log.info("Получен стиль {} ", style);
@@ -63,7 +63,7 @@ public class AdminStyleRestController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public Response<?> deleteStyle(@PathVariable("id") Long id) {
+    public Response<?> deleteStyle(@PathVariable Long id) {
         if (styleService.isStyleExist(id)) {
             styleService.delete(id);
             log.info("Стиль с id = {} успешно удален", id);

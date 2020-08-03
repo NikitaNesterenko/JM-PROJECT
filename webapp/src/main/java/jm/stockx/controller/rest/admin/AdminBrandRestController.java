@@ -63,7 +63,7 @@ public class AdminBrandRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: brand")
             })
-    public Response<Brand> getBrandById(@PathVariable("id") Long id) {
+    public Response<Brand> getBrandById(@PathVariable Long id) {
         if (brandService.isBrandExist(id)) {
             Brand brand = brandService.get(id);
             logger.info("Получен бренд {} ", brand);
@@ -131,7 +131,7 @@ public class AdminBrandRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no brand with such id")
             }
     )
-    public Response<?> deleteBrand(@PathVariable("id") Long id) {
+    public Response<?> deleteBrand(@PathVariable Long id) {
         if (brandService.isBrandExist(id)) {
             brandService.delete(id);
             logger.info("Бренд с id = {} успешно удалён", id);
