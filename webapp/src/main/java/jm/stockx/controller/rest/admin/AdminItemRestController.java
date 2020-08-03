@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/rest/api/admin/items")
 @Tag(name = "item", description = "Item API")
@@ -39,7 +43,7 @@ public class AdminItemRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: item was not created")
             })
-    public Response<?> createItem(@RequestBody Item item) {
+    public Response<?> createItem(@Valid @RequestBody Item item) {
         String itemName = item.getName();
         if (itemService.isItemExist(item.getId())) {
             log.warn("Товар {} уже существует в базе", itemName);
@@ -64,15 +68,15 @@ public class AdminItemRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to update item")
             })
-    public Response<?> updateItem(@RequestBody Item item) {
+    public Response<?> updateItem(@Valid @RequestBody Item item) {
         String itemName = item.getName();
-        if (itemService.isItemExist(item.getId())) {
-            itemService.update(item);
-            log.info("Товар {} успешно обновлен", itemName);
-            return Response.ok(item);
+        if (itemService.getItemByName(itemName) == null) {
+            log.warn("Товар {} в базе не найден", itemName);
+            return Response.error(HttpStatus.BAD_REQUEST,"Item not found");
         }
-        log.warn("Товар {} в базе не найден", itemName);
-        return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
+        itemService.update(item);
+        log.info("Товар {} успешно обновлен", itemName);
+        return Response.ok(item);
     }
 
     @DeleteMapping(value = "/{id}")

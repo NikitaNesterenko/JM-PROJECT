@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/rest/api/admin/news")
 @Tag(name = "news", description = "News API")
@@ -39,7 +41,7 @@ public class AdminNewsRestController {
                     @ApiResponse(responseCode = "200", description = "OK: news created"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: news not created")
             })
-    public Response<?> createNews(@RequestBody News news) {
+    public Response<?> createNews(@Valid @RequestBody News news) {
         String newsName = news.getName();
         if (newsService.isNewsExist(news.getId())) {
             log.warn("Новость {} уже существует в базе", newsName);
@@ -64,7 +66,7 @@ public class AdminNewsRestController {
                     @ApiResponse(responseCode = "200", description = "OK: news updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update news")
             })
-    public Response<?> updateNews(@RequestBody News news) {
+    public Response<?> updateNews(@Valid @RequestBody News news) {
         String newsName = news.getName();
         if (newsService.isNewsExist(news.getId())) {
             newsService.update(news);

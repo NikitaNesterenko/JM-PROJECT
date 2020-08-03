@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.ShoeSizeTypes;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,10 @@ public class ShoeSize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "size", unique = true, nullable = false)
     private Double size;
+
+    @Column(name = "size_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ShoeSizeTypes sizeTypes;
 }

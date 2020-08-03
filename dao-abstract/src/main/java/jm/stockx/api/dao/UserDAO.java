@@ -10,5 +10,7 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     Optional<User> getByEmail(String name);
 
+    Optional<User> getByAppleId(String appleId);
+
     boolean doesItExistEntity(Long id);
 }
