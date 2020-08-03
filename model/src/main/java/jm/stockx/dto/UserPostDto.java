@@ -3,6 +3,11 @@ package jm.stockx.dto;
 import jm.stockx.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @ToString
@@ -10,12 +15,25 @@ import lombok.*;
 @AllArgsConstructor
 public class UserPostDto {
 
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @Email(message = "Адрес электронной почты должен быть корректным")
     private String email;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
+
+    @Min(1)
+    @NotNull
     private byte sellerLevel;
+
     private boolean vacationMode;
     private String appleUserId;
 
