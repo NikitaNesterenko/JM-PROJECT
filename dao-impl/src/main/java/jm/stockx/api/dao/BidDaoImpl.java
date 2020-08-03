@@ -8,15 +8,13 @@ import org.springframework.stereotype.Repository;
 public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
     @Override
     public BidDto getBidDtoById(Long id) {
-        String query = "" +
+        return entityManager.createQuery("" +
                 "SELECT new jm.stockx.dto.BidDto(" +
                 "b.id," +
                 "b.price," +
                 "b.success)" +
                 "FROM Bid AS b " +
-                "WHERE id =: id";
-
-        return entityManager.createQuery(query, BidDto.class)
+                "WHERE id =: id", BidDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

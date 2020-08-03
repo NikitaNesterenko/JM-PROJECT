@@ -9,15 +9,13 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
 
     @Override
     public BuyingInfoDto getBuyingInfoDtoById(Long id) {
-        String query =
+        return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.BuyingInfoDto(" +
-                        "b.id, " +
-                        "b.buyingTimeStamp, " +
-                        "b.buyingPrice)" +
-                        "FROM BuyingInfo AS b " +
-                        "WHERE id =: id";
-
-        return entityManager.createQuery(query, BuyingInfoDto.class)
+                "b.id, " +
+                "b.buyingTimeStamp, " +
+                "b.buyingPrice)" +
+                "FROM BuyingInfo AS b " +
+                "WHERE id =: id", BuyingInfoDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

@@ -6,10 +6,10 @@ import java.util.List;
 
 public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
 
+    private final Class clazz;
+
     @PersistenceContext
     EntityManager entityManager;
-
-    private final Class clazz;
 
     public AbstractDAO() {
         clazz = (Class) ((java.lang.reflect.ParameterizedType)
