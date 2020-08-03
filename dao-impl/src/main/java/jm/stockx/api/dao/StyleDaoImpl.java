@@ -12,7 +12,8 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
 
     @Override
     public Optional<Style> getByName(String name) {
-        Style style = entityManager.createQuery("FROM Style " +
+        Style style = entityManager.createQuery(
+             "FROM Style " +
                 "WHERE name = :name", Style.class)
                 .setParameter("name", name)
                 .getSingleResult();
@@ -21,10 +22,10 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
 
     @Override
     public StyleDto getStyleDtoById(Long id) {
-        String query = "SELECT new jm.stockx.dto.StyleDto(s.id, s.name)" +
+        return entityManager.createQuery(
+             "SELECT new jm.stockx.dto.StyleDto(s.id, s.name)" +
                 "FROM Style AS s " +
-                "WHERE id =: id";
-        return entityManager.createQuery(query, StyleDto.class)
+                "WHERE id =: id", StyleDto.class)
                 .setParameter("id", id).getSingleResult();
     }
 

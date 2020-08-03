@@ -10,10 +10,10 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public SellingInfo getSellingInfoDtoById(Long id) {
-        String query = "SELECT new jm.stockx.dto.SellingInfoDto(s.id, s.name)" +
-                "FROM SellingInfo AS s " +
-                "WHERE id =: id";
-        return entityManager.createQuery(query, SellingInfo.class)
-                .setParameter("id", id).getSingleResult();
+        return entityManager.createQuery(
+            "SELECT new jm.stockx.dto.SellingInfoDto(s.id, s.name)" +
+               "FROM SellingInfo AS s " +
+               "WHERE id =: id", SellingInfo.class)
+               .setParameter("id", id).getSingleResult();
     }
 }
