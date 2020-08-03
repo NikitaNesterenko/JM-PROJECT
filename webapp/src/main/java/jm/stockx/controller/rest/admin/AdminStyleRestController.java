@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,11 +41,11 @@ public class AdminStyleRestController {
     }
 
     @PostMapping
-    public Response<?> createItem(@RequestBody Style style) {
+    public Response<?> createItem(@Valid @RequestBody Style style) {
         String styleName = style.getName();
         if (styleService.getStyleByName(styleName) != null) {
             log.warn("Стиль с именем {} уже существует в базе", styleName);
-            return Response.error(HttpStatus.BAD_REQUEST,"This style already exists in database");
+            return Response.error(HttpStatus.BAD_REQUEST, "This style already exists in database");
         }
         styleService.create(style);
         log.info("Стиль {} успешно создан", styleName);
@@ -52,10 +53,10 @@ public class AdminStyleRestController {
     }
 
     @PutMapping
-    public Response<?> updateStyle(@RequestBody Style style) {
+    public Response<?> updateStyle(@Valid @RequestBody Style style) {
         if (!styleService.isStyleExist(style.getId())) {
             log.warn("Стиль с id = {} в базе не найден", style.getId());
-            return Response.error(HttpStatus.BAD_REQUEST,"Style not found");
+            return Response.error(HttpStatus.BAD_REQUEST, "Style not found");
         }
         styleService.update(style);
         log.info("Стиль с id = {} успешно обновлен", style.getId());
