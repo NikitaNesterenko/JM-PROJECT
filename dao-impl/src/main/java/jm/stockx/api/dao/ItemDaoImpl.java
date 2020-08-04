@@ -19,7 +19,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "WHERE i.name = :itemName", Item.class)
                 .setParameter("itemName", name)
                 .getSingleResult();
-
         return Optional.of(item);
     }
 
@@ -81,7 +80,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<Item> getNotReleasedItems() {
         return entityManager.createQuery("" +
                 "FROM Item AS i " +

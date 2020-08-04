@@ -1,6 +1,5 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.NewsDto;
 import jm.stockx.dto.StyleDto;
 import jm.stockx.entity.Style;
 import org.springframework.stereotype.Repository;
@@ -12,8 +11,8 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
 
     @Override
     public Optional<Style> getByName(String name) {
-        Style style = entityManager.createQuery(
-             "FROM Style " +
+        Style style = entityManager.createQuery("" +
+                "FROM Style " +
                 "WHERE name = :name", Style.class)
                 .setParameter("name", name)
                 .getSingleResult();
@@ -22,8 +21,8 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
 
     @Override
     public StyleDto getStyleDtoById(Long id) {
-        return entityManager.createQuery(
-             "SELECT new jm.stockx.dto.StyleDto(" +
+        return entityManager.createQuery("" +
+                "SELECT new jm.stockx.dto.StyleDto(" +
                 "s.id, " +
                 "s.name)" +
                 "FROM Style AS s " +
