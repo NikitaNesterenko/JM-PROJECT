@@ -23,22 +23,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public ItemDto getItemDtoById(Long id) {
-        return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
-                "i.name," +
-                "i.price," +
-                "i.lowestAsk," +
-                "i.highestBid," +
-                "i.releaseDate," +
-                "i.condition)" +
-                "FROM Item AS i " +
-                "WHERE id =: id", ItemDto.class)
-                .setParameter("id", id)
-                .getSingleResult();
-    }
-
-    @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
         return entityManager.createQuery("" +
                 "FROM Item i  " +
@@ -119,5 +103,21 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
             return null;
         }
         return list.get(0).getItemImage();
+    }
+
+    @Override
+    public ItemDto getItemDtoById(Long id) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
+                "i.name," +
+                "i.price," +
+                "i.lowestAsk," +
+                "i.highestBid," +
+                "i.releaseDate," +
+                "i.condition)" +
+                "FROM Item AS i " +
+                "WHERE id =: id", ItemDto.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

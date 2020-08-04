@@ -22,7 +22,7 @@ public class CurrencyDaoImpl extends AbstractDAO<Currency, Long> implements Curr
     @Override
     public CurrencyDto getCurrencyDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.CurrencyDto(" +
+                "SELECT NEW jm.stockx.dto.CurrencyDto(" +
                 "c.id," +
                 "c.name)" +
                 "FROM Currency AS c " +

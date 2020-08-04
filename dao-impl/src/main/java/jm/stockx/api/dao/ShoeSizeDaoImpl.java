@@ -17,7 +17,7 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
     @Override
     public ShoeSizeDto getShoeSizeDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.ShoeSizeDto(" +
+                "SELECT NEW jm.stockx.dto.ShoeSizeDto(" +
                 "ss.id," +
                 "ss.size," +
                 "ss.sizeTypes)" +

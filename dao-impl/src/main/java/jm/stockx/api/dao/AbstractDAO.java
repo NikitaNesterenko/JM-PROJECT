@@ -6,24 +6,24 @@ import java.util.List;
 
 public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
 
-    private final Class clazz;
+    private final Class<T> clazz;
 
     @PersistenceContext
     EntityManager entityManager;
 
+    @SuppressWarnings("unchecked")
     public AbstractDAO() {
-        clazz = (Class) ((java.lang.reflect.ParameterizedType)
+        clazz = (Class<T>) ((java.lang.reflect.ParameterizedType)
                 this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    @SuppressWarnings("unchecked")
     public List<T> getAll() {
-        return entityManager.createQuery(
-                "FROM " + clazz.getName())
-                .getResultList();
+        return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
     public T getById(PK id) {
-        return (T) entityManager.find(clazz, id);
+        return entityManager.find(clazz, id);
     }
 
     public void add(T t) {
@@ -39,10 +39,11 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     }
 
     public boolean doesItExistEntity(Long desiredId) {
-        Long existingValue = (Long) entityManager.createQuery("" +
-                "SELECT count(c.id) " +
-                "FROM " + clazz.getName() + " AS c" +
-                "WHERE x.id =" + desiredId)
+        Long existingValue = entityManager.createQuery("" +
+                "SELECT COUNT(c.id) " +
+                "FROM " + clazz.getName() + " AS c " +
+                "WHERE c.id =: desiredId", Long.class)
+                .setParameter("desiredId", desiredId)
                 .getSingleResult();
 
         return existingValue > 0;

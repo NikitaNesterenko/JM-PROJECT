@@ -22,7 +22,7 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
     @Override
     public BrandDto getBrandDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.BrandDto(" +
+                "SELECT NEW jm.stockx.dto.BrandDto(" +
                 "b.id," +
                 "b.name)" +
                 "FROM Brand AS b " +

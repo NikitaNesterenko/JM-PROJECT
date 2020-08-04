@@ -22,7 +22,7 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
     @Override
     public StyleDto getStyleDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.StyleDto(" +
+                "SELECT NEW jm.stockx.dto.StyleDto(" +
                 "s.id, " +
                 "s.name)" +
                 "FROM Style AS s " +

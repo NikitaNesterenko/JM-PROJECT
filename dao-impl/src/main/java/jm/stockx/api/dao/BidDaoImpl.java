@@ -10,7 +10,7 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
     @Override
     public BidDto getBidDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.BidDto(" +
+                "SELECT NEW jm.stockx.dto.BidDto(" +
                 "b.id," +
                 "b.price," +
                 "b.success)" +

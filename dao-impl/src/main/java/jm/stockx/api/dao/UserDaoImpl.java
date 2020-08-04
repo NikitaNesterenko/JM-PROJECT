@@ -44,7 +44,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     @Override
     public UserDto getUserDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.UserDto(" +
+                "SELECT NEW jm.stockx.dto.UserDto(" +
                 "u.id," +
                 "u.firstName," +
                 "u.lastName," +

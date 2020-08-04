@@ -19,7 +19,7 @@ public class TokenRecoveryDaoImpl extends AbstractDAO<TokenRecovery, Long> imple
     @Override
     public TokenRecoveryDto getTokenRecoveryDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT new jm.stockx.dto.TokenRecoveryDto(" +
+                "SELECT NEW jm.stockx.dto.TokenRecoveryDto(" +
                 "u.id," +
                 "u.user," +
                 "u.hash," +
