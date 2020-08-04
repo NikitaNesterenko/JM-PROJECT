@@ -23,9 +23,12 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
     @Override
     public NewsDto getNewsDtoById(Long id) {
         return entityManager.createQuery(
-             "SELECT new jm.stockx.dto.NewsDto(n.id, n.name)" +
+             "SELECT new jm.stockx.dto.NewsDto(" +
+                "n.id, " +
+                "n.name)" +
                 "FROM Brand AS n " +
                 "WHERE id =: id", NewsDto.class)
-                .setParameter("id", id).getSingleResult();
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }
