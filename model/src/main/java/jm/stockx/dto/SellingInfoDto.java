@@ -22,6 +22,4 @@ public class SellingInfoDto {
     @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double price;
-
-
 }
