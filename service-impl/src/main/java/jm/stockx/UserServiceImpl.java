@@ -61,9 +61,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByAppleUserId(String appleId) {
+        return userdao.getByAppleId(appleId).orElse(null);
+    }
+
+    @Override
     public void login(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(username, password, authorities);
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(authReq);
     }
+
+    @Override
+    public boolean isUserExist(Long id) {
+        return userdao.doesItExistEntity(id);
+    }
+
 }

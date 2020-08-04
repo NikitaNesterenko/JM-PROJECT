@@ -119,4 +119,19 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
         return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
     }
+
+    @Override
+    public List<Item> getNotReleasedItems() {
+        return itemDao.getNotReleasedItems();
+    }
+
+    @Override
+    public List<Item> getNotReleasedItemsByBrand(Brand brand) {
+        return itemDao.getNotReleasedItemsByBrand(brand);
+    }
+
+    @Override
+    public boolean isItemExist(Long id) {
+        return itemDao.doesItExistEntity(id);
+    }
 }

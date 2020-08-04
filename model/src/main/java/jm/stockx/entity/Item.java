@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -33,14 +32,14 @@ public class Item {
     @Column(name = "highest_bid")
     private Double highestBid;
 
-    @Column(name = "date_release")
-    private LocalDate dateRelease;
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
 
     //new or old
     @Column(name = "item_condition")
     private String condition;
 
-    @ManyToOne (targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
@@ -49,13 +48,13 @@ public class Item {
     @Basic(fetch = FetchType.LAZY)
     private Byte[] itemImage;
 
-    public Item(String name, Double price, Double lowestAsk, Double highestBid, LocalDate dateRelease,
+    public Item(String name, Double price, Double lowestAsk, Double highestBid, LocalDate releaseDate,
                 String condition) {
         this.name = name;
         this.price = price;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
-        this.dateRelease = dateRelease;
+        this.releaseDate = releaseDate;
         this.condition = condition;
     }
 

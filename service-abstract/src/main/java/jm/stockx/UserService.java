@@ -22,5 +22,9 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
+    User getUserByAppleUserId(String appleId);
+
     void login(String username, String password, Collection<? extends GrantedAuthority> authorities);
+
+    boolean isUserExist(Long id);
 }

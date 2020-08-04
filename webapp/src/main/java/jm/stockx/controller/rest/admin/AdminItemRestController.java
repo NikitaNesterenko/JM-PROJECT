@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/rest/api/admin/items")
 @Tag(name = "item", description = "Item API")
@@ -39,11 +43,11 @@ public class AdminItemRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: item was not created")
             })
-    public Response<?> createItem(@RequestBody Item item) {
+    public Response<?> createItem(@Valid @RequestBody Item item) {
         String itemName = item.getName();
-        if (itemService.getItemByName(itemName) != null) {
+        if (itemService.isItemExist(item.getId())) {
             log.warn("Товар {} уже существует в базе", itemName);
-            return Response.error(HttpStatus.BAD_REQUEST,"This item already exists in database");
+            return Response.error(HttpStatus.BAD_REQUEST, "This item already exists in database");
         }
         itemService.create(item);
         log.info("Товар {} успешно создан", itemName);
@@ -64,7 +68,7 @@ public class AdminItemRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to update item")
             })
-    public Response<?> updateItem(@RequestBody Item item) {
+    public Response<?> updateItem(@Valid @RequestBody Item item) {
         String itemName = item.getName();
         if (itemService.getItemByName(itemName) == null) {
             log.warn("Товар {} в базе не найден", itemName);
@@ -84,13 +88,13 @@ public class AdminItemRestController {
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: no item with such id")
             }
     )
-    public Response<?> deleteItem(@PathVariable("id") Long id) {
-        if (itemService.get(id) == null) {
-            log.warn("Товар с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST,"Item not found");
+    public Response<?> deleteItem(@PathVariable Long id) {
+        if (itemService.isItemExist(id)) {
+            itemService.delete(id);
+            log.info("Товар с id = {} успешно удален", id);
+            return Response.ok().build();
         }
-        itemService.delete(id);
-        log.info("Товар с id = {} успешно удален", id);
-        return Response.ok().build();
+        log.warn("Товар с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
     }
 }
