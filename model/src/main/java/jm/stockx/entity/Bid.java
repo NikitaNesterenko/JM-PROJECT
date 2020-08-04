@@ -1,6 +1,7 @@
 package jm.stockx.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -20,6 +21,7 @@ public class Bid {
     @Column(name = "price")
     private Double price;
 
+    @Type(type="true_false")
     @Column(name = "success")
     private Boolean success;
 

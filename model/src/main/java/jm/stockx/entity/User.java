@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -45,6 +46,7 @@ public class User implements UserDetails {
     @Column(name = "seller_level")
     private Byte sellerLevel;
 
+    @Type(type="true_false")
     @Column(name = "vacation_mode")
     private Boolean vacationMode;
 
