@@ -41,4 +41,16 @@ public class PageDto<T> {
         totalEntitiesCount = entities.size();
         currentPage = 0;
     }
+
+    public PageDto(Integer totalEntitiesCount,
+                   Integer currentPage,
+                   Integer pageCount,
+                   Integer countOnPage,
+                   List<T> entities) {
+        this.totalEntitiesCount = totalEntitiesCount;
+        this.currentPage = currentPage;
+        this.pageCount = pageCount;
+        this.countOnPage = countOnPage;
+        this.entities = entities;
+    }
 }
