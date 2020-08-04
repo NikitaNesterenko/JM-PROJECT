@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Getter
 @Setter
@@ -14,7 +13,6 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 public class ShoeSizeDto {
 
-    @Null
     private Long id;
 
     @Min(3)

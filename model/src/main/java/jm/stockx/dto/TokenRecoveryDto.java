@@ -5,7 +5,6 @@ import jm.stockx.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Date;
 
 @Getter
@@ -15,7 +14,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class TokenRecoveryDto {
 
-    @Null
     private Long id;
 
     @NotNull

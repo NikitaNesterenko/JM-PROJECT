@@ -4,7 +4,6 @@ import jm.stockx.entity.Currency;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
 
 @Getter
 @Setter
@@ -13,7 +12,6 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 public class CurrencyDto {
 
-    @Null
     private Long id;
 
     @NotBlank(message = "Имя не должно быть null, пустым или состоять из одних лишь пробельных символов")

@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class PageDto<T> {
 
+    private Long id;
+
     @Positive
     @NotNull
     private Integer totalEntitiesCount;

@@ -7,7 +7,6 @@ import jm.stockx.enums.Status;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -19,7 +18,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class BuyingInfoDto {
 
-    @Null
     private Long id;
 
     @NotNull

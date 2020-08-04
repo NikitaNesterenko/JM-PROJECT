@@ -2,6 +2,7 @@ package jm.stockx.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Blob;
 import java.time.LocalDateTime;
@@ -13,12 +14,25 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class NewsDto {
 
-    @NotNull
     private Long id;
+
+    @NotBlank
     private String name;
+
+    @NotNull
     private LocalDateTime time;
+
+    @NotBlank
+    @NotNull
     private String title;
+
+    @NotBlank
+    @NotNull
     private String description;
+
+    @NotBlank
+    @NotNull
     private String text;
+
     private Blob image;
 }

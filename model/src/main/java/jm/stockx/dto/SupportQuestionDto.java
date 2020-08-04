@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SupportQuestionDto {
 
-    @Null
     private Long id;
 
     @NotBlank
