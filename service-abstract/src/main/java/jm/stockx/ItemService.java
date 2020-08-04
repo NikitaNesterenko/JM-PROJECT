@@ -35,4 +35,6 @@ public interface ItemService {
     List<Item> getNotReleasedItems();
 
     List<Item> getNotReleasedItemsByBrand(Brand brand);
+
+    boolean isItemExist(Long id);
 }

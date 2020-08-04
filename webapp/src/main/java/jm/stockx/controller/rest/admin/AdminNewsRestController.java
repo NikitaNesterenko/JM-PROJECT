@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/rest/api/admin/news")
 @Tag(name = "news", description = "News API")
@@ -39,9 +41,9 @@ public class AdminNewsRestController {
                     @ApiResponse(responseCode = "200", description = "OK: news created"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: news not created")
             })
-    public Response<?> createNews(@RequestBody News news) {
+    public Response<?> createNews(@Valid @RequestBody News news) {
         String newsName = news.getName();
-        if (newsService.getNewsByName(newsName) != null) {
+        if (newsService.isNewsExist(news.getId())) {
             log.warn("Новость {} уже существует в базе", newsName);
             return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a news");
         }
@@ -64,15 +66,15 @@ public class AdminNewsRestController {
                     @ApiResponse(responseCode = "200", description = "OK: news updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update news")
             })
-    public Response<?> updateNews(@RequestBody News news) {
+    public Response<?> updateNews(@Valid @RequestBody News news) {
         String newsName = news.getName();
-        if (newsService.getNewsByName(news.getName()) == null) {
-            log.warn("Новость {} в базе не найдена", newsName);
-            return Response.error(HttpStatus.BAD_REQUEST, "News not found");
+        if (newsService.isNewsExist(news.getId())) {
+            newsService.update(news);
+            log.info("новость {} успешно обновлена", newsName);
+            return Response.ok().build();
         }
-        newsService.update(news);
-        log.info("новость {} успешно обновлена", newsName);
-        return Response.ok().build();
+        log.warn("Новость {} в базе не найдена", newsName);
+        return Response.error(HttpStatus.BAD_REQUEST, "News not found");
     }
 
     @DeleteMapping(value = "/deleteNews")
@@ -85,12 +87,12 @@ public class AdminNewsRestController {
             }
     )
     public Response<Boolean> deleteNews(Long id) {
-        if (newsService.get(id) == null) {
-            log.warn("Новость с id = {} в базе не найдена", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "News not found");
+        if (newsService.isNewsExist(id)) {
+            newsService.delete(id);
+            log.info("Новость с id = {} успешно удалена", id);
+            return Response.ok().build();
         }
-        newsService.delete(id);
-        log.info("Новость с id = {} успешно удалена", id);
-        return Response.ok().build();
+        log.warn("Новость с id = {} в базе не найдена", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "News not found");
     }
 }

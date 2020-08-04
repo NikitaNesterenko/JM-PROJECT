@@ -46,4 +46,10 @@ public class BrandServiceImpl implements BrandService {
     public Brand getBrandByName(String name) {
         return brandDAO.getByName(name).orElse(null);
     }
+
+    @Override
+    public boolean isBrandExist(Long id) {
+        return brandDAO.doesItExistEntity(id);
+    }
+
 }

@@ -3,6 +3,8 @@ package jm.stockx.dto;
 import jm.stockx.entity.Bid;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @ToString
@@ -10,7 +12,9 @@ import lombok.*;
 @AllArgsConstructor
 public class BidPutDto {
 
+    @NotNull
     private Long id;
+
     private Boolean success;
 
     public BidPutDto(Bid bid) {
