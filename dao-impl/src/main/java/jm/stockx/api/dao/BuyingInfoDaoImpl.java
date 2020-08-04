@@ -13,7 +13,10 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 "SELECT NEW jm.stockx.dto.BuyingInfoDto(" +
                 "b.id, " +
                 "b.buyingTimeStamp, " +
-                "b.buyingPrice)" +
+                "b.buyingPrice," +
+                "b.boughtItems," +
+                "b.paymentsInfo," +
+                "b.status)" +
                 "FROM BuyingInfo AS b " +
                 "WHERE id =: id", BuyingInfoDto.class)
                 .setParameter("id", id)
