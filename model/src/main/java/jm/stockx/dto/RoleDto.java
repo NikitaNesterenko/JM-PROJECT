@@ -10,7 +10,7 @@ import javax.validation.constraints.Null;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class StyleDto {
+public class RoleDto {
 
     @Null
     private Long id;

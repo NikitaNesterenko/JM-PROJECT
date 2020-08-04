@@ -5,15 +5,16 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoeSizePutDto {
+public class ShoeSizeDto {
 
-    @NotNull
+    @Null
     private Long id;
 
     @Min(3)
