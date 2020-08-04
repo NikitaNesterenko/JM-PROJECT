@@ -13,7 +13,7 @@ public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
     @Override
     public Optional<Role> getByName(String name) {
         Role role = entityManager.createQuery(
-                "FROM Role " +
+            "FROM Role " +
                 "WHERE name = :roleName", Role.class)
                 .setParameter("roleName", name)
                 .getSingleResult();

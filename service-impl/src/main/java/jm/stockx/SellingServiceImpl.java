@@ -1,16 +1,16 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.SellingDAO;
+import jm.stockx.api.dao.SellingInfoDAO;
 
 public class SellingServiceImpl implements SellingService {
-    private final SellingDAO sellingDAO;
+    private final SellingInfoDAO sellingInfoDAO;
 
-    public SellingServiceImpl(SellingDAO sellingDAO) {
-        this.sellingDAO = sellingDAO;
+    public SellingServiceImpl(SellingInfoDAO sellingInfoDAO) {
+        this.sellingInfoDAO = sellingInfoDAO;
     }
 
     @Override
     public Double getAverageSalesValue() {
-        return sellingDAO.getAverageSalesValue();
+        return sellingInfoDAO.getAverageSalesValue();
     }
 }
