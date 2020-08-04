@@ -129,4 +129,9 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getNotReleasedItemsByBrand(Brand brand) {
         return itemDao.getNotReleasedItemsByBrand(brand);
     }
+
+    @Override
+    public boolean isItemExist(Long id) {
+        return itemDao.doesItExistEntity(id);
+    }
 }

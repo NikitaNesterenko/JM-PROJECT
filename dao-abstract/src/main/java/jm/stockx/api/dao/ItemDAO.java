@@ -24,4 +24,6 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     List<Item> getNotReleasedItems();
 
     List<Item> getNotReleasedItemsByBrand(Brand brand);
+
+    boolean doesItExistEntity(Long id);
 }

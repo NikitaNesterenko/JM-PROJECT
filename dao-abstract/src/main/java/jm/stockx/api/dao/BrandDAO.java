@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface BrandDAO extends GenericDao<Brand, Long> {
     Optional<Brand> getByName(String name);
+    boolean doesItExistEntity(Long id);
 }
