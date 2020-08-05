@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
@@ -16,7 +15,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemDto {
 
-    @Null
     private Long id;
 
     @NotBlank

@@ -3,7 +3,10 @@ package jm.stockx.dto;
 import jm.stockx.entity.User;
 import lombok.*;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -12,7 +15,6 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class UserDto {
 
-    @Null
     private Long id;
 
     @NotBlank

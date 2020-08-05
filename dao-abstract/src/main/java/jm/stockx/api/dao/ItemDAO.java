@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemDAO extends GenericDao<Item, Long> {
-
     Optional<Item> getByName(String name);
 
     void addItemImage(Long id, Byte[] array);
@@ -25,5 +24,5 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     List<Item> getNotReleasedItemsByBrand(Brand brand);
 
-    boolean doesItExistEntity(Long id);
+    ItemDto getItemDtoById(Long id);
 }
