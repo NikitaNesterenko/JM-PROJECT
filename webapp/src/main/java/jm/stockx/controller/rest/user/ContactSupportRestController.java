@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/rest/api/user/help/contactSupport")
 public class ContactSupportRestController {
@@ -21,7 +23,7 @@ public class ContactSupportRestController {
     }
 
     @PostMapping
-    public Response<?> askQuestion(@RequestBody CallbackFormDto callbackFormDto) {
+    public Response<?> askQuestion(@Valid @RequestBody CallbackFormDto callbackFormDto) {
         supportUserService.askQuestionByUser(callbackFormDto);
         return Response.ok(callbackFormDto);
     }

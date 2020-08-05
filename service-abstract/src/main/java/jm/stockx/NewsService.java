@@ -18,4 +18,6 @@ public interface NewsService {
 
     News getNewsByName(String name);
 
+    boolean isNewsExist(Long id);
+
 }

@@ -4,6 +4,7 @@ import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -13,9 +14,16 @@ import java.util.Date;
 @AllArgsConstructor
 public class TokenRecoveryPostDto {
 
+    @NotNull
     private User user;
+
+    @NotNull
     private String hash;
+
+    @NotNull
     private String hashEmail;
+
+    @NotNull
     private Date startTime;
 
     public TokenRecoveryPostDto(TokenRecovery tokenRecovery) {

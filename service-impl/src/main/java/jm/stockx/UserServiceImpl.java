@@ -71,4 +71,10 @@ public class UserServiceImpl implements UserService {
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(authReq);
     }
+
+    @Override
+    public boolean isUserExist(Long id) {
+        return userdao.doesItExistEntity(id);
+    }
+
 }
