@@ -12,16 +12,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/rest/api/admin")
 @Tag(name = "admin", description = "Admin API")
 @Slf4j
-public class AdminRestController {
+public class AdminUserRestController {
     private final UserService userService;
 
-    public AdminRestController(UserService userService) {
+    public AdminUserRestController(UserService userService) {
         this.userService = userService;
     }
 
@@ -59,15 +60,15 @@ public class AdminRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user created"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: user not created")
             })
-    public Response<?> createUser(@RequestBody User user) {
+    public Response<?> createUser(@Valid @RequestBody User user) {
         String username = user.getUsername();
-        if (userService.getUserByUserName(username) != null) {
-            log.warn("Пользователь {} уже существует в базе", username);
-            return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a user");
+        if (userService.isUserExist(user.getId())) {
+            userService.createUser(user);
+            log.info("Пользователь {} успешно создан", username);
+            return Response.ok(HttpStatus.OK, "User created successfully");
         }
-        userService.createUser(user);
-        log.info("Пользователь {} успешно создан", username);
-        return Response.ok(HttpStatus.OK, "User created successfully");
+        log.warn("Пользователь {} уже существует в базе", username);
+        return Response.error(HttpStatus.BAD_REQUEST, "Error when creating a user");
     }
 
     @PutMapping(value = "/updateUser")
@@ -84,15 +85,15 @@ public class AdminRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update user")
             })
-    public Response<?> updateUser(@RequestBody User user) {
+    public Response<?> updateUser(@Valid @RequestBody User user) {
         String username = user.getUsername();
-        if (userService.getUserByUserName(user.getUsername()) == null) {
-            log.warn("Пользователь {} в базе не найден", username);
-            return Response.error(HttpStatus.BAD_REQUEST, "User not found");
+        if (userService.isUserExist(user.getId())) {
+            userService.updateUser(user);
+            log.info("Пользователь {} успешно обновлен", username);
+            return Response.ok().build();
         }
-        userService.updateUser(user);
-        log.info("Пользователь {} успешно обновлен", username);
-        return Response.ok().build();
+        log.warn("Пользователь {} в базе не найден", username);
+        return Response.error(HttpStatus.BAD_REQUEST, "User not found");
     }
 
     @DeleteMapping(value = "/deleteUser")
@@ -105,12 +106,12 @@ public class AdminRestController {
             }
     )
     public Response<Boolean> deleteUser(Long id) {
-        if (userService.getUserById(id) == null) {
-            log.warn("Пользователь с id = {} в базе не найден", id);
-            return Response.error(HttpStatus.BAD_REQUEST, "User not found");
+        if (userService.isUserExist(id)) {
+            userService.deleteUser(id);
+            log.info("Пользователь с id = {} успешно удален", id);
+            return Response.ok().build();
         }
-        userService.deleteUser(id);
-        log.info("Пользователь с id = {} успешно удален", id);
-        return Response.ok().build();
+        log.warn("Пользователь с id = {} в базе не найден", id);
+        return Response.error(HttpStatus.BAD_REQUEST, "User not found");
     }
 }

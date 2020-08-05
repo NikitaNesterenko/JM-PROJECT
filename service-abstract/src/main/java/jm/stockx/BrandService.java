@@ -17,4 +17,7 @@ public interface BrandService {
     void delete(Long id);
 
     Brand getBrandByName(String name);
+
+    boolean isBrandExist(Long id);
+
 }

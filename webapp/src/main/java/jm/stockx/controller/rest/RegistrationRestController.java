@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/registration")
 @Slf4j
@@ -24,7 +26,7 @@ public class RegistrationRestController {
     }
 
     @PostMapping
-    public Response<?> registerUser(@RequestBody UserDto userDto) {
+    public Response<?> registerUser(@Valid @RequestBody UserDto userDto) {
         if (userDto == null) {
             log.info("Ошибка регистрации пользователя. Не корректные регистрационные данные.");
             return Response.error(HttpStatus.BAD_REQUEST, "Invalid registration data");
