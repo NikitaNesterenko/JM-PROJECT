@@ -45,7 +45,7 @@ public class User implements UserDetails {
     @Column(name = "seller_level")
     private Byte sellerLevel;
 
-    @Column(name = "vacation_mode", columnDefinition = "TINYINT(1) default false")
+    @Column(name = "vacation_mode")
     private Boolean vacationMode;
 
     @OneToOne
