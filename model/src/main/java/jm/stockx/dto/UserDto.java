@@ -18,6 +18,7 @@ public class UserDto {
     private String password;
     private byte sellerLevel;
     private boolean vacationMode;
+    private String localeTag;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -28,6 +29,7 @@ public class UserDto {
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
         this.vacationMode = user.getVacationMode();
+        this.localeTag = user.getLocaleTag();
     }
 
     public UserDto(String firstName,
@@ -36,7 +38,8 @@ public class UserDto {
                    String username,
                    String password,
                    Byte sellerLevel,
-                   Boolean vacationMode) {
+                   Boolean vacationMode,
+                   String localeTag) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -44,5 +47,6 @@ public class UserDto {
         this.password = password;
         this.sellerLevel = sellerLevel;
         this.vacationMode = vacationMode;
+        this.localeTag = localeTag;
     }
 }

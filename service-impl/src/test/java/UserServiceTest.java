@@ -36,6 +36,8 @@ public class UserServiceTest {
 
     private final Boolean vacationMode = false;
 
+    private final String localeTag = "ru";
+
     @Mock
     private User mockUser;
 
@@ -46,7 +48,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetUserByName() {
-        User user = new User(firstName, lastName, email, username, password, sellerLevel, vacationMode);
+        User user = new User(firstName, lastName, email, username, password, sellerLevel, vacationMode, localeTag);
         Mockito.when(userDao.getByName(Mockito.anyString()))
                 .thenReturn(java.util.Optional.of(user));
         User fromTest = userService.getUserByUserName("name");

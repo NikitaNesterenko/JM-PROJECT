@@ -58,22 +58,22 @@ public class EntityDataInitializer {
     private List<User> createUsers() {
 
         Admin admin = new Admin("Admin", "God", "admin.god@email.com",
-                "admin", "admin", (byte) 100, true);
+                "admin", "admin", (byte) 100, true, "ru");
         admin.setRole(roleList.get(0));
         userList.add(admin);
 
         User user1 = new User("Vasya", "Pupkin", "vasya.pupkin@email.com",
-                "vasya.pupkin", "1", (byte) 10, true);
+                "vasya.pupkin", "1", (byte) 10, true, "en");
         user1.setRole(roleList.get(1));
         userList.add(user1);
 
         User user2 = new User("Petya", "Vakulov", "petya.vakulov@email.com",
-                "petya.vakulov", "1", (byte) 12, true);
+                "petya.vakulov", "1", (byte) 12, true, "ru");
         user2.setRole(roleList.get(1));
         userList.add(user2);
 
         User user3 = new User("Semen","Semenych","semen.semenych@email.com",
-                "semen.semenych","1",(byte) 22,true);
+                "semen.semenych","1",(byte) 22,true, "en");
         user3.setRole(roleList.get(1));
         userList.add(user3);
 

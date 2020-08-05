@@ -63,13 +63,17 @@ public class User implements UserDetails {
     @Column(name = "apple_user_id")
     private String appleUserId;
 
+    @Column(name = "locale_tag")
+    private String localeTag;
+
     public User(String firstName,
                 String lastName,
                 String email,
                 String username,
                 String password,
                 Byte sellerLevel,
-                Boolean vacationMode) {
+                Boolean vacationMode,
+                String localeTag) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -77,6 +81,7 @@ public class User implements UserDetails {
         this.password = password;
         this.sellerLevel = sellerLevel;
         this.vacationMode = vacationMode;
+        this.localeTag = localeTag;
     }
 
     public User(String firstName, String lastName, String password) {
@@ -89,7 +94,8 @@ public class User implements UserDetails {
                 userDto.getUsername() != null ? userDto.getUsername() : "stockx" + System.currentTimeMillis(),
                 userDto.getPassword(),
                 userDto.getSellerLevel(),
-                userDto.isVacationMode());
+                userDto.isVacationMode(),
+                userDto.getLocaleTag());
     }
 
     @Override
