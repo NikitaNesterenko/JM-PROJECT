@@ -101,11 +101,10 @@
             <version>v3-rev224-1.22.0</version>
         </dependency>
 
-
+        <!-- PostgreSQL -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
 
         <dependency>
