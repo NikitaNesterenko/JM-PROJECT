@@ -114,7 +114,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.lowestAsk," +
                 "i.highestBid," +
                 "i.releaseDate," +
-                "i.condition)" +
+                "i.condition," +
+                "i.itemColors)" +
                 "FROM Item AS i " +
                 "WHERE id =: id", ItemDto.class)
                 .setParameter("id", id)
@@ -123,11 +124,18 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public List<ItemDto> getItemsByColors(String itemColors) {
-        return entityManager.createQuery("FROM Item i WHERE i.itemColors = :itemColors", Item.class)
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
+                "i.name," +
+                "i.price," +
+                "i.lowestAsk," +
+                "i.highestBid," +
+                "i.releaseDate," +
+                "i.condition," +
+                "i.itemColors)" +
+                "FROM Item AS i " +
+                "WHERE itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
-                .getResultList()
-                .stream()
-                .map(ItemDto::new)
-                .collect(Collectors.toList());
+                .getResultList();
     }
 }
