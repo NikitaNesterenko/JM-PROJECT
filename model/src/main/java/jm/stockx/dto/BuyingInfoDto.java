@@ -16,7 +16,9 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuyingInfoPostDto {
+public class BuyingInfoDto {
+
+    private Long id;
 
     @NotNull
     private LocalDateTime buyingTimeStamp;
@@ -32,7 +34,20 @@ public class BuyingInfoPostDto {
     @NotNull
     private Status status;
 
-    public BuyingInfoPostDto(BuyingInfo buyingInfo) {
+    public BuyingInfoDto(LocalDateTime buyingTimeStamp,
+                         Double buyingPrice,
+                         Set<Item> boughtItems,
+                         Set<PaymentInfo> paymentsInfo,
+                         Status status) {
+        this.buyingTimeStamp = buyingTimeStamp;
+        this.buyingPrice = buyingPrice;
+        this.boughtItems = boughtItems;
+        this.paymentsInfo = paymentsInfo;
+        this.status = status;
+    }
+
+    public BuyingInfoDto(BuyingInfo buyingInfo) {
+        this.id = buyingInfo.getId();
         this.buyingTimeStamp = buyingInfo.getBuyingTimeStamp();
         this.buyingPrice = buyingInfo.getBuyingPrice();
         this.boughtItems = buyingInfo.getBoughtItems();

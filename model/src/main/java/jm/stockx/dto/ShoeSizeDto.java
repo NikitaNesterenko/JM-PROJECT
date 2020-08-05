@@ -11,9 +11,8 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoeSizePutDto {
+public class ShoeSizeDto {
 
-    @NotNull
     private Long id;
 
     @Min(3)
