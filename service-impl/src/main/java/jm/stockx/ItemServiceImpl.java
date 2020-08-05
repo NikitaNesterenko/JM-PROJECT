@@ -1,8 +1,8 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingDAO;
+import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.api.dao.ItemDAO;
-import jm.stockx.api.dao.SellingDAO;
+import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
@@ -23,16 +23,16 @@ public class ItemServiceImpl implements ItemService {
     private final ItemDAO itemDao;
     private final UserDAO userDAO;
     private final MailService mailService;
-    private final BuyingDAO buyingDAO;
-    private final SellingDAO sellingDAO;
+    private final BuyingInfoDAO buyingInfoDAO;
+    private final SellingInfoDAO sellingInfoDAO;
 
     @Autowired
-    public ItemServiceImpl(ItemDAO itemDao, UserDAO userDAO, MailService mailService, BuyingDAO buyingDAO, SellingDAO sellingDAO) {
+    public ItemServiceImpl(ItemDAO itemDao, UserDAO userDAO, MailService mailService, BuyingInfoDAO buyingInfoDAO, SellingInfoDAO sellingInfoDAO) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
-        this.buyingDAO = buyingDAO;
-        this.sellingDAO = sellingDAO;
+        this.sellingInfoDAO = sellingInfoDAO;
+        this.buyingInfoDAO = buyingInfoDAO;
     }
 
     @Override
@@ -104,13 +104,13 @@ public class ItemServiceImpl implements ItemService {
         buyingInfo.setBoughtItems(bougthItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
-        buyingDAO.add(buyingInfo);
+        buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
         SellingInfo sellingInfo = new SellingInfo(item);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
-        sellingDAO.add(sellingInfo);
+        sellingInfoDAO.add(sellingInfo);
 
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
     }
@@ -128,5 +128,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getNotReleasedItemsByBrand(Brand brand) {
         return itemDao.getNotReleasedItemsByBrand(brand);
+    }
+
+    @Override
+    public boolean isItemExist(Long id) {
+        return itemDao.doesItExistEntity(id);
     }
 }

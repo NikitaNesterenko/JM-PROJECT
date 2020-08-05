@@ -3,6 +3,9 @@ package jm.stockx.dto;
 import jm.stockx.entity.Item;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Getter
@@ -13,11 +16,25 @@ import java.time.LocalDate;
 public class ItemDto {
 
     private Long id;
+
+    @NotBlank
     private String name;
+
+    @Positive(message = "Цена должна быть положительной")
+    @NotNull
     private Double price;
+
+    @Positive(message = "Цена должна быть положительной")
+    @NotNull
     private Double lowestAsk;
+
+    @Positive(message = "Ставка должна быть положительной")
+    @NotNull
     private Double highestBid;
+
     private LocalDate dateRelease;
+
+    @NotBlank
     private String condition;
 
     public ItemDto(@NonNull Item item) {
