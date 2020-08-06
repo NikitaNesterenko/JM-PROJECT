@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jm.stockx.BuyService;
+import jm.stockx.BuyingService;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.enums.Status;
 import jm.stockx.util.Response;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/rest/api/user/buy")
 @Tag(name = "buy", description = "Buy API")
 @Slf4j
-public class UserBuyRestController {
-    private final BuyService buyService;
+public class UserBuyingRestController {
+    private final BuyingService buyingService;
 
     @Autowired
-    public UserBuyRestController(BuyService buyService) {
-        this.buyService = buyService;
+    public UserBuyingRestController(BuyingService buyingService) {
+        this.buyingService = buyingService;
     }
 
     @PutMapping(value = "/{id}")
@@ -40,7 +40,7 @@ public class UserBuyRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update buyingInfo")
             })
     public Response<?> updateBuyingStatusById(@PathVariable("id") Long id, Status status) {
-        buyService.updateBuyingStatus(id, status);
+        buyingService.updateBuyingStatus(id, status);
         log.info("Информация о продаже успешно обновлена");
         return Response.ok().build();
     }
