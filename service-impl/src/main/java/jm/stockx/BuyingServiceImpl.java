@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class BuyServiceImpl implements BuyService {
+public class BuyingServiceImpl implements BuyingService {
     private final BuyingInfoDAO buyingInfoDAO;
 
-    public BuyServiceImpl(BuyingInfoDAO buyingInfoDAO) {
+    public BuyingServiceImpl(BuyingInfoDAO buyingInfoDAO) {
         this.buyingInfoDAO = buyingInfoDAO;
     }
 

@@ -2,7 +2,7 @@ package jm.stockx;
 
 import jm.stockx.enums.Status;
 
-public interface BuyService {
+public interface BuyingService {
 
     void updateBuyingStatus(Long id, Status status);
 }
