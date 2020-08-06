@@ -19,6 +19,7 @@ public class EntityDataInitializer {
     private StyleService styleService;
     private NewsService newsService;
     private SellingInfoService sellingInfoService;
+    private CurrencyService currencyService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -27,7 +28,8 @@ public class EntityDataInitializer {
                              BrandService brandService,
                              StyleService styleService,
                              NewsService newsService,
-                             SellingInfoService sellingInfoService) {
+                             SellingInfoService sellingInfoService,
+                             CurrencyService currencyService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -35,6 +37,7 @@ public class EntityDataInitializer {
         this.styleService = styleService;
         this.newsService = newsService;
         this.sellingInfoService = sellingInfoService;
+        this.currencyService = currencyService;
     }
 
 
@@ -47,30 +50,14 @@ public class EntityDataInitializer {
     }
 
     private void fillDataBase() {
-        createRoles();              // Works with hibernate 6.0.0.Alpha5
-//        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-        createBrands();             // Works with hibernate 6.0.0.Alpha5
-        createStyles();             // Works with hibernate 6.0.0.Alpha5
-//        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createRoles();
+        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createBrands();
+        createCurrency();
+        createStyles();
+        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createNews();
-//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
-    }
-
-    private void createSellingInfo() {
-        if (sellingInfoService.getAll().size() == 0) {
-
-            sellingInfoService.create(new SellingInfo(
-                    userService.getUserById(1L),
-                    itemService.get(1L),
-                    108L,
-                    Status.DELIVERED));
-
-            sellingInfoService.create(new SellingInfo(
-                    userService.getUserById(2L),
-                    itemService.get(2L),
-                    109L,
-                    Status.ACCEPTED));
-        }
+        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
     }
 
     private void createRoles() {
@@ -125,6 +112,14 @@ public class EntityDataInitializer {
             brandService.create(new Brand("Jordan"));
             brandService.create(new Brand("Adidas"));
             brandService.create(new Brand("Nike"));
+        }
+    }
+
+    private void createCurrency() {
+        if (currencyService.getAll().size() == 0) {
+            currencyService.create(new Currency("USD"));
+            currencyService.create(new Currency("EUR"));
+            currencyService.create(new Currency("RUB"));
         }
     }
 
@@ -212,6 +207,23 @@ public class EntityDataInitializer {
                     "Заголовок новости - ясно",
                     "Описание новости - не очень ясно, но допустим",
                     "Вопрос: что такое name в сущности News? Может, удалить?"));
+        }
+    }
+
+    private void createSellingInfo() {
+        if (sellingInfoService.getAll().size() == 0) {
+
+            sellingInfoService.create(new SellingInfo(
+                    userService.getUserById(1L),
+                    itemService.get(1L),
+                    108L,
+                    Status.DELIVERED));
+
+            sellingInfoService.create(new SellingInfo(
+                    userService.getUserById(2L),
+                    itemService.get(2L),
+                    109L,
+                    Status.ACCEPTED));
         }
     }
 }
