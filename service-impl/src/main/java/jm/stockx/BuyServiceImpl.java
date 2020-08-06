@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingDAO;
+import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.enums.Status;
 import org.springframework.stereotype.Service;
@@ -8,17 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BuyServiceImpl implements BuyService {
-    private final BuyingDAO buyingDAO;
+    private final BuyingInfoDAO buyingInfoDAO;
 
-    public BuyServiceImpl(BuyingDAO buyingDAO) {
-        this.buyingDAO = buyingDAO;
+    public BuyServiceImpl(BuyingInfoDAO buyingInfoDAO) {
+        this.buyingInfoDAO = buyingInfoDAO;
     }
 
     @Transactional
     @Override
     public void updateBuyingStatus(Long id, Status status) {
-        BuyingInfo buyingInfo = buyingDAO.getById(id);
+        BuyingInfo buyingInfo = buyingInfoDAO.getById(id);
         buyingInfo.setStatus(status);
-        buyingDAO.update(buyingInfo);
+        buyingInfoDAO.update(buyingInfo);
     }
 }
