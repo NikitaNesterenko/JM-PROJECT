@@ -2,12 +2,14 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.User;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Component
 @Getter
 @Setter
 @ToString
@@ -37,6 +39,8 @@ public class UserDto {
     private byte sellerLevel;
 
     private boolean vacationMode;
+
+    @NotBlank
     private String localeTag;
 
     public UserDto(User user) {
