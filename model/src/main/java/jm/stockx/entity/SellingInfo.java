@@ -33,11 +33,11 @@ public class SellingInfo {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @Column(name = "order_status", nullable = false)
+    @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     private Double price;
 
     public SellingInfo(User user,
@@ -48,6 +48,14 @@ public class SellingInfo {
         this.price = item.getPrice();
         this.orderDate = LocalDateTime.now();
         this.status = status;
+    }
+
+    public SellingInfo(User user,
+                       Item item) {
+        this.user = user;
+        this.item = item;
+        this.price = item.getPrice();
+        this.orderDate = LocalDateTime.now();
     }
 
     public SellingInfo(User user,

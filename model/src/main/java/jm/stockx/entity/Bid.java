@@ -18,7 +18,7 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     private Double price;
 
     @Type(type="true_false")

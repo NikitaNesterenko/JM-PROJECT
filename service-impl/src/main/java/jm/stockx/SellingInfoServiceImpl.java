@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.SellingDAO;
+import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,39 +10,39 @@ import java.util.List;
 @Service
 @Transactional
 public class SellingInfoServiceImpl implements SellingInfoService {
-    private final SellingDAO sellingDAO;
+    private final SellingInfoDAO sellingInfoDAO;
 
-    public SellingInfoServiceImpl(SellingDAO sellingDAO) {
-        this.sellingDAO = sellingDAO;
+    public SellingInfoServiceImpl(SellingInfoDAO sellingInfoDAO) {
+        this.sellingInfoDAO = sellingInfoDAO;
     }
 
     @Override
     public Double getAverageSalesValue() {
-        return sellingDAO.getAverageSalesValue();
+        return sellingInfoDAO.getAverageSalesValue();
     }
 
     @Override
     public List<SellingInfo> getAll() {
-        return sellingDAO.getAll();
+        return sellingInfoDAO.getAll();
     }
 
     @Override
     public SellingInfo get(Long id) {
-        return sellingDAO.getById(id);
+        return sellingInfoDAO.getById(id);
     }
 
     @Override
     public void create(SellingInfo sellingInfo) {
-        sellingDAO.add(sellingInfo);
+        sellingInfoDAO.add(sellingInfo);
     }
 
     @Override
     public void update(SellingInfo sellingInfo) {
-        sellingDAO.update(sellingInfo);
+        sellingInfoDAO.update(sellingInfo);
     }
 
     @Override
     public void delete(Long id) {
-        sellingDAO.deleteById(id);
+        sellingInfoDAO.deleteById(id);
     }
 }

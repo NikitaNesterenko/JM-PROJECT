@@ -52,7 +52,7 @@ public class EntityDataInitializer {
         createBrands();             // Works with hibernate 6.0.0.Alpha5
         createStyles();             // Works with hibernate 6.0.0.Alpha5
 //        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-//        createNews();               // DON'T WORKS with hibernate 6.0.0.Alpha5. Data truncation: Data too long for column 'text' at row 1
+        createNews();
 //        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
     }
 

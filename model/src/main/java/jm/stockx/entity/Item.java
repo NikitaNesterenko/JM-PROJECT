@@ -23,13 +23,13 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     private Double price;
 
-    @Column(name = "lowest_ask")
+    @Column(name = "lowest_ask", precision = 10, scale = 2)
     private Double lowestAsk;
 
-    @Column(name = "highest_bid")
+    @Column(name = "highest_bid", precision = 10, scale = 2)
     private Double highestBid;
 
     @Column(name = "release_date")

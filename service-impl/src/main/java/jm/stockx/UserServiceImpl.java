@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-
     @Override
     public List<User> getAllUsers() {
         return userDao.getAll();
@@ -74,7 +73,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserExist(Long id) {
-        return userdao.doesItExistEntity(id);
+        return userDao.doesItExistEntity(id);
     }
-
 }

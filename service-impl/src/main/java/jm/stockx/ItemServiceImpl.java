@@ -107,7 +107,7 @@ public class ItemServiceImpl implements ItemService {
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(item);
+        SellingInfo sellingInfo = new SellingInfo(seller, item);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);
