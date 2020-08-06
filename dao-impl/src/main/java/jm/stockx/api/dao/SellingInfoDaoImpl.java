@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
 
@@ -17,14 +18,14 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
-    public SellingInfo getSellingInfoDtoById(Long id) {
+    public SellingInfoDto getSellingInfoDtoById(Long id) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.SellingInfoDto(" +
                 "s.id, " +
                 "s.orderDate," +
                 "s.price)" +
                 "FROM SellingInfo AS s " +
-                "WHERE id =: id", SellingInfo.class)
+                "WHERE id =: id", SellingInfoDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
