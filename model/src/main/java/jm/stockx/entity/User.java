@@ -54,7 +54,7 @@ public class User implements UserDetails {
     private String appleUserId;
 
     @OneToOne
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     @NotNull
     private Role role;
 

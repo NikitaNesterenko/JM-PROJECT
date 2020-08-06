@@ -6,6 +6,10 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -14,7 +18,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserDto {
 
-    @Null
     private Long id;
 
     @NotBlank(message = "Имя не должно быть null, пустым или состоять из одних лишь пробельных символов")

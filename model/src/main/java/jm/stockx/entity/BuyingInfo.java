@@ -15,8 +15,6 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "buying_info")
-
-/* Таблица хранит историю покупок для КАЖДОГО Item-а */
 public class BuyingInfo {
 
     @Id

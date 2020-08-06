@@ -1,10 +1,10 @@
 package jm.stockx.dto;
 
-import jm.stockx.entity.ShoeSize;
+import jm.stockx.enums.ShoeSizeTypes;
 import lombok.*;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
@@ -16,13 +16,10 @@ public class ShoeSizePutDto {
     @NotNull
     private Long id;
 
-    @Positive
+    @Min(3)
     @NotNull
     private Double size;
 
-    public ShoeSizePutDto(ShoeSize shoeSize) {
-        this.id = shoeSize.getId();
-        this.size = shoeSize.getSize();
-    }
-
+    @NotNull
+    private ShoeSizeTypes sizeTypes;
 }

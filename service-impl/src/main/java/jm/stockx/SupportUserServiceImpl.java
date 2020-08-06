@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.QuestionDAO;
+import jm.stockx.api.dao.SupportQuestionDAO;
 import jm.stockx.dto.CallbackFormDto;
 import jm.stockx.entity.SupportQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 public class SupportUserServiceImpl implements SupportUserService {
 
     private final MailService mailService;
-    private final QuestionDAO questionDAO;
+    private final SupportQuestionDAO supportQuestionDAO;
 
     @Autowired
-    public SupportUserServiceImpl(MailService mailService, QuestionDAO questionDAO) {
+    public SupportUserServiceImpl(MailService mailService, SupportQuestionDAO supportQuestionDAO) {
         this.mailService = mailService;
-        this.questionDAO = questionDAO;
+        this.supportQuestionDAO = supportQuestionDAO;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SupportUserServiceImpl implements SupportUserService {
         supportQuestion.setDateTime(LocalDateTime.now());
         supportQuestion.setOrderNumber(callbackFormDto.getPrimaryOrderNumber());
         supportQuestion.setText(callbackFormDto.getDescription());
-        questionDAO.add(supportQuestion);
+        supportQuestionDAO.add(supportQuestion);
 
         mailService.sendSimpleMessage("email@javamentor.ru", "Question from client",
                 "user email is" + callbackFormDto.getEmail()

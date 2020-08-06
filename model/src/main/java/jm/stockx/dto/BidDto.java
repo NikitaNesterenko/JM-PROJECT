@@ -4,7 +4,6 @@ import jm.stockx.entity.Bid;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
 
 @Getter
@@ -14,7 +13,6 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class BidDto {
 
-        @Null
         private Long id;
 
         @Positive(message = "Цена должна быть положительной")

@@ -49,4 +49,9 @@ public class NewsServiceImpl implements NewsService {
     public News getNewsByName(String name) {
         return newsDAO.getByName(name).orElse(null);
     }
+
+    @Override
+    public boolean isNewsExist(Long id) {
+        return newsDAO.doesItExistEntity(id);
+    }
 }

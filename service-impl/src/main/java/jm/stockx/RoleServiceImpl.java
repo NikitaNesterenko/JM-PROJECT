@@ -48,4 +48,14 @@ public class RoleServiceImpl implements RoleService {
     public Role getByRoleName(String roleName) {
         return roleDAO.getByName(roleName).orElse(null);
     }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return roleDAO.getByName(name).orElse(null);
+    }
+
+    @Override
+    public boolean isRoleExist(Long id) {
+        return roleDAO.doesItExistEntity(id);
+    }
 }
