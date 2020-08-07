@@ -20,4 +20,8 @@ public class Style {
 
     @Column(name = "name")
     private String name;
+
+    public Style(String name) {
+        this.name = name;
+    }
 }

@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class MailServiceImpl implements MailService {
 
     public final JavaMailSender emailSender;
@@ -47,7 +48,6 @@ public class MailServiceImpl implements MailService {
         emailSender.send(message);
     }
 
-    @Transactional
     @Override
     public boolean sendRecoveryLinkToUser(User user) {
         if (user == null || user.getEmail() == null) {
@@ -69,7 +69,6 @@ public class MailServiceImpl implements MailService {
         return true;
     }
 
-    @Transactional
     @Override
     public boolean changePasswordByToken(String link, String password) {
         if (!link.startsWith(urlRecoveryLink)) {

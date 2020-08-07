@@ -20,4 +20,8 @@ public class Brand {
 
     @Column(name = "name")
     private String name;
+
+    public Brand(String name) {
+        this.name = name;
+    }
 }

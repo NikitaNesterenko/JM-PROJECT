@@ -1,8 +1,11 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.*;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -17,19 +20,19 @@ public class UserDto {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Имя не должно быть null, пустым или состоять из одних лишь пробельных символов")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Фамилия не должна быть null, пустой или состоять из одних лишь пробельных символов")
     private String lastName;
 
     @Email(message = "Адрес электронной почты должен быть корректным")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Username не должен быть null, пустым или состоять из одних лишь пробельных символов")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "Пароль не должен быть null, пустым или состоять из одних лишь пробельных символов")
     private String password;
 
     @Min(1)
@@ -37,6 +40,10 @@ public class UserDto {
     private byte sellerLevel;
 
     private boolean vacationMode;
+
+    private Set<BuyingInfo> buyingInfo;
+
+    private String appleUserId;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -46,6 +53,7 @@ public class UserDto {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
+        this.buyingInfo = user.getBuyingInfo();
         this.vacationMode = user.getVacationMode();
     }
 

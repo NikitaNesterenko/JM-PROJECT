@@ -25,7 +25,7 @@ public class BuyingInfo {
     @Column(name = "buying_time_stamp")
     private LocalDateTime buyingTimeStamp;
 
-    @Column(name = "buying_price")
+    @Column(name = "buying_price", precision = 10, scale = 2)
     private Double buyingPrice;
 
     @ManyToMany(cascade = CascadeType.ALL)
