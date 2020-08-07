@@ -51,13 +51,13 @@ public class EntityDataInitializer {
 
     private void fillDataBase() {
         createRoles();
-        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+//        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createBrands();
         createCurrency();
         createStyles();
-        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+//        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createNews();
-        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
     }
 
     private void createRoles() {
