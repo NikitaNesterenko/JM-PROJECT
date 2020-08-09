@@ -11,8 +11,13 @@ import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -113,5 +118,34 @@ public class AdminUserRestController {
         }
         log.warn("Пользователь с id = {} в базе не найден", id);
         return Response.error(HttpStatus.BAD_REQUEST, "User not found");
+    }
+
+    @PostMapping(value = "/addUserImage")
+    public Response<?> addUserImage(@RequestParam MultipartFile file, @RequestParam Long id) {
+        User user = userService.getUserById(id);
+        String fileName = file.getOriginalFilename();
+        String uploadRootPath = AdminUserRestController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        user.setImageUrl(uploadRootPath + user.getUsername());
+        userService.updateUser(user);
+        File uploadRootDir = new File(uploadRootPath + user.getUsername());
+
+        if (!uploadRootDir.exists()) {
+            uploadRootDir.mkdirs();
+        }
+        List<File> uploadedFiles = new ArrayList<File>();
+        if (fileName != null && fileName.length() > 0) {
+            try {
+                File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(file.getBytes());
+                stream.close();
+                uploadedFiles.add(serverFile);
+            } catch (Exception e) {
+                System.out.println("Error Write file: " + fileName);
+                log.warn("Картинка не загружена");
+                return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");
+            }
+        }
+        return Response.ok().build();
     }
 }

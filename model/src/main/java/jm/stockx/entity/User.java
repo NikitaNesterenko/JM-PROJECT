@@ -43,6 +43,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
     @Column(name = "seller_level")
     private Byte sellerLevel;
 
