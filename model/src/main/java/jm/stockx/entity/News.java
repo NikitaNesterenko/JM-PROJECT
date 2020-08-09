@@ -36,9 +36,8 @@ public class News {
     @Lob
     private String text;
 
-    @Column(name = "image")
-    @Lob
-    private Blob image;
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
     public News(
             String name,
