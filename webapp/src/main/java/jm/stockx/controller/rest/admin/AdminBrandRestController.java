@@ -87,7 +87,7 @@ public class AdminBrandRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: brand was not created")
             })
-    public Response<?> createBrand(Brand brand) {
+    public Response<?> createBrand(@RequestBody Brand brand) {
         if (brandService.isBrandExist(brand.getId())) {
             logger.warn("Бренд> {} уже существует в базе", brand.getName());
             return Response.error(HttpStatus.BAD_REQUEST, "This brand already exists in database");
@@ -111,7 +111,7 @@ public class AdminBrandRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update brand")
             })
-    public Response<?> updateBrand(Brand brand) {
+    public Response<?> updateBrand(@RequestBody Brand brand) {
         String brandName = brand.getName();
         if (brandService.isBrandExist(brand.getId())) {
             brandService.update(brand);

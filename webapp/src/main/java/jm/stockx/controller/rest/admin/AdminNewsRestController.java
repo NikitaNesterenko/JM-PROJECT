@@ -86,7 +86,7 @@ public class AdminNewsRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no news with such id")
             }
     )
-    public Response<Boolean> deleteNews(Long id) {
+    public Response<Boolean> deleteNews(@PathVariable Long id) {
         if (newsService.isNewsExist(id)) {
             newsService.delete(id);
             log.info("Новость с id = {} успешно удалена", id);

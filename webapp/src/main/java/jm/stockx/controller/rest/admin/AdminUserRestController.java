@@ -105,7 +105,7 @@ public class AdminUserRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no user with such id")
             }
     )
-    public Response<Boolean> deleteUser(Long id) {
+    public Response<Boolean> deleteUser(@PathVariable Long id) {
         if (userService.isUserExist(id)) {
             userService.deleteUser(id);
             log.info("Пользователь с id = {} успешно удален", id);
