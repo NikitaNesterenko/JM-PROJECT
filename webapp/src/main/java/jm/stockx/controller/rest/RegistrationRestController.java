@@ -29,31 +29,37 @@ public class RegistrationRestController {
     public Response<?> registerUser(@Valid @RequestBody UserDto userDto) {
         if (userDto == null) {
             log.info("Ошибка регистрации пользователя. Не корректные регистрационные данные.");
-            return Response.error(HttpStatus.BAD_REQUEST, "Invalid registration data");
+            return Response.error(HttpStatus.BAD_REQUEST, "data.empty");
         }
         String firstName = userDto.getFirstName();
         if (firstName == null || firstName.length() < 1 || firstName.length() > 50) {
             log.info("!Ошибка регистрации пользователя. firstName не соответствует условию.");
-            return Response.error(HttpStatus.BAD_REQUEST, "!first name must be between 1 and 50 characters long");
+            return Response.error(HttpStatus.BAD_REQUEST, "data.firstName");
         }
         String lastName = userDto.getLastName();
         if (lastName == null || lastName.length() < 1 || lastName.length() > 50) {
             log.info("Ошибка регистрации пользователя. lastName не соответствует условию.");
-            return Response.error(HttpStatus.BAD_REQUEST, "last name must be between 1 and 50 characters long");
+            return Response.error(HttpStatus.BAD_REQUEST, "data.lastName");
         }
         String password = userDto.getPassword();
         if (password == null || password.length() < 8) {
             log.info("Ошибка регистрации пользователя. password не соответствует условию.");
-            return Response.error(HttpStatus.BAD_REQUEST, "At least 8 characters");
+            return Response.error(HttpStatus.BAD_REQUEST, "data.password");
         }
         String email = userDto.getEmail();
+        String emailError = "data.email";
         if (email == null || email.indexOf('@') == -1) {
             log.info("Ошибка регистрации пользователя. email не соответствует условию.");
-            return Response.error(HttpStatus.BAD_REQUEST, "error in email - email format validation failed: " + email);
+            return Response.error(HttpStatus.BAD_REQUEST, emailError + email);
         }
+        String emailNotNull = "data.email.notenull";
         if (userService.getUserByEmail(email) != null) {
-            log.info("Ошибка регистрации пользователя. Почтовый адрес {} уже используется.", userDto.getEmail());
-            return Response.error(HttpStatus.BAD_REQUEST, "There is already an account associated with this email address. Please login using your existing account");
+            log.info("Ошибка регистрации пользователя. Почтовый адрес {} уже используется.", email);
+            return Response.error(HttpStatus.BAD_REQUEST, emailNotNull + email);
+        }
+        String localeTag = userDto.getLocaleTag();
+        if (localeTag == null || !localeTag.contains("ru") & !localeTag.contains("en")) {
+            userDto.setLocaleTag("en");
         }
 
         User user = new User(userDto);

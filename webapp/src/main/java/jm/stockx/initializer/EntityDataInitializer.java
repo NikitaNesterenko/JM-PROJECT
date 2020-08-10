@@ -77,6 +77,7 @@ public class EntityDataInitializer {
                     "admin",
                     (byte) 100,
                     true,
+                    "ru",
                     "admin@apple.id");
             admin.setRole(roleService.getByRoleName("ROLE_ADMIN"));
             userService.createUser(admin);
@@ -89,6 +90,7 @@ public class EntityDataInitializer {
                     "1",
                     (byte) 10,
                     true,
+                    "en",
                     "user1@apple.id");
             user1.setRole(roleService.getByRoleName("ROLE_USER"));
             userService.createUser(user1);
@@ -101,6 +103,7 @@ public class EntityDataInitializer {
                     "1",
                     (byte) 13,
                     false,
+                    "en",
                     "user2@apple.id");
             user2.setRole(roleService.getByRoleName("ROLE_USER"));
             userService.createUser(user2);
