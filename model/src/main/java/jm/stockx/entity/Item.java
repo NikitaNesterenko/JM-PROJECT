@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -47,6 +50,23 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private Byte[] itemImage;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subscriber_id")}
+    )
+    private Set<User> subscribers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")}
+    )
+    private Set<Item> items = new HashSet<>();
+
 
     public Item(String name, Double price, Double lowestAsk, Double highestBid, LocalDate releaseDate,
                 String condition) {
