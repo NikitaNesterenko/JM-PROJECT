@@ -1,9 +1,12 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.*;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -19,19 +22,19 @@ public class UserDto {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "{data.firstName}")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "{data.lastName}")
     private String lastName;
 
-    @Email(message = "Адрес электронной почты должен быть корректным")
+    @Email(message = "{data.email}")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{data.firstName}")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "{data.password}")
     private String password;
 
     @Min(1)
@@ -43,6 +46,10 @@ public class UserDto {
     @NotBlank
     private String localeTag;
 
+    private Set<BuyingInfo> buyingInfo;
+
+    private String appleUserId;
+
     public UserDto(User user) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
@@ -51,6 +58,7 @@ public class UserDto {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
+        this.buyingInfo = user.getBuyingInfo();
         this.vacationMode = user.getVacationMode();
         this.localeTag = user.getLocaleTag();
     }

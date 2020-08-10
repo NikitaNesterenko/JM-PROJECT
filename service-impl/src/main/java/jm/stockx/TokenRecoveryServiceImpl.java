@@ -3,10 +3,11 @@ package jm.stockx;
 import jm.stockx.api.dao.TokenRecoveryDAO;
 import jm.stockx.entity.TokenRecovery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Service
+@Transactional
 public class TokenRecoveryServiceImpl implements TokenRecoveryService {
 
     private final TokenRecoveryDAO tokenDao;
@@ -16,13 +17,11 @@ public class TokenRecoveryServiceImpl implements TokenRecoveryService {
         this.tokenDao = tokenDao;
     }
 
-    @Transactional
     @Override
     public void createToken(TokenRecovery tokenRecovery) {
         tokenDao.add(tokenRecovery);
     }
 
-    @Transactional
     @Override
     public void deleteToken(Long id) {
         tokenDao.deleteById(id);
