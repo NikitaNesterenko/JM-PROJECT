@@ -21,7 +21,7 @@ public class ShoeSize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "size", unique = true, nullable = false)
+    @Column(name = "size", unique = true, precision = 10, scale = 2)
     private Double size;
 
     @Column(name = "size_type", nullable = false)
