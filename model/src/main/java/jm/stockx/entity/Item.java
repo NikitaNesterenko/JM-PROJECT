@@ -23,13 +23,13 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     private Double price;
 
-    @Column(name = "lowest_ask")
+    @Column(name = "lowest_ask", precision = 10, scale = 2)
     private Double lowestAsk;
 
-    @Column(name = "highest_bid")
+    @Column(name = "highest_bid", precision = 10, scale = 2)
     private Double highestBid;
 
     @Column(name = "release_date")
@@ -39,7 +39,8 @@ public class Item {
     @Column(name = "item_condition")
     private String condition;
 
-    @ManyToOne(targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // @ManyToOne(targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)     - так валится
+    @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
@@ -48,7 +49,15 @@ public class Item {
     @Basic(fetch = FetchType.LAZY)
     private Byte[] itemImage;
 
-    public Item(String name, Double price, Double lowestAsk, Double highestBid, LocalDate releaseDate,
+    @ManyToOne
+    @JoinColumn(name = "style_id")
+    private Style style;
+
+    public Item(String name,
+                Double price,
+                Double lowestAsk,
+                Double highestBid,
+                LocalDate releaseDate,
                 String condition) {
         this.name = name;
         this.price = price;
@@ -58,7 +67,26 @@ public class Item {
         this.condition = condition;
     }
 
-    @OneToOne(targetEntity = Style.class)
-    @JoinColumn(name = "style_id")
-    private Style style;
+    public Item(String name,
+                Double price,
+                Double lowestAsk,
+                Double highestBid,
+                LocalDate releaseDate,
+                String condition,
+                Brand brand) {
+        this(name, price, lowestAsk, highestBid, releaseDate, condition);
+        this.brand = brand;
+    }
+
+    public Item(String name,
+                Double price,
+                Double lowestAsk,
+                Double highestBid,
+                LocalDate releaseDate,
+                String condition,
+                Brand brand,
+                Style style) {
+        this(name, price, lowestAsk, highestBid, releaseDate, condition, brand);
+        this.style = style;
+    }
 }
