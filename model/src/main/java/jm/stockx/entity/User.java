@@ -53,6 +53,9 @@ public class User implements UserDetails {
     @Column(name = "apple_user_id")
     private String appleUserId;
 
+    @Column(name = "locale_tag")
+    private String localeTag;
+
     @OneToOne
     @JoinColumn(name = "role_id", nullable = false)
     @NotNull
@@ -64,9 +67,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
-
-    @Column(name = "locale_tag")
-    private String localeTag;
 
     public User(String firstName,
                 String lastName,
@@ -93,39 +93,34 @@ public class User implements UserDetails {
                 String password,
                 Byte sellerLevel,
                 Boolean vacationMode,
-                String appleUserId) {
-        this(firstName, lastName, email, username, password, sellerLevel, vacationMode);
-        this.appleUserId = appleUserId;
-    }
-
-    public User(String firstName,
-                String lastName,
-                String email,
-                String username,
-                String password,
-                Byte sellerLevel,
-                Boolean vacationMode,
                 String appleUserId,
                 Set<BuyingInfo> buyingInfo) {
         this(firstName, lastName, email, username, password, sellerLevel, vacationMode, appleUserId);
         this.buyingInfo = buyingInfo;
     }
 
+    public User(String firstName, String lastName, String email, String username, String password, Byte sellerLevel, Boolean vacationMode, String appleUserId, String localeTag) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.sellerLevel = sellerLevel;
+        this.vacationMode = vacationMode;
+        this.appleUserId = appleUserId;
+        this.localeTag = localeTag;
+    }
+
     public User(String firstName, String lastName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 
     public User(UserDto userDto) {
-        this(userDto.getFirstName(),
-                userDto.getLastName(),
-                userDto.getEmail(),
-                userDto.getUsername() != null ? userDto.getUsername() : "stockx" + System.currentTimeMillis(),
-                userDto.getPassword(),
-                userDto.getSellerLevel(),
-                userDto.isVacationMode(),
-                userDto.getLocaleTag()),
-                userDto.getAppleUserId(),
-                userDto.getBuyingInfo());
+
     }
+
 
     @Override
     public String getUsername() {
