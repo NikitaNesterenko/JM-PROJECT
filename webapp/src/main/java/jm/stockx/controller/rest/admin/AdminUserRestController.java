@@ -141,7 +141,6 @@ public class AdminUserRestController {
                 stream.close();
                 uploadedFiles.add(serverFile);
             } catch (Exception e) {
-                System.out.println("Error Write file: " + fileName);
                 log.warn("Картинка не загружена");
                 return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");
             }
