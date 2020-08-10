@@ -110,18 +110,15 @@ public class AdminNewsRestController {
         news.setImageUrl(uploadRootPath + news.getName());
         newsService.update(news);
         File uploadRootDir = new File(uploadRootPath + news.getName());
-
         if (!uploadRootDir.exists()) {
             uploadRootDir.mkdirs();
         }
-        List<File> uploadedFiles = new ArrayList<File>();
         if (fileName != null && fileName.length() > 0) {
             try {
                 File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(file.getBytes());
-                stream.close();
-                uploadedFiles.add(serverFile);
+                try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+                    stream.write(file.getBytes());
+                }
             } catch (Exception e) {
                 log.warn("Картинка не загружена");
                 return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");

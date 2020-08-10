@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.ItemService;
 import jm.stockx.entity.Item;
 import jm.stockx.util.Response;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -103,6 +104,7 @@ public class AdminItemRestController {
     }
 
 
+    @SneakyThrows
     @PostMapping(value = "/addItemImage")
     public Response<?> addItemImage(@RequestParam MultipartFile file, @RequestParam Long id) {
         Item item = itemService.get(id);
@@ -111,22 +113,16 @@ public class AdminItemRestController {
         item.setItemImageUrl(uploadRootPath + item.getName());
         itemService.update(item);
         File uploadRootDir = new File(uploadRootPath + item.getName());
-
         if (!uploadRootDir.exists()) {
             uploadRootDir.mkdirs();
         }
-        List<File> uploadedFiles = new ArrayList<File>();
         if (fileName != null && fileName.length() > 0) {
-            try {
-                File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+            File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
+            try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
                 stream.write(file.getBytes());
-                stream.close();
-                uploadedFiles.add(serverFile);
-            } catch (Exception e) {
-                log.warn("Картинка не загружена");
-                return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");
             }
+            log.warn("Картинка не загружена");
+            return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");
         }
         return Response.ok().build();
     }
