@@ -41,7 +41,7 @@ public class AdminStyleRestController {
     }
 
     @PostMapping
-    public Response<?> createItem(@Valid @RequestBody Style style) {
+    public Response<?> createStyle(@Valid @RequestBody Style style) {
         String styleName = style.getName();
         if (styleService.isStyleExist(style.getId())) {
             log.warn("Стиль с именем {} уже существует в базе", styleName);

@@ -71,16 +71,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void addItemImage(Long id, Byte[] array) {
-        itemDao.addItemImage(id, array);
-    }
-
-    @Override
-    public Byte[] getItemImage(Long id) {
-        return itemDao.getItemImage(id);
-    }
-
-    @Override
     public PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size) {
         List<ItemDto> foundItems = itemDao.searchItem(search, page, size);
         int sizeItems = foundItems.size();

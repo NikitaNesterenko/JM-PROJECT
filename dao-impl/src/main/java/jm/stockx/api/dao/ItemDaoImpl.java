@@ -4,7 +4,6 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,30 +78,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "AND i.brand =: brandId", Item.class)
                 .setParameter("brandId", brand.getId())
                 .getResultList();
-    }
-
-    @Override
-    public void addItemImage(Long id, Byte[] array) {
-        entityManager.createQuery("" +
-                "UPDATE Item i " +
-                "SET i.itemImage = :bytesOfImage " +
-                "WHERE id=:id", Item.class)
-                .setParameter("bytesOfImage", array)
-                .setParameter("id", id)
-                .executeUpdate();
-    }
-
-    @Override
-    public Byte[] getItemImage(Long id) {
-        List<Item> list = entityManager.createQuery("" +
-                "FROM Item " +
-                "WHERE id=:id", Item.class)
-                .setParameter("id", id)
-                .getResultList();
-        if (list.size() == 0) {
-            return null;
-        }
-        return list.get(0).getItemImage();
     }
 
     @Override

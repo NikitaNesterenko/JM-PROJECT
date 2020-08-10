@@ -22,10 +22,6 @@ public interface ItemService {
 
     Item getItemByName(String name);
 
-    void addItemImage(Long id, Byte[] array);
-
-    Byte[] getItemImage(Long id);
-
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
 
     void buyItem(BuyingDto buyingDto);

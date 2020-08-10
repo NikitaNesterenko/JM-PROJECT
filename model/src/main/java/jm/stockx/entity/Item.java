@@ -45,10 +45,8 @@ public class Item {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @Column(name = "item_image")
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private Byte[] itemImage;
+    @Column(name = "item_imageUrl")
+    private String itemImageUrl;
 
     @ManyToOne
     @JoinColumn(name = "style_id")
@@ -92,6 +90,26 @@ public class Item {
                 Brand brand,
                 Style style) {
         this(name, price, lowestAsk, highestBid, releaseDate, condition, brand);
+        this.style = style;
+    }
+
+    public Item(String name,
+                Double price,
+                Double lowestAsk,
+                Double highestBid,
+                LocalDate releaseDate,
+                String condition,
+                Brand brand,
+                String itemImageUrl,
+                Style style) {
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.releaseDate = releaseDate;
+        this.condition = condition;
+        this.brand = brand;
+        this.itemImageUrl = itemImageUrl;
         this.style = style;
     }
 }

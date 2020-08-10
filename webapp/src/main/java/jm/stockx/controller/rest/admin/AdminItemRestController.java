@@ -8,14 +8,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.ItemService;
 import jm.stockx.entity.Item;
 import jm.stockx.util.Response;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-
-import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/rest/api/admin/items")
@@ -72,7 +77,7 @@ public class AdminItemRestController {
         String itemName = item.getName();
         if (itemService.getItemByName(itemName) == null) {
             log.warn("Товар {} в базе не найден", itemName);
-            return Response.error(HttpStatus.BAD_REQUEST,"Item not found");
+            return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
         }
         itemService.update(item);
         log.info("Товар {} успешно обновлен", itemName);
@@ -96,5 +101,29 @@ public class AdminItemRestController {
         }
         log.warn("Товар с id = {} в базе не найден", id);
         return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
+    }
+
+
+    @SneakyThrows
+    @PostMapping(value = "/addItemImage")
+    public Response<?> addItemImage(@RequestParam MultipartFile file, @RequestParam Long id) {
+        Item item = itemService.get(id);
+        String fileName = file.getOriginalFilename();
+        String uploadRootPath = AdminItemRestController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        item.setItemImageUrl(uploadRootPath + item.getName());
+        itemService.update(item);
+        File uploadRootDir = new File(uploadRootPath + item.getName());
+        if (!uploadRootDir.exists()) {
+            uploadRootDir.mkdirs();
+        }
+        if (fileName != null && fileName.length() > 0) {
+            File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
+            try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+                stream.write(file.getBytes());
+            }
+            log.warn("Картинка не загружена");
+            return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");
+        }
+        return Response.ok().build();
     }
 }
