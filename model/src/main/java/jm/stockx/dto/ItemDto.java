@@ -1,6 +1,7 @@
 package jm.stockx.dto;
 
 import jm.stockx.entity.Item;
+import jm.stockx.enums.ItemColors;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -36,6 +37,7 @@ public class ItemDto {
 
     @NotBlank
     private String condition;
+    private ItemColors itemColors;
 
     public ItemDto(@NonNull Item item) {
         this.id = item.getId();
@@ -45,5 +47,6 @@ public class ItemDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
+        this.itemColors = item.getItemColors();
     }
 }
