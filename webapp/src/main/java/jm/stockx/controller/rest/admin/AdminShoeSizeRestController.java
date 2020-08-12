@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.BrandService;
 import jm.stockx.ShoeSizeService;
+import jm.stockx.dto.ShoeSizeDto;
+import jm.stockx.dto.ShoeSizePutDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.util.Response;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -46,10 +49,17 @@ public class AdminShoeSizeRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no shoe_size found")
             })
-    public Response<List<ShoeSize>> getAllShoeSize() {
+    public Response<List<ShoeSizeDto>> getAllShoeSize() {
+        List<ShoeSizeDto> shoeSizeDtos = new LinkedList<>();
         List<ShoeSize> shoeSizeList = shoeSizeService.getAll();
-        logger.info("Получен список размеров обуви. Всего {} записей.", shoeSizeList.size());
-        return Response.ok(shoeSizeList);
+        for (ShoeSize shoesize : shoeSizeList
+        ) {
+            ShoeSizeDto shoeSizeDto = new ShoeSizeDto(shoesize);
+            shoeSizeDtos.add(shoeSizeDto);
+
+        }
+        logger.info("Получен список размеров обуви. Всего {} записей.", shoeSizeDtos.size());
+        return Response.ok(shoeSizeDtos);
     }
 
     @GetMapping(value = "/{id}")
@@ -66,11 +76,11 @@ public class AdminShoeSizeRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no shoe_size with this shoe_size-id")
             })
-    public Response<ShoeSize> getShoeSizeById(@PathVariable Long id) {
+    public Response<ShoeSizeDto> getShoeSizeById(@PathVariable Long id) {
         if (shoeSizeService.isShoeSizeExist(id)) {
-            ShoeSize shoeSize = shoeSizeService.get(id);
-            logger.info("Получен размер обуви {} ", shoeSize);
-            return Response.ok(shoeSize);
+            ShoeSizeDto shoeSizeDto = shoeSizeService.getShoeSizedDtoById(id);
+            logger.info("Получен размер обуви {} ", shoeSizeDto);
+            return Response.ok(shoeSizeDto);
         }
         logger.warn("Размер обуви с id = {} в базе не найден", id);
         return Response.error(HttpStatus.BAD_REQUEST, "Shoe_size not found");
@@ -115,10 +125,11 @@ public class AdminShoeSizeRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update shoe_size")
             })
-    public Response<?> updateShoeSize(@RequestBody ShoeSize shoeSize) {
-        String shoeSizeName = String.valueOf(shoeSize.getSize());
-        if (shoeSizeService.isShoeSizeExist(shoeSize.getId())) {
-            shoeSizeService.update(shoeSize);
+    public Response<?> updateShoeSize(@RequestBody ShoeSizePutDto shoeSizePutDto) {
+        String shoeSizeName = String.valueOf(shoeSizePutDto.getSize());
+        if (shoeSizeService.isShoeSizeExist(shoeSizePutDto.getId())) {
+            ShoeSize shoeSizeUpdate = new ShoeSize(shoeSizePutDto.getId(), shoeSizePutDto.getSize(), shoeSizePutDto.getSizeTypes());
+            shoeSizeService.update(shoeSizeUpdate);
             logger.info("Размер обуви {} успешно обновлен", shoeSizeName);
             return Response.ok().build();
         }

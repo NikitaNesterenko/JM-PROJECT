@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.RoleService;
+import jm.stockx.dto.RolePutDto;
 import jm.stockx.entity.Role;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -65,12 +66,13 @@ public class AdminRoleRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to update role")
             })
-    public Response<?> updateRole(@RequestBody Role role) {
-        String roleName = role.getRoleName();
-        if (roleService.isRoleExist(role.getId())) {
-            roleService.update(role);
+    public Response<?> updateRole(@RequestBody RolePutDto rolePutDto) {
+        String roleName = rolePutDto.getName();
+        if (roleService.isRoleExist(rolePutDto.getId())) {
+            Role roleUpdate = new Role(rolePutDto.getId(), rolePutDto.getName());
+            roleService.update(roleUpdate);
             log.info("Роль {} успешно обновлен", roleName);
-            return Response.ok(role);
+            return Response.ok(rolePutDto);
         }
         log.warn("Роль {} в базе не найден", roleName);
         return Response.error(HttpStatus.BAD_REQUEST, "Role not found");

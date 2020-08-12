@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.ShoeSizeDAO;
+import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,4 +55,10 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     public boolean isShoeSizeExist(Long id) {
         return shoeSizeDAO.doesItExistEntity(id);
     }
+
+    @Override
+    public ShoeSizeDto getShoeSizedDtoById(Long id) {
+        return shoeSizeDAO.getShoeSizeDtoById(id);
+    }
+
 }

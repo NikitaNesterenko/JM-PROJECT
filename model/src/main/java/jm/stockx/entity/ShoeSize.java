@@ -1,16 +1,14 @@
 package jm.stockx.entity;
 
 import jm.stockx.enums.ShoeSizeTypes;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "shoe_size")
