@@ -34,8 +34,15 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     public List<SellerTopInfoDto> getTopSellingUsers(){
-        String sql = "select NEW jm.stockx.dto.SellerTopInfoDto(u.id, u.username) from SellingInfo as si left join User as u on si.user = u.id " +
-                "group by u.id order by count(si.item) desc";
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.SellerTopInfoDto(" +
+                "u.id, " +
+                "u.username) " +
+                "FROM SellingInfo as si " +
+                "LEFT JOIN User as u " +
+                "ON si.user = u.id " +
+                "GROUP BY u.id " +
+                "ORDER BY COUNT(si.item) DESC";
         return entityManager.createQuery(sql)
                 .setMaxResults(20)
                 .getResultList();
