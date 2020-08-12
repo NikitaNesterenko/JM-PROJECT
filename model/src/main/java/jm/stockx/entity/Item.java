@@ -56,6 +56,25 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
+    public Item(Long id, String name, Double price, Double lowestAsk, Double highestBid, LocalDate releaseDate, String condition) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.releaseDate = releaseDate;
+        this.condition = condition;
+    }
+
+    public Item(Long id, String name, Double price, Double lowestAsk, Double highestBid, String condition) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.condition = condition;
+    }
+
     public Item(String name,
                 Double price,
                 Double lowestAsk,

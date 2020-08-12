@@ -17,6 +17,9 @@ public class ItemPutDto {
     @NotNull
     private Long id;
 
+    @NotBlank(message = "Добавьте название товара. Название не может быть пустым или состоять из одних пробелов")
+    private String name;
+
     @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Double price;
@@ -34,6 +37,7 @@ public class ItemPutDto {
 
     public ItemPutDto(Item item) {
         this.id = item.getId();
+        this.name = item.getName();
         this.price = item.getPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
