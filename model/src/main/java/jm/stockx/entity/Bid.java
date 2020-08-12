@@ -1,7 +1,6 @@
 package jm.stockx.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -18,10 +17,9 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price", precision = 10, scale = 2)
+    @Column(name = "price")
     private Double price;
 
-    @Type(type="true_false")
     @Column(name = "success")
     private Boolean success;
 
@@ -32,4 +30,11 @@ public class Bid {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
+
+    public Bid(Double price, Boolean success, User user, Item item) {
+        this.price = price;
+        this.success = success;
+        this.user = user;
+        this.item = item;
+    }
 }
