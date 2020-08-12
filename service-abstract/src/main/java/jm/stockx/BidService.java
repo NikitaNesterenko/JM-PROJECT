@@ -1,5 +1,7 @@
 package jm.stockx;
 
+import jm.stockx.dto.BidDto;
+import jm.stockx.dto.BidPostDto;
 import jm.stockx.entity.Bid;
 
 import java.util.List;
@@ -10,7 +12,11 @@ public interface BidService {
 
     Bid get(Long id);
 
+    BidDto get(String itemName, String userName);
+
     void create(Bid bid);
+
+    void create(BidPostDto bidPostDto);
 
     void update(Bid bid);
 

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.BidService;
+import jm.stockx.dto.BidDto;
+import jm.stockx.dto.BidPostDto;
 import jm.stockx.entity.Bid;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -84,10 +86,10 @@ public class UserBidRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: bid was not added")
             })
-    public Response<?> addBid(Bid bid) {
-        bidService.create(bid);
+    public Response<BidDto> addBid(BidPostDto bidPostDto) {
+        bidService.create(bidPostDto);
         log.info("Ставка успешно добавлена");
-        return Response.ok().build();
+        return Response.ok(bidService.get(bidPostDto.getItemName(), bidPostDto.getUserName()));
     }
 
     @PutMapping
