@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
+
     private final RoleDAO roleDAO;
 
     @Autowired
@@ -44,8 +45,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRoleByName(String name) {
-        return roleDAO.getByName(name).orElse(null);
+    public Role getByRoleName(String roleName) {
+        return roleDAO.getByName(roleName).orElse(null);
     }
 
     @Override

@@ -11,8 +11,13 @@ import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -105,7 +110,7 @@ public class AdminUserRestController {
                     @ApiResponse(responseCode = "400", description = "NOT FOUND: no user with such id")
             }
     )
-    public Response<Boolean> deleteUser(Long id) {
+    public Response<Boolean> deleteUser(@PathVariable Long id) {
         if (userService.isUserExist(id)) {
             userService.deleteUser(id);
             log.info("Пользователь с id = {} успешно удален", id);
@@ -113,5 +118,30 @@ public class AdminUserRestController {
         }
         log.warn("Пользователь с id = {} в базе не найден", id);
         return Response.error(HttpStatus.BAD_REQUEST, "User not found");
+    }
+
+    @PostMapping(value = "/addUserImage")
+    public Response<?> addUserImage(@RequestParam MultipartFile file, @RequestParam Long id) {
+        User user = userService.getUserById(id);
+        String fileName = file.getOriginalFilename();
+        String uploadRootPath = AdminUserRestController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        user.setImageUrl(uploadRootPath + user.getUsername());
+        userService.updateUser(user);
+        File uploadRootDir = new File(uploadRootPath + user.getUsername());
+        if (!uploadRootDir.exists()) {
+            uploadRootDir.mkdirs();
+        }
+        if (fileName != null && fileName.length() > 0) {
+            try {
+                File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
+                try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+                    stream.write(file.getBytes());
+                }
+            } catch (Exception e) {
+                log.warn("Картинка не загружена");
+                return Response.error(HttpStatus.BAD_REQUEST, "Image not loaded");
+            }
+        }
+        return Response.ok().build();
     }
 }

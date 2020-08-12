@@ -36,8 +36,19 @@ public class News {
     @Lob
     private String text;
 
-    @Column(name = "image")
-    @Lob
-    private Blob image;
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
+    public News(
+            String name,
+            LocalDateTime time,
+            String title,
+            String description,
+            String text) {
+        this.name = name;
+        this.time = time;
+        this.title = title;
+        this.description = description;
+        this.text = text;
+    }
 }

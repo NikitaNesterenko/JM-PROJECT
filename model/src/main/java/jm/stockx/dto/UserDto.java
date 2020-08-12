@@ -1,13 +1,18 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.User;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.*;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Component
 @Getter
 @Setter
 @ToString
@@ -17,19 +22,19 @@ public class UserDto {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "{data.firstName}")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "{data.lastName}")
     private String lastName;
 
-    @Email(message = "Адрес электронной почты должен быть корректным")
+    @Email(message = "{data.email}")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{data.firstName}")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "{data.password}")
     private String password;
 
     @Min(1)
@@ -37,6 +42,13 @@ public class UserDto {
     private byte sellerLevel;
 
     private boolean vacationMode;
+
+    @NotBlank
+    private String localeTag;
+
+    private Set<BuyingInfo> buyingInfo;
+
+    private String appleUserId;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -46,7 +58,9 @@ public class UserDto {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.sellerLevel = user.getSellerLevel();
+        this.buyingInfo = user.getBuyingInfo();
         this.vacationMode = user.getVacationMode();
+        this.localeTag = user.getLocaleTag();
     }
 
     public UserDto(String firstName,
@@ -55,7 +69,8 @@ public class UserDto {
                    String username,
                    String password,
                    Byte sellerLevel,
-                   Boolean vacationMode) {
+                   Boolean vacationMode,
+                   String localeTag) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -63,5 +78,6 @@ public class UserDto {
         this.password = password;
         this.sellerLevel = sellerLevel;
         this.vacationMode = vacationMode;
+        this.localeTag = localeTag;
     }
 }

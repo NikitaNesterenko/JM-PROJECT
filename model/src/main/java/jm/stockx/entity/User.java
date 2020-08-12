@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -42,11 +43,21 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
     @Column(name = "seller_level")
     private Byte sellerLevel;
 
+    @Type(type="true_false")
     @Column(name = "vacation_mode")
     private Boolean vacationMode;
+
+    @Column(name = "apple_user_id")
+    private String appleUserId;
+
+    @Column(name = "locale_tag")
+    private String localeTag;
 
     @OneToOne
     @JoinColumn(name = "role_id", nullable = false)
@@ -60,16 +71,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
 
-    @Column(name = "apple_user_id")
-    private String appleUserId;
-
     public User(String firstName,
                 String lastName,
                 String email,
                 String username,
                 String password,
                 Byte sellerLevel,
-                Boolean vacationMode) {
+                Boolean vacationMode,
+                String localeTag) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -77,20 +86,44 @@ public class User implements UserDetails {
         this.password = password;
         this.sellerLevel = sellerLevel;
         this.vacationMode = vacationMode;
+        this.localeTag = localeTag;
+    }
+
+    public User(String firstName,
+                String lastName,
+                String email,
+                String username,
+                String password,
+                Byte sellerLevel,
+                Boolean vacationMode,
+                String appleUserId,
+                Set<BuyingInfo> buyingInfo) {
+        this(firstName, lastName, email, username, password, sellerLevel, vacationMode, appleUserId);
+        this.buyingInfo = buyingInfo;
+    }
+
+    public User(String firstName, String lastName, String email, String username, String password, Byte sellerLevel, Boolean vacationMode, String appleUserId, String localeTag) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.sellerLevel = sellerLevel;
+        this.vacationMode = vacationMode;
+        this.appleUserId = appleUserId;
+        this.localeTag = localeTag;
     }
 
     public User(String firstName, String lastName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 
     public User(UserDto userDto) {
-        this(userDto.getFirstName(),
-                userDto.getLastName(),
-                userDto.getEmail(),
-                userDto.getUsername() != null ? userDto.getUsername() : "stockx" + System.currentTimeMillis(),
-                userDto.getPassword(),
-                userDto.getSellerLevel(),
-                userDto.isVacationMode());
+
     }
+
 
     @Override
     public String getUsername() {

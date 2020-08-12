@@ -11,6 +11,6 @@ public interface RoleService {
     void create(Role role);
     void delete(Long id);
     void update(Role role);
-    Role getRoleByName(String name);
+    Role getByRoleName(String roleName);
     boolean isRoleExist(Long id);
 }

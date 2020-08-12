@@ -18,7 +18,9 @@ public class Admin extends User {
                  String username,
                  String password,
                  Byte sellerLevel,
-                 Boolean vacationMode) {
-        super(firstName, lastName, email, username, password, sellerLevel, vacationMode);
+                 Boolean vacationMode,
+                 String localeTag,
+                 String appleUserId) {
+        super(firstName, lastName, email, username, password, sellerLevel, vacationMode, localeTag, appleUserId);
     }
 }

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class ItemServiceImpl implements ItemService {
 
     private final ItemDAO itemDao;
@@ -27,7 +28,11 @@ public class ItemServiceImpl implements ItemService {
     private final SellingInfoDAO sellingInfoDAO;
 
     @Autowired
-    public ItemServiceImpl(ItemDAO itemDao, UserDAO userDAO, MailService mailService, BuyingInfoDAO buyingInfoDAO, SellingInfoDAO sellingInfoDAO) {
+    public ItemServiceImpl(ItemDAO itemDao,
+                           UserDAO userDAO,
+                           MailService mailService,
+                           BuyingInfoDAO buyingInfoDAO,
+                           SellingInfoDAO sellingInfoDAO) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
@@ -50,34 +55,19 @@ public class ItemServiceImpl implements ItemService {
         return itemDao.getById(id);
     }
 
-    @Transactional
     @Override
     public void create(Item item) {
         itemDao.add(item);
     }
 
-    @Transactional
     @Override
     public void update(Item item) {
         itemDao.update(item);
     }
 
-    @Transactional
     @Override
     public void delete(Long id) {
         itemDao.deleteById(id);
-    }
-
-    @Transactional
-    @Override
-    public void addItemImage(Long id, Byte[] array) {
-        itemDao.addItemImage(id, array);
-    }
-
-    @Transactional
-    @Override
-    public Byte[] getItemImage(Long id) {
-        return itemDao.getItemImage(id);
     }
 
     @Override
@@ -107,7 +97,7 @@ public class ItemServiceImpl implements ItemService {
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(item);
+        SellingInfo sellingInfo = new SellingInfo(seller, item);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);

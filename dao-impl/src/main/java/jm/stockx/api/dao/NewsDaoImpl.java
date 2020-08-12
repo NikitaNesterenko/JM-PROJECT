@@ -29,7 +29,7 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
                 "n.title," +
                 "n.description," +
                 "n.text," +
-                "n.image)" +
+                "n.imageUrl)" +
                 "FROM News AS n " +
                 "WHERE id =: id", NewsDto.class)
                 .setParameter("id", id)

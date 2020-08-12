@@ -90,7 +90,7 @@ public class AdminShoeSizeRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: shoe_size was not created")
             })
-    public Response<?> createShoeSize(ShoeSize shoeSize) {
+    public Response<?> createShoeSize(@RequestBody ShoeSize shoeSize) {
         String shoeSizeName = String.valueOf(shoeSize.getSize());
         if (shoeSizeService.isShoeSizeExist(shoeSize.getId())) {
             logger.warn("Размер обуви> {} уже существует в базе", shoeSizeName);
@@ -115,7 +115,7 @@ public class AdminShoeSizeRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update shoe_size")
             })
-    public Response<?> updateShoeSize(ShoeSize shoeSize) {
+    public Response<?> updateShoeSize(@RequestBody ShoeSize shoeSize) {
         String shoeSizeName = String.valueOf(shoeSize.getSize());
         if (shoeSizeService.isShoeSizeExist(shoeSize.getId())) {
             shoeSizeService.update(shoeSize);

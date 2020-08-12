@@ -91,7 +91,7 @@ public class AdminCurrencyRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: currency was not created")
             })
-    public Response<?> createCurrency(Currency currency) {
+    public Response<?> createCurrency(@RequestBody Currency currency) {
 
         if (currencyService.doesItExistEntity(currency.getId())) {
             logger.warn("Валюта> {} уже существует в базе", currency.getName());
@@ -116,7 +116,7 @@ public class AdminCurrencyRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update currency")
             })
-    public Response<?> updateCurrency(Currency currency) {
+    public Response<?> updateCurrency(@RequestBody Currency currency) {
         String currencyName = currency.getName();
         if (currencyService.doesItExistEntity(currency.getId())) {
             currencyService.update(currency);
