@@ -3,6 +3,7 @@ package jm.stockx.dto;
 import jm.stockx.entity.Bid;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter

@@ -5,4 +5,6 @@ import jm.stockx.entity.Bid;
 
 public interface BidDAO extends GenericDao<Bid, Long> {
     BidDto getBidDtoById(Long id);
+
+    BidDto getBidDtoByItemAndUser(String itemName, String userName);
 }

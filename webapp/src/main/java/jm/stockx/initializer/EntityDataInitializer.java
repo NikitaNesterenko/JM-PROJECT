@@ -20,6 +20,7 @@ public class EntityDataInitializer {
     private NewsService newsService;
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
+    private BidService bidService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -29,7 +30,8 @@ public class EntityDataInitializer {
                              StyleService styleService,
                              NewsService newsService,
                              SellingInfoService sellingInfoService,
-                             CurrencyService currencyService) {
+                             CurrencyService currencyService,
+                             BidService bidService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -38,6 +40,7 @@ public class EntityDataInitializer {
         this.newsService = newsService;
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
+        this.bidService = bidService;
     }
 
 
@@ -51,13 +54,14 @@ public class EntityDataInitializer {
 
     private void fillDataBase() {
         createRoles();
-//        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createBrands();
         createCurrency();
         createStyles();
-//        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createNews();
-//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        //createBid();
     }
 
     private void createRoles() {
@@ -229,4 +233,15 @@ public class EntityDataInitializer {
                     Status.ACCEPTED));
         }
     }
+
+    private void createBid() {
+        if (bidService.getAll().size() == 0) {
+            bidService.create(new Bid(
+                    200.0,
+                    false,
+                    userService.getUserById(2L),
+                    itemService.get(3L)));
+        }
+    }
+
 }
