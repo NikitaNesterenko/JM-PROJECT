@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.CurrencyDAO;
+import jm.stockx.dto.CurrencyDto;
 import jm.stockx.entity.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,10 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public boolean doesItExistEntity(Long id) {
         return currencyDAO.doesItExistEntity(id);
+    }
+
+    @Override
+    public CurrencyDto getCurrencyDtoById(Long id) {
+        return currencyDAO.getCurrencyDtoById(id);
     }
 }

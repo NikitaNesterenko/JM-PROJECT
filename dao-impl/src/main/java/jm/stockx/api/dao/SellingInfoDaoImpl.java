@@ -1,8 +1,11 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository
@@ -28,5 +31,20 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "WHERE id =: id", SellingInfoDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    public List<SellerTopInfoDto> getTopSellingUsers(){
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.SellerTopInfoDto(" +
+                "u.id, " +
+                "u.username) " +
+                "FROM SellingInfo as si " +
+                "LEFT JOIN User as u " +
+                "ON si.user = u.id " +
+                "GROUP BY u.id " +
+                "ORDER BY COUNT(si.item) DESC";
+        return entityManager.createQuery(sql)
+                .setMaxResults(20)
+                .getResultList();
     }
 }

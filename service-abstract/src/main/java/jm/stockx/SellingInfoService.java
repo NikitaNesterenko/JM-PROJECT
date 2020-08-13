@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface SellingInfoService {
     void update(SellingInfo sellingInfo);
 
     void delete(Long id);
+
+    List<SellerTopInfoDto> getTopSellingUsers();
 }

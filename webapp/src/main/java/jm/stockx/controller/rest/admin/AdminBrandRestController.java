@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.BrandService;
+import jm.stockx.dto.BrandDto;
+import jm.stockx.dto.BrandPostDto;
+import jm.stockx.dto.BrandPutDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -43,10 +47,15 @@ public class AdminBrandRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no brands found")
             })
-    public Response<List<Brand>> getAllBrands() {
+    public Response<List<BrandDto>> getAllBrands() {
+        List<BrandDto> brandDtos = new LinkedList<>();
         List<Brand> brands = brandService.getAll();
-        logger.info("Получен список брендов. Всего {} записей.", brands.size());
-        return Response.ok(brands);
+        for (Brand brand : brands
+        ) {BrandDto brandDto = new BrandDto(brand);
+        brandDtos.add(brandDto);
+        }
+        logger.info("Получен список брендов. Всего {} записей.", brandDtos.size());
+        return Response.ok(brandDtos);
     }
 
     @GetMapping(value = "/{id}")
@@ -63,11 +72,11 @@ public class AdminBrandRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: brand")
             })
-    public Response<Brand> getBrandById(@PathVariable Long id) {
+    public Response<BrandDto> getBrandById(@PathVariable Long id) {
         if (brandService.isBrandExist(id)) {
-            Brand brand = brandService.get(id);
-            logger.info("Получен бренд {} ", brand);
-            return Response.ok(brand);
+            BrandDto brandDto = brandService.getBrandDtoById(id);
+            logger.info("Получен бренд {} ", brandDto);
+            return Response.ok(brandDto);
         }
         logger.warn("Бренд с id = {} в базе не найден", id);
         return Response.error(HttpStatus.BAD_REQUEST, "Brand not found");
@@ -111,10 +120,11 @@ public class AdminBrandRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update brand")
             })
-    public Response<?> updateBrand(@RequestBody Brand brand) {
-        String brandName = brand.getName();
-        if (brandService.isBrandExist(brand.getId())) {
-            brandService.update(brand);
+    public Response<?> updateBrand(@RequestBody BrandPutDto brandPutDto) {
+        String brandName = brandPutDto.getName();
+        if (brandService.isBrandExist(brandPutDto.getId())) {
+            Brand updateBrand = new Brand(brandPutDto.getId(), brandPutDto.getName());
+            brandService.update(updateBrand);
             logger.info("Бренд {} успешно обновлен", brandName);
             return Response.ok().build();
         }

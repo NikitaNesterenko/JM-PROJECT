@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.BrandService;
 import jm.stockx.CurrencyService;
+import jm.stockx.dto.CurrencyDto;
+import jm.stockx.dto.CurrencyPutDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Currency;
 import jm.stockx.util.Response;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -46,10 +49,15 @@ public class AdminCurrencyRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no currencies found")
             })
-    public Response<List<Currency>> getAllCurrencies() {
+    public Response<List<CurrencyDto>> getAllCurrencies() {
         List<Currency> currencies = currencyService.getAll();
+        List<CurrencyDto> currencyDtos = new LinkedList<>();
+        for (Currency currency : currencies
+        ) { CurrencyDto currencyDto = new CurrencyDto(currency);
+            currencyDtos.add(currencyDto);
+        }
         logger.info("Получен список валют. Всего {} записей.", currencies.size());
-        return Response.ok(currencies);
+        return Response.ok(currencyDtos);
     }
 
     @GetMapping(value = "/{id}")
@@ -66,12 +74,12 @@ public class AdminCurrencyRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no currency with this currency-id")
             })
-    public Response<Currency> getCurrencyById(@PathVariable Long id) {
+    public Response<CurrencyDto> getCurrencyById(@PathVariable Long id) {
 
         if (currencyService.doesItExistEntity(id)) {
-            Currency currency = currencyService.get(id);
-            logger.info("Получена валюта {} ", currency);
-            return Response.ok(currency);
+            CurrencyDto currencyDto = currencyService.getCurrencyDtoById(id);
+            logger.info("Получена валюта {} ", currencyDto);
+            return Response.ok(currencyDto);
         }
         logger.warn("Валюта с id = {} в базе не найдена", id);
         return Response.error(HttpStatus.BAD_REQUEST, "Currency not found");
@@ -116,10 +124,11 @@ public class AdminCurrencyRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update currency")
             })
-    public Response<?> updateCurrency(@RequestBody Currency currency) {
-        String currencyName = currency.getName();
-        if (currencyService.doesItExistEntity(currency.getId())) {
-            currencyService.update(currency);
+    public Response<?> updateCurrency(@RequestBody CurrencyPutDto currencyPutDto) {
+        String currencyName = currencyPutDto.getName();
+        if (currencyService.doesItExistEntity(currencyPutDto.getId())) {
+            Currency currencyUpdate = new Currency(currencyPutDto.getId(), currencyPutDto.getName());
+            currencyService.update(currencyUpdate);
             logger.info("Валюта {} успешно обновлена", currencyName);
             return Response.ok().build();
         }
