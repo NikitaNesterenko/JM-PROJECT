@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.StyleDAO;
+import jm.stockx.dto.StyleDto;
 import jm.stockx.entity.Style;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,11 @@ public class StyleServiceImpl implements StyleService {
     @Override
     public boolean isStyleExist(Long id) {
         return styleDao.doesItExistEntity(id);
+    }
+
+    @Override
+    public StyleDto getStyleDtoById(Long id) {
+        return styleDao.getStyleDtoById(id);
     }
 
 }

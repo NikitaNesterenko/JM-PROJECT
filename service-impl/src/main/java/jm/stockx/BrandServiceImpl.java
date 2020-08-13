@@ -1,6 +1,8 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.BrandDAO;
+import jm.stockx.dto.BrandDto;
+import jm.stockx.dto.BrandPostDto;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +52,11 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public boolean isBrandExist(Long id) {
         return brandDAO.doesItExistEntity(id);
+    }
+
+    @Override
+    public BrandDto getBrandDtoById(Long id) {
+        return brandDAO.getBrandDtoById(id);
     }
 
 }

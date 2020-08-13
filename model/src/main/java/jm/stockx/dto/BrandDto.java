@@ -1,5 +1,6 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.Brand;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -15,4 +16,9 @@ public class BrandDto {
 
     @NotBlank(message = "Добавьте название бренда. Название не может быть пустым или состоять из одних пробелов")
     private String name;
+
+    public BrandDto(Brand brand) {
+        this.id = brand.getId();
+        this.name = brand.getName();
+    }
 }
