@@ -27,6 +27,10 @@ public class ItemDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
+    private Double retailPrice;
+
+    @Positive(message = "Цена должна быть положительной")
+    @NotNull
     private Double lowestAsk;
 
     @Positive(message = "Ставка должна быть положительной")
@@ -43,6 +47,7 @@ public class ItemDto {
         this.id = item.getId();
         this.name = item.getName();
         this.price = item.getPrice();
+        this.retailPrice = item.getRetailPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
