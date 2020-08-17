@@ -10,6 +10,7 @@ import jm.stockx.ItemService;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.SubscriptionDto;
 import jm.stockx.entity.Item;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -91,6 +92,12 @@ public class UserItemRestController {
     public Response<?> buyItemNow(@Valid BuyingDto buyingDto) {
         itemService.buyItem(buyingDto);
         return Response.ok(buyingDto);
+    }
+
+    @GetMapping("/subscribe")
+    public Response<?> subscribeToItem(@Valid SubscriptionDto subscriptionDto) {
+        itemService.subscribeToItem(subscriptionDto);
+        return Response.ok(subscriptionDto);
     }
 
     @GetMapping("/top")

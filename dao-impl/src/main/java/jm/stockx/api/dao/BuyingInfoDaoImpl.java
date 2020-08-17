@@ -18,7 +18,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 "b.paymentsInfo," +
                 "b.status)" +
                 "FROM BuyingInfo AS b " +
-                "WHERE id =: id", BuyingInfoDto.class)
+                "WHERE b.id =: id", BuyingInfoDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

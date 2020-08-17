@@ -3,6 +3,7 @@ package jm.stockx;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.SubscriptionDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 
@@ -26,6 +27,10 @@ public interface ItemService {
 
     void buyItem(BuyingDto buyingDto);
 
+    void subscribeToItem(SubscriptionDto subscriptionDto);
+
+    void unsubscribeToItem(SubscriptionDto subscriptionDto);
+
     List<Item> getTopItemsByStyle(Long styleId, Integer topLimit);
 
     List<Item> getNotReleasedItems();
@@ -33,4 +38,6 @@ public interface ItemService {
     List<Item> getNotReleasedItemsByBrand(Brand brand);
 
     boolean isItemExist(Long id);
+
+
 }
