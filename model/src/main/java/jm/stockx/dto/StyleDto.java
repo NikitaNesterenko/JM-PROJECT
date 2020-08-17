@@ -1,5 +1,6 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.Style;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -15,4 +16,9 @@ public class StyleDto {
 
     @NotBlank
     private String name;
+
+    public StyleDto(Style style) {
+        this.id = style.getId();
+        this.name = style.getName();
+    }
 }

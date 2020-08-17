@@ -1,6 +1,8 @@
 package jm.stockx.controller.rest.admin;
 
 import jm.stockx.StyleService;
+import jm.stockx.dto.StyleDto;
+import jm.stockx.dto.StylePutDto;
 import jm.stockx.entity.Style;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -23,18 +26,24 @@ public class AdminStyleRestController {
     }
 
     @GetMapping
-    public Response<List<Style>> getAllStyles() {
+    public Response<List<StyleDto>> getAllStyles() {
+        List<StyleDto> styleDtos = new LinkedList<>();
         List<Style> styles = styleService.getAll();
+        for (Style style : styles
+        ) {
+            StyleDto styleDto = new StyleDto(style);
+            styleDtos.add(styleDto);
+        }
         log.info("Получен список стилей. Всего {} записей.", styles.size());
-        return Response.ok(styles);
+        return Response.ok(styleDtos);
     }
 
     @GetMapping(value = "/{id}")
-    public Response<Style> getStyleById(@PathVariable Long id) {
+    public Response<StyleDto> getStyleById(@PathVariable Long id) {
         if (styleService.isStyleExist(id)) {
-            Style style = styleService.get(id);
-            log.info("Получен стиль {} ", style);
-            return Response.ok(style);
+            StyleDto styleDto = styleService.getStyleDtoById(id);
+            log.info("Получен стиль {} ", styleDto);
+            return Response.ok(styleDto);
         }
         log.warn("Стиль с id = {} в базе не найден", id);
         return Response.error(HttpStatus.BAD_REQUEST, "Style not found");
@@ -53,13 +62,14 @@ public class AdminStyleRestController {
     }
 
     @PutMapping
-    public Response<?> updateStyle(@Valid @RequestBody Style style) {
-        if (styleService.isStyleExist(style.getId())) {
-            styleService.update(style);
-            log.info("Стиль с id = {} успешно обновлен", style.getId());
-            return Response.ok(style);
+    public Response<?> updateStyle(@Valid @RequestBody StylePutDto stylePutDto) {
+        if (styleService.isStyleExist(stylePutDto.getId())) {
+            Style styleUpdate = new Style(stylePutDto.getId(), stylePutDto.getName());
+            styleService.update(styleUpdate);
+            log.info("Стиль с id = {} успешно обновлен", stylePutDto.getId());
+            return Response.ok(stylePutDto);
         }
-        log.warn("Стиль с id = {} в базе не найден", style.getId());
+        log.warn("Стиль с id = {} в базе не найден", stylePutDto.getId());
         return Response.error(HttpStatus.BAD_REQUEST, "Style not found");
     }
 

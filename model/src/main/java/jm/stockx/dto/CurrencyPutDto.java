@@ -1,6 +1,4 @@
 package jm.stockx.dto;
-
-import jm.stockx.entity.Currency;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,8 +17,4 @@ public class CurrencyPutDto {
     @NotBlank(message = "Имя не должно быть null, пустым или состоять из одних лишь пробельных символов")
     private String name;
 
-    public CurrencyPutDto(Currency currency) {
-        this.id = currency.getId();
-        this.name = currency.getName();
-    }
 }

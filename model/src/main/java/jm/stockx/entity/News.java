@@ -51,4 +51,14 @@ public class News {
         this.description = description;
         this.text = text;
     }
+
+
+    public News(Long id, String name, LocalDateTime time, String title, String description, String text) {
+        this.id = id;
+        this.name = name;
+        this.time = time;
+        this.title = title;
+        this.description = description;
+        this.text = text;
+    }
 }

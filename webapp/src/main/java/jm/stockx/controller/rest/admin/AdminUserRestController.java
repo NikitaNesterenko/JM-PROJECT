@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.UserService;
+import jm.stockx.dto.UserDto;
+import jm.stockx.dto.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -45,10 +48,16 @@ public class AdminUserRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no users found")
             })
-    public Response<List<User>> getAllUsers() {
+    public Response<List<UserDto>> getAllUsers() {
+        List<UserDto> userDtos = new LinkedList<>();
         List<User> users = userService.getAllUsers();
-        log.info("Получен список пользователей. Всего {} записей.", users.size());
-        return Response.ok(users);
+        for (User user : users
+        ) {
+            UserDto userDto = new UserDto(user);
+            userDtos.add(userDto);
+        }
+        log.info("Получен список пользователей. Всего {} записей.", userDtos.size());
+        return Response.ok(userDtos);
     }
 
     @PostMapping(value = "/createUser")
@@ -90,10 +99,13 @@ public class AdminUserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: user updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update user")
             })
-    public Response<?> updateUser(@Valid @RequestBody User user) {
-        String username = user.getUsername();
-        if (userService.isUserExist(user.getId())) {
-            userService.updateUser(user);
+    public Response<?> updateUser(@Valid @RequestBody UserPutDto userPutDto) {
+        String username = userPutDto.getUsername();
+        if (userService.isUserExist(userPutDto.getId())) {
+            User userUpdate = new User(userPutDto.getId(), userPutDto.getFirstName(), userPutDto.getLastName(),
+                                userPutDto.getEmail(), userPutDto.getUsername(), userPutDto.getPassword(),
+                                userPutDto.getSellerLevel());
+            userService.updateUser(userUpdate);
             log.info("Пользователь {} успешно обновлен", username);
             return Response.ok().build();
         }

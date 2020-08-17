@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Column(name = "seller_level")
     private Byte sellerLevel;
 
-    @Type(type="true_false")
+    @Type(type = "true_false")
     @Column(name = "vacation_mode")
     private Boolean vacationMode;
 
@@ -102,7 +102,15 @@ public class User implements UserDetails {
         this.buyingInfo = buyingInfo;
     }
 
-    public User(String firstName, String lastName, String email, String username, String password, Byte sellerLevel, Boolean vacationMode, String appleUserId, String localeTag) {
+    public User(String firstName,
+                String lastName,
+                String email,
+                String username,
+                String password,
+                Byte sellerLevel,
+                Boolean vacationMode,
+                String appleUserId,
+                String localeTag) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -122,6 +130,22 @@ public class User implements UserDetails {
 
     public User(UserDto userDto) {
 
+    }
+
+    public User(Long id,
+                String firstName,
+                String lastName,
+                String email,
+                String username,
+                String password,
+                byte sellerLevel) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.sellerLevel = sellerLevel;
     }
 
 

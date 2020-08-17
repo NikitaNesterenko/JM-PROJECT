@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
+import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +45,9 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     @Override
     public void delete(Long id) {
         sellingInfoDAO.deleteById(id);
+    }
+
+    public List<SellerTopInfoDto> getTopSellingUsers(){
+        return sellingInfoDAO.getTopSellingUsers();
     }
 }

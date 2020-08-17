@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.BrandPostDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,5 +24,9 @@ public class Brand {
 
     public Brand(String name) {
         this.name = name;
+    }
+
+    public Brand(BrandPostDto brandPostDto) {
+        this.name = brandPostDto.getName();
     }
 }
