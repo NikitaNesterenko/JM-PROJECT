@@ -2,6 +2,7 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.Bid;
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ public class BidPostDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double price;
+    private Money price;
 
     private Boolean success;
 

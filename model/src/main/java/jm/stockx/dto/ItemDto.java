@@ -3,6 +3,7 @@ package jm.stockx.dto;
 import jm.stockx.entity.Item;
 import jm.stockx.enums.ItemColors;
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ public class ItemDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double price;
+    private Money price;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull

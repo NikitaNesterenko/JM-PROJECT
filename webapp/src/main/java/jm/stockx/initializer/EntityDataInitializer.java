@@ -4,6 +4,7 @@ import jm.stockx.*;
 import jm.stockx.entity.*;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -143,7 +144,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 14 Retro Gym Red Toro",
-                    190.0,
+                    Money.parse("USD 190.0"),
                     254.0,
                     316.0,
                     LocalDate.of(2020, 7, 2),
@@ -153,7 +154,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Adidas Yeezy Boost 380 Mist",
-                    230.0,
+                    Money.parse("USD 230.0"),
                     195.0,
                     230.0,
                     LocalDate.of(2020, 3, 25),
@@ -163,7 +164,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Nike React Element 87 Anthracite Black",
-                    160.0,
+                    Money.parse("USD 160.0"),
                     77.0,
                     101.0,
                     LocalDate.of(2018, 6, 14),
@@ -173,7 +174,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 4 Retro Winterized Loyal Blue",
-                    200.0,
+                    Money.parse("USD 200.0"),
                     155.0,
                     212.0,
                     LocalDate.of(2019, 12, 21),
@@ -183,7 +184,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
-                    160.0,
+                    Money.parse("USD 160.0"),
                     342.0,
                     442.0,
                     LocalDate.of(2019, 8, 17),
@@ -237,7 +238,7 @@ public class EntityDataInitializer {
     private void createBid() {
         if (bidService.getAll().size() == 0) {
             bidService.create(new Bid(
-                    200.0,
+                    Money.parse("USD 200.0"),
                     false,
                     userService.getUserById(2L),
                     itemService.get(3L)));

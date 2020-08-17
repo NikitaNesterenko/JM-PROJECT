@@ -1,6 +1,7 @@
 package jm.stockx.entity;
 
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class Bid {
     private Long id;
 
     @Column(name = "price")
-    private Double price;
+    private Money price;
 
     @Column(name = "success")
     private Boolean success;
@@ -31,7 +32,7 @@ public class Bid {
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
-    public Bid(Double price, Boolean success, User user, Item item) {
+    public Bid(Money price, Boolean success, User user, Item item) {
         this.price = price;
         this.success = success;
         this.user = user;

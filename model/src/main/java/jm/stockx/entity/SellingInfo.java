@@ -2,6 +2,7 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.Status;
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ public class SellingInfo {
     private Status status;
 
     @Column(name = "price", precision = 10, scale = 2)
-    private Double price;
+    private Money price;
 
     public SellingInfo(User user,
                        Item item,

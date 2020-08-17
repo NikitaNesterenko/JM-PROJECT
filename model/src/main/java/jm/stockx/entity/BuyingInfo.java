@@ -2,6 +2,7 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.Status;
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class BuyingInfo {
     private LocalDateTime buyingTimeStamp;
 
     @Column(name = "buying_price", precision = 10, scale = 2)
-    private Double buyingPrice;
+    private Money buyingPrice;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

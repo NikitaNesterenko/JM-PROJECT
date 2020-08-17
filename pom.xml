@@ -186,6 +186,12 @@
             <version>${stripe.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-money</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
     </dependencies>
 
 
