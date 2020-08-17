@@ -144,6 +144,7 @@ public class EntityDataInitializer {
             itemService.create(new Item(
                     "Jordan 14 Retro Gym Red Toro",
                     190.0,
+                    200.0,
                     254.0,
                     316.0,
                     LocalDate.of(2020, 7, 2),
@@ -161,6 +162,7 @@ public class EntityDataInitializer {
             itemService.create(new Item(
                     "Adidas Yeezy Boost 380 Mist",
                     230.0,
+                    240.0,
                     195.0,
                     230.0,
                     LocalDate.of(2020, 3, 25),
@@ -179,6 +181,7 @@ public class EntityDataInitializer {
             itemService.create(new Item(
                     "Nike React Element 87 Anthracite Black",
                     160.0,
+                    190.0,
                     77.0,
                     101.0,
                     LocalDate.of(2018, 6, 14),
@@ -194,6 +197,7 @@ public class EntityDataInitializer {
             itemService.create(new Item(
                     "Jordan 4 Retro Winterized Loyal Blue",
                     200.0,
+                    210.0,
                     155.0,
                     212.0,
                     LocalDate.of(2019, 12, 21),
@@ -210,6 +214,7 @@ public class EntityDataInitializer {
             itemService.create(new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
                     160.0,
+                    200.0,
                     342.0,
                     442.0,
                     LocalDate.of(2019, 8, 17),

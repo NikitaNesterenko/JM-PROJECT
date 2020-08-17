@@ -27,6 +27,9 @@ public class Item {
     @Column(name = "price", precision = 10, scale = 2)
     private Double price;
 
+    @Column(name = "retail_price", precision = 10, scale = 2)
+    private Double retailPrice;
+
     @Column(name = "lowest_ask", precision = 10, scale = 2)
     private Double lowestAsk;
 
@@ -61,6 +64,7 @@ public class Item {
 
     public Item(Long id, String name,
                 Double price,
+                Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
@@ -69,6 +73,7 @@ public class Item {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.retailPrice = retailPrice;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
         this.releaseDate = releaseDate;
@@ -79,6 +84,7 @@ public class Item {
     public Item(Long id,
                 String name,
                 Double price,
+                Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 String condition,
@@ -94,6 +100,7 @@ public class Item {
 
     public Item(String name,
                 Double price,
+                Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
@@ -101,6 +108,7 @@ public class Item {
                 String description) {
         this.name = name;
         this.price = price;
+        this.retailPrice = retailPrice;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
         this.releaseDate = releaseDate;
@@ -110,18 +118,20 @@ public class Item {
 
     public Item(String name,
                 Double price,
+                Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description,
                 Brand brand) {
-        this(name, price, lowestAsk, highestBid, releaseDate, condition, description);
+        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, description);
         this.brand = brand;
     }
 
     public Item(String name,
                 Double price,
+                Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
@@ -129,12 +139,13 @@ public class Item {
                 String description,
                 Brand brand,
                 Style style) {
-        this(name, price, lowestAsk, highestBid, releaseDate, condition, description, brand);
+        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, description, brand);
         this.style = style;
     }
 
     public Item(String name,
                 Double price,
+                Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
@@ -145,6 +156,7 @@ public class Item {
                 Style style) {
         this.name = name;
         this.price = price;
+        this.retailPrice = retailPrice;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
         this.releaseDate = releaseDate;
