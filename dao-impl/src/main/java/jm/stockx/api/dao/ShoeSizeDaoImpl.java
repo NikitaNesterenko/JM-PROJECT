@@ -26,4 +26,6 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
                 .setParameter("id", id)
                 .getSingleResult();
     }
+
+
 }

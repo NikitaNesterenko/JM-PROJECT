@@ -1,6 +1,7 @@
 package jm.stockx;
 
 
+import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface ShoeSizeService {
     ShoeSize getShoeSizeByName(String name);
 
     boolean isShoeSizeExist(Long id);
+
+    ShoeSizeDto getShoeSizedDtoById(Long id);
 }
 

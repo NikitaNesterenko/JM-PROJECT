@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.ItemService;
+import jm.stockx.dto.ItemPutDto;
 import jm.stockx.entity.Item;
 import jm.stockx.util.Response;
 import lombok.SneakyThrows;
@@ -73,15 +74,18 @@ public class AdminItemRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to update item")
             })
-    public Response<?> updateItem(@Valid @RequestBody Item item) {
-        String itemName = item.getName();
-        if (itemService.getItemByName(itemName) == null) {
-            log.warn("Товар {} в базе не найден", itemName);
-            return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
+    public Response<?> updateItem(@Valid @RequestBody ItemPutDto itemPutDto) {
+        String itemName = itemPutDto.getName();
+        if (itemService.isItemExist(itemPutDto.getId())) {
+            Item itemUpdate = new Item(itemPutDto.getId(), itemPutDto.getName(), itemPutDto.getPrice(), itemPutDto.getRetailPrice(),
+                    itemPutDto.getLowestAsk(), itemPutDto.getHighestBid(), itemPutDto.getCondition());
+            itemService.update(itemUpdate);
+            log.info("Товар {} успешно обновлен", itemName);
+            return Response.ok(itemPutDto);
         }
-        itemService.update(item);
-        log.info("Товар {} успешно обновлен", itemName);
-        return Response.ok(item);
+        log.warn("Товар {} в базе не найден", itemName);
+        return Response.error(HttpStatus.BAD_REQUEST, "Item not found");
+
     }
 
     @DeleteMapping(value = "/{id}")

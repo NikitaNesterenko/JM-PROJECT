@@ -1,6 +1,5 @@
 package jm.stockx.dto;
 
-import jm.stockx.entity.Bid;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -11,15 +10,11 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BidPutDto {
+public class StylePutDto {
 
     @NotNull
     private Long id;
 
-    private Boolean success;
-
-    public BidPutDto(Bid bid) {
-        this.id = bid.getId();
-        this.success = bid.getSuccess();
-    }
+    @NotBlank(message = "Добавьте название стиля. Название не может быть пустым или состоять из одних пробелов")
+    private String name;
 }

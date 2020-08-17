@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.NewsService;
+import jm.stockx.dto.NewsPutDto;
 import jm.stockx.entity.News;
 import jm.stockx.util.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -72,10 +73,12 @@ public class AdminNewsRestController {
                     @ApiResponse(responseCode = "200", description = "OK: news updated successfully"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to update news")
             })
-    public Response<?> updateNews(@Valid @RequestBody News news) {
-        String newsName = news.getName();
-        if (newsService.isNewsExist(news.getId())) {
-            newsService.update(news);
+    public Response<?> updateNews(@Valid @RequestBody NewsPutDto newsPutDto) {
+        String newsName = newsPutDto.getName();
+        if (newsService.isNewsExist(newsPutDto.getId())) {
+            News newsUpdate = new News(newsPutDto.getId(), newsPutDto.getName(), newsPutDto.getTime(),
+                                    newsPutDto.getTitle(), newsPutDto.getDescription(), newsPutDto.getText());
+            newsService.update(newsUpdate);
             log.info("новость {} успешно обновлена", newsName);
             return Response.ok().build();
         }
