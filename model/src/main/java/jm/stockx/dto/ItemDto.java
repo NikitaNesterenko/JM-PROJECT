@@ -41,6 +41,10 @@ public class ItemDto {
 
     @NotBlank
     private String condition;
+
+    @NotBlank
+    private String description;
+
     private ItemColors itemColors;
 
     public ItemDto(@NonNull Item item) {
@@ -52,6 +56,7 @@ public class ItemDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
+        this.condition = item.getDescription();
         this.itemColors = item.getItemColors();
     }
 }

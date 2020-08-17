@@ -43,6 +43,9 @@ public class Item {
     @Column(name = "item_condition")
     private String condition;
 
+    @Column(name = "description", length = 1500)
+    private String description;
+
     // @ManyToOne(targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)     - так валится
     @ManyToOne
     @JoinColumn(name = "brand_id")
@@ -59,33 +62,15 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
-    public Item(Long id, String name, Double price,  Double retailPrice, Double lowestAsk, Double highestBid, LocalDate releaseDate, String condition) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.retailPrice = retailPrice;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
-        this.releaseDate = releaseDate;
-        this.condition = condition;
-    }
-
-    public Item(Long id, String name, Double price, Double retailPrice, Double lowestAsk, Double highestBid, String condition) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
-        this.condition = condition;
-    }
-
-    public Item(String name,
+    public Item(Long id, String name,
                 Double price,
                 Double retailPrice,
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
-                String condition) {
+                String condition,
+                String description) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.retailPrice = retailPrice;
@@ -93,6 +78,24 @@ public class Item {
         this.highestBid = highestBid;
         this.releaseDate = releaseDate;
         this.condition = condition;
+        this.description = description;
+    }
+
+    public Item(Long id,
+                String name,
+                Double price,
+                Double retailPrice,
+                Double lowestAsk,
+                Double highestBid,
+                String condition,
+                String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.condition = condition;
+        this.description = description;
     }
 
     public Item(String name,
@@ -102,8 +105,27 @@ public class Item {
                 Double highestBid,
                 LocalDate releaseDate,
                 String condition,
+                String description) {
+        this.name = name;
+        this.price = price;
+        this.retailPrice = retailPrice;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.releaseDate = releaseDate;
+        this.condition = condition;
+        this.description = description;
+    }
+
+    public Item(String name,
+                Double price,
+                Double retailPrice,
+                Double lowestAsk,
+                Double highestBid,
+                LocalDate releaseDate,
+                String condition,
+                String description,
                 Brand brand) {
-        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition);
+        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, description);
         this.brand = brand;
     }
 
@@ -114,9 +136,10 @@ public class Item {
                 Double highestBid,
                 LocalDate releaseDate,
                 String condition,
+                String description,
                 Brand brand,
                 Style style) {
-        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, brand);
+        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, description, brand);
         this.style = style;
     }
 
@@ -126,7 +149,8 @@ public class Item {
                 Double lowestAsk,
                 Double highestBid,
                 LocalDate releaseDate,
-                String condition,
+                String condition ,
+                String description,
                 Brand brand,
                 String itemImageUrl,
                 Style style) {
@@ -137,6 +161,7 @@ public class Item {
         this.highestBid = highestBid;
         this.releaseDate = releaseDate;
         this.condition = condition;
+        this.description = description;
         this.brand = brand;
         this.itemImageUrl = itemImageUrl;
         this.style = style;
