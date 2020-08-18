@@ -1,7 +1,11 @@
 package jm.stockx.dto;
 
 import jm.stockx.entity.Bid;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,7 +32,7 @@ public class BidDto {
         @NotBlank(message = "User name is mandatory")
         private String userName;
 
-        public BidDto(@NonNull Bid bid) {
+        public BidDto(@NotNull Bid bid) {
                 this.id = bid.getId();
                 this.price = bid.getPrice();
                 this.success = bid.getSuccess();

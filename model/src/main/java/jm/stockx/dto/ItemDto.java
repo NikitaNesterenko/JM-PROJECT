@@ -2,7 +2,12 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.Item;
 import jm.stockx.enums.ItemColors;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
