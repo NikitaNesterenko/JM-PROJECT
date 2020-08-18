@@ -55,22 +55,6 @@ public class Item {
     @JoinColumn(name = "style_id")
     private Style style;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_subscriptions",
-//            joinColumns = {@JoinColumn(name = "item_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "subscriber_id")}
-//    )
-//    private Set<User> subscribers = new HashSet<>();
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_subscriptions",
-//            joinColumns = {@JoinColumn(name = "subscriber_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "item_id")}
-//    )
-//    private Set<Item> items = new HashSet<>();
-
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;

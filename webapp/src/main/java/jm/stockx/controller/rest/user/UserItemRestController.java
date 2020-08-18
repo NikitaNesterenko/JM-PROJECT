@@ -100,6 +100,12 @@ public class UserItemRestController {
         return Response.ok(subscriptionDto);
     }
 
+    @GetMapping("/unsubscribe")
+    public Response<?> unsubscribeToItem(@Valid SubscriptionDto subscriptionDto) {
+        itemService.unsubscribeToItem(subscriptionDto);
+        return Response.ok(subscriptionDto);
+    }
+
     @GetMapping("/top")
     public Response<List<Item>> getTopItemsByStyle(@RequestParam(name = "styleId") Long styleId,
                                                    @RequestParam(name = "limit", required = false, defaultValue = "5") Integer limit) {
