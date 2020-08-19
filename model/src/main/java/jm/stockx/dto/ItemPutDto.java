@@ -2,6 +2,7 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.Item;
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -22,19 +23,19 @@ public class ItemPutDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double price;
+    private Money price;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double retailPrice;
+    private Money retailPrice;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double lowestAsk;
+    private Money lowestAsk;
 
     @Positive(message = "Ставка должна быть положительной")
     @NotNull
-    private Double highestBid;
+    private Money highestBid;
 
     @NotBlank
     private String condition;

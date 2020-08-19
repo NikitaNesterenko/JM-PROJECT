@@ -2,6 +2,11 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.Status;
 import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
+import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +20,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "buying_info")
+@TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class BuyingInfo {
 
     @Id
@@ -25,8 +31,9 @@ public class BuyingInfo {
     @Column(name = "buying_time_stamp")
     private LocalDateTime buyingTimeStamp;
 
-    @Column(name = "buying_price", precision = 10, scale = 2)
-    private Double buyingPrice;
+    @Columns(columns = { @Column(name = "buying_info_currency"), @Column(name = "buying_info_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money buyingPrice;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

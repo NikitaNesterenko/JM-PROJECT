@@ -2,6 +2,11 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.ItemColors;
 import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
+import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +19,7 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Table(name = "items")
+@TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class Item {
 
     @Id
@@ -24,17 +30,21 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price", precision = 10, scale = 2)
-    private Double price;
+    @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money price;
 
-    @Column(name = "retail_price", precision = 10, scale = 2)
-    private Double retailPrice;
+    @Columns(columns = { @Column(name = "retail_price_currency"), @Column(name = "item_retail_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money retailPrice;
 
-    @Column(name = "lowest_ask", precision = 10, scale = 2)
-    private Double lowestAsk;
+    @Columns(columns = { @Column(name = "lowest_ask_currency"), @Column(name = "item_lowest_ask") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money lowestAsk;
 
-    @Column(name = "highest_bid", precision = 10, scale = 2)
-    private Double highestBid;
+    @Columns(columns = { @Column(name = "highest_bid_currency"), @Column(name = "item_highest_bid") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money highestBid;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -51,7 +61,7 @@ public class Item {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @Column(name = "item_imageUrl")
+    @Column(name = "item_image_url")
     private String itemImageUrl;
 
     @ManyToOne
@@ -63,12 +73,9 @@ public class Item {
     private ItemColors itemColors;
 
     public Item(Long id, String name,
-                Double price,
-                Double retailPrice,
-                Double lowestAsk,
-                Double highestBid,
-                LocalDate releaseDate,
-                String condition,
+                Money price,  Money retailPrice,
+                Money lowestAsk, Money highestBid,
+                LocalDate releaseDate, String condition,
                 String description) {
         this.id = id;
         this.name = name;
@@ -81,17 +88,14 @@ public class Item {
         this.description = description;
     }
 
-    public Item(Long id,
-                String name,
-                Double price,
-                Double retailPrice,
-                Double lowestAsk,
-                Double highestBid,
-                String condition,
-                String description) {
+    public Item(Long id, String name,
+                Money price, Money retailPrice,
+                Money lowestAsk, Money highestBid,
+                String condition, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.retailPrice = retailPrice;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
         this.condition = condition;
@@ -99,10 +103,10 @@ public class Item {
     }
 
     public Item(String name,
-                Double price,
-                Double retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money price,
+                Money retailPrice,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description) {
@@ -117,10 +121,10 @@ public class Item {
     }
 
     public Item(String name,
-                Double price,
-                Double retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money price,
+                Money retailPrice,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description,
@@ -130,10 +134,10 @@ public class Item {
     }
 
     public Item(String name,
-                Double price,
-                Double retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money price,
+                Money retailPrice,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description,
@@ -144,10 +148,10 @@ public class Item {
     }
 
     public Item(String name,
-                Double price,
-                Double retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money price,
+                Money retailPrice,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition ,
                 String description,
