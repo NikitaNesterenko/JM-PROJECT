@@ -6,6 +6,7 @@ import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,7 +48,13 @@ public class SellingInfoServiceImpl implements SellingInfoService {
         sellingInfoDAO.deleteById(id);
     }
 
+    @Override
     public List<SellerTopInfoDto> getTopSellingUsers(){
         return sellingInfoDAO.getTopSellingUsers();
+    }
+
+    @Override
+    public int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+        return sellingInfoDAO.getNumberSalesForSpecifiedPeriod(beginningPeriod, endPeriod);
     }
 }

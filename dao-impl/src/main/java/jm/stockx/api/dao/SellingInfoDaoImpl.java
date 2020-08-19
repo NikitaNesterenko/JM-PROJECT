@@ -5,6 +5,9 @@ import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 
@@ -46,5 +49,16 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
         return entityManager.createQuery(sql)
                 .setMaxResults(20)
                 .getResultList();
+    }
+
+    public int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+         List<SellingInfo> list = entityManager.createQuery("" +
+                "SELECT si " +
+                "FROM SellingInfo as si " +
+                "WHERE si.orderDate BETWEEN :begin AND :end", SellingInfo.class)
+                .setParameter("begin", beginningPeriod)
+                .setParameter("end", endPeriod)
+                .getResultList();
+        return list.size();
     }
 }
