@@ -40,6 +40,8 @@ public class ItemPutDto {
     @NotBlank
     private String condition;
 
+    private String description;
+
     public ItemPutDto(Item item) {
         this.id = item.getId();
         this.name = item.getName();
@@ -48,5 +50,6 @@ public class ItemPutDto {
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
         this.condition = item.getCondition();
+        this.condition = item.getDescription();
     }
 }

@@ -38,6 +38,9 @@ public class ItemPostDto {
     @NotBlank
     private String condition;
 
+    @NotBlank
+    private String description;
+
     public ItemPostDto(Item item) {
         this.price = item.getPrice();
         this.retailPrice = item.getRetailPrice();
@@ -45,5 +48,6 @@ public class ItemPostDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
+        this.condition = item.getDescription();
     }
 }
