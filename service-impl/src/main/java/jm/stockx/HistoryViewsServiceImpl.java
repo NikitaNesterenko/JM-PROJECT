@@ -19,7 +19,7 @@ public class HistoryViewsServiceImpl implements HistoryViewsService{
     }
 
     @Override
-    @Scheduled(cron = "* * * * * sun")
+    @Scheduled(cron = "0 12 * * * sun")
     public void clearHistoryViews() {
         historyViewsDAO.clearHistoryOfViews();
         log.info("История просмотров очищена");
