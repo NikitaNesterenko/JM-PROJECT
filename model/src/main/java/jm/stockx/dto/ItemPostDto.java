@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.joda.money.Money;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,15 +22,19 @@ public class ItemPostDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double price;
+    private Money price;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double lowestAsk;
+    private Money retailPrice;
+
+    @Positive(message = "Цена должна быть положительной")
+    @NotNull
+    private Money lowestAsk;
 
     @Positive(message = "Ставка должна быть положительной")
     @NotNull
-    private Double highestBid;
+    private Money highestBid;
 
     @NotNull
     private LocalDate dateRelease;
@@ -37,11 +42,16 @@ public class ItemPostDto {
     @NotBlank
     private String condition;
 
+    @NotBlank
+    private String description;
+
     public ItemPostDto(Item item) {
         this.price = item.getPrice();
+        this.retailPrice = item.getRetailPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
+        this.condition = item.getDescription();
     }
 }

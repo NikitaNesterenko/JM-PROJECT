@@ -84,8 +84,8 @@ public class AdminItemRestController {
     public Response<?> updateItem(@Valid @RequestBody ItemPutDto itemPutDto) {
         String itemName = itemPutDto.getName();
         if (itemService.isItemExist(itemPutDto.getId())) {
-            Item itemUpdate = new Item(itemPutDto.getId(), itemPutDto.getName(), itemPutDto.getPrice(),
-                    itemPutDto.getLowestAsk(), itemPutDto.getHighestBid(), itemPutDto.getCondition());
+            Item itemUpdate = new Item(itemPutDto.getId(), itemPutDto.getName(), itemPutDto.getPrice(), itemPutDto.getRetailPrice(),
+                    itemPutDto.getLowestAsk(), itemPutDto.getHighestBid(), itemPutDto.getCondition(), itemPutDto.getDescription());
             itemService.update(itemUpdate);
             log.info("Товар {} успешно обновлен", itemName);
             return Response.ok(itemPutDto);
