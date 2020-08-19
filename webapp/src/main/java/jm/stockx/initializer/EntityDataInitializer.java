@@ -3,26 +3,22 @@ package jm.stockx.initializer;
 import jm.stockx.BidService;
 import jm.stockx.BrandService;
 import jm.stockx.CurrencyService;
-import jm.stockx.ItemForPortfolioService;
 import jm.stockx.ItemService;
 import jm.stockx.NewsService;
 import jm.stockx.RoleService;
 import jm.stockx.SellingInfoService;
 import jm.stockx.StyleService;
-import jm.stockx.UserPortfolioService;
 import jm.stockx.UserService;
 import jm.stockx.entity.Admin;
 import jm.stockx.entity.Bid;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Currency;
 import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemForPortfolio;
 import jm.stockx.entity.News;
 import jm.stockx.entity.Role;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.Style;
 import jm.stockx.entity.User;
-import jm.stockx.entity.UserPortfolio;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +38,6 @@ public class EntityDataInitializer {
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
     private BidService bidService;
-    private UserPortfolioService userPortfolio;
-    private ItemForPortfolioService itemForPortfolioService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -54,9 +48,7 @@ public class EntityDataInitializer {
                              NewsService newsService,
                              SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
-                             BidService bidService,
-                             UserPortfolioService userPortfolio,
-                             ItemForPortfolioService itemForPortfolioService) {
+                             BidService bidService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -66,8 +58,6 @@ public class EntityDataInitializer {
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
         this.bidService = bidService;
-        this.userPortfolio = userPortfolio;
-        this.itemForPortfolioService = itemForPortfolioService;
     }
 
 
@@ -89,7 +79,7 @@ public class EntityDataInitializer {
         createNews();
         //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
-        createUserPortfolio();
+
     }
 
     private void createRoles() {
@@ -272,34 +262,6 @@ public class EntityDataInitializer {
         }
     }
 
-    private void createUserPortfolio() {
-        UserPortfolio userPortfolio1 = new UserPortfolio(userService.getUserById(2L));
-        UserPortfolio userPortfolio2 = new UserPortfolio(userService.getUserById(3L));
-        Item item1 = itemService.get(1L);
-        Item item2 = itemService.get(2L);
-        Item item3 = itemService.get(3L);
-        ItemForPortfolio itemForPortfolio1 = new ItemForPortfolio(
-                LocalDate.of(2020, 01, 21),
-                35.5,
-                item1,
-                userPortfolio1
-        );
-        ItemForPortfolio itemForPortfolio2 = new ItemForPortfolio(
-                LocalDate.of(2019, 01, 21),
-                45.5,
-                item2,
-                userPortfolio1
-        );
-        ItemForPortfolio itemForPortfolio3 = new ItemForPortfolio(
-                LocalDate.of(2018, 01, 21),
-                55.5,
-                item3,
-                userPortfolio2
-        );
 
-        itemForPortfolioService.add(itemForPortfolio1);
-        itemForPortfolioService.add(itemForPortfolio2);
-        itemForPortfolioService.add(itemForPortfolio3);
-    }
 
 }
