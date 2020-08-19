@@ -28,15 +28,15 @@ public class ItemDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double retailPrice;
+    private Money retailPrice;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double lowestAsk;
+    private Money lowestAsk;
 
     @Positive(message = "Ставка должна быть положительной")
     @NotNull
-    private Double highestBid;
+    private Money highestBid;
 
     private LocalDate dateRelease;
 

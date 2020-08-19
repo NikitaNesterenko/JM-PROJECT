@@ -2,6 +2,10 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.ItemColors;
 import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
 import javax.persistence.*;
@@ -15,6 +19,7 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Table(name = "items")
+@TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class Item {
 
     @Id
@@ -25,17 +30,21 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price", precision = 10, scale = 2)
+    @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money price;
 
-    @Column(name = "retail_price", precision = 10, scale = 2)
+    @Columns(columns = { @Column(name = "retail_price_currency"), @Column(name = "item_retail_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money retailPrice;
 
-    @Column(name = "lowest_ask", precision = 10, scale = 2)
-    private Double lowestAsk;
+    @Columns(columns = { @Column(name = "lowest_ask_currency"), @Column(name = "item_lowest_ask") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money lowestAsk;
 
-    @Column(name = "highest_bid", precision = 10, scale = 2)
-    private Double highestBid;
+    @Columns(columns = { @Column(name = "highest_bid_currency"), @Column(name = "item_highest_bid") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money highestBid;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -60,7 +69,7 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
-    public Item(Long id, String name, Money price,  Money retailPrice, Double lowestAsk, Double highestBid, LocalDate releaseDate, String condition) {
+    public Item(Long id, String name, Money price,  Money retailPrice, Money lowestAsk, Money highestBid, LocalDate releaseDate, String condition) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -71,7 +80,7 @@ public class Item {
         this.condition = condition;
     }
 
-    public Item(Long id, String name, Money price, Money retailPrice, Double lowestAsk, Double highestBid, String condition) {
+    public Item(Long id, String name, Money price, Money retailPrice, Money lowestAsk, Money highestBid, String condition) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -84,8 +93,8 @@ public class Item {
     public Item(String name,
                 Money price,
                 Money retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition) {
         this.name = name;
@@ -100,8 +109,8 @@ public class Item {
     public Item(String name,
                 Money price,
                 Money retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 Brand brand) {
@@ -112,8 +121,8 @@ public class Item {
     public Item(String name,
                 Money price,
                 Money retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 Brand brand,
@@ -125,8 +134,8 @@ public class Item {
     public Item(String name,
                 Money price,
                 Money retailPrice,
-                Double lowestAsk,
-                Double highestBid,
+                Money lowestAsk,
+                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 Brand brand,

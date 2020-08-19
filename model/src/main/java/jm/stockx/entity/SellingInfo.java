@@ -2,6 +2,10 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.Status;
 import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
 import javax.persistence.*;
@@ -14,6 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "selling_info")
+@TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class SellingInfo {
     @Id
     @Column(name = "id")
@@ -38,7 +43,8 @@ public class SellingInfo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "price", precision = 10, scale = 2)
+    @Columns(columns = { @Column(name = "selling_info_currency"), @Column(name = "selling_info_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money price;
 
     public SellingInfo(User user,

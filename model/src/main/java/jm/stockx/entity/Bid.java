@@ -1,6 +1,10 @@
 package jm.stockx.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
 import javax.persistence.*;
@@ -12,13 +16,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "bids")
+@TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price")
+    @Columns(columns = { @Column(name = "bid_currency"), @Column(name = "bid_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money price;
 
     @Column(name = "success")
