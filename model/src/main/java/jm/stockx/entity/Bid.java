@@ -1,21 +1,13 @@
 package jm.stockx.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
+import org.joda.money.Money;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -24,14 +16,16 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "bids")
+@TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price")
-    private Double price;
+    @Columns(columns = { @Column(name = "bid_currency"), @Column(name = "bid_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money price;
 
     @Column(name = "success")
     private Boolean success;
@@ -44,7 +38,7 @@ public class Bid {
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
-    public Bid(Double price, Boolean success, User user, Item item) {
+    public Bid(Money price, Boolean success, User user, Item item) {
         this.price = price;
         this.success = success;
         this.user = user;

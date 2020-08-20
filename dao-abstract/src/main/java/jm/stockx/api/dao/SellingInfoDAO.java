@@ -4,6 +4,7 @@ import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
@@ -12,4 +13,6 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
     SellingInfoDto getSellingInfoDtoById(Long id);
 
     List<SellerTopInfoDto> getTopSellingUsers();
+
+    int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 }
