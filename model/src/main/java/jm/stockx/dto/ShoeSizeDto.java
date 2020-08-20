@@ -2,7 +2,11 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
