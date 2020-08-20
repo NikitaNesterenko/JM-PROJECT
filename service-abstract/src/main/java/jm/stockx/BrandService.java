@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.dto.BrandDto;
-import jm.stockx.dto.BrandPostDto;
 import jm.stockx.entity.Brand;
 
 import java.util.List;

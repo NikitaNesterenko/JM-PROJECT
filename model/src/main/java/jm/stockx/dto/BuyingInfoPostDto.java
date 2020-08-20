@@ -4,7 +4,12 @@ import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.enums.Status;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.joda.money.Money;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -23,7 +28,7 @@ public class BuyingInfoPostDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double buyingPrice;
+    private Money buyingPrice;
 
     private Set<Item> boughtItems;
 

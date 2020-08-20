@@ -2,7 +2,13 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.Item;
 import jm.stockx.enums.ItemColors;
-import lombok.*;
+import org.joda.money.Money;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,24 +29,28 @@ public class ItemDto {
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double price;
+    private Money price;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double retailPrice;
+    private Money retailPrice;
 
     @Positive(message = "Цена должна быть положительной")
     @NotNull
-    private Double lowestAsk;
+    private Money lowestAsk;
 
     @Positive(message = "Ставка должна быть положительной")
     @NotNull
-    private Double highestBid;
+    private Money highestBid;
 
     private LocalDate dateRelease;
 
     @NotBlank
     private String condition;
+
+    @NotBlank
+    private String description;
+
     private ItemColors itemColors;
 
     public ItemDto(@NonNull Item item) {
@@ -52,6 +62,7 @@ public class ItemDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
+        this.condition = item.getDescription();
         this.itemColors = item.getItemColors();
     }
 }
