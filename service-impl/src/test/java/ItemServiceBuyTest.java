@@ -22,8 +22,6 @@ public class ItemServiceBuyTest {
     private ItemServiceImpl itemService;
 
     @Mock
-    private jm.stockx.api.dao.ItemDAO itemDao;
-    @Mock
     private jm.stockx.api.dao.UserDAO userDAO;
     @Mock
     private jm.stockx.api.dao.BuyingInfoDAO buyingInfoDAO;
