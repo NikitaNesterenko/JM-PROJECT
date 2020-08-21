@@ -3,7 +3,11 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.SellingInfo;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -113,4 +117,16 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .setParameter("itemColors", itemColors)
                 .getResultList();
     }
+
+
+    @Override
+    public Money getLastSalePriceById(Long id) {
+        return (Money) entityManager.createNativeQuery("" +
+                "SELECT LAST i.retail_price" +
+                "FROM Item AS i " +
+                "WHERE i.id AND i.releaseDate <= GETDATE(current_date)", Item.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
 }

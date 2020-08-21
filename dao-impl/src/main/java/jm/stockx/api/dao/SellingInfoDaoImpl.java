@@ -5,9 +5,7 @@ import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 
@@ -36,6 +34,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getSingleResult();
     }
 
+    @Override
     public List<SellerTopInfoDto> getTopSellingUsers(){
         String sql = "" +
                 "SELECT NEW jm.stockx.dto.SellerTopInfoDto(" +

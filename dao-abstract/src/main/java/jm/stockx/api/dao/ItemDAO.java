@@ -3,6 +3,8 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import org.joda.money.Money;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,4 +25,6 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     ItemDto getItemDtoById(Long id);
 
     List<ItemDto> getItemsByColors(String itemColors);
+
+    Money getLastSalePriceById(Long id);
 }

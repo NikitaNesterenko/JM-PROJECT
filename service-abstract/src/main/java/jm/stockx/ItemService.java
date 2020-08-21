@@ -5,6 +5,7 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import org.joda.money.Money;
 
 import java.util.List;
 
@@ -33,4 +34,6 @@ public interface ItemService {
     List<Item> getNotReleasedItemsByBrand(Brand brand);
 
     boolean isItemExist(Long id);
+
+    Money getLastSalePriceById(Long id);
 }

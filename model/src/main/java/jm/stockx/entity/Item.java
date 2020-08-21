@@ -86,6 +86,10 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
+    @Columns(columns = { @Column(name = "last_sale_price_currency"), @Column(name = "item_last_sale_price") })
+    @Type(type = "joda_MoneyAmountWithCurrencyType")
+    private Money lastSalePrice;
+
     public Item(Long id, String name,
                 Money price,  Money retailPrice,
                 Money lowestAsk, Money highestBid,

@@ -14,6 +14,7 @@ import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.User;
 import jm.stockx.enums.Status;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,5 +129,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean isItemExist(Long id) {
         return itemDao.doesItExistEntity(id);
+    }
+
+    @Override
+    public Money getLastSalePriceById(Long id) {
+        return itemDao.getLastSalePriceById(id);
     }
 }

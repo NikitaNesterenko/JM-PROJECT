@@ -53,6 +53,10 @@ public class ItemDto {
 
     private ItemColors itemColors;
 
+    @Positive
+    @NotNull
+    private Money lastSalePrice;
+
     public ItemDto(@NonNull Item item) {
         this.id = item.getId();
         this.name = item.getName();
@@ -64,5 +68,25 @@ public class ItemDto {
         this.condition = item.getCondition();
         this.condition = item.getDescription();
         this.itemColors = item.getItemColors();
+        this.lastSalePrice = item.getLastSalePrice();
+    }
+
+    public ItemDto(
+            Long id,
+            @NotBlank String name,
+            @Positive(message = "Цена должна быть положительной") @NotNull Money price,
+            @Positive(message = "Цена должна быть положительной") @NotNull Money lowestAsk,
+            @Positive(message = "Ставка должна быть положительной") @NotNull Money highestBid,
+            LocalDate dateRelease,
+            @NotBlank String condition,
+            ItemColors itemColors) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.dateRelease = dateRelease;
+        this.condition = condition;
+        this.itemColors = itemColors;
     }
 }
