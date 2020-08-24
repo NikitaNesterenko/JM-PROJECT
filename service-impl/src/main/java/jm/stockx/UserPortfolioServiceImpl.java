@@ -36,4 +36,12 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
     public UserPortfolio getUserPortfolioByUserId(Long id) {
         return null; //userPortfolioDao.getUserPortfolioByUserId(id);
     }
+
+    @Override
+    @Transactional
+    public UserPortfolio update(UserPortfolio userPortfolio) {
+        return userPortfolioDao.update(userPortfolio);
+    }
+
+
 }

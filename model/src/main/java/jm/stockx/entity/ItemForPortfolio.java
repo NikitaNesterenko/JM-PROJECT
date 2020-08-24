@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -39,20 +40,14 @@ public class ItemForPortfolio {
     @Column(name = "purchase_price")
     private Double purchasePrice;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     @NonNull
     private Item item;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "portfolio_id", nullable = false)
-    @NonNull
-    private UserPortfolio userPortfolio;
-
-    public ItemForPortfolio(LocalDate date, Double purchasePrice, Item item, UserPortfolio userPortfolio) {
+    public ItemForPortfolio(LocalDate date, Double purchasePrice, Item item) {
         purchaseDate = date;
         this.purchasePrice = purchasePrice;
         this.item = item;
-        this.userPortfolio = userPortfolio;
     }
 }

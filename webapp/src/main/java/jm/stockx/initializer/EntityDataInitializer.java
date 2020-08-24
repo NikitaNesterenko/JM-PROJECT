@@ -43,7 +43,7 @@ public class EntityDataInitializer {
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
     private BidService bidService;
-    private UserPortfolioService userPortfolio;
+    private UserPortfolioService userPortfolioService;
     private ItemForPortfolioService itemForPortfolioService;
 
     @Autowired
@@ -67,7 +67,7 @@ public class EntityDataInitializer {
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
         this.bidService = bidService;
-        this.userPortfolio = userPortfolio;
+        this.userPortfolioService = userPortfolio;
         this.itemForPortfolioService = itemForPortfolioService;
     }
 
@@ -320,25 +320,29 @@ public class EntityDataInitializer {
         ItemForPortfolio itemForPortfolio1 = new ItemForPortfolio(
                 LocalDate.of(2020, 01, 21),
                 35.5,
-                item1,
-                userPortfolio1
+                item1
         );
         ItemForPortfolio itemForPortfolio2 = new ItemForPortfolio(
                 LocalDate.of(2019, 01, 21),
                 45.5,
-                item2,
-                userPortfolio1
+                item2
         );
         ItemForPortfolio itemForPortfolio3 = new ItemForPortfolio(
                 LocalDate.of(2018, 01, 21),
                 55.5,
-                item3,
-                userPortfolio2
+                item3
         );
 
-        itemForPortfolioService.add(itemForPortfolio1);
-        itemForPortfolioService.add(itemForPortfolio2);
-        itemForPortfolioService.add(itemForPortfolio3);
+
+        userPortfolio1.getItemPortfolio().add(itemForPortfolio1);
+        userPortfolio1.getItemPortfolio().add(itemForPortfolio2);
+        userPortfolio2.getItemPortfolio().add(itemForPortfolio3);
+
+        userPortfolioService.create(userPortfolio1);
+        userPortfolioService.create(userPortfolio2);
+        userPortfolio1.getItemPortfolio().remove(itemForPortfolio2);
+        userPortfolioService.update(userPortfolio1);
+
     }
 
 }
