@@ -4,6 +4,11 @@ import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.*;
 import org.joda.money.Money;
 

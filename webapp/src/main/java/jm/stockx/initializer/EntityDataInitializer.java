@@ -1,7 +1,24 @@
 package jm.stockx.initializer;
 
-import jm.stockx.*;
-import jm.stockx.entity.*;
+import jm.stockx.BidService;
+import jm.stockx.BrandService;
+import jm.stockx.CurrencyService;
+import jm.stockx.ItemService;
+import jm.stockx.NewsService;
+import jm.stockx.RoleService;
+import jm.stockx.SellingInfoService;
+import jm.stockx.StyleService;
+import jm.stockx.UserService;
+import jm.stockx.entity.Admin;
+import jm.stockx.entity.Bid;
+import jm.stockx.entity.Brand;
+import jm.stockx.entity.Currency;
+import jm.stockx.entity.Item;
+import jm.stockx.entity.News;
+import jm.stockx.entity.Role;
+import jm.stockx.entity.SellingInfo;
+import jm.stockx.entity.Style;
+import jm.stockx.entity.User;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
@@ -63,6 +80,7 @@ public class EntityDataInitializer {
         createNews();
         //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
+
     }
 
     private void createRoles() {
@@ -282,5 +300,7 @@ public class EntityDataInitializer {
                     itemService.get(3L)));
         }
     }
+
+
 
 }

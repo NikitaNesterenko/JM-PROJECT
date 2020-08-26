@@ -2,10 +2,13 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.User;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.*;
 import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;

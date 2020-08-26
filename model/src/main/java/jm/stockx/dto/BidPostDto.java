@@ -1,6 +1,11 @@
 package jm.stockx.dto;
 
 import jm.stockx.entity.Bid;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.*;
 import org.joda.money.Money;
 
