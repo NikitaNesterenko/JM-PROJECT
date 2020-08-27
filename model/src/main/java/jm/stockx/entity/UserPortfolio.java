@@ -46,12 +46,8 @@ public class UserPortfolio {
     @NonNull
     private User user;
 
-    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL})
-    private Set<ItemForPortfolio> itemPortfolio;
-
     public UserPortfolio(User user) {
         this.user = user;
-        this.itemPortfolio = new HashSet<>();
     }
 
 }

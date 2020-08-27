@@ -1,15 +1,33 @@
 package jm.stockx.entity;
 
 import jm.stockx.enums.Status;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -35,7 +53,7 @@ public class BuyingInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money buyingPrice;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "buying_item",
             joinColumns = @JoinColumn(name = "buying_id"),
@@ -56,5 +74,8 @@ public class BuyingInfo {
     public BuyingInfo(Item item) {
         this.buyingTimeStamp = LocalDateTime.now();
         this.buyingPrice = item.getPrice();
+        this.boughtItems = new HashSet<>();
+        boughtItems.add(item);
+
     }
 }

@@ -3,7 +3,6 @@ package jm.stockx.initializer;
 import jm.stockx.BidService;
 import jm.stockx.BrandService;
 import jm.stockx.CurrencyService;
-import jm.stockx.ItemForPortfolioService;
 import jm.stockx.ItemService;
 import jm.stockx.NewsService;
 import jm.stockx.RoleService;
@@ -14,9 +13,9 @@ import jm.stockx.UserService;
 import jm.stockx.entity.Admin;
 import jm.stockx.entity.Bid;
 import jm.stockx.entity.Brand;
+import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Currency;
 import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemForPortfolio;
 import jm.stockx.entity.News;
 import jm.stockx.entity.Role;
 import jm.stockx.entity.SellingInfo;
@@ -30,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -44,7 +44,6 @@ public class EntityDataInitializer {
     private CurrencyService currencyService;
     private BidService bidService;
     private UserPortfolioService userPortfolioService;
-    private ItemForPortfolioService itemForPortfolioService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -56,8 +55,7 @@ public class EntityDataInitializer {
                              SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
                              BidService bidService,
-                             UserPortfolioService userPortfolio,
-                             ItemForPortfolioService itemForPortfolioService) {
+                             UserPortfolioService userPortfolio) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -68,7 +66,6 @@ public class EntityDataInitializer {
         this.currencyService = currencyService;
         this.bidService = bidService;
         this.userPortfolioService = userPortfolio;
-        this.itemForPortfolioService = itemForPortfolioService;
     }
 
 
@@ -312,36 +309,26 @@ public class EntityDataInitializer {
     }
 
     private void createUserPortfolio() {
-        UserPortfolio userPortfolio1 = new UserPortfolio(userService.getUserById(2L));
-        UserPortfolio userPortfolio2 = new UserPortfolio(userService.getUserById(3L));
+        User user1 = userService.getUserById(2L);
+        User user2 = userService.getUserById(3L);
         Item item1 = itemService.get(1L);
         Item item2 = itemService.get(2L);
         Item item3 = itemService.get(3L);
-        ItemForPortfolio itemForPortfolio1 = new ItemForPortfolio(
-                LocalDate.of(2020, 01, 21),
-                35.5,
-                item1
-        );
-        ItemForPortfolio itemForPortfolio2 = new ItemForPortfolio(
-                LocalDate.of(2019, 01, 21),
-                45.5,
-                item2
-        );
-        ItemForPortfolio itemForPortfolio3 = new ItemForPortfolio(
-                LocalDate.of(2018, 01, 21),
-                55.5,
-                item3
-        );
-
-
-        userPortfolio1.getItemPortfolio().add(itemForPortfolio1);
-        userPortfolio1.getItemPortfolio().add(itemForPortfolio2);
-        userPortfolio2.getItemPortfolio().add(itemForPortfolio3);
-
-        userPortfolioService.create(userPortfolio1);
-        userPortfolioService.create(userPortfolio2);
-        userPortfolio1.getItemPortfolio().remove(itemForPortfolio2);
-        userPortfolioService.update(userPortfolio1);
+        Item item4 = itemService.get(4L);
+        BuyingInfo buyingInfo1 = new BuyingInfo(item1);
+        buyingInfo1.getBoughtItems().add(item2);
+        buyingInfo1.setStatus(Status.DELIVERED);
+        BuyingInfo buyingInfo2 = new BuyingInfo(item3);
+        buyingInfo2.setStatus(Status.DELIVERED);
+        BuyingInfo buyingInfo3 = new BuyingInfo(item4);
+        buyingInfo3.setStatus(Status.DELIVERED);
+        user1.getBuyingInfo().add(buyingInfo1);
+        user1.getBuyingInfo().add(buyingInfo3);
+        user2.getBuyingInfo().add(buyingInfo2);
+        userService.updateUser(user1);
+        userService.updateUser(user2);
+        userPortfolioService.create(new UserPortfolio(user1));
+        userPortfolioService.create(new UserPortfolio(user2));
 
     }
 

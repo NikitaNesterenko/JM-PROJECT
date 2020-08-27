@@ -1,10 +1,14 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserPortfolioDaoImpl;
+import jm.stockx.entity.BuyingInfo;
+import jm.stockx.entity.Item;
 import jm.stockx.entity.UserPortfolio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserPortfolioServiceImpl implements UserPortfolioService{
@@ -34,7 +38,7 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
 
    @Override
     public UserPortfolio getUserPortfolioByUserId(Long id) {
-        return null; //userPortfolioDao.getUserPortfolioByUserId(id);
+        return userPortfolioDao.getUserPortfolioByUserId(id);
     }
 
     @Override
@@ -43,5 +47,12 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
         return userPortfolioDao.update(userPortfolio);
     }
 
+    public List<BuyingInfo> getBuyingInfoByPortfolioId(Long id) {
+        return userPortfolioDao.getBuyingInfoByPortfolioId(id);
+    }
+
+    public List<Item> getItemByPortfolioId(Long id) {
+       return userPortfolioDao.getItemByPortfolioId(id);
+    }
 
 }
