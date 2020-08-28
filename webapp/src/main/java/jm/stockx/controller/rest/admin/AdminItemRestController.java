@@ -11,6 +11,8 @@ import jm.stockx.entity.Item;
 import jm.stockx.util.Response;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,8 +29,6 @@ import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/rest/api/admin/items")
@@ -84,8 +84,12 @@ public class AdminItemRestController {
     public Response<?> updateItem(@Valid @RequestBody ItemPutDto itemPutDto) {
         String itemName = itemPutDto.getName();
         if (itemService.isItemExist(itemPutDto.getId())) {
-            Item itemUpdate = new Item(itemPutDto.getId(), itemPutDto.getName(), itemPutDto.getPrice(), itemPutDto.getRetailPrice(),
-                    itemPutDto.getLowestAsk(), itemPutDto.getHighestBid(), itemPutDto.getCondition(), itemPutDto.getDescription());
+            Item itemUpdate = new Item(itemPutDto.getId(), itemPutDto.getName(),
+                    Money.of(CurrencyUnit.of(itemPutDto.getPriceCurrency()), itemPutDto.getPrice()),
+                    Money.of(CurrencyUnit.of(itemPutDto.getRetailPriceCurrency()), itemPutDto.getRetailPrice()),
+                    Money.of(CurrencyUnit.of(itemPutDto.getLowestAskCurrency()), itemPutDto.getLowestAsk()),
+                    Money.of(CurrencyUnit.of(itemPutDto.getHighestBidCurrency()), itemPutDto.getHighestBid()),
+                    itemPutDto.getCondition(), itemPutDto.getDescription());
             itemService.update(itemUpdate);
             log.info("Товар {} успешно обновлен", itemName);
             return Response.ok(itemPutDto);
