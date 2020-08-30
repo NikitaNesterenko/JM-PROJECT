@@ -8,12 +8,10 @@ import jm.stockx.NewsService;
 import jm.stockx.RoleService;
 import jm.stockx.SellingInfoService;
 import jm.stockx.StyleService;
-import jm.stockx.UserPortfolioService;
 import jm.stockx.UserService;
 import jm.stockx.entity.Admin;
 import jm.stockx.entity.Bid;
 import jm.stockx.entity.Brand;
-import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Currency;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.News;
@@ -21,7 +19,6 @@ import jm.stockx.entity.Role;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.Style;
 import jm.stockx.entity.User;
-import jm.stockx.entity.UserPortfolio;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
@@ -29,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -43,7 +39,6 @@ public class EntityDataInitializer {
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
     private BidService bidService;
-    private UserPortfolioService userPortfolioService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -54,8 +49,7 @@ public class EntityDataInitializer {
                              NewsService newsService,
                              SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
-                             BidService bidService,
-                             UserPortfolioService userPortfolio) {
+                             BidService bidService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -65,7 +59,6 @@ public class EntityDataInitializer {
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
         this.bidService = bidService;
-        this.userPortfolioService = userPortfolio;
     }
 
 
@@ -87,7 +80,7 @@ public class EntityDataInitializer {
         createNews();
         //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
-        createUserPortfolio();
+
     }
 
     private void createRoles() {
@@ -308,28 +301,6 @@ public class EntityDataInitializer {
         }
     }
 
-    private void createUserPortfolio() {
-        User user1 = userService.getUserById(2L);
-        User user2 = userService.getUserById(3L);
-        Item item1 = itemService.get(1L);
-        Item item2 = itemService.get(2L);
-        Item item3 = itemService.get(3L);
-        Item item4 = itemService.get(4L);
-        BuyingInfo buyingInfo1 = new BuyingInfo(item1);
-        buyingInfo1.getBoughtItems().add(item2);
-        buyingInfo1.setStatus(Status.DELIVERED);
-        BuyingInfo buyingInfo2 = new BuyingInfo(item3);
-        buyingInfo2.setStatus(Status.DELIVERED);
-        BuyingInfo buyingInfo3 = new BuyingInfo(item4);
-        buyingInfo3.setStatus(Status.DELIVERED);
-        user1.getBuyingInfo().add(buyingInfo1);
-        user1.getBuyingInfo().add(buyingInfo3);
-        user2.getBuyingInfo().add(buyingInfo2);
-        userService.updateUser(user1);
-        userService.updateUser(user2);
-        userPortfolioService.create(new UserPortfolio(user1));
-        userPortfolioService.create(new UserPortfolio(user2));
 
-    }
 
 }
