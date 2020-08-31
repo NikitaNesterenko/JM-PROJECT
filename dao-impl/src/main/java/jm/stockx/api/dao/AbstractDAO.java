@@ -17,23 +17,28 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
                 this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<T> getAll() {
         return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
+    @Override
     public T getById(PK id) {
         return entityManager.find(clazz, id);
     }
 
+    @Override
     public void add(T t) {
         entityManager.persist(t);
     }
 
+    @Override
     public T update(T t) {
         return entityManager.merge(t);
     }
 
+    @Override
     public void deleteById(PK id) {
         entityManager.remove(getById(id));
     }

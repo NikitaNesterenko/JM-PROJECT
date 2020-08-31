@@ -92,7 +92,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.condition," +
                 "i.itemColors)" +
                 "FROM Item AS i " +
-                "WHERE id =: id", ItemDto.class)
+                "WHERE i.id =: id", ItemDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -109,7 +109,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.condition," +
                 "i.itemColors)" +
                 "FROM Item AS i " +
-                "WHERE itemColors =: itemColors", ItemDto.class)
+                "WHERE i.itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
                 .getResultList();
     }

@@ -7,6 +7,7 @@ import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.SubscriptionDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
@@ -90,13 +91,13 @@ public class ItemServiceImpl implements ItemService {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         Item item = itemDao.getById(buyingDto.getItemId());
-        Set<Item> bougthItems = new HashSet<>();
-        bougthItems.add(item);
+        Set<Item> boughtItems = new HashSet<>();
+        boughtItems.add(item);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
         //TODO : add actual paymentInfo
 
         BuyingInfo buyingInfo = new BuyingInfo(item);
-        buyingInfo.setBoughtItems(bougthItems);
+        buyingInfo.setBoughtItems(boughtItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
         buyingInfoDAO.add(buyingInfo);
@@ -108,6 +109,26 @@ public class ItemServiceImpl implements ItemService {
         sellingInfoDAO.add(sellingInfo);
 
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
+    }
+
+    @Override
+    public void subscribeToItem(SubscriptionDto subscriptionDto) {
+        User subscriber = userDAO.getById(subscriptionDto.getSubscriberId());
+        Item item = itemDao.getById(subscriptionDto.getItemId());
+        Set<Item> subscribedItems = new HashSet<>();
+        subscribedItems.add(item);
+
+        mailService.sendSimpleMessage(subscriber.getEmail(), "You've subscribe to item!", item.toString());
+    }
+
+    @Override
+    public void unsubscribeToItem(SubscriptionDto subscriptionDto) {
+        User subscriber = userDAO.getById(subscriptionDto.getSubscriberId());
+        Item item = itemDao.getById(subscriptionDto.getItemId());
+        Set<Item> subscribedItems = new HashSet<>();
+        subscribedItems.remove(item);
+
+        mailService.sendSimpleMessage(subscriber.getEmail(), "You've unsubscribe from item!", item.toString());
     }
 
     @Override
