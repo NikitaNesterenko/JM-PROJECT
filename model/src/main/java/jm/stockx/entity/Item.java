@@ -184,4 +184,8 @@ public class Item {
         this.itemImageUrl = itemImageUrl;
         this.style = style;
     }
+
+    public Item(String name) {
+        this.name = name;
+    }
 }

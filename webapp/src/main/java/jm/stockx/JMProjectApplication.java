@@ -5,14 +5,14 @@ import jm.stockx.initializer.EntityDataInitializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 @EntityScan("jm.stockx")
-public class JMProjectApplication {
+public class JMProjectApplication extends SpringBootServletInitializer {
 
     @Bean(initMethod = "init")
     @PostConstruct
