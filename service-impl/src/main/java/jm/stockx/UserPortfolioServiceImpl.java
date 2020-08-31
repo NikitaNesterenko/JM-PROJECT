@@ -36,7 +36,7 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
         userPortfolioDao.add(userPortfolio);
     }
 
-   @Override
+    @Override
     public UserPortfolio getUserPortfolioByUserId(Long id) {
         return userPortfolioDao.getUserPortfolioByUserId(id);
     }
@@ -47,10 +47,12 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
         return userPortfolioDao.update(userPortfolio);
     }
 
+    @Override
     public List<BuyingInfo> getBuyingInfoByPortfolioId(Long id) {
         return userPortfolioDao.getBuyingInfoByPortfolioId(id);
     }
 
+    @Override
     public List<Item> getItemByPortfolioId(Long id) {
        return userPortfolioDao.getItemByPortfolioId(id);
     }
