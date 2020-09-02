@@ -3,7 +3,6 @@ package jm.stockx;
 import jm.stockx.api.dao.BrandDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.entity.Brand;
-import jm.stockx.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,13 +15,13 @@ import java.util.List;
 @EnableScheduling
 public class SeasonalMessagesServiceImpl implements SeasonalMessagesService{
     private final MailServiceImpl mailService;
-    private final UserDAO userDAO;
-    private final BrandDAO brandDAO;
+    private final UserService userService;
+    private final BrandService brandService;
 
-    public SeasonalMessagesServiceImpl(MailServiceImpl mailService, UserDAO userDAO, BrandDAO brandDAO) {
+    public SeasonalMessagesServiceImpl(MailServiceImpl mailService, UserService userService, BrandService brandService) {
         this.mailService = mailService;
-        this.userDAO = userDAO;
-        this.brandDAO = brandDAO;
+        this.userService = userService;
+        this.brandService = brandService;
     }
 
     @Override
@@ -58,12 +57,9 @@ public class SeasonalMessagesServiceImpl implements SeasonalMessagesService{
     }
 
     private void mailingSeasonalMessages(String subject, String text) {
-        List<User> users=  userDAO.getAll();
-        List<Brand> brands = brandDAO.getAll();
-
-        for (Brand brand : brands) {
-            for (User user : users) {
-                mailService.sendSimpleMessage(user.getEmail(), subject, text.concat(brand.getName()));
+        for (String brand : brandService.getAllBrandNames()) {
+            for (String string : userService.getAllUsersMail()) {
+                mailService.sendSimpleMessage(string, subject, text.concat(brand));
             }
         }
     }
