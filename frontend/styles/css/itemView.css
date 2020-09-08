@@ -1,12 +1,11 @@
 .item_view_style{
     width: 100%;
-    height: 1050px;
+    height: 1000px;
     display: flex;
     justify-content: center;
 }
 
 .head_block_style {
-    background-color: blue;
     width: 800px;
     height: 100%;
 }
@@ -20,27 +19,23 @@
 }
 
 .naming_style{
-    background-color: white;
     width: 100%;
     height: 110px;
 }
 
 .about_price_style{
-    background-color: white;
     width: 100%;
     height: 75px;
 }
 
 .viewer_style{
-    background-color: brown;
     width: 100%;
     height: 600px;
 }
 
 .description_style{
-    background-color: purple;
     width: 100%;
-    height: 50px;
+    height: 150px;
 }
 
 .item_menu_style {
@@ -120,7 +115,6 @@
 }
 
 .under_name_decoration {
-    color: darkgreen;
 }
 
 .under_name_style a {
@@ -147,7 +141,6 @@
 }
 
 .enter_size_style {
-    background-color: white;
     width: 70px;
     border-style: solid;
     border-left: 0;
@@ -183,7 +176,6 @@
 }
 
 .last_sale_style {
-    background-color: white;
     width: 190px;
 }
 
@@ -258,4 +250,17 @@
     height: 100% !important;
     margin-left: 0;
     margin-top: 0;
+}
+
+.description_block_style{
+    display: flex;
+    justify-content: space-between;}
+
+.left_block_style{
+    width: 30%;
+}
+
+.right_block_style{
+    width: 60%;
+    font-size: 0.8em;
 }
