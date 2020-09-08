@@ -1,0 +1,41 @@
+.button_item_style {
+    width: 150px;
+    height: 60px;
+    background-color: orangered;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 600;
+    color: white;
+}
+
+.top_row_style {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+    padding-left: 10px;
+    height: 25px;
+    padding-right: 10px;
+    font-size: 1.3em;
+}
+
+.bottom_row_style {
+    font-size: 0.8em !important;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    color: antiquewhite;
+}
+
+.border {
+    border-width: 1px;
+    border-color: gray;
+    border-style: solid;
+    padding-left: 13px;
+    /* margin: 0; */
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
+
+}

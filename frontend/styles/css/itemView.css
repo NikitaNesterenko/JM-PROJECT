@@ -1,0 +1,261 @@
+.item_view_style{
+    width: 100%;
+    height: 1050px;
+    display: flex;
+    justify-content: center;
+}
+
+.head_block_style {
+    background-color: blue;
+    width: 800px;
+    height: 100%;
+}
+
+.anchor_style {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    width: 100%;
+    height: 50px;
+}
+
+.naming_style{
+    background-color: white;
+    width: 100%;
+    height: 110px;
+}
+
+.about_price_style{
+    background-color: white;
+    width: 100%;
+    height: 75px;
+}
+
+.viewer_style{
+    background-color: brown;
+    width: 100%;
+    height: 600px;
+}
+
+.description_style{
+    background-color: purple;
+    width: 100%;
+    height: 50px;
+}
+
+.item_menu_style {
+    margin-top: 15px;
+}
+
+.item_menu_style ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.item_menu_style li {
+    font-size: 0.6em;
+    font-style: normal;
+    font-family: Arial;
+    color: gray;
+    margin: 0px;
+    padding: 0px;
+}
+
+.separator_style {
+    margin-left: 3px !important;
+    margin-right: 6px !important;
+}
+
+.item_button_style {
+
+}
+
+.item_button_style vaadin-button {
+    font-style: normal;
+    font-family: Arial;
+    font-weight: 500;
+    font-size: 0.7em;
+    color: black;
+    height: 20px;
+    margin: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 20px;
+    background-color: white;
+
+}
+
+.name_item_style {
+    margin: 0;
+    padding: 0;
+    padding-top: 20px;
+}
+
+.name_item_style h1 {
+    font-size: 2em;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+
+.under_name_style ul {
+    margin: 0;
+    font-size: 0.8em;
+    padding: 0;
+    font-family: Arial;
+    color: gray;
+    margin-top: 5px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.under_name_style li {
+    margin: 0;
+    padding: 0;
+}
+
+.under_name_decoration {
+    color: darkgreen;
+}
+
+.under_name_style a {
+    text-decoration: none;
+    color: darkgreen;
+}
+
+.ticker_style {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    border-left: 1px;
+    border-right: 1px;
+    border-top: 0;
+    border-bottom: 0;
+    /* border: gray; */
+    border-style: solid;
+}
+
+.price_block_style {
+    display: flex;
+    height: 70px;
+}
+
+.enter_size_style {
+    background-color: white;
+    width: 70px;
+    border-style: solid;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-width: 1px;
+    border-color: gray;
+}
+
+.enter_size_style span {
+    font-style: normal;
+    font-weight: 600;
+    color: gray;
+    font-family: Arial;
+    font-size: 0.8em;
+}
+
+.enter_size_style vaadin-button {
+    background-color: white;
+    height: 25px;
+    padding: 0;
+    font-size: 1.2em;
+    color: black;
+    min-width: 60px !important;
+}
+.enter_size_style vaadin-button-container {
+    width: 80%;
+}
+
+.enter_size_style button {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.last_sale_style {
+    background-color: white;
+    width: 190px;
+}
+
+.lowest_ask_style {
+}
+
+.highest_bid_style {
+}
+
+.last_sale_string_style {
+    padding-left: 15px;
+    font-size: 0.7em;
+    font-style: normal;
+    font-weight: 600;
+    font-family: Arial;
+    padding-top: 20px;
+}
+
+.span_style_1 {
+    color: gray;
+}
+
+.last_sale_string_style iron-icon {
+    color: red;
+    width: 15px;
+}
+
+.span_style_2 {
+    color: red;
+    padding-right: 5px;
+}
+
+.span_style_3 {
+    color: black;
+    font-size: 1.5em;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 4px;
+}
+
+.under_last_style {
+    text-align: center;
+    position: relative;
+    top: -10px;
+}
+
+.size_search1_style {
+    text-align: center;
+    position: relative;
+    bottom: 7px;
+}
+
+.size_search2_style {
+    text-align: center;
+    position: relative;
+    bottom: 7px;
+}
+
+.button_item1_style {
+    background-color: green !important;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.button_item2_style {
+    background-color: red !important;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.image_style {
+    height: 100% !important;
+    margin-left: 0;
+    margin-top: 0;
+}

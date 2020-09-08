@@ -1,0 +1,20 @@
+.size_search_style a {
+    font-size: 0.6em;
+    font-family: Arial;
+    color: black;
+    font-style: normal;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.anchor_left_style {
+    padding-right: 4px;
+    margin-right: 4px;
+    border-style: solid;
+    border-bottom: 0;
+    border-left: 0;
+    /* border-right: 2px !important; */
+    border-top: 0;
+    border-width: 1px;
+}
+
