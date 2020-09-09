@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.entity.TokenRecovery;
+import jm.stockx.entity.TokenRegistration;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +22,9 @@ public class MailServiceImpl implements MailService {
 
     public final JavaMailSender emailSender;
 
-    public final TokenRecoveryService tokenRecoveryService;
-
     public final UserService userService;
+
+    public final TokenRecoveryService tokenRecoveryService;
 
     @Value("${recovery.url}")
     private String urlRecoveryLink;
@@ -31,12 +32,19 @@ public class MailServiceImpl implements MailService {
     @Value("${recovery.expirationDays}")
     private int linkExpirationDays;
 
+    public final TokenRegistrationService tokenRegistrationService;
+
+    @Value("${registration.url}")
+    private String urlRegistrationLink;
+
+
 
     @Autowired
-    public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService, UserService userService) {
+    public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService, UserService userService, TokenRegistrationService tokenRegistrationService) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
         this.userService = userService;
+        this.tokenRegistrationService = tokenRegistrationService;
     }
 
     @Override
@@ -63,6 +71,28 @@ public class MailServiceImpl implements MailService {
         try {
             sendSimpleMessage(user.getEmail(), "Password recovery", hashEmail);
             tokenRecoveryService.createToken(token);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean sendRegistrationLinkToUser(User user) {
+        if(user == null || user.getEmail() == null) {
+            return false;
+        }
+        String hash = UUID.randomUUID().toString();
+        String hashEmail = urlRegistrationLink + hash;
+        TokenRegistration token = new TokenRegistration();
+        token.setUser(user);
+        token.setHash(hash);
+        token.setHashEmail(hashEmail);
+        token.setStartTime(getCurrentDate());
+
+        try {
+            sendSimpleMessage(user.getEmail(), "Confirm your registration", hashEmail);
+            tokenRegistrationService.createToken(token);
         } catch (Exception e) {
             return false;
         }
