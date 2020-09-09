@@ -16,6 +16,7 @@ import jm.stockx.controller.view.Item;
 import jm.stockx.controller.view.head_form.element.ButtonItem;
 import jm.stockx.controller.view.head_form.element.SizeSearch;
 import jm.stockx.controller.view.head_form.element.BlockDescription;
+import jm.stockx.controller.view.head_form.element.SocialBlock;
 
 //@Route("")
 @CssImport("./styles/css/itemView.css")
@@ -84,9 +85,9 @@ public class ItemView extends Div {
 
     private class ItemMenu extends Div{
         UnorderedList listMenu = new UnorderedList();
-        ListItem home = new ListItem("HOME");
-        ListItem category = new ListItem(item.getCategory());
-        ListItem brand = new ListItem(item.getBrand());
+        ListItem home = new ListItem(new Anchor("#", "HOME"));
+        ListItem category = new ListItem(new Anchor("#", "CATEGORY"));
+        ListItem brand = new ListItem(new Anchor("#", item.getBrand().toUpperCase()));
         ListItem name = new ListItem(item.getName().toUpperCase());
         ListItem separator1 = new ListItem("/");
         ListItem separator2 = new ListItem("/");
@@ -133,16 +134,17 @@ public class ItemView extends Div {
     }
 
     private class NameBlock extends Div{
-        Div nameDiv = new Div();
-        Div underNameDiv = new Div();
-        H1 nameItem;
-        UnorderedList underNameString = new UnorderedList();
-        Span conditionText = new Span("Condition: ");
-        Span conditionValue;
-        ListItem condition = new ListItem();
-        ListItem ticker = new ListItem("Ticker: JB-JO1RHSSGW");
-        ListItem authentic = new ListItem();
-        Anchor authenticUrl = new Anchor("#", "100% Authentic");
+        private Div nameDiv = new Div();
+        private Div underNameDiv = new Div();
+        private H1 nameItem;
+        private UnorderedList underNameString = new UnorderedList();
+        private Span conditionText = new Span("Condition: ");
+        private Span conditionValue;
+        private ListItem condition = new ListItem();
+        private ListItem ticker = new ListItem("Ticker: JB-JO1RHSSGW");
+        private ListItem authentic = new ListItem();
+        private Anchor authenticUrl = new Anchor("#", "100% Authentic");
+        private SocialBlock socialBlock = new SocialBlock();
 
         public NameBlock() {
             initNameBlock();
@@ -152,7 +154,8 @@ public class ItemView extends Div {
 
         private void initNameBlock() {
             nameItem = new H1(item.getName());
-            nameDiv.add(nameItem);
+            socialBlock.setVisible(true);
+            nameDiv.add(nameItem, socialBlock);
             conditionValue = new Span(item.getCondition());
             condition.add(conditionText, conditionValue);
             authentic.add(authenticUrl);
@@ -167,6 +170,7 @@ public class ItemView extends Div {
             conditionValue.addClassName("under_name_decoration");
             authentic.addClassName("under_name_decoration");
             ticker.addClassName("ticker_style");
+            socialBlock.addClassName("social_block_style");
         }
     }
 
@@ -271,4 +275,5 @@ public class ItemView extends Div {
         }
     }
 }
+
 

@@ -55,6 +55,18 @@
     color: gray;
     margin: 0px;
     padding: 0px;
+    font-weight: 600;
+}
+
+.item_menu_style a {
+    font-style: normal;
+    font-family: Arial;
+    color: gray;
+}
+
+.item_menu_style a:hover {
+    color: black;
+    text-decoration: none;
 }
 
 .separator_style {
@@ -84,11 +96,18 @@
 
 }
 
+.item_button_style vaadin-button:hover {
+    background-color: white;
+}
+
 .name_item_style {
     margin: 0;
     padding: 0;
     padding-top: 20px;
+    position: relative;
+    display: flex;
 }
+
 
 .name_item_style h1 {
     font-size: 2em;
@@ -115,11 +134,18 @@
 }
 
 .under_name_decoration {
+    color: darkgreen;
 }
 
 .under_name_style a {
     text-decoration: none;
     color: darkgreen;
+}
+
+.social_block_style {
+    position: absolute;
+    left: 550px;
+    bottom: 22px
 }
 
 .ticker_style {
