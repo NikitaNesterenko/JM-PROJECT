@@ -23,4 +23,6 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     ItemDto getItemDtoById(Long id);
 
     List<ItemDto> getItemsByColors(String itemColors);
+
+    ItemDto getItemBySizeABrandAndName(String brand, String name, String shoeSize);
 }

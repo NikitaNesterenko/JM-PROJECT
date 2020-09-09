@@ -1,9 +1,11 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.BidDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,5 +114,26 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "WHERE itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
                 .getResultList();
+    }
+
+    @Override
+    public ItemDto getItemBySizeABrandAndName(String brand, String name, String shoeSize) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
+                "i.name," +
+                "i.price," +
+                "i.lowestAsk," +
+                "i.highestBid," +
+                "i.releaseDate," +
+                "i.condition," +
+                "i.itemColors)" +
+                "FROM Item AS i, ShoeSize AS s, Brand AS b " +
+                "WHERE b.name =: itemBrand " +
+                "AND i.name =: itemName " +
+                "AND s.size =: itemSize", ItemDto.class)
+                .setParameter("itemBrand", brand)
+                .setParameter("itemName", name)
+                .setParameter("itemSize", shoeSize)
+                .getSingleResult();
     }
 }

@@ -82,6 +82,10 @@ public class Item {
     @JoinColumn(name = "style_id")
     private Style style;
 
+    @ManyToOne
+    @JoinColumn(name = "shoe_size_id")
+    private ShoeSize size;
+
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;

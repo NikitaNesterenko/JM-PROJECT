@@ -7,17 +7,21 @@ import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
+import jm.stockx.entity.ShoeSize;
 import jm.stockx.entity.User;
 import jm.stockx.enums.Status;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,18 +35,21 @@ public class ItemServiceImpl implements ItemService {
     private final MailService mailService;
     private final BuyingInfoDAO buyingInfoDAO;
     private final SellingInfoDAO sellingInfoDAO;
+    private final ShoeSizeServiceImpl shoeSizeService;
 
     @Autowired
     public ItemServiceImpl(ItemDAO itemDao,
                            UserDAO userDAO,
                            MailService mailService,
                            BuyingInfoDAO buyingInfoDAO,
-                           SellingInfoDAO sellingInfoDAO) {
+                           SellingInfoDAO sellingInfoDAO,
+                           ShoeSizeServiceImpl shoeSizeService) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
         this.sellingInfoDAO = sellingInfoDAO;
         this.buyingInfoDAO = buyingInfoDAO;
+        this.shoeSizeService = shoeSizeService;
     }
 
     @Override
@@ -129,4 +136,17 @@ public class ItemServiceImpl implements ItemService {
     public boolean isItemExist(Long id) {
         return itemDao.doesItExistEntity(id);
     }
+
+    @Override
+    public HashMap<String, Money> getTheItemDTOForSizeNameBrand(String brand, String name) {
+        List<ShoeSize> shoeSizes = shoeSizeService.getAll();
+        HashMap<String, Money> lowestAsksBySize = new HashMap<>();
+        for (ShoeSize s : shoeSizes) {
+            String shoeSize = s.getSize().toString();
+            Money lowestAsk = itemDao.getItemBySizeABrandAndName(brand, name, shoeSize).getLowestAsk();
+            lowestAsksBySize.put(shoeSize, lowestAsk);
+        }
+        return lowestAsksBySize;
+    }
+
 }
