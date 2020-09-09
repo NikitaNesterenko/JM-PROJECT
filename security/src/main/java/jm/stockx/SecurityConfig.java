@@ -40,13 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     }
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8888")
-                .allowedMethods("*");
-    }
-
-    @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
                 "/VAADIN/**",
