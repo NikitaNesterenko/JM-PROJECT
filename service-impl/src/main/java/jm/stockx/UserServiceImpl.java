@@ -13,11 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.List;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.util.StringUtils;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDao;
+
+    @Autowired
+    private MailSender mailSender;
 
     @Autowired
     public UserServiceImpl(UserDAO userDao) {
@@ -31,7 +39,50 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        try{
+            Optional<User> userFromDb = userDao.getByName(user.getUsername());
+        } catch (Exception e) {
+            return;
+        }
+
+
+
+//        if (userFromDb.isPresent()) {
+//            return;
+//        }
+
+        user.setActive(true);
+//        user.setRoles(Collections.singleton(Role.USER));
+        user.setActivationCode(UUID.randomUUID().toString());
+
         userDao.add(user);
+
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Welcome to App. Please, visit next link: http://localhost:8080/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+
+            mailSender.send(user.getEmail(), "Activation code", message);
+        }
+
+    }
+
+    @Override
+    public boolean activateUser(String code) {
+        User user = userDao.getByActivationCode(code);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setActivationCode(null);
+
+        userDao.update(user);
+
+        return true;
     }
 
     @Override

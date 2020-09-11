@@ -16,7 +16,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "WHERE u.username = :username", User.class)
                 .setParameter("username", name)
                 .getSingleResult();
-
         return Optional.of(user);
     }
 
@@ -42,6 +41,16 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
+    public User getByActivationCode(String code) {
+        User user = entityManager.createQuery("" +
+                "FROM User AS u " +
+                "WHERE u.activationCode = :code", User.class)
+                .setParameter("code", code)
+                .getSingleResult();
+        return user;
+    }
+
+    @Override
     public UserDto getUserDtoById(Long id) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.UserDto(" +
@@ -58,4 +67,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .setParameter("id", id)
                 .getSingleResult();
     }
+
+
 }
