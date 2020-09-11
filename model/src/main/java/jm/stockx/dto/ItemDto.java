@@ -1,6 +1,9 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ShoeSize;
+import jm.stockx.entity.Style;
 import jm.stockx.enums.ItemColors;
 import org.joda.money.Money;
 import lombok.Getter;
@@ -50,6 +53,15 @@ public class ItemDto {
 
     @NotBlank
     private String description;
+
+    @NotNull
+    private Brand brand;
+
+    private String itemImageUrl;
+
+    private Style style;
+
+    private ShoeSize size;
 
     private ItemColors itemColors;
 

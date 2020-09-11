@@ -4,8 +4,12 @@ import jm.stockx.dto.BidDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ShoeSize;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -126,6 +130,10 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
+                "i.brand," +
+                "i.itemImageUrl," +
+                "i.style," +
+                "i.size," +
                 "i.itemColors)" +
                 "FROM Item AS i, ShoeSize AS s, Brand AS b " +
                 "WHERE b.name =: itemBrand " +
