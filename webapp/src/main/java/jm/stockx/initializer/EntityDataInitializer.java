@@ -7,6 +7,7 @@ import jm.stockx.ItemService;
 import jm.stockx.NewsService;
 import jm.stockx.RoleService;
 import jm.stockx.SellingInfoService;
+import jm.stockx.ShoeSizeService;
 import jm.stockx.StyleService;
 import jm.stockx.UserService;
 import jm.stockx.entity.Admin;
@@ -17,8 +18,10 @@ import jm.stockx.entity.Item;
 import jm.stockx.entity.News;
 import jm.stockx.entity.Role;
 import jm.stockx.entity.SellingInfo;
+import jm.stockx.entity.ShoeSize;
 import jm.stockx.entity.Style;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ShoeSizeTypes;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
@@ -39,6 +42,7 @@ public class EntityDataInitializer {
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
     private BidService bidService;
+    private ShoeSizeService shoeSizeService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -49,7 +53,8 @@ public class EntityDataInitializer {
                              NewsService newsService,
                              SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
-                             BidService bidService) {
+                             BidService bidService,
+                             ShoeSizeService shoeSizeService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -59,6 +64,7 @@ public class EntityDataInitializer {
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
         this.bidService = bidService;
+        this.shoeSizeService = shoeSizeService;
     }
 
 
@@ -80,7 +86,7 @@ public class EntityDataInitializer {
         createNews();
         //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
-
+        createShoeSizes();
     }
 
     private void createRoles() {
@@ -301,6 +307,111 @@ public class EntityDataInitializer {
         }
     }
 
+    private void createShoeSizes() {
+        if (shoeSizeService.getAll().size() == 0) {
+            shoeSizeService.create(new ShoeSize(5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(5.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(6d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(6.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(7d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(7.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(8d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(8.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(9d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(9.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(10d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(10.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(11d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(11.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(12d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(12.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(13d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(13.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(14d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(14.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(15d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(15.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(16d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(16.5d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(17d, ShoeSizeTypes.WOMEN));
+            shoeSizeService.create(new ShoeSize(17.5d, ShoeSizeTypes.WOMEN));
+
+            shoeSizeService.create(new ShoeSize(0.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(1d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(1.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(2d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(2.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(3d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(3.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(4d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(4.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(5.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(6d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(6.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(7d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(7.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(8d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(8.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(9d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(9.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(10d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(10.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(11d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(11.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(12d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(12.5d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(13d, ShoeSizeTypes.CHILD));
+            shoeSizeService.create(new ShoeSize(13.5d, ShoeSizeTypes.CHILD));
+
+            shoeSizeService.create(new ShoeSize(7d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(7.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(8d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(8.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(9d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(9.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(10d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(10.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(11d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(11.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(12d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(12.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(13d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(14d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(15d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(16d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(17d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(18d, ShoeSizeTypes.MEN));
+
+            shoeSizeService.create(new ShoeSize(0d, ShoeSizeTypes.INFANT));
+            shoeSizeService.create(new ShoeSize(1d, ShoeSizeTypes.INFANT));
+            shoeSizeService.create(new ShoeSize(2d, ShoeSizeTypes.INFANT));
+            shoeSizeService.create(new ShoeSize(3d, ShoeSizeTypes.INFANT));
+            shoeSizeService.create(new ShoeSize(4d, ShoeSizeTypes.INFANT));
+
+            shoeSizeService.create(new ShoeSize(1d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(1.5d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(2d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(2.5d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(3d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(10.5d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(11d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(11.5d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(12d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(12.5d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(13d, ShoeSizeTypes.PRESCHOOL));
+            shoeSizeService.create(new ShoeSize(13.5d, ShoeSizeTypes.PRESCHOOL));
+
+            shoeSizeService.create(new ShoeSize(4d, ShoeSizeTypes.TODDLER));
+            shoeSizeService.create(new ShoeSize(5d, ShoeSizeTypes.TODDLER));
+            shoeSizeService.create(new ShoeSize(6d, ShoeSizeTypes.TODDLER));
+            shoeSizeService.create(new ShoeSize(7d, ShoeSizeTypes.TODDLER));
+            shoeSizeService.create(new ShoeSize(8d, ShoeSizeTypes.TODDLER));
+            shoeSizeService.create(new ShoeSize(9d, ShoeSizeTypes.TODDLER));
+            shoeSizeService.create(new ShoeSize(10d, ShoeSizeTypes.TODDLER));
+
+        }
+    }
 
 
 }

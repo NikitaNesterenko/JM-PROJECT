@@ -27,12 +27,17 @@ import java.util.List;
 @Table(name = "shoe_size")
 public class ShoeSize {
 
+    public ShoeSize(Double size, ShoeSizeTypes sizeTypes) {
+        this.size = size;
+        this.sizeTypes = sizeTypes;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "size", unique = true, precision = 10, scale = 2)
+    @Column(name = "size", precision = 10, scale = 2)
     private Double size;
 
     @Column(name = "size_type", nullable = false)
