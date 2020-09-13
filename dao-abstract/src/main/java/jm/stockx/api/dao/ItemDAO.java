@@ -3,12 +3,12 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+
 import java.util.List;
-import java.util.Optional;
 
 public interface ItemDAO extends GenericDao<Item, Long> {
 
-    Optional<Item> getByName(String name);
+    ItemDto getByName(String name);
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
 
