@@ -1,5 +1,6 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.News;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -39,4 +40,13 @@ public class NewsDto {
     private String text;
 
     private Blob image;
+
+    public NewsDto(News news) {
+        this.id = news.getId();
+        this.name = news.getName();
+        this.time = news.getTime();
+        this.title = news.getTitle();
+        this.description = news.getDescription();
+        this.text = news.getText();
+    }
 }
