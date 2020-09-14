@@ -12,16 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-    private static final String LOGIN_PROCESSING_URL = "/login";
-    private static final String LOGIN_FAILURE_URL = "/login?error";
-    private static final String LOGIN_URL = "/login";
-    private static final String LOGOUT_SUCCESS_URL = "/login";
 
     private final UserDetailsService userDetailsService;
 
@@ -84,10 +79,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .loginPage(LOGIN_URL).permitAll()
-                .loginProcessingUrl(LOGIN_PROCESSING_URL)
-                .failureUrl(LOGIN_FAILURE_URL)
-                .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+                .loginPage("/login").permitAll()
+                .loginProcessingUrl("/login")
+                .failureUrl("/login?error")
+                .and().logout().logoutSuccessUrl("/login");
     }
 
     @Override
