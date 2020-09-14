@@ -34,8 +34,7 @@ public class ItemView extends Div {
         item = initItem();
         initItemView();
         initClass();
-        add(
-                headBlockDiv);
+        add(headBlockDiv);
     }
 
     private void initItemView() {
@@ -81,17 +80,17 @@ public class ItemView extends Div {
                 "\n" +
                 "This Jordan 1 consists of a white and red leather upper with red satin tongue and liner. Black faux snakeskin leather detailing appears on the upper as well. A white midsole, red outsole, and a traditional Jordan Wings graphic on the ankle completes the design. These sneakers released in August of 2020 and retailed for $170.");
         return item;
-    }
+    } //В методе можно заинициализировать итем из БД. Пока все работает на классе отдельно созданном
 
     private class ItemMenu extends Div{
-        UnorderedList listMenu = new UnorderedList();
-        ListItem home = new ListItem(new Anchor("#", "HOME"));
-        ListItem category = new ListItem(new Anchor("#", "CATEGORY"));
-        ListItem brand = new ListItem(new Anchor("#", item.getBrand().toUpperCase()));
-        ListItem name = new ListItem(item.getName().toUpperCase());
-        ListItem separator1 = new ListItem("/");
-        ListItem separator2 = new ListItem("/");
-        ListItem separator3 = new ListItem("/");
+        private UnorderedList listMenu = new UnorderedList();
+        private ListItem home = new ListItem(new Anchor("#", "HOME"));
+        private ListItem category = new ListItem(new Anchor("#", "CATEGORY"));
+        private ListItem brand = new ListItem(new Anchor("#", item.getBrand().toUpperCase()));
+        private ListItem name = new ListItem(item.getName().toUpperCase());
+        private ListItem separator1 = new ListItem("/");
+        private ListItem separator2 = new ListItem("/");
+        private ListItem separator3 = new ListItem("/");
 
         public ItemMenu() {
             initItemMenu();
@@ -113,22 +112,26 @@ public class ItemView extends Div {
     }
 
     private class ItemButton extends Div{
-        Button share = new Button( "SHARE", new Icon(VaadinIcon.ARROW_UP));
-        Button portfolio= new Button( "PORTFOLIO", new Icon(VaadinIcon.PLUS));
-        Button follow = new Button( "FOLLOW", new Icon(VaadinIcon.PLUS));
+
+        private Anchor shareRef;
+        private Button share = new Button( "SHARE", new Icon(VaadinIcon.ARROW_UP));
+        private Button portfolio= new Button( "PORTFOLIO", new Icon(VaadinIcon.PLUS));
+        private Button follow = new Button( "FOLLOW", new Icon(VaadinIcon.PLUS));
+        SocialBlock socialBlock = new SocialBlock();
 
         public ItemButton() {
             initItemButton();
             this.initClass();
-            add(share, portfolio, follow);
+            add(shareRef, portfolio, follow);
         }
 
         private void initItemButton() {
-
+               shareRef = new Anchor("#", share, socialBlock);
         }
 
         private void initClass() {
             this.addClassName("item_button_style");
+            socialBlock.addClassName("social_blc_style");
         }
 
     }
@@ -144,7 +147,6 @@ public class ItemView extends Div {
         private ListItem ticker = new ListItem("Ticker: JB-JO1RHSSGW");
         private ListItem authentic = new ListItem();
         private Anchor authenticUrl = new Anchor("#", "100% Authentic");
-        private SocialBlock socialBlock = new SocialBlock();
 
         public NameBlock() {
             initNameBlock();
@@ -154,8 +156,7 @@ public class ItemView extends Div {
 
         private void initNameBlock() {
             nameItem = new H1(item.getName());
-            socialBlock.setVisible(true);
-            nameDiv.add(nameItem, socialBlock);
+            nameDiv.add(nameItem);
             conditionValue = new Span(item.getCondition());
             condition.add(conditionText, conditionValue);
             authentic.add(authenticUrl);
@@ -170,29 +171,28 @@ public class ItemView extends Div {
             conditionValue.addClassName("under_name_decoration");
             authentic.addClassName("under_name_decoration");
             ticker.addClassName("ticker_style");
-            socialBlock.addClassName("social_block_style");
         }
     }
 
     private class PriceBlock extends Div{
-        Div enterSize = new Div();
-        Div lastSale = new Div();
-        Div lowestAsk = new Div();
-        Div highestBid = new Div();
+        private Div enterSize = new Div();
+        private  Div lastSale = new Div();
+        private Div lowestAsk = new Div();
+        private Div highestBid = new Div();
 
-        Span size = new Span("Size");
-        Button sizeButton = new Button( "All", new Icon(VaadinIcon.ANGLE_DOWN));
+        private Span size = new Span("Size");
+        private Button sizeButton = new Button( "All", new Icon(VaadinIcon.ANGLE_DOWN));
 
-        Div lastSaleString = new Div();
-        Span sale = new Span("Last Sale");
-        Span priceLastSale;
-        Span differentMoney;
-        Span differentPercent;
-        Div underlastSale;
-        ButtonItem buttonItem1;
-        ButtonItem buttonItem2;
-        SizeSearch sizeSearch1;
-        SizeSearch sizeSearch2;
+        private Div lastSaleString = new Div();
+        private Span sale = new Span("Last Sale");
+        private Span priceLastSale;
+        private Span differentMoney;
+        private Span differentPercent;
+        private Div underlastSale;
+        private ButtonItem buttonItem1;
+        private ButtonItem buttonItem2;
+        private SizeSearch sizeSearch1;
+        private SizeSearch sizeSearch2;
 
         public PriceBlock(){
 

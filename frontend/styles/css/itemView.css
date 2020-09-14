@@ -75,7 +75,12 @@
 }
 
 .item_button_style {
+    display: flex;
+    justify-content: end;
+}
 
+.item_button_style a:hover div.social_blc_style {
+    display: block !important;
 }
 
 .item_button_style vaadin-button {
@@ -94,6 +99,13 @@
     margin-top: 20px;
     background-color: white;
 
+}
+
+.social_blc_style {
+    display: none !important;
+    position: absolute;
+    right: 250px;
+    z-index: 3;
 }
 
 .item_button_style vaadin-button:hover {
@@ -140,12 +152,6 @@
 .under_name_style a {
     text-decoration: none;
     color: darkgreen;
-}
-
-.social_block_style {
-    position: absolute;
-    left: 550px;
-    bottom: 22px
 }
 
 .ticker_style {
