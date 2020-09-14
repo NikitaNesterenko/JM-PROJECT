@@ -23,5 +23,5 @@ public interface BrandService {
 
     BrandDto getBrandDtoById(Long id);
 
-
+    List<String> getAllBrandNames();
 }

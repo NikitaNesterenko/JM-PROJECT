@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -74,5 +75,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserExist(Long id) {
         return userDao.doesItExistEntity(id);
+    }
+
+    @Override
+    public List<String> getAllUsersMail() {
+        List<String> strings = new ArrayList<>();
+        for (User user : userDao.getAll()) {
+            strings.add(user.getEmail());
+        }
+        return strings;
     }
 }

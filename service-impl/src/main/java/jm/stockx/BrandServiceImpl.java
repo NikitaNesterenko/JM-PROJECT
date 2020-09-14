@@ -4,9 +4,11 @@ import jm.stockx.api.dao.BrandDAO;
 import jm.stockx.dto.BrandDto;
 import jm.stockx.dto.BrandPostDto;
 import jm.stockx.entity.Brand;
+import jm.stockx.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,4 +61,12 @@ public class BrandServiceImpl implements BrandService {
         return brandDAO.getBrandDtoById(id);
     }
 
+    @Override
+    public List<String> getAllBrandNames() {
+        List<String> strings = new ArrayList<>();
+        for (Brand brand : brandDAO.getAll()) {
+            strings.add(brand.getName());
+        }
+        return strings;
+    }
 }
