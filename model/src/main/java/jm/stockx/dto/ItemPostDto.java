@@ -50,7 +50,7 @@ public class ItemPostDto {
         this.retailPrice = item.getRetailPrice();
         this.lowestAsk = item.getLowestAsk();
         this.highestBid = item.getHighestBid();
-        this.dateRelease = item.getReleaseDate();
+        this.dateRelease = item.getDateRelease();
         this.condition = item.getCondition();
         this.condition = item.getDescription();
     }

@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header_style {
+    border-top: 0;
+    border-bottom: 2px;
+    border-left: 0;
+    border-right: 0;
+    border-color: black;
+    border-style: solid;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+}
+
+.search_field_style {
+    min-width: 300px;
+    width: 700px;
+    flex-shrink: 1;
+}
+
+.head_menu_style {
+    margin-top: 8%;
+    margin-right: 3%;
+}
+
+.header_menu_style {
+    width: 400px;
+    flex-shrink: 0;
+}
+
+.logo_style {
+    flex-shrink: 0;
+}
+
+img {
+    height: 80%;
+    margin-left: 20%;
+    margin-top: 5%;
+}
+
+.content_style {
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    background-color: gainsboro;
+    border-radius: 0;
+    width: 82%;
+    min-width: 250px;
+    flex-shrink: 1;
+    height: 90%;
+    border-width: 0;
+    padding: 0;
+}
+
+.search_block_style {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: gainsboro;
+    height: 35px;
+    margin-top: 15px;
+    border-radius: 2px;
+}
+
+vaadin-button {
+    background-color: gainsboro;
+    margin: 0;
+    border-radius: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    padding: 0;
+    height: 100%;
+}

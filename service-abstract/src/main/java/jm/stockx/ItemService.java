@@ -3,10 +3,14 @@ package jm.stockx;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import org.joda.money.Money;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
@@ -33,4 +37,6 @@ public interface ItemService {
     List<Item> getNotReleasedItemsByBrand(Brand brand);
 
     boolean isItemExist(Long id);
+
+    Map<String, Money> getTheItemDTOForSizeNameBrand(String brand, String name);
 }
