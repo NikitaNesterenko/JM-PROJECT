@@ -17,7 +17,7 @@ public class ButtonItem extends Div {
 
     public ButtonItem(String tle, String tre, String ble, String bre) {
         Span left = new Span(tre);
-        Span left2 = new Span(new Span("or" + bre));
+        Span left2 = new Span(new Span("or " + bre));
         topRow = new Div(new Span("$" +tle), left);
         bottomRow = new Div(new Span(ble), left2);
         left.addClassName("border");
