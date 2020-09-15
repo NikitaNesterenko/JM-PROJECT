@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -138,12 +139,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public HashMap<String, Money> getTheItemDTOForSizeNameBrand(String brand, String name) {
+    public Map<String, Money> getTheItemDTOForSizeNameBrand(String brand, String name) {
         List<ShoeSize> shoeSizes = shoeSizeService.getAll();
         HashMap<String, Money> lowestAsksBySize = new HashMap<>();
         for (ShoeSize s : shoeSizes) {
             String shoeSize = s.getSize().toString();
-            Money lowestAsk = itemDao.getItemBySizeABrandAndName(brand, name, shoeSize).getLowestAsk();
+            Money lowestAsk = itemDao.getItemBySizeBrandName(brand, name, shoeSize).getLowestAsk();
             lowestAsksBySize.put(shoeSize, lowestAsk);
         }
         return lowestAsksBySize;

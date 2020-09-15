@@ -10,6 +10,7 @@ import org.joda.money.Money;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
@@ -37,5 +38,5 @@ public interface ItemService {
 
     boolean isItemExist(Long id);
 
-    HashMap<String, Money> getTheItemDTOForSizeNameBrand(String brand, String name);
+    Map<String, Money> getTheItemDTOForSizeNameBrand(String brand, String name);
 }

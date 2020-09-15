@@ -29,6 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -82,11 +84,11 @@ public class EntityDataInitializer {
         createBrands();
         createCurrency();
         createStyles();
+        createShoeSizes();
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createNews();
         //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
-        createShoeSizes();
     }
 
     private void createRoles() {
@@ -165,7 +167,6 @@ public class EntityDataInitializer {
 
     private void createItems() {
         if (itemService.getAll().size() == 0) {
-
             itemService.create(new Item(
                     "Jordan 14 Retro Gym Red Toro",
                     Money.parse("RUB 190.0"),
@@ -236,7 +237,12 @@ public class EntityDataInitializer {
                     brandService.getBrandByName("Jordan"),
                     styleService.getStyleByName("sports")));
 
-            itemService.create(new Item(
+            List<ShoeSize> shoeSizes = new ArrayList<>();
+            shoeSizes.add(shoeSizeService.get(2L));
+            shoeSizes.add(shoeSizeService.get(5L));
+            shoeSizes.add(shoeSizeService.get(6L));
+            shoeSizes.add(shoeSizeService.get(8L));
+            Item item = new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
                     Money.parse("USD 160.0"),
                     Money.parse("USD 200.0"),
@@ -252,7 +258,9 @@ public class EntityDataInitializer {
                             "construction providing a luxury feel. A metal Wings logo on the heel completes the design. These sneakers released " +
                             "in August of 2019 and retailed for $160.",
                     brandService.getBrandByName("Jordan"),
-                    styleService.getStyleByName("sports")));
+                    styleService.getStyleByName("sports"));
+            item.setSizes(shoeSizes);
+            itemService.create(item);
         }
     }
 

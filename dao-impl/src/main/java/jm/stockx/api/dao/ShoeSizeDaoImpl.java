@@ -21,11 +21,8 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
                 "ss.id," +
                 "ss.size," +
                 "ss.sizeTypes)" +
-                "FROM ShoeSize AS ss " +
-                "WHERE ss.id =: id", ShoeSizeDto.class)
+                "FROM ShoeSize AS ss left join fetch ss.items WHERE ss.id = :id", ShoeSizeDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
-
-
 }

@@ -11,12 +11,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -44,6 +49,12 @@ public class ShoeSize {
     @Enumerated(EnumType.STRING)
     private ShoeSizeTypes sizeTypes;
 
-    @OneToMany
-    private List<Item> items;
+    @ManyToMany(mappedBy = "sizes")
+    private List<Item> items = new ArrayList<>();
+
+    public ShoeSize(Double size, ShoeSizeTypes sizeTypes, List<Item> items) {
+        this.size = size;
+        this.sizeTypes = sizeTypes;
+        this.items = items;
+    }
 }

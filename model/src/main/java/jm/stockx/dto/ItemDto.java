@@ -17,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -55,26 +56,80 @@ public class ItemDto {
     private String description;
 
     @NotNull
-    private Brand brand;
+    private String brand;
 
     private String itemImageUrl;
 
-    private Style style;
+    private String style;
 
-    private ShoeSize size;
+    private List<String> sizes;
 
-    private ItemColors itemColors;
+    private String itemColor;
 
-    public ItemDto(@NonNull Item item) {
-        this.id = item.getId();
-        this.name = item.getName();
-        this.price = item.getPrice();
-        this.retailPrice = item.getRetailPrice();
-        this.lowestAsk = item.getLowestAsk();
-        this.highestBid = item.getHighestBid();
-        this.dateRelease = item.getReleaseDate();
-        this.condition = item.getCondition();
-        this.condition = item.getDescription();
-        this.itemColors = item.getItemColors();
+    public ItemDto(@NonNull Item i) {
+        this.id = i.getId();
+        this.name = i.getName();
+        this.price = i.getPrice();
+        this.retailPrice = i.getRetailPrice();
+        this.lowestAsk = i.getLowestAsk();
+        this.highestBid = i.getHighestBid();
+        this.dateRelease = i.getDateRelease();
+        this.condition = i.getCondition();
+        this.condition = i.getDescription();
+        this.itemColor = i.getItemColors().toString();
+        this.brand = i.getBrand().getName();
+        this.itemImageUrl = i.getItemImageUrl();
+        this.style = i.getStyle().getName();
+        i.getSizes().forEach(x -> this.sizes.add(x.getSize().toString()));
+    }
+
+
+    public ItemDto(Long id,
+                   @NotBlank String name,
+                   @NotNull Money price,
+                   @NotNull Money lowestAsk,
+                   @NotNull Money highestBid,
+                   LocalDate dateRelease,
+                   @NotBlank String condition,
+                   ItemColors itemColors) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.dateRelease = dateRelease;
+        this.condition = condition;
+        this.itemColor = itemColors.toString();
+    }
+
+
+    public ItemDto(Long id,
+                   String name,
+                   Money price,
+                   Money retailPrice,
+                   Money lowestAsk,
+                   Money highestBid,
+                   LocalDate dateRelease,
+                   String condition,
+                   String description,
+                   Brand brand,
+                   String itemImageUrl,
+                   Style style,
+                   List<ShoeSize> sizes,
+                   ItemColors itemColor) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.retailPrice = retailPrice;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.dateRelease = dateRelease;
+        this.condition = condition;
+        this.description = description;
+        this.brand = brand.getName();
+        this.itemImageUrl = itemImageUrl;
+        this.style = style.getName();
+        sizes.forEach(x -> this.sizes.add(x.getSize().toString()));
+        this.itemColor = itemColor.toString();
     }
 }
