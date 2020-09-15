@@ -119,6 +119,24 @@ public class MailServiceImpl implements MailService {
         return false;
     }
 
+    @Override
+    public boolean activateAccountByToken(String link) {
+        if (!link.startsWith(urlRegistrationLink)) {
+            return false;
+        }
+        TokenRegistration token  = tokenRegistrationService.getTokenByHashEmail(link);
+        if (token != null && isValidToken(token.getStartTime())) {
+
+            try {
+                tokenRegistrationService.deleteToken(token.getId());
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+        return false;
+    }
+
     private Date getCurrentDate() {
         return Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
