@@ -1,4 +1,4 @@
-package jm.stockx.components.news.newsHeader;
+package jm.stockx.components.news.news_header;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Anchor;

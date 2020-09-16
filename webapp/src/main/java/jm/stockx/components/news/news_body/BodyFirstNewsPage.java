@@ -1,4 +1,4 @@
-package jm.stockx.components.news.newsBody;
+package jm.stockx.components.news.news_body;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
