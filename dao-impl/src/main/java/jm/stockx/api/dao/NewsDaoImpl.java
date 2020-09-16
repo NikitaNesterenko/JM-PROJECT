@@ -9,12 +9,19 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
 
     @Override
     public NewsDto getByName(String name) {
-        News news = (News) entityManager.createQuery("" +
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.NewsDto(" +
+                "n.id," +
+                "n.name," +
+                "n.time," +
+                "n.title," +
+                "n.description," +
+                "n.text" +
+                ") " +
                 "FROM News AS n " +
-                "WHERE n.name = :newsName")
+                "WHERE n.name = :newsName", NewsDto.class)
                 .setParameter("newsName", name)
                 .getSingleResult();
-        return new NewsDto(news);
     }
 
     @Override
@@ -26,10 +33,10 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
                 "n.time," +
                 "n.title," +
                 "n.description," +
-                "n.text," +
-                "n.imageUrl)" +
+                "n.text" +
+                ")" +
                 "FROM News AS n " +
-                "WHERE id =: id", NewsDto.class)
+                "WHERE n.id =: id", NewsDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

@@ -12,13 +12,15 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
     public ShoeSizeDto getByName(String name) {
         for (ShoeSizeTypes type : ShoeSizeTypes.values()) {
             if (type.toString().equals(name)) {
-                ShoeSize shoeSize = entityManager.createQuery("" +
-                        "FROM ShoeSizeDto AS shoeSize" +
-                        "WERE shoeSize.typename = :typename", ShoeSize.class)
+                return entityManager.createQuery("" +
+                        "SELECT NEW jm.stockx.dto.ShoeSizeDto(" +
+                        "ss.id," +
+                        "ss.size," +
+                        "ss.sizeTypes)" +
+                        "FROM ShoeSize AS ss " +
+                        "WHERE ss.sizeTypes =: typename", ShoeSizeDto.class)
                         .setParameter("typename", ShoeSizeTypes.valueOf(name))
                         .getSingleResult();
-
-                return new ShoeSizeDto(shoeSize);
             }
         }
         return null;

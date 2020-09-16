@@ -57,6 +57,4 @@ public class Bid {
         this.user = user;
         this.item = item;
     }
-
-    public Bid() {}
 }
