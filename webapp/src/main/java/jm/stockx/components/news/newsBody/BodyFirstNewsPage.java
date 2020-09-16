@@ -1,10 +1,9 @@
-package jm.stockx.components.news.NewsBody;
+package jm.stockx.components.news.newsBody;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class BodyFirstNewsPage extends Div {
     private Div newsDiv = new Div();
