@@ -1,7 +1,9 @@
-package jm.stockx.controller.view.news;
+package jm.stockx.controller.user;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import jm.stockx.components.news.NewsHeader.HeaderRowNewsPage;
+import jm.stockx.components.news.NewsBody.BodyFirstNewsPage;
 
 @Route("news")
 public class NewsPage extends VerticalLayout {

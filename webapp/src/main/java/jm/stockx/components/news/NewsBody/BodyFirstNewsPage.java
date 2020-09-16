@@ -1,4 +1,4 @@
-package jm.stockx.controller.view.news;
+package jm.stockx.components.news.NewsBody;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
