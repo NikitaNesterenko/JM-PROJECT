@@ -75,9 +75,6 @@ public class User implements UserDetails {
     @NotNull
     private Role role;
 
-    public User(String firstName, String lastName, String email, String username, String password, Byte sellerLevel, Boolean vacationMode, String localeTag, String appleUserId, boolean active) {
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -207,11 +204,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isActive();
     }
-
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
