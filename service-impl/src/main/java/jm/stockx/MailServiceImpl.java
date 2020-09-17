@@ -58,7 +58,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean sendRecoveryLinkToUser(User user) {
-        if (user == null || user.getEmail() == null) {
+        if (user.getEmail() == null) {
             return false;
         }
         String hash = UUID.randomUUID().toString();
