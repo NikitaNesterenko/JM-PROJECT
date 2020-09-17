@@ -1,7 +1,6 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.entity.TokenRegistration;
-import jm.stockx.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,14 +13,4 @@ public class TokenRegistrationDaoImpl extends AbstractDAO<TokenRegistration, Lon
                 .setParameter("hashEmail", hashEmail)
                 .getSingleResult();
     }
-
-    @Override
-    public boolean isActive(User user) {
-        return entityManager.createQuery("" +
-                "FROM TokenRegistration AS t " +
-                "WHERE t.user = :user", TokenRegistration.class)
-                .setParameter("user", user)
-                .getSingleResult() == null;
-    }
-
 }

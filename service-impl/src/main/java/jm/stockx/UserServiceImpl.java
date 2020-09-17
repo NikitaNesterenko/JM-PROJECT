@@ -19,7 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     final UserDAO userDao;
-     MailService mailService;
+    MailService mailService;
 
     @Autowired
     public UserServiceImpl(UserDAO userDao) {
@@ -29,13 +29,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userDao.getAll();
+        try {
+            return userDao.getAll();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
     }
 
     @Override
     public void createUser(User user) {
-        userDao.add(user);
         try {
+            user.setActive(false);
+            userDao.add(user);
             mailService.sendRegistrationLinkToUser(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());
