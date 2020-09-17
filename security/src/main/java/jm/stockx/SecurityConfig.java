@@ -43,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
                 "/VAADIN/**",
-                "/brand/all/**",
                 "/favicon.ico",
                 "/robots.txt",
                 "/manifest.webmanifest",
