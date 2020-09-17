@@ -12,7 +12,7 @@ public interface ItemService {
 
     List<Item> getAll();
 
-    Item get(Long id);
+    ItemDto getItemDtoById(Long id);
 
     void create(Item item);
 
@@ -20,7 +20,7 @@ public interface ItemService {
 
     void delete(Long id);
 
-    Item getItemByName(String name);
+    ItemDto getItemDtoByName(String name);
 
     PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
 
@@ -33,4 +33,8 @@ public interface ItemService {
     List<Item> getNotReleasedItemsByBrand(Brand brand);
 
     boolean isItemExist(Long id);
+
+    Item getItemByName(String name);
+
+    Item getItemById(Long id);
 }

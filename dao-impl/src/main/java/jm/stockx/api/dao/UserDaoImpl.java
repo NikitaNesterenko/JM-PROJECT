@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
-    public UserDto getByName(String name) {
+    public UserDto getUserDtoByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.UserDto(" +
                 "u.firstName," +
@@ -27,7 +27,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public UserDto getByEmail(String email) {
+    public UserDto getUserDtoByEmail(String email) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.UserDto(" +
                 "u.firstName," +
@@ -46,7 +46,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public UserDto getByAppleId(String appleId) {
+    public UserDto getUserDtoByAppleId(String appleId) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.UserDto(" +
                 "u.firstName," +
@@ -79,6 +79,22 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 ")" +
                 "FROM User AS u " +
                 "WHERE u.id =: id", UserDto.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return entityManager.createQuery("" +
+                "FROM User AS u WHERE u.name = : name", User.class)
+                .setParameter("name", name)
+                .getSingleResult();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return entityManager.createQuery("" +
+                "FROM User AS u WHERE u.id = : name", User.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

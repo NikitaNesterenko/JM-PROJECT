@@ -5,4 +5,6 @@ import jm.stockx.enums.Status;
 public interface BuyingService {
 
     void updateBuyingStatus(Long id, Status status);
+
+    boolean isBuyingInfoExist(Long id);
 }
