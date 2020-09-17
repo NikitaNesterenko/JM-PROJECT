@@ -1,4 +1,4 @@
-package jm.stockx.controller.view;
+package jm.stockx.controller.admin;
 
 
 import com.vaadin.flow.component.grid.Grid;
