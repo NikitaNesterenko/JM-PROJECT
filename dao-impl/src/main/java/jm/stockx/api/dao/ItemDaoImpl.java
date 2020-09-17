@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
-    public ItemDto getByName(String name) {
+    public ItemDto getItemDtoByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
@@ -131,5 +131,21 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "WHERE i.itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
                 .getResultList();
+    }
+
+    @Override
+    public Item getItemByName(String name) {
+        return entityManager.createQuery("" +
+                "FROM Item AS i WHERE i.name = : name", Item.class)
+                .setParameter("name", name)
+                .getSingleResult();
+    }
+
+    @Override
+    public Item getItemById(Long id) {
+        return entityManager.createQuery("" +
+                "FROM Item AS i WHERE i.id = : id", Item.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

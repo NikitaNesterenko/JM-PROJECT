@@ -6,8 +6,6 @@ import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.BidDto;
 import jm.stockx.dto.BidPostDto;
 import jm.stockx.entity.Bid;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +31,8 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public Bid get(Long id) {
-        return bidDAO.getById(id);
+    public BidDto get(Long id) {
+        return bidDAO.getBidDtoById(id);
     }
 
     @Override
@@ -52,8 +50,8 @@ public class BidServiceImpl implements BidService {
         Bid bid = new Bid();
         bid.setPrice(bidPostDto.getPrice());
         bid.setSuccess(bidPostDto.getSuccess());
-        bid.setItem(itemDAO.getByName(bidPostDto.getItemName()));
-        bid.setUser(userDAO.getByName(bidPostDto.getUserName()).get());
+        bid.setItem(itemDAO.getItemByName(bidPostDto.getItemName()));
+        bid.setUser(userDAO.getUserByName(bidPostDto.getUserName()));
         bidDAO.add(bid);
     }
 

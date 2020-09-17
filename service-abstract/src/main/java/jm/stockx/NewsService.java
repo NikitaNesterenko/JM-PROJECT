@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.NewsDto;
 import jm.stockx.entity.News;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public interface NewsService {
 
     List<News> getAllNews();
 
-    News get(Long id);
+    NewsDto get(Long id);
 
     void create(News news);
 
@@ -16,7 +17,7 @@ public interface NewsService {
 
     void delete(Long id);
 
-    News getNewsByName(String name);
+    NewsDto getNewsByName(String name);
 
     boolean isNewsExist(Long id);
 

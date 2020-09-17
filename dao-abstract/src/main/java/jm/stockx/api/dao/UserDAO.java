@@ -6,8 +6,12 @@ import jm.stockx.entity.User;
 import java.util.Optional;
 
 public interface UserDAO extends GenericDao<User, Long> {
-    UserDto getByName(String name);
-    UserDto getByEmail(String name);
-    UserDto getByAppleId(String appleId);
+    UserDto getUserDtoByName(String name);
+    UserDto getUserDtoByEmail(String name);
+    UserDto getUserDtoByAppleId(String appleId);
     UserDto getUserDtoById(Long id);
+
+    User getUserByName(String name);
+    User getUserById(Long id);
+
 }

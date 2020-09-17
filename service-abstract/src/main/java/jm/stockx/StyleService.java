@@ -9,9 +9,9 @@ public interface StyleService {
 
     List<Style> getAll();
 
-    Style get(Long id);
+    StyleDto get(Long id);
 
-    Style getStyleByName(String name);
+    StyleDto getStyleByName(String name);
 
     void create(Style style);
 
@@ -23,4 +23,5 @@ public interface StyleService {
 
     StyleDto getStyleDtoById(Long id);
 
+    Style getStyle(String name);
 }
