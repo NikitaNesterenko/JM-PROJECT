@@ -12,13 +12,12 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class ItemHolder {
-    Item item;
-    String itemName;
-    String itemCondition;
-    String itemImgUrl;
-    Money itemLowestAsk;
-    Money itemHighestBid;
-    LocalDate itemReleaseDate;
+    private Item item;
+    private String itemName;
+    private String itemCondition;
+    private String itemImgUrl;
+    private Money itemLowestAsk;
+    private LocalDate itemReleaseDate;
 
     public ItemHolder(Item item) {
         initItemData(item);
@@ -34,7 +33,6 @@ public class ItemHolder {
         itemCondition = item.getCondition();
         itemImgUrl = item.getItemImageUrl();
         itemLowestAsk = item.getLowestAsk();
-        itemHighestBid = item.getHighestBid();
         itemReleaseDate = item.getReleaseDate();
     }
 
