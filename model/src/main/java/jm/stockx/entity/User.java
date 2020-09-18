@@ -75,6 +75,8 @@ public class User implements UserDetails {
     @NotNull
     private Role role;
 
+    private Boolean active;
+
     public boolean isActive() {
         return active;
     }
@@ -82,8 +84,6 @@ public class User implements UserDetails {
     public void setActive(boolean active) {
         this.active = active;
     }
-
-    public Boolean active;
 
     @ManyToMany(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

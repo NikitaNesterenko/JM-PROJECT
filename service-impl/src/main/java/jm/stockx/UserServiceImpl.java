@@ -18,7 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     final UserDAO userDao;
-    MailService mailService;
+    public MailService mailService;
 
     @Autowired
     public UserServiceImpl(UserDAO userDao) {

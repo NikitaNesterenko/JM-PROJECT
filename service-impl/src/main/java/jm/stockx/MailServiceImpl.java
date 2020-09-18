@@ -101,9 +101,6 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean changePasswordByToken(String link, String password) {
-        if (!link.startsWith(urlRecoveryLink)) {
-            return false;
-        }
         TokenRecovery token = tokenRecoveryService.getTokenByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
@@ -121,9 +118,6 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean activateAccountByToken(String link) {
-        if (!link.startsWith(urlRegistrationLink)) {
-            return false;
-        }
         TokenRegistration token = tokenRegistrationService.getTokenByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
 
