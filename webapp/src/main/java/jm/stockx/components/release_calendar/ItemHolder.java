@@ -1,6 +1,5 @@
 package jm.stockx.components.release_calendar;
 
-import jm.stockx.entity.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,28 +11,31 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class ItemHolder {
-    private Item item;
     private String itemName;
     private String itemCondition;
     private String itemImgUrl;
     private Money itemLowestAsk;
     private LocalDate itemReleaseDate;
 
-    public ItemHolder(Item item) {
-        initItemData(item);
+    public ItemHolder(String name,
+                      String condition,
+                      String imgUrl,
+                      Money lowestAsk,
+                      LocalDate releaseDate) {
+        initItemData(name, condition, imgUrl, lowestAsk, releaseDate);
     }
 
-    public void setItem(Item item) {
-        initItemData(item);
-    }
 
-    private void initItemData(Item item) {
-        this.item = item;
-        itemName = item.getName();
-        itemCondition = item.getCondition();
-        itemImgUrl = item.getItemImageUrl();
-        itemLowestAsk = item.getLowestAsk();
-        itemReleaseDate = item.getReleaseDate();
+    private void initItemData(String name,
+                              String condition,
+                              String imgUrl,
+                              Money lowestAsk,
+                              LocalDate releaseDate) {
+        itemName = name;
+        itemCondition = condition;
+        itemImgUrl = imgUrl;
+        itemLowestAsk = lowestAsk;
+        itemReleaseDate = releaseDate;
     }
 
 }
