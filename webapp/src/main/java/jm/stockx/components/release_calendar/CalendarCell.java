@@ -3,37 +3,24 @@ package jm.stockx.components.release_calendar;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.router.Route;
 import jm.stockx.entity.Item;
+import lombok.NoArgsConstructor;
+import org.joda.money.Money;
 
+import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-@Route("calendar")
+@NoArgsConstructor
 public class CalendarCell extends Div {
     private ItemHolder itemHolder;
 
-    public CalendarCell() {
-//        initTestItemHolder();
-    }
-
-    public CalendarCell(Item srcItem) {
-        initItemHolder(srcItem);
-    }
-
-//    private void initTestItemHolder() {
-//        itemHolder = new ItemHolder();
-//        itemHolder.setItemReleaseDate(LocalDate.of(2020, 9, 15));
-//        itemHolder.setItemName("Reebok Pump Court Brain Dead");
-//        itemHolder.setItemLowestAsk(Money.parse("USD 225"));
-//        itemHolder.setItemImgUrl("release_calendar-images/Reebok-Pump-Court-Brain-Dead.jpg");
-//        itemHolder.setItemCondition("RELEASE");
-//
-//        createCell();
-//    }
-
-    private void initItemHolder(Item srcItem) {
-        itemHolder = new ItemHolder(srcItem);
+    public CalendarCell(String name,
+                        String condition,
+                        String imgUrl,
+                        Money lowestAsk,
+                        LocalDate releaseDate) {
+        itemHolder = new ItemHolder(name, condition, imgUrl, lowestAsk, releaseDate);
         createCell();
     }
 
@@ -67,7 +54,7 @@ public class CalendarCell extends Div {
         releaseDate.add(date, addToCollection);
 
 
-        Image itemImage = new Image(itemHolder.getItemImgUrl(), "Reebok Pump Court Brain Dead");
+        Image itemImage = new Image(itemHolder.getItemImgUrl(), "Item image");
         itemImage.getStyle().set("max-width", "100%");
 
 
