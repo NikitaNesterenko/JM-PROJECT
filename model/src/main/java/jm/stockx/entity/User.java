@@ -70,6 +70,21 @@ public class User implements UserDetails {
     @Column(name = "locale_tag")
     private String localeTag;
 
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    //код активации
+    @Column(name = "activation_code")
+    private String activationCode;
+
+    @Column(name = "active")
+    private boolean active;
+
     @OneToOne
     @JoinColumn(name = "role_id", nullable = false)
     @NotNull
@@ -193,5 +208,9 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }
