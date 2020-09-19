@@ -17,21 +17,35 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDao;
+    final UserDAO userDao;
+    public MailService mailService;
 
     @Autowired
     public UserServiceImpl(UserDAO userDao) {
         this.userDao = userDao;
+
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userDao.getAll();
+        try {
+            return userDao.getAll();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
     }
 
     @Override
     public void createUser(User user) {
-        userDao.add(user);
+        try {
+            user.setActive(false);
+            userDao.add(user);
+            mailService.sendRegistrationLinkToUser(user);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @Override

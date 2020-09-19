@@ -29,7 +29,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+//@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -74,6 +74,16 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", nullable = false)
     @NotNull
     private Role role;
+
+    private Boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     @ManyToMany(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -159,6 +169,11 @@ public class User implements UserDetails {
         this.sellerLevel = sellerLevel;
     }
 
+    public User() {
+        super();
+        this.active = false;
+    }
+
 
     @Override
     public String getUsername() {
@@ -187,7 +202,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive();
     }
 
     @Override
