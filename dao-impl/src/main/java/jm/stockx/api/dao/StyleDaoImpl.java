@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
 
     @Override
-    public StyleDto getByName(String name) {
+    public StyleDto getStyleDtoByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.StyleDto(" +
                 "s.id, " +
