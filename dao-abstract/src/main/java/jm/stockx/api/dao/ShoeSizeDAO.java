@@ -7,6 +7,4 @@ public interface ShoeSizeDAO extends GenericDao<ShoeSize, Long> {
     ShoeSizeDto getShoeSizeDtoByName(String name);
 
     ShoeSizeDto getShoeSizeDtoById(Long id);
-
-//    boolean isExist
 }
