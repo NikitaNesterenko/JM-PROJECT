@@ -37,9 +37,4 @@ public class ShoeSize {
     @Column(name = "size_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private ShoeSizeTypes sizeTypes;
-
-    public ShoeSize(ShoeSizeDto shoeSizeDto) {
-        this.size = shoeSizeDto.getSize();
-        this.sizeTypes = shoeSizeDto.getSizeTypes();
-    }
 }

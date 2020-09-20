@@ -41,16 +41,6 @@ public class NewsDto {
 
     private Blob image;
 
-//    на удаление
-//    public NewsDto(News news) {
-//        this.id = news.getId();
-//        this.name = news.getName();
-//        this.time = news.getTime();
-//        this.title = news.getTitle();
-//        this.description = news.getDescription();
-//        this.text = news.getText();
-//    }
-
     public NewsDto(Long id, String name, String title) {
         this.id = id;
         this.name = name;

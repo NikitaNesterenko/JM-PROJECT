@@ -34,8 +34,4 @@ public class Style {
     public Style(String name) {
         this.name = name;
     }
-
-    public Style(StyleDto styleDto) {
-        this.name = styleDto.getName();
-    }
 }

@@ -155,15 +155,6 @@ public class User implements UserDetails {
         this.sellerLevel = sellerLevel;
     }
 
-    public User(UserDto userDto) {
-        this.id = userDto.getId();
-        this.firstName = userDto.getFirstName();
-        this.lastName = userDto.getLastName();
-        this.email = userDto.getEmail();
-        this.username = userDto.getUsername();
-        this.password = userDto.getPassword();
-        this.sellerLevel = userDto.getSellerLevel();
-    }
 
     @Override
     public String getUsername() {
