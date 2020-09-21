@@ -8,11 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-@EnableVaadin({"jm.stockx.controller.view", "jm.stockx.ui.views.login"})
+@EnableVaadin({"jm.stockx.controller", "jm.stockx.ui.views.login"})
 @EntityScan("jm.stockx")
 public class JMProjectApplication {
 
