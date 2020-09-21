@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.api.dao.TokenActivationDAO;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.TokenRegistration;
 import jm.stockx.entity.User;
@@ -26,13 +27,13 @@ public class MailServiceImpl implements MailService {
 
     public final TokenRecoveryService tokenRecoveryService;
 
+    public final TokenActivationDAO tokenActivation;
+
     @Value("${recovery.url}")
     private String urlRecoveryLink;
 
     @Value("${recovery.expirationDays}")
     private int linkExpirationDays;
-
-    public final TokenRegistrationService tokenRegistrationService;
 
     @Value("${registration.url}")
     private String urlRegistrationLink;
@@ -40,11 +41,11 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService,
-                           UserService userService, TokenRegistrationService tokenRegistrationService) {
+                           UserService userService, TokenActivationDAO tokenActivation) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
         this.userService = userService;
-        this.tokenRegistrationService = tokenRegistrationService;
+        this.tokenActivation = tokenActivation;
     }
 
     @Override
@@ -92,7 +93,7 @@ public class MailServiceImpl implements MailService {
 
         try {
             sendSimpleMessage(user.getEmail(), "Confirm your registration", hashEmail);
-            tokenRegistrationService.createToken(token);
+            tokenActivation.save(token);
         } catch (Exception e) {
             return false;
         }
@@ -101,9 +102,6 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean changePasswordByToken(String link, String password) {
-        if (!link.startsWith(urlRecoveryLink)) {
-            return false;
-        }
         TokenRecovery token = tokenRecoveryService.getTokenByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
@@ -121,14 +119,11 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean activateAccountByToken(String link) {
-        if (!link.startsWith(urlRegistrationLink)) {
-            return false;
-        }
-        TokenRegistration token = tokenRegistrationService.getTokenByHashEmail(link);
+        TokenRegistration token = tokenActivation.getByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
 
             try {
-                tokenRegistrationService.deleteToken(token.getId());
+                tokenActivation.delete(token);
                 token.getUser().setActive(true);
                 return true;
             } catch (Exception ex) {
