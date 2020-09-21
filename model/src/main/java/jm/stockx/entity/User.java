@@ -85,7 +85,7 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    @ManyToMany(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_buying",
             joinColumns = @JoinColumn(name = "user_id"),
