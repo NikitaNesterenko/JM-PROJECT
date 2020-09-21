@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.CurrencyDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

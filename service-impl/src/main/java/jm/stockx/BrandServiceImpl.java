@@ -2,7 +2,6 @@ package jm.stockx;
 
 import jm.stockx.api.dao.BrandDAO;
 import jm.stockx.dto.BrandDto;
-import jm.stockx.dto.BrandPostDto;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +24,8 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand get(Long id) {
-        return brandDAO.getById(id);
+    public BrandDto get(Long id) {
+        return brandDAO.getBrandDtoById(id);
     }
 
     @Override
@@ -45,8 +44,8 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand getBrandByName(String name) {
-        return brandDAO.getByName(name).orElse(null);
+    public BrandDto getBrandByName(String name) {
+        return brandDAO.getBrandDtoByName(name);
     }
 
     @Override
@@ -57,6 +56,11 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public BrandDto getBrandDtoById(Long id) {
         return brandDAO.getBrandDtoById(id);
+    }
+
+    @Override
+    public Brand getBrand(String name) {
+        return brandDAO.getBrand(name);
     }
 
 }
