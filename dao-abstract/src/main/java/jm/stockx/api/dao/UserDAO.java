@@ -16,4 +16,5 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     User getUserById(Long id);
 
+    User getUserByEmail(String email);
 }
