@@ -8,6 +8,10 @@ public interface MailService {
 
     boolean sendRecoveryLinkToUser(User user);
 
+    boolean sendRegistrationLinkToUser(User user);
+
+    boolean activateAccountByToken(String link);
+
     boolean changePasswordByToken(String link, String newPassword);
 
 }
