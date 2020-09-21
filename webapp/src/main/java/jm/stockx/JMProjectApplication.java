@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-@EnableVaadin({"jm.stockx.controller"})
+@EnableVaadin({"jm.stockx.controller", "jm.stockx.ui.views.login"})
 @EntityScan("jm.stockx")
 public class JMProjectApplication {
 

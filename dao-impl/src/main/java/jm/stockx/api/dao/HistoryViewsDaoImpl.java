@@ -18,6 +18,5 @@ public class HistoryViewsDaoImpl extends AbstractDAO<HistoryViews, Long> impleme
                 "GROUP BY item " +
                 "HAVING COUNT(item) > 4)")
                 .executeUpdate();
-
     }
 }

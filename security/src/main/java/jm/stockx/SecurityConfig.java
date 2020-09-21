@@ -9,12 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -22,11 +19,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final UserDetailsService userDetailsService;
+    private final SecurityUtils securityUtils;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsService userDetailsService, SecurityUtils securityUtils) {
         this.userDetailsService = userDetailsService;
+        this.securityUtils = securityUtils;
     }
 
     @Bean
@@ -56,17 +55,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .permitAll();
-
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/rest/api/**", "/registration/**", "/authorization/**", "/password-recovery/**", "/brand/all", "/news").permitAll()
-                    .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/", "/rest/api/**", "/registration/**", "/authorization/**", "/password-recovery/**", "/brand/all", "/news").permitAll()
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN");
+
+        http.csrf().disable()
+                .requestCache().requestCache(new CustomRequestCache(securityUtils))
+                .and().authorizeRequests()
+                //.requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
+                .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .loginPage("/login").permitAll()
+                .loginProcessingUrl("/login")
+                .failureUrl("/login?error")
+                .and().logout().logoutSuccessUrl("/login");
     }
 
     @Override
