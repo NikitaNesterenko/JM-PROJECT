@@ -3,7 +3,7 @@ package jm.stockx.components.release_calendar;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import jm.stockx.entity.Item;
+import jm.stockx.dto.ReleaseItemDto;
 import lombok.NoArgsConstructor;
 import org.joda.money.Money;
 
@@ -12,15 +12,11 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 @NoArgsConstructor
-public class CalendarCell extends Div {
-    private ItemHolder itemHolder;
+public class ReleaseCalendarCell extends Div {
+    private ReleaseItemDto releaseItemDto;
 
-    public CalendarCell(String name,
-                        String condition,
-                        String imgUrl,
-                        Money lowestAsk,
-                        LocalDate releaseDate) {
-        itemHolder = new ItemHolder(name, condition, imgUrl, lowestAsk, releaseDate);
+    public ReleaseCalendarCell(ReleaseItemDto releaseItemDto) {
+        this.releaseItemDto = releaseItemDto;
         createCell();
     }
 
@@ -31,9 +27,9 @@ public class CalendarCell extends Div {
         Div date = new Div();
         date.getStyle().set("letter-spacing", "-1");
         date.getStyle().set("font-size", "20px");
-        date.add(itemHolder.getItemReleaseDate().getMonth().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH));
+        date.add(releaseItemDto.getItemReleaseDate().getMonth().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.ENGLISH));
         date.add(verticalLine);
-        date.add(String.valueOf(itemHolder.getItemReleaseDate().getDayOfMonth()));
+        date.add(String.valueOf(releaseItemDto.getItemReleaseDate().getDayOfMonth()));
 
 
         Icon addIcon = new Icon(VaadinIcon.PLUS_CIRCLE_O);
@@ -54,11 +50,11 @@ public class CalendarCell extends Div {
         releaseDate.add(date, addToCollection);
 
 
-        Image itemImage = new Image(itemHolder.getItemImgUrl(), "Item image");
+        Image itemImage = new Image(releaseItemDto.getItemImgUrl(), "Item image");
         itemImage.getStyle().set("max-width", "100%");
 
 
-        Paragraph itemName = new Paragraph(itemHolder.getItemName());
+        Paragraph itemName = new Paragraph(releaseItemDto.getItemName());
         itemName.getStyle().set("font-size", "16px");
         itemName.getStyle().set("line-height", "16px");
         itemName.getStyle().set("margin", "0");
@@ -75,7 +71,7 @@ public class CalendarCell extends Div {
         itemPrice.getStyle().set("letter-spacing", "1px");
         itemPrice.add(chevron);
         itemPrice.add(" ASK: $");
-        itemPrice.add(String.valueOf(itemHolder.getItemLowestAsk().getAmountMajorLong()));
+        itemPrice.add(String.valueOf(releaseItemDto.getItemLowestAsk().getAmountMajorLong()));
 
 
         Anchor itemPage = new Anchor("#");
