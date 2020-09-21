@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
+import jm.stockx.dto.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,35 +18,21 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    final UserDAO userDao;
-    public MailService mailService;
+    private final UserDAO userDao;
 
     @Autowired
     public UserServiceImpl(UserDAO userDao) {
         this.userDao = userDao;
-
     }
 
     @Override
     public List<User> getAllUsers() {
-        try {
-            return userDao.getAll();
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return null;
+        return userDao.getAll();
     }
 
     @Override
     public void createUser(User user) {
-        try {
-            user.setActive(false);
-            userDao.add(user);
-            mailService.sendRegistrationLinkToUser(user);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        userDao.add(user);
     }
 
     @Override
@@ -59,23 +46,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userDao.getById(id);
+    public UserDto getUserDtoById(Long id) {
+        return userDao.getUserDtoById(id);
     }
 
     @Override
-    public User getUserByUserName(String userName) {
-        return userDao.getByName(userName).orElse(null);
+    public UserDto getUserDtoByUserName(String userName) {
+        return userDao.getUserDtoByName(userName);
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.getByEmail(email).orElse(null);
+    public UserDto getUserDtoByEmail(String email) {
+        return userDao.getUserDtoByEmail(email);
     }
 
     @Override
-    public User getUserByAppleUserId(String appleId) {
-        return userDao.getByAppleId(appleId).orElse(null);
+    public UserDto getUserByAppleUserId(String appleId) {
+        return userDao.getUserDtoByAppleId(appleId);
     }
 
     @Override
@@ -88,5 +75,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserExist(Long id) {
         return userDao.doesItExistEntity(id);
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return userDao.getUserByName(name);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userDao.getUserById(id);
     }
 }

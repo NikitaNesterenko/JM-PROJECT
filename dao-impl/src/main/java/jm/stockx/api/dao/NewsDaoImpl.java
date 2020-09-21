@@ -4,34 +4,33 @@ import jm.stockx.dto.NewsDto;
 import jm.stockx.entity.News;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
 
     @Override
-    public Optional<News> getByName(String name) {
-        News news = (News) entityManager.createQuery("" +
+    public NewsDto getNewsDtoByName(String name) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.NewsDto(" +
+                "n.id," +
+                "n.name," +
+                "n.title" +
+                ") " +
                 "FROM News AS n " +
-                "WHERE n.name = :newsName")
+                "WHERE n.name = :newsName", NewsDto.class)
                 .setParameter("newsName", name)
                 .getSingleResult();
-        return Optional.of(news);
     }
 
     @Override
     public NewsDto getNewsDtoById(Long id) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.NewsDto(" +
-                "n.id, " +
+                "n.id," +
                 "n.name," +
-                "n.time," +
-                "n.title," +
-                "n.description," +
-                "n.text," +
-                "n.imageUrl)" +
+                "n.title" +
+                ") " +
                 "FROM News AS n " +
-                "WHERE id =: id", NewsDto.class)
+                "WHERE n.id =: id", NewsDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
