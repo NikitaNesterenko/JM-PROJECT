@@ -5,7 +5,7 @@ import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class AreaOfLinkToBuyItemMostPopular extends VerticalLayout {
+public class ProductTile extends VerticalLayout {
     private Div imgDiv = new Div();
     private Div textDescriptionItemDiv = new Div();
     private Div bidDiv = new Div();
@@ -13,14 +13,14 @@ public class AreaOfLinkToBuyItemMostPopular extends VerticalLayout {
     private Label itemTitle = new Label();
     private Label itemDemand = new Label();
     private Label bid = new Label();
-    private Label numberOfSold = new Label();
+    private Label latestSaleInfo = new Label();
 
-    public AreaOfLinkToBuyItemMostPopular(String itemTitle, String itemDemand, String bid, String numberOfSold,
-                                          String urlImage, String dummyImage) {
+    public ProductTile(String itemTitle, String itemDemand, String bid, String latestSaleInfo,
+                       String urlImage, String dummyImage) {
         this.itemTitle.add(itemTitle);
         this.itemDemand.add(itemDemand);
         this.bid.add(bid);
-        this.numberOfSold.add(numberOfSold);
+        this.latestSaleInfo.add(latestSaleInfo);
         this.itemLogoImg = new Image(urlImage, dummyImage);
 
         configureMainLayout();
@@ -65,12 +65,12 @@ public class AreaOfLinkToBuyItemMostPopular extends VerticalLayout {
 
         configureBidDiv();
 
-        numberOfSold.getStyle().set("font-size", "12pt");
-        numberOfSold.getStyle().set("font-family", "CALIBRI");
+        latestSaleInfo.getStyle().set("font-size", "12pt");
+        latestSaleInfo.getStyle().set("font-family", "CALIBRI");
 
         VerticalLayout layoutTextDescriptionItemDiv = new VerticalLayout();
         layoutTextDescriptionItemDiv.setSpacing(false);
-        layoutTextDescriptionItemDiv.add(itemTitle, bidDiv,numberOfSold);
+        layoutTextDescriptionItemDiv.add(itemTitle, bidDiv,latestSaleInfo);
         layoutTextDescriptionItemDiv.setHorizontalComponentAlignment(Alignment.CENTER, itemLogoImg);
         layoutTextDescriptionItemDiv.setJustifyContentMode(JustifyContentMode.CENTER);
 
