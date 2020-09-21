@@ -1,5 +1,6 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,4 +20,8 @@ public class RoleDto {
 
     @NotBlank
     private String name;
+
+    public RoleDto(Role role) {
+        this.name = role.getRoleName();
+    }
 }

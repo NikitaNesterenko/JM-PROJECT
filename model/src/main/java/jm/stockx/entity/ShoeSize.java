@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.enums.ShoeSizeTypes;
 import lombok.Getter;
 import lombok.Setter;
