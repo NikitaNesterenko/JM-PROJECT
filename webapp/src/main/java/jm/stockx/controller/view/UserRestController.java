@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.MailService;
 import jm.stockx.UserService;
+import jm.stockx.dto.UserDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import org.slf4j.Logger;

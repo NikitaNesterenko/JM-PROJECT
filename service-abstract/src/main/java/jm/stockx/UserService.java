@@ -32,4 +32,7 @@ public interface UserService {
     User getUserByName(String email);
 
     User getUserById(Long id);
+
+    User getUserByEmail(String email);
+
 }
