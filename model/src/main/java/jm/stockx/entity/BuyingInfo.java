@@ -70,8 +70,8 @@ public class BuyingInfo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public BuyingInfo(Item item) {
+    public BuyingInfo(ItemInfo itemInfo) {
         this.buyingTimeStamp = LocalDateTime.now();
-        this.buyingPrice = item.getPrice();
+        this.buyingPrice = itemInfo.getPrice();
     }
 }

@@ -61,28 +61,31 @@ public class SellingInfo {
     private Money price;
 
     public SellingInfo(User user,
+                       ItemInfo itemInfo,
                        Item item,
                        Status status) {
         this.user = user;
         this.item = item;
-        this.price = item.getPrice();
+        this.price = itemInfo.getPrice();
         this.orderDate = LocalDateTime.now();
         this.status = status;
     }
 
     public SellingInfo(User user,
+                       ItemInfo itemInfo,
                        Item item) {
         this.user = user;
         this.item = item;
-        this.price = item.getPrice();
+        this.price = itemInfo.getPrice();
         this.orderDate = LocalDateTime.now();
     }
 
     public SellingInfo(User user,
                        Item item,
+                       ItemInfo itemInfo,
                        Long orderNumber,
                        Status status) {
-        this(user, item, status);
+        this(user, itemInfo, item, status);
         this.orderNumber = orderNumber;
     }
 }

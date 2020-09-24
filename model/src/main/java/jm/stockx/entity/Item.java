@@ -31,21 +31,9 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
-    @Type(type = "joda_MoneyAmountWithCurrencyType")
-    private Money price;
-
     @Columns(columns = { @Column(name = "retail_price_currency"), @Column(name = "item_retail_price") })
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money retailPrice;
-
-    @Columns(columns = { @Column(name = "lowest_ask_currency"), @Column(name = "item_lowest_ask") })
-    @Type(type = "joda_MoneyAmountWithCurrencyType")
-    private Money lowestAsk;
-
-    @Columns(columns = { @Column(name = "highest_bid_currency"), @Column(name = "item_highest_bid") })
-    @Type(type = "joda_MoneyAmountWithCurrencyType")
-    private Money highestBid;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -80,79 +68,59 @@ public class Item {
                 String description) {
         this.id = id;
         this.name = name;
-        this.price = price;
         this.retailPrice = retailPrice;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
         this.releaseDate = releaseDate;
         this.condition = condition;
         this.description = description;
     }
 
-    public Item(Long id, String name,
-                Money price, Money retailPrice,
-                Money lowestAsk, Money highestBid,
-                String condition, String description) {
+    public Item(Long id,
+                String name,
+                Money retailPrice,
+                String condition,
+                String description) {
         this.id = id;
         this.name = name;
-        this.price = price;
         this.retailPrice = retailPrice;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
         this.condition = condition;
         this.description = description;
     }
 
     public Item(String name,
-                Money price,
                 Money retailPrice,
-                Money lowestAsk,
-                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description) {
         this.name = name;
-        this.price = price;
         this.retailPrice = retailPrice;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
         this.releaseDate = releaseDate;
         this.condition = condition;
         this.description = description;
     }
 
     public Item(String name,
-                Money price,
                 Money retailPrice,
-                Money lowestAsk,
-                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description,
                 Brand brand) {
-        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, description);
+        this(name, retailPrice, releaseDate, condition, description);
         this.brand = brand;
     }
 
     public Item(String name,
-                Money price,
                 Money retailPrice,
-                Money lowestAsk,
-                Money highestBid,
                 LocalDate releaseDate,
                 String condition,
                 String description,
                 Brand brand,
                 Style style) {
-        this(name, price, retailPrice, lowestAsk, highestBid, releaseDate, condition, description, brand);
+        this(name, retailPrice, releaseDate, condition, description, brand);
         this.style = style;
     }
 
     public Item(String name,
-                Money price,
                 Money retailPrice,
-                Money lowestAsk,
-                Money highestBid,
                 LocalDate releaseDate,
                 String condition ,
                 String description,
@@ -160,10 +128,7 @@ public class Item {
                 String itemImageUrl,
                 Style style) {
         this.name = name;
-        this.price = price;
         this.retailPrice = retailPrice;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
         this.releaseDate = releaseDate;
         this.condition = condition;
         this.description = description;

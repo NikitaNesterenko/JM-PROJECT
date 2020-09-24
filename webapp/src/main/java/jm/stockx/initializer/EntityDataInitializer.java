@@ -3,6 +3,7 @@ package jm.stockx.initializer;
 import jm.stockx.BidService;
 import jm.stockx.BrandService;
 import jm.stockx.CurrencyService;
+import jm.stockx.ItemInfoService;
 import jm.stockx.ItemService;
 import jm.stockx.NewsService;
 import jm.stockx.RoleService;
@@ -39,6 +40,7 @@ public class EntityDataInitializer {
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
     private BidService bidService;
+    private ItemInfoService itemInfoService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -49,7 +51,8 @@ public class EntityDataInitializer {
                              NewsService newsService,
                              SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
-                             BidService bidService) {
+                             BidService bidService,
+                             ItemInfoService itemInfoService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -59,6 +62,7 @@ public class EntityDataInitializer {
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
         this.bidService = bidService;
+        this.itemInfoService = itemInfoService;
     }
 
 
@@ -162,10 +166,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 14 Retro Gym Red Toro",
-                    Money.parse("RUB 190.0"),
                     Money.parse("RUB 200.0"),
-                    Money.parse("RUB 254.0"),
-                    Money.parse("RUB 316.0"),
                     LocalDate.of(2020, 7, 2),
                     "New",
                     "Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
@@ -180,10 +181,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Adidas Yeezy Boost 380 Mist",
-                    Money.parse("USD 230.0"),
                     Money.parse("USD 240.0"),
-                    Money.parse("USD 195.0"),
-                    Money.parse("USD 230.0"),
                     LocalDate.of(2020, 3, 25),
                     "New",
                     "Yeezy added a new colorway to their Boost 380 product line with the adidas Yeezy Boost 380 Mist, " +
@@ -199,10 +197,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Nike React Element 87 Anthracite Black",
-                    Money.parse("USD 160.0"),
                     Money.parse("USD 190.0"),
-                    Money.parse("USD 77.0"),
-                    Money.parse("USD 101.0"),
                     LocalDate.of(2018, 6, 14),
                     "New",
                     "Since first being spotted on the runway during a Paris Fashion Week Show in March, " +
@@ -215,10 +210,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 4 Retro Winterized Loyal Blue",
-                    Money.parse("USD 200.0"),
                     Money.parse("USD 210.0"),
-                    Money.parse("USD 155.0"),
-                    Money.parse("USD 212.0"),
                     LocalDate.of(2019, 12, 21),
                     "New",
                     "Jordan Brand spins an iconic design for winter with the Jordan 4 Retro Winterized Loyal Blue, " +
@@ -232,10 +224,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
-                    Money.parse("USD 160.0"),
                     Money.parse("USD 200.0"),
-                    Money.parse("USD 342.0"),
-                    Money.parse("USD 442.0"),
                     LocalDate.of(2019, 8, 17),
                     "New",
                     "Jordan Brand adds a twist to a classic with the Air Jordan 1 WMNS Satin “Black Toe”, now available on StockX. " +
@@ -280,12 +269,14 @@ public class EntityDataInitializer {
             sellingInfoService.create(new SellingInfo(
                     userService.getUserById(1L),
                     itemService.getItemById(1L),
+                    itemInfoService.getItemInfoByItemId(1L),
                     108L,
                     Status.DELIVERED));
 
             sellingInfoService.create(new SellingInfo(
                     userService.getUserById(2L),
                     itemService.getItemById(2L),
+                    itemInfoService.getItemInfoByItemId(2L),
                     109L,
                     Status.ACCEPTED));
         }

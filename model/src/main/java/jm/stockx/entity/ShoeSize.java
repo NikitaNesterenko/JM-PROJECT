@@ -15,7 +15,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,4 +42,8 @@ public class ShoeSize {
     @Column(name = "size_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private ShoeSizeTypes sizeTypes;
+
+
+    @ManyToMany(mappedBy = "sizes")
+    private Set<ItemInfo> items = new HashSet<>();
 }
