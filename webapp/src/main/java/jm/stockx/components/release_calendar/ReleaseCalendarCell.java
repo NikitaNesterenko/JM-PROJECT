@@ -12,9 +12,11 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 @NoArgsConstructor
+@Component
 public class ReleaseCalendarCell extends Div {
     private ReleaseItemDto releaseItemDto;
 
+    @Autowired
     public ReleaseCalendarCell(ReleaseItemDto releaseItemDto) {
         this.releaseItemDto = releaseItemDto;
         createCell();
