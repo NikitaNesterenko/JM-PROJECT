@@ -18,11 +18,13 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDao;
+    final UserDAO userDao;
+     MailService mailService;
 
     @Autowired
     public UserServiceImpl(UserDAO userDao) {
         this.userDao = userDao;
+
     }
 
     @Override
@@ -33,6 +35,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(User user) {
         userDao.add(user);
+        try {
+            mailService.sendRegistrationLinkToUser(user);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @Override
