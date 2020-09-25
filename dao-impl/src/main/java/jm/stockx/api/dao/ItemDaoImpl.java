@@ -13,23 +13,12 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public ItemDto getByName(String name) {
-        return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
-                "i.id," +
-                "i.name," +
-                "i.price," +
-                "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
-                "i.releaseDate," +
-                "i.condition," +
-                "i.description," +
-                "i.itemColors" +
-                ")" +
-                "FROM Item AS i " +
-                "WHERE i.name = :itemName", ItemDto.class)
+        Item item = entityManager.createQuery("" +
+                "FROM Item i " +
+                "WHERE i.name = :itemName", Item.class)
                 .setParameter("itemName", name)
                 .getSingleResult();
+        return new ItemDto(item);
     }
 
     @Override
@@ -94,20 +83,16 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public ItemDto getItemDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
-                "i.id," +
+                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
                 "i.name," +
                 "i.price," +
-                "i.retailPrice," +
                 "i.lowestAsk," +
                 "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
-                "i.description," +
-                "i.itemColors" +
-                ")" +
+                "i.itemColors)" +
                 "FROM Item AS i " +
-                "WHERE i.id =: id", ItemDto.class)
+                "WHERE id =: id", ItemDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -115,20 +100,16 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public List<ItemDto> getItemsByColors(String itemColors) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
-                "i.id," +
+                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
                 "i.name," +
                 "i.price," +
-                "i.retailPrice," +
                 "i.lowestAsk," +
                 "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
-                "i.description," +
-                "i.itemColors" +
-                ")" +
+                "i.itemColors)" +
                 "FROM Item AS i " +
-                "WHERE i.itemColors =: itemColors", ItemDto.class)
+                "WHERE itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
                 .getResultList();
     }
