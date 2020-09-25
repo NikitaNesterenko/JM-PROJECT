@@ -10,36 +10,35 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
-    public UserDto getByName(String name) {
+    public Optional<User> getByName(String name) {
         User user = entityManager.createQuery("" +
                 "FROM User AS u " +
                 "WHERE u.username = :username", User.class)
                 .setParameter("username", name)
                 .getSingleResult();
 
-        return new UserDto(user);
+        return Optional.of(user);
     }
 
     @Override
-    public UserDto getByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         User user = entityManager.createQuery("" +
                 "FROM User AS u " +
                 "WHERE u.email = :email", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
 
-        return new UserDto(user);
+        return Optional.of(user);
     }
 
     @Override
-    public UserDto getByAppleId(String appleId) {
+    public Optional<User> getByAppleId(String appleId) {
         User user = entityManager.createQuery("" +
                 "FROM User AS u " +
                 "WHERE u.appleUserId = :appleId", User.class)
                 .setParameter("appleId", appleId)
                 .getSingleResult();
-
-        return new UserDto(user);
+        return Optional.of(user);
     }
 
     @Override

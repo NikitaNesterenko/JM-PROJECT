@@ -47,8 +47,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News getNewsByName(String name) {
-        return new News(newsDAO.getByName(name));
-//                .orElse(null);
+        return newsDAO.getByName(name).orElse(null);
     }
 
     @Override

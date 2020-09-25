@@ -4,17 +4,19 @@ import jm.stockx.dto.RoleDto;
 import jm.stockx.entity.Role;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
 
     @Override
-    public RoleDto getByName(String name) {
+    public Optional<Role> getByName(String name) {
         Role role = entityManager.createQuery("" +
                 "FROM Role AS r " +
                 "WHERE r.roleName = :roleName", Role.class)
                 .setParameter("roleName", name)
                 .getSingleResult();
-        return new RoleDto(role);
+        return Optional.of(role);
     }
 
     @Override

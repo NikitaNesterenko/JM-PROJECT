@@ -48,8 +48,7 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
 
     @Override
     public ShoeSize getShoeSizeByName(String name) {
-        return new ShoeSize(shoeSizeDAO.getByName(name));
-//        .orElse(null);
+        return shoeSizeDAO.getByName(name).orElse(null);
     }
 
     @Override
