@@ -171,4 +171,16 @@ public class Item {
         this.itemImageUrl = itemImageUrl;
         this.style = style;
     }
+
+    public Item(ItemDto itemDto) {
+        this.id = itemDto.getId();
+        this.name = itemDto.getName();
+        this.price = itemDto.getPrice();
+        this.retailPrice = itemDto.getRetailPrice();
+        this.lowestAsk = itemDto.getLowestAsk();
+        this.highestBid = itemDto.getHighestBid();
+        this.releaseDate = itemDto.getDateRelease();
+        this.condition = itemDto.getCondition();
+        this.description = itemDto.getDescription();
+    }
 }

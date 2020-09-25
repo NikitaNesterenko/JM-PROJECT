@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
 
     @Override
-    public RoleDto getRoleDtoByName(String name) {
+    public RoleDto getByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.RoleDto(" +
                 "r.id, " +

@@ -72,4 +72,13 @@ public class News {
         this.description = description;
         this.text = text;
     }
+
+    public News(NewsDto newsDto) {
+        this.id = newsDto.getId();
+        this.name = newsDto.getName();
+        this.time = newsDto.getTime();
+        this.title = newsDto.getTitle();
+        this.description = newsDto.getDescription();
+        this.text = newsDto.getText();
+    }
 }

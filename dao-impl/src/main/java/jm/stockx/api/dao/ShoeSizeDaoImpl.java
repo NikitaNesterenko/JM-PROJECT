@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements ShoeSizeDAO {
 
     @Override
-    public ShoeSizeDto getShoeSizeDtoByName(String name) {
+    public ShoeSizeDto getByName(String name) {
         for (ShoeSizeTypes type : ShoeSizeTypes.values()) {
             if (type.toString().equals(name)) {
                 return entityManager.createQuery("" +
@@ -23,10 +23,7 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
                         .getSingleResult();
             }
         }
-        return entityManager.createQuery("SELECT count(ss) FROM ShoeSize AS ss WHERE ss.sizeTypes = : name", ShoeSizeDto.class)
-                .setParameter("name", name)
-                .setMaxResults(1)
-                .getSingleResult();
+        return null;
     }
 
     @Override

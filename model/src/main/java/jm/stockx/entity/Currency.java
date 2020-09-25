@@ -35,4 +35,8 @@ public class Currency {
     public Currency(String name) {
         this.name = name;
     }
+
+    public Currency(CurrencyDto currencyDto) {
+
+    }
 }
