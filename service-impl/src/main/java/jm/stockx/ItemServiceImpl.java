@@ -47,8 +47,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItemByName(String name) {
-        return new Item(itemDao.getByName(name));
-//                .orElse(null);
+        return itemDao.getByName(name).orElse(null);
     }
 
     @Override

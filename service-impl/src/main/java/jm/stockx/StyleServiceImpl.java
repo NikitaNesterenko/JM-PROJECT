@@ -30,8 +30,7 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public Style getStyleByName(String name) {
-        return new Style(styleDao.getByName(name));
-//                .orElse(null);
+        return styleDao.getByName(name).orElse(null);
     }
 
     @Override

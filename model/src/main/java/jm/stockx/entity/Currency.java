@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.CurrencyDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,9 +33,5 @@ public class Currency {
 
     public Currency(String name) {
         this.name = name;
-    }
-
-    public Currency(CurrencyDto currencyDto) {
-
     }
 }

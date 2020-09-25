@@ -4,21 +4,21 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
-    public ItemDto getByName(String name) {
+    public Optional<Item> getByName(String name) {
         Item item = entityManager.createQuery("" +
                 "FROM Item i " +
                 "WHERE i.name = :itemName", Item.class)
                 .setParameter("itemName", name)
                 .getSingleResult();
-        return new ItemDto(item);
+        return Optional.of(item);
     }
 
     @Override

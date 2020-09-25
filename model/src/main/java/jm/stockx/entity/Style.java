@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.StyleDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,9 +32,5 @@ public class Style {
 
     public Style(String name) {
         this.name = name;
-    }
-
-    public Style(StyleDto styleDto) {
-        this.name = styleDto.getName();
     }
 }

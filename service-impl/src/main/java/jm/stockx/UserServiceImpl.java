@@ -51,20 +51,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserName(String userName) {
-        return new User(userDao.getByName(userName));
-//                .orElse(null);
+        return userDao.getByName(userName).orElse(null);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return new User(userDao.getByEmail(email));
-//                .orElse(null);
+        return userDao.getByEmail(email).orElse(null);
     }
 
     @Override
     public User getUserByAppleUserId(String appleId) {
-        return new User(userDao.getByAppleId(appleId));
-//                .orElse(null);
+        return userDao.getByAppleId(appleId).orElse(null);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ItemDto;
 import jm.stockx.enums.ItemColors;
 import lombok.Getter;
 import lombok.Setter;
@@ -184,19 +183,5 @@ public class Item {
         this.brand = brand;
         this.itemImageUrl = itemImageUrl;
         this.style = style;
-    }
-
-    public Item(ItemDto itemDto) {
-        this.name = itemDto.getName();
-        this.price = itemDto.getPrice();
-        this.retailPrice = itemDto.getRetailPrice();
-        this.lowestAsk = itemDto.getLowestAsk();
-        this.highestBid = itemDto.getHighestBid();
-        this.releaseDate = itemDto.getReleaseDate();
-        this.condition = itemDto.getCondition();
-        this.description = itemDto.getDescription();
-        this.brand = itemDto.getBrand();
-        this.itemImageUrl = itemDto.getItemImageUrl();
-        this.style = itemDto.getStyle();
     }
 }
