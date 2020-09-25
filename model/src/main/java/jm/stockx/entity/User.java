@@ -75,7 +75,8 @@ public class User implements UserDetails {
     @NotNull
     private Role role;
 
-    private Boolean active;
+    public User(String firstName, String lastName, String email, String username, String password, Byte sellerLevel, Boolean vacationMode, String localeTag, String appleUserId, boolean active) {
+    }
 
     public boolean isActive() {
         return active;
@@ -85,7 +86,9 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public Boolean active;
+
+    @ManyToMany(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_buying",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -200,6 +203,11 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isActive();
     }
+
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
