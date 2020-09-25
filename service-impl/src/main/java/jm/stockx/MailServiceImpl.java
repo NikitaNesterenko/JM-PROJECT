@@ -38,9 +38,9 @@ public class MailServiceImpl implements MailService {
     private String urlRegistrationLink;
 
 
-
     @Autowired
-    public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService, UserService userService, TokenRegistrationService tokenRegistrationService) {
+    public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService,
+                           UserService userService, TokenRegistrationService tokenRegistrationService) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
         this.userService = userService;
@@ -58,7 +58,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean sendRecoveryLinkToUser(User user) {
-        if (user == null || user.getEmail() == null) {
+        if (user.getEmail() == null) {
             return false;
         }
         String hash = UUID.randomUUID().toString();
@@ -79,7 +79,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean sendRegistrationLinkToUser(User user) {
-        if(user == null || user.getEmail() == null) {
+        if (user == null || user.getEmail() == null) {
             return false;
         }
         String hash = UUID.randomUUID().toString();
@@ -113,6 +113,25 @@ public class MailServiceImpl implements MailService {
                 tokenRecoveryService.deleteToken(token.getId());
                 return true;
             } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean activateAccountByToken(String link) {
+        if (!link.startsWith(urlRegistrationLink)) {
+            return false;
+        }
+        TokenRegistration token = tokenRegistrationService.getTokenByHashEmail(link);
+        if (token != null && isValidToken(token.getStartTime())) {
+
+            try {
+                tokenRegistrationService.deleteToken(token.getId());
+                token.getUser().setActive(true);
+                return true;
+            } catch (Exception ex) {
                 return false;
             }
         }
