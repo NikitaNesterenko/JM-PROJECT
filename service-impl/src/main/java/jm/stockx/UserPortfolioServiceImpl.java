@@ -57,4 +57,9 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
        return userPortfolioDao.getItemByPortfolioId(id);
     }
 
+    @Override
+    public void addItemToPortfolio(Long portfolioId, Long itemId) {
+        userPortfolioDao.addItemToPortfolio(portfolioId, itemId);
+    }
+
 }
