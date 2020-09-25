@@ -1,21 +1,23 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.BrandDto;
+import jm.stockx.dto.BrandPostDto;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
 
     @Override
-    public BrandDto getByName(String name) {
+    public Optional<Brand> getByName(String name) {
         Brand brand = entityManager.createQuery("" +
                 "FROM Brand AS b " +
                 "WHERE b.name = :brandName", Brand.class)
                 .setParameter("brandName", name)
                 .getSingleResult();
-
-        return new BrandDto(brand);
+        return Optional.of(brand);
     }
 
     @Override
