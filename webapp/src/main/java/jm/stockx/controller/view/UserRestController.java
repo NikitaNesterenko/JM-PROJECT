@@ -91,4 +91,23 @@ public class UserRestController {
         logger.warn("Ошибка восстановления пароля по адресу {}", link);
         return Response.error(HttpStatus.BAD_REQUEST, "Error recovery password");
     }
+
+    @GetMapping(value = "/registration/{code}")
+    @Operation(
+            operationId = "activateAccount",
+            summary = "Token received to email",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK: account avtivated"),
+                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to activate account")
+            })
+    public Response<?> activateAccountByToken(@PathVariable("code") String code) {
+
+        if (code != null) {
+            mailService.activateAccountByToken(code);
+            logger.info("Аккаунт активирован = {}", code);
+            return Response.ok().build();
+        }
+        logger.warn("Не определен email {} для восстаноления пароля", code);
+        return Response.error(HttpStatus.BAD_REQUEST, "User with such mail does not exist");
+    }
 }
