@@ -63,7 +63,7 @@ public class UserRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to send password recovery token")
             })
     public Response<?> sendRecoveryLinkToEmail(@PathVariable("email") String email) {
-        User user = userService.getUserByEmail(email);
+        User user= userService.getUserByEmail(email);
         if (user != null) {
             mailService.sendRecoveryLinkToUser(user);
             logger.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
@@ -102,11 +102,12 @@ public class UserRestController {
             })
     public Response<?> activateAccountByToken(@PathVariable("code") String code) {
 
-        if (mailService.activateAccountByToken(code)) {
+        if (code != null) {
+            mailService.activateAccountByToken(code);
             logger.info("Аккаунт активирован = {}", code);
             return Response.ok().build();
         }
-        logger.warn("Не определен код активации {} для восстаноления пароля", code);
-        return Response.error(HttpStatus.BAD_REQUEST, "User with such activation code does not exist");
+        logger.warn("Не определен email {} для восстаноления пароля", code);
+        return Response.error(HttpStatus.BAD_REQUEST, "User with such mail does not exist");
     }
 }
