@@ -4,7 +4,7 @@ import jm.stockx.entity.TokenRegistration;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TokenRegistrationDaoImpl extends AbstractDAO<TokenRegistration, Long> implements TokenRegistrationDAO {
+public class TokenRegistrationDaoImpl extends AbstractDAO<TokenRegistration, Long> implements TokenRegistrationDAO{
     @Override
     public TokenRegistration getByHashEmail(String hashEmail) {
         return entityManager.createQuery("" +
@@ -13,4 +13,5 @@ public class TokenRegistrationDaoImpl extends AbstractDAO<TokenRegistration, Lon
                 .setParameter("hashEmail", hashEmail)
                 .getSingleResult();
     }
+
 }

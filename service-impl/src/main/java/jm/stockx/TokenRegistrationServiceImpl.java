@@ -11,6 +11,7 @@ public class TokenRegistrationServiceImpl implements TokenRegistrationService {
 
     private final TokenRegistrationDAO tokenDao;
 
+
     public TokenRegistrationServiceImpl(TokenRegistrationDAO tokenDao) {
         this.tokenDao = tokenDao;
     }
@@ -34,5 +35,4 @@ public class TokenRegistrationServiceImpl implements TokenRegistrationService {
     public TokenRegistration getTokenByHashEmail(String hashEmail) {
         return tokenDao.getByHashEmail(hashEmail);
     }
-
 }

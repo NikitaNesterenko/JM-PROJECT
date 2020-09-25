@@ -10,5 +10,4 @@ public interface TokenRegistrationService {
     TokenRegistration getTokenById(Long id);
 
     TokenRegistration getTokenByHashEmail(String hashEmail);
-
 }
