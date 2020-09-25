@@ -11,6 +11,7 @@ import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -72,6 +73,9 @@ public class Item {
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
+
+    @ManyToMany(mappedBy = "userItems")
+    private Set<UserPortfolio> userPortfolios;
 
     public Item(Long id, String name,
                 Money price,  Money retailPrice,

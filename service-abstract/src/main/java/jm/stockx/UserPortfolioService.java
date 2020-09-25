@@ -22,4 +22,6 @@ public interface UserPortfolioService {
 
     List<Item> getItemByPortfolioId(Long id);
 
+    void addItemToPortfolio(Long portfolioId, Long itemId);
+
 }

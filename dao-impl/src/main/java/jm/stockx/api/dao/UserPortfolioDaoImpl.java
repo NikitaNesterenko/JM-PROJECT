@@ -43,4 +43,11 @@ public class UserPortfolioDaoImpl extends AbstractDAO<UserPortfolio, Long> {
                 .getResultList();
     }
 
+    public void addItemToPortfolio(Long portfolioId, Long itemId) {
+        entityManager.createNativeQuery("INSERT INTO portfolio_user_items (user_portfolios_id, user_items_id) " +
+                "VALUES (?, ?)")
+                .setParameter(1, portfolioId)
+                .setParameter(2, itemId)
+                .executeUpdate();
+    }
 }
