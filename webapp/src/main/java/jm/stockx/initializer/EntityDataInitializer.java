@@ -3,10 +3,12 @@ package jm.stockx.initializer;
 import jm.stockx.BidService;
 import jm.stockx.BrandService;
 import jm.stockx.CurrencyService;
+import jm.stockx.ItemInfoService;
 import jm.stockx.ItemService;
 import jm.stockx.NewsService;
 import jm.stockx.RoleService;
 import jm.stockx.SellingInfoService;
+import jm.stockx.ShoeSizeService;
 import jm.stockx.StyleService;
 import jm.stockx.UserService;
 import jm.stockx.entity.Admin;
@@ -17,8 +19,10 @@ import jm.stockx.entity.Item;
 import jm.stockx.entity.News;
 import jm.stockx.entity.Role;
 import jm.stockx.entity.SellingInfo;
+import jm.stockx.entity.ShoeSize;
 import jm.stockx.entity.Style;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ShoeSizeTypes;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
@@ -26,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -39,6 +45,8 @@ public class EntityDataInitializer {
     private SellingInfoService sellingInfoService;
     private CurrencyService currencyService;
     private BidService bidService;
+    private ItemInfoService itemInfoService;
+    private ShoeSizeService shoeSizeService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -49,7 +57,9 @@ public class EntityDataInitializer {
                              NewsService newsService,
                              SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
-                             BidService bidService) {
+                             BidService bidService,
+                             ItemInfoService itemInfoService,
+                             ShoeSizeService shoeSizeService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -59,6 +69,8 @@ public class EntityDataInitializer {
         this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
         this.bidService = bidService;
+        this.itemInfoService = itemInfoService;
+        this.shoeSizeService = shoeSizeService;
     }
 
 
@@ -71,17 +83,19 @@ public class EntityDataInitializer {
     }
 
     private void fillDataBase() {
+        createShoeSizes();
         createRoles();
         createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createBrands();
         createCurrency();
         createStyles();
-        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createNews();
+        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
 
     }
+
 
     private void createRoles() {
         if (roleService.getAll().size() == 0) {
@@ -102,7 +116,7 @@ public class EntityDataInitializer {
                     true,
                     "ru",
                     "admin@apple.id");
-            admin.setRole(roleService.getByRoleName("ROLE_ADMIN"));
+            admin.setRole(roleService.getRole("ROLE_ADMIN"));
             userService.createUser(admin);
 
             User user1 = new User(
@@ -115,7 +129,7 @@ public class EntityDataInitializer {
                     true,
                     "en",
                     "user1@apple.id");
-            user1.setRole(roleService.getByRoleName("ROLE_USER"));
+            user1.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user1);
 
             User user2 = new User(
@@ -128,7 +142,7 @@ public class EntityDataInitializer {
                     false,
                     "en",
                     "user2@apple.id");
-            user2.setRole(roleService.getByRoleName("ROLE_USER"));
+            user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
         }
     }
@@ -162,10 +176,7 @@ public class EntityDataInitializer {
 
             itemService.create(new Item(
                     "Jordan 14 Retro Gym Red Toro",
-                    Money.parse("RUB 190.0"),
                     Money.parse("RUB 200.0"),
-                    Money.parse("RUB 254.0"),
-                    Money.parse("RUB 316.0"),
                     LocalDate.of(2020, 7, 2),
                     "New",
                     "Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
@@ -175,15 +186,12 @@ public class EntityDataInitializer {
                             "The Jordan 14 Gym Red Toro features a red suede upper atop a black and white sole. A black woven tongue, " +
                             "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
                             "retailed for $190 USD.",
-                    brandService.getBrandByName("Jordan"),
-                    styleService.getStyleByName("sports")));
+                    brandService.getBrand("Jordan"),
+                    styleService.getStyle("sports")));
 
             itemService.create(new Item(
                     "Adidas Yeezy Boost 380 Mist",
-                    Money.parse("USD 230.0"),
                     Money.parse("USD 240.0"),
-                    Money.parse("USD 195.0"),
-                    Money.parse("USD 230.0"),
                     LocalDate.of(2020, 3, 25),
                     "New",
                     "Yeezy added a new colorway to their Boost 380 product line with the adidas Yeezy Boost 380 Mist, " +
@@ -194,15 +202,12 @@ public class EntityDataInitializer {
                             "This 380 Mist] features a Mist Primeknit pattern on its upper and lacks the traditional " +
                             "lateral side stripe. An upgraded translucent Boost midsole and engineered gum outsole grip complete " +
                             "the design. These sneakers released in March of 2020 and retailed for $230.",
-                    brandService.getBrandByName("Adidas"),
-                    styleService.getStyleByName("sports")));
+                    brandService.getBrand("Adidas"),
+                    styleService.getStyle("sports")));
 
             itemService.create(new Item(
                     "Nike React Element 87 Anthracite Black",
-                    Money.parse("USD 160.0"),
                     Money.parse("USD 190.0"),
-                    Money.parse("USD 77.0"),
-                    Money.parse("USD 101.0"),
                     LocalDate.of(2018, 6, 14),
                     "New",
                     "Since first being spotted on the runway during a Paris Fashion Week Show in March, " +
@@ -210,15 +215,12 @@ public class EntityDataInitializer {
                             "deconstructed style the react Element 87 features a transcluscent upper and a React-cushioned midsole. " +
                             "Released exclusively overseas in June, this pair saw an American release in July 2018 at a retail " +
                             "price of $160.",
-                    brandService.getBrandByName("Nike"),
-                    styleService.getStyleByName("sports")));
+                    brandService.getBrand("Nike"),
+                    styleService.getStyle("sports")));
 
             itemService.create(new Item(
                     "Jordan 4 Retro Winterized Loyal Blue",
-                    Money.parse("USD 200.0"),
                     Money.parse("USD 210.0"),
-                    Money.parse("USD 155.0"),
-                    Money.parse("USD 212.0"),
                     LocalDate.of(2019, 12, 21),
                     "New",
                     "Jordan Brand spins an iconic design for winter with the Jordan 4 Retro Winterized Loyal Blue, " +
@@ -227,15 +229,20 @@ public class EntityDataInitializer {
                             "The difference between this winterized design and a traditional Jordan 4 lies in the material choices. " +
                             "The Winterized 4 replaces the classic mesh insert panels with a canvas-like material and adopts a fleece lining " +
                             "to retain warmth.",
-                    brandService.getBrandByName("Jordan"),
-                    styleService.getStyleByName("sports")));
+                    brandService.getBrand("Jordan"),
+                    styleService.getStyle("sports")));
+
+            List<ShoeSize> sizes = shoeSizeService.getAll();
+            List<ShoeSize> menSizes = new ArrayList<>();
+            for(ShoeSize s : sizes){
+                if(s.getSizeTypes().equals(ShoeSizeTypes.MEN)){
+                    menSizes.add(s);
+                }
+            }
 
             itemService.create(new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
-                    Money.parse("USD 160.0"),
                     Money.parse("USD 200.0"),
-                    Money.parse("USD 342.0"),
-                    Money.parse("USD 442.0"),
                     LocalDate.of(2019, 8, 17),
                     "New",
                     "Jordan Brand adds a twist to a classic with the Air Jordan 1 WMNS Satin “Black Toe”, now available on StockX. " +
@@ -245,8 +252,14 @@ public class EntityDataInitializer {
                             "This AJ 1 features classic “Black Toe” color scheme. This design is constructed in a mix of leather and satin " +
                             "construction providing a luxury feel. A metal Wings logo on the heel completes the design. These sneakers released " +
                             "in August of 2019 and retailed for $160.",
-                    brandService.getBrandByName("Jordan"),
-                    styleService.getStyleByName("sports")));
+                    brandService.getBrand("Jordan"),
+                    "URL",
+                    styleService.getStyle("sports"),
+                    Money.parse("USD 200.0"),
+                    Money.parse("USD 342.0"),
+                    Money.parse("USD 442.0"),
+                    menSizes
+            ));
         }
     }
 
@@ -279,13 +292,15 @@ public class EntityDataInitializer {
 
             sellingInfoService.create(new SellingInfo(
                     userService.getUserById(1L),
-                    itemService.get(1L),
+                    itemService.getItemById(1L),
+                    itemInfoService.getItemInfoByItemId(1L),
                     108L,
                     Status.DELIVERED));
 
             sellingInfoService.create(new SellingInfo(
                     userService.getUserById(2L),
-                    itemService.get(2L),
+                    itemService.getItemById(2L),
+                    itemInfoService.getItemInfoByItemId(2L),
                     109L,
                     Status.ACCEPTED));
         }
@@ -297,10 +312,31 @@ public class EntityDataInitializer {
                     Money.parse("USD 200.0"),
                     false,
                     userService.getUserById(2L),
-                    itemService.get(3L)));
+                    itemService.getItemById(3L)));
         }
     }
 
-
+    private void createShoeSizes() {
+        if (shoeSizeService.getAll().size() == 0) {
+            shoeSizeService.create(new ShoeSize(7d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(7.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(8d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(8.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(9d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(9.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(10d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(10.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(11d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(11.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(12d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(12.5d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(13d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(14d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(15d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(16d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(17d, ShoeSizeTypes.MEN));
+            shoeSizeService.create(new ShoeSize(18d, ShoeSizeTypes.MEN));
+        }
+    }
 
 }

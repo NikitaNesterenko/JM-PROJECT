@@ -2,10 +2,12 @@ package jm.stockx;
 
 import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.api.dao.ItemDAO;
+import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.ItemInfoDto;
 import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
@@ -28,6 +30,7 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemDAO itemDao;
     private final UserDAO userDAO;
+    private final ItemInfoDAO itemInfoDAO;
     private final MailService mailService;
     private final BuyingInfoDAO buyingInfoDAO;
     private final SellingInfoDAO sellingInfoDAO;
@@ -37,12 +40,14 @@ public class ItemServiceImpl implements ItemService {
                            UserDAO userDAO,
                            MailService mailService,
                            BuyingInfoDAO buyingInfoDAO,
-                           SellingInfoDAO sellingInfoDAO) {
+                           SellingInfoDAO sellingInfoDAO,
+                           ItemInfoDAO itemInfoDAO) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
         this.sellingInfoDAO = sellingInfoDAO;
         this.buyingInfoDAO = buyingInfoDAO;
+        this.itemInfoDAO = itemInfoDAO;
     }
 
     @Override
@@ -90,19 +95,20 @@ public class ItemServiceImpl implements ItemService {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         Item item = itemDao.getById(buyingDto.getItemId());
+        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getByItemId(buyingDto.getItemId()));
         Set<Item> bougthItems = new HashSet<>();
         bougthItems.add(item);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
         //TODO : add actual paymentInfo
 
-        BuyingInfo buyingInfo = new BuyingInfo(item);
+        BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
         buyingInfo.setBoughtItems(bougthItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(seller, item);
+        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, item);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);

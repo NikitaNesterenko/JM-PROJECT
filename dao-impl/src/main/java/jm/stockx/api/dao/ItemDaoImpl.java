@@ -4,21 +4,29 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
-    public Optional<Item> getByName(String name) {
-        Item item = entityManager.createQuery("" +
-                "FROM Item i " +
-                "WHERE i.name = :itemName", Item.class)
+    public ItemDto getItemDtoByName(String name) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.ItemDto(" +
+                "i.id," +
+                "i.name," +
+                "i.retailPrice," +
+                "i.releaseDate," +
+                "i.condition," +
+                "i.description," +
+                "i.itemColors" +
+                ")" +
+                "FROM Item AS i " +
+                "WHERE i.name = :itemName", ItemDto.class)
                 .setParameter("itemName", name)
                 .getSingleResult();
-        return Optional.of(item);
     }
 
     @Override
@@ -83,16 +91,17 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public ItemDto getItemDtoById(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
+                "SELECT NEW jm.stockx.dto.ItemDto(" +
+                "i.id," +
                 "i.name," +
-                "i.price," +
-                "i.lowestAsk," +
-                "i.highestBid," +
+                "i.retailPrice," +
                 "i.releaseDate," +
                 "i.condition," +
-                "i.itemColors)" +
+                "i.description," +
+                "i.itemColors" +
+                ")" +
                 "FROM Item AS i " +
-                "WHERE id =: id", ItemDto.class)
+                "WHERE i.id =: id", ItemDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -100,17 +109,34 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public List<ItemDto> getItemsByColors(String itemColors) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(i.id," +
+                "SELECT NEW jm.stockx.dto.ItemDto(" +
+                "i.id," +
                 "i.name," +
-                "i.price," +
-                "i.lowestAsk," +
-                "i.highestBid," +
+                "i.retailPrice," +
                 "i.releaseDate," +
                 "i.condition," +
-                "i.itemColors)" +
+                "i.description," +
+                "i.itemColors" +
+                ")" +
                 "FROM Item AS i " +
-                "WHERE itemColors =: itemColors", ItemDto.class)
+                "WHERE i.itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
                 .getResultList();
+    }
+
+    @Override
+    public Item getItemByName(String name) {
+        return entityManager.createQuery("" +
+                "FROM Item AS i WHERE i.name = : name", Item.class)
+                .setParameter("name", name)
+                .getSingleResult();
+    }
+
+    @Override
+    public Item getItemById(Long id) {
+        return entityManager.createQuery("" +
+                "FROM Item AS i WHERE i.id = : id", Item.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

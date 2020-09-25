@@ -3,10 +3,12 @@ package jm.stockx;
 import jm.stockx.api.dao.ShoeSizeDAO;
 import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
+import jm.stockx.enums.ShoeSizeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,6 +61,13 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     @Override
     public ShoeSizeDto getShoeSizedDtoById(Long id) {
         return shoeSizeDAO.getShoeSizeDtoById(id);
+    }
+
+    @Override
+    public List<ShoeSizeDto> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType) {
+        List<ShoeSizeDto> list = new ArrayList<>();
+        shoeSizeDAO.getShoeSizeDtoBySizeType(sizeType).forEach(x -> list.add(new ShoeSizeDto(x)));
+        return list;
     }
 
 }
