@@ -2,7 +2,6 @@ package jm.stockx;
 
 import jm.stockx.api.dao.TokenRegistrationDAO;
 import jm.stockx.entity.TokenRegistration;
-import jm.stockx.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +34,5 @@ public class TokenRegistrationServiceImpl implements TokenRegistrationService {
     @Override
     public TokenRegistration getTokenByHashEmail(String hashEmail) {
         return tokenDao.getByHashEmail(hashEmail);
-    }
-
-    @Override
-    public boolean isActive(User user) {
-        return tokenDao.isActive(user);
     }
 }
