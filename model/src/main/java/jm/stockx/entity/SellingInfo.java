@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -72,11 +73,11 @@ public class SellingInfo {
     }
 
     public SellingInfo(User user,
-                       ItemInfo itemInfo,
+                       ItemInfoDto itemInfoDto,
                        Item item) {
         this.user = user;
         this.item = item;
-        this.price = itemInfo.getPrice();
+        this.price = itemInfoDto.getPrice();
         this.orderDate = LocalDateTime.now();
     }
 

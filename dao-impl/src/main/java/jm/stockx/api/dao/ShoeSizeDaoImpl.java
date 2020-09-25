@@ -5,6 +5,8 @@ import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements ShoeSizeDAO {
 
@@ -40,5 +42,14 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
                 "WHERE ss.id =: id", ShoeSizeDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<ShoeSize> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType) {
+        return entityManager.createQuery(
+                "FROM ShoeSize AS ss WHERE ss.sizeTypes =: type",
+                ShoeSize.class)
+                .setParameter("type", sizeType)
+                .getResultList();
     }
 }

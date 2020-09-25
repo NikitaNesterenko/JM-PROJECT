@@ -19,8 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,7 +39,7 @@ public class ItemInfo {
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "itemInfo_shoe_size", joinColumns = @JoinColumn(name = "shoe_size_id"),
             inverseJoinColumns = @JoinColumn(name = "itemInfo_id"))
-    private Set<ShoeSize> sizes = new HashSet<>();
+    private List<ShoeSize> sizes = new ArrayList<>();
 
     @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
     @Type(type = "joda_MoneyAmountWithCurrencyType")
@@ -52,4 +53,15 @@ public class ItemInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
+    @OneToOne(targetEntity = Item.class)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+
+    public ItemInfo(List<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item) {
+        this.sizes = sizes;
+        this.price = price;
+        this.lowestAsk = lowestAsk;
+        this.highestBid = highestBid;
+        this.item = item;
+    }
 }

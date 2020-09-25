@@ -1,16 +1,30 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ItemDto;
 import jm.stockx.enums.ItemColors;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,7 +45,7 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @Columns(columns = { @Column(name = "retail_price_currency"), @Column(name = "item_retail_price") })
+    @Columns(columns = {@Column(name = "retail_price_currency"), @Column(name = "item_retail_price")})
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money retailPrice;
 
@@ -61,10 +75,11 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
-    public Item(Long id, String name,
-                Money price,  Money retailPrice,
-                Money lowestAsk, Money highestBid,
-                LocalDate releaseDate, String condition,
+    public Item(Long id,
+                String name,
+                Money retailPrice,
+                LocalDate releaseDate,
+                String condition,
                 String description) {
         this.id = id;
         this.name = name;
@@ -122,7 +137,7 @@ public class Item {
     public Item(String name,
                 Money retailPrice,
                 LocalDate releaseDate,
-                String condition ,
+                String condition,
                 String description,
                 Brand brand,
                 String itemImageUrl,
@@ -136,4 +151,28 @@ public class Item {
         this.itemImageUrl = itemImageUrl;
         this.style = style;
     }
+
+    public Item(String name,
+                Money retailPrice,
+                LocalDate releaseDate,
+                String condition,
+                String description,
+                Brand brand,
+                String itemImageUrl,
+                Style style,
+                Money price,
+                Money lowestAsk,
+                Money highestBid,
+                List<ShoeSize> sizes) {
+        this.name = name;
+        this.retailPrice = retailPrice;
+        this.releaseDate = releaseDate;
+        this.condition = condition;
+        this.description = description;
+        this.brand = brand;
+        this.itemImageUrl = itemImageUrl;
+        this.style = style;
+        ItemInfo itemInfo = new ItemInfo(sizes, price, lowestAsk, highestBid, this);
+    }
+
 }

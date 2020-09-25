@@ -1,12 +1,11 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.enums.ShoeSizeTypes;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,9 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -46,4 +43,14 @@ public class ShoeSize {
 
     @ManyToMany(mappedBy = "sizes")
     private Set<ItemInfo> items = new HashSet<>();
+
+    public ShoeSize(Double size, ShoeSizeTypes sizeTypes) {
+        this.size = size;
+        this.sizeTypes = sizeTypes;
+    }
+
+    @Override
+    public String toString() {
+        return size + " " + sizeTypes;
+    }
 }
