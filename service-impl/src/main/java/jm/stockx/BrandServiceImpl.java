@@ -45,7 +45,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public BrandDto getBrandByName(String name) {
-        return brandDAO.getBrandDtoByName(name);
+        return brandDAO.getByName(name);
     }
 
     @Override

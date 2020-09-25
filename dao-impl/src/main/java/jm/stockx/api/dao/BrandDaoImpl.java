@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
 
     @Override
-    public BrandDto getBrandDtoByName(String name) {
+    public BrandDto getByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.BrandDto(" +
                 "b.id," +

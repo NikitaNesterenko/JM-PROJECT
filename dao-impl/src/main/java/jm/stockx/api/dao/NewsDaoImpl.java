@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
 
     @Override
-    public NewsDto getNewsDtoByName(String name) {
+    public NewsDto getByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.NewsDto(" +
                 "n.id," +

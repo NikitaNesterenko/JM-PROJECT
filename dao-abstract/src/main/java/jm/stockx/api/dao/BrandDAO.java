@@ -4,8 +4,7 @@ import jm.stockx.dto.BrandDto;
 import jm.stockx.entity.Brand;
 
 public interface BrandDAO extends GenericDao<Brand, Long> {
-    BrandDto getBrandDtoByName(String name);
-
+    BrandDto getByName(String name);// ? Brand || BrandDto
     BrandDto getBrandDtoById(Long id);
 
     Brand getBrand(String name);

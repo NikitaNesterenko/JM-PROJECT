@@ -48,7 +48,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public CurrencyDto getCurrencyByName(String name) {
-        return currencyDAO.getCurrencyDtoByName(name);
+        return currencyDAO.getByName(name);
     }
 
     @Override

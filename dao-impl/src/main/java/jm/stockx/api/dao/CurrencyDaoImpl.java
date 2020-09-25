@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class CurrencyDaoImpl extends AbstractDAO<Currency, Long> implements CurrencyDAO {
 
     @Override
-    public CurrencyDto getCurrencyDtoByName(String name) {
+    public CurrencyDto getByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.CurrencyDto(" +
                 "c.id," +
