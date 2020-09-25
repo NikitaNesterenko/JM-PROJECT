@@ -9,9 +9,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -19,13 +22,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final UserDetailsService userDetailsService;
-    private final SecurityUtils securityUtils;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, SecurityUtils securityUtils) {
+    public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.securityUtils = securityUtils;
     }
 
     @Bean
@@ -68,10 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers("/admin/**").hasAuthority("ADMIN");
 
         http.csrf().disable()
-                .requestCache().requestCache(new CustomRequestCache(securityUtils))
+                .requestCache().requestCache(new CustomRequestCache())
                 .and().authorizeRequests()
-                //.requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
-                .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
+                .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll()
