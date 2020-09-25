@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ItemDAO extends GenericDao<Item, Long> {
 
-    ItemDto getItemDtoByName(String name);
+    ItemDto getByName(String name);
 
     List<ItemDto> searchItem(String search, Integer page, Integer size);
 
@@ -23,8 +23,4 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     ItemDto getItemDtoById(Long id);
 
     List<ItemDto> getItemsByColors(String itemColors);
-
-    Item getItemByName(String name);
-
-    Item getItemById(Long id);
 }

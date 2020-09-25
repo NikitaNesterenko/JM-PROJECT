@@ -31,13 +31,4 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
                 .getSingleResult();
     }
 
-    @Override
-    public Style getStyle(String name) {
-        return entityManager.createQuery("" +
-                "FROM Style AS s WHERE s.name = : styleName", Style.class)
-                .setParameter("styleName", name)
-                .getSingleResult();
-    }
-
-
 }

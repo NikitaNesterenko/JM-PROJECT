@@ -50,16 +50,16 @@ public class UserServiceTest {
     @Test
     public void testGetUserByName() {
         User user = new User(firstName, lastName, email, username, password, sellerLevel, vacationMode, localeTag);
-        Mockito.when(userDao.getUserDtoByName(Mockito.anyString()))
+        Mockito.when(userDao.getByName(Mockito.anyString()))
                 .thenReturn(new UserDto(user));
-        User fromTest = userService.getUserByName("name");
+        User fromTest = userService.getUserByUserName("name");
         Assert.assertEquals(username, fromTest.getUsername());
     }
 
     @Test
     public void getUserByEmailTest() {
-        when(userDao.getUserDtoByEmail(any())).thenReturn(new UserDto(mockUser));
-        assertEquals(userService.getUserDtoByEmail(any()), mockUser);
-        verify(userDao).getUserDtoByEmail(any());
+        when(userDao.getByEmail(any())).thenReturn(new UserDto(mockUser));
+        assertEquals(userService.getUserByEmail(any()), mockUser);
+        verify(userDao).getByEmail(any());
     }
 }

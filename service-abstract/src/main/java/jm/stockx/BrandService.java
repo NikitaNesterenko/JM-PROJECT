@@ -9,7 +9,7 @@ public interface BrandService {
 
     List<Brand> getAll();
 
-    BrandDto get(Long id);
+    Brand get(Long id);
 
     void create(Brand brand);
 
@@ -17,11 +17,11 @@ public interface BrandService {
 
     void delete(Long id);
 
-    BrandDto getBrandByName(String name);
+    Brand getBrandByName(String name);
 
     boolean isBrandExist(Long id);
 
     BrandDto getBrandDtoById(Long id);
 
-    Brand getBrand(String name);
+
 }

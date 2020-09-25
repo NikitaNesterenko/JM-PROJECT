@@ -9,7 +9,7 @@ import java.util.List;
 public interface ShoeSizeService {
     List<ShoeSize> getAll();
 
-    ShoeSizeDto get(Long id);
+    ShoeSize get(Long id);
 
     void create(ShoeSize shoeSize);
 
@@ -17,7 +17,7 @@ public interface ShoeSizeService {
 
     void update(ShoeSize shoeSize);
 
-    ShoeSizeDto getShoeSizeByName(String name);
+    ShoeSize getShoeSizeByName(String name);
 
     boolean isShoeSizeExist(Long id);
 

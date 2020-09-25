@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.TokenRecoveryDAO;
-import jm.stockx.dto.TokenRecoveryDto;
 import jm.stockx.entity.TokenRecovery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +28,8 @@ public class TokenRecoveryServiceImpl implements TokenRecoveryService {
     }
 
     @Override
-    public TokenRecoveryDto getTokenById(Long id) {
-        return tokenDao.getTokenRecoveryDtoById(id);
+    public TokenRecovery getTokenById(Long id) {
+        return tokenDao.getById(id);
     }
 
     @Override

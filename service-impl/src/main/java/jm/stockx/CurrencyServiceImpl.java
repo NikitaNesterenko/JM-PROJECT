@@ -27,8 +27,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public CurrencyDto get(Long id) {
-        return currencyDAO.getCurrencyDtoById(id);
+    public Currency get(Long id) {
+        return currencyDAO.getById(id);
     }
 
     @Override
@@ -47,8 +47,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public CurrencyDto getCurrencyByName(String name) {
-        return currencyDAO.getByName(name);
+    public Currency getCurrencyByName(String name) {
+        return new Currency(currencyDAO.getByName(name));
+//                .orElse(null);
     }
 
     @Override

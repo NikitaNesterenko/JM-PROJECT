@@ -21,11 +21,4 @@ public class BuyingServiceImpl implements BuyingService {
         buyingInfo.setStatus(status);
         buyingInfoDAO.update(buyingInfo);
     }
-
-    @Override
-    public boolean isBuyingInfoExist(Long id) {
-        return buyingInfoDAO.doesItExistEntity(id);
-    }
-
-
 }

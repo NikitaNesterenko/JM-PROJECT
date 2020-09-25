@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ItemDto;
 import jm.stockx.enums.ItemColors;
 import lombok.*;
 import org.hibernate.annotations.Columns;
@@ -170,17 +169,5 @@ public class Item {
         this.brand = brand;
         this.itemImageUrl = itemImageUrl;
         this.style = style;
-    }
-
-    public Item(ItemDto itemDto) {
-        this.id = itemDto.getId();
-        this.name = itemDto.getName();
-        this.price = itemDto.getPrice();
-        this.retailPrice = itemDto.getRetailPrice();
-        this.lowestAsk = itemDto.getLowestAsk();
-        this.highestBid = itemDto.getHighestBid();
-        this.releaseDate = itemDto.getDateRelease();
-        this.condition = itemDto.getCondition();
-        this.description = itemDto.getDescription();
     }
 }

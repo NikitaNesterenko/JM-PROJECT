@@ -46,8 +46,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto getItemDtoByName(String name) {
-        return itemDao.getItemDtoByName(name);
+    public Item getItemByName(String name) {
+        return new Item(itemDao.getByName(name));
+//                .orElse(null);
     }
 
     @Override
@@ -56,8 +57,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto getItemDtoById(Long id) {
-        return itemDao.getItemDtoById(id);
+    public Item get(Long id) {
+        return itemDao.getById(id);
     }
 
     @Override
@@ -128,15 +129,5 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean isItemExist(Long id) {
         return itemDao.doesItExistEntity(id);
-    }
-
-    @Override
-    public Item getItemByName(String name) {
-        return itemDao.getItemByName(name);
-    }
-
-    @Override
-    public Item getItemById(Long id) {
-        return itemDao.getItemById(id);
     }
 }

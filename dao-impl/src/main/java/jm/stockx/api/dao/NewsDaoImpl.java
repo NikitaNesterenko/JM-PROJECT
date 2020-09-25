@@ -13,7 +13,10 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
                 "SELECT NEW jm.stockx.dto.NewsDto(" +
                 "n.id," +
                 "n.name," +
-                "n.title" +
+                "n.time," +
+                "n.title," +
+                "n.description," +
+                "n.text" +
                 ") " +
                 "FROM News AS n " +
                 "WHERE n.name = :newsName", NewsDto.class)
@@ -25,10 +28,13 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
     public NewsDto getNewsDtoById(Long id) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.NewsDto(" +
-                "n.id," +
+                "n.id, " +
                 "n.name," +
-                "n.title" +
-                ") " +
+                "n.time," +
+                "n.title," +
+                "n.description," +
+                "n.text" +
+                ")" +
                 "FROM News AS n " +
                 "WHERE n.id =: id", NewsDto.class)
                 .setParameter("id", id)

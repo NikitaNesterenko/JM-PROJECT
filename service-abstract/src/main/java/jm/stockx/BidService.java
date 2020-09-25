@@ -10,7 +10,7 @@ public interface BidService {
 
     List<Bid> getAll();
 
-    BidDto get(Long id);
+    Bid get(Long id);
 
     BidDto get(String itemName, String userName);
 

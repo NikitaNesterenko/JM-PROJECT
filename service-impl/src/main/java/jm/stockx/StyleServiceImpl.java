@@ -24,13 +24,14 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    public StyleDto get(Long id) {
-        return styleDao.getStyleDtoById(id);
+    public Style get(Long id) {
+        return styleDao.getById(id);
     }
 
     @Override
-    public StyleDto getStyleByName(String name) {
-        return styleDao.getByName(name);
+    public Style getStyleByName(String name) {
+        return new Style(styleDao.getByName(name));
+//                .orElse(null);
     }
 
     @Override
@@ -56,11 +57,6 @@ public class StyleServiceImpl implements StyleService {
     @Override
     public StyleDto getStyleDtoById(Long id) {
         return styleDao.getStyleDtoById(id);
-    }
-
-    @Override
-    public Style getStyle(String name) {
-        return styleDao.getStyle(name);
     }
 
 }

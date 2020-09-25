@@ -102,7 +102,7 @@ public class EntityDataInitializer {
                     true,
                     "ru",
                     "admin@apple.id");
-            admin.setRole(roleService.getRole("ROLE_ADMIN"));
+            admin.setRole(roleService.getByRoleName("ROLE_ADMIN"));
             userService.createUser(admin);
 
             User user1 = new User(
@@ -115,7 +115,7 @@ public class EntityDataInitializer {
                     true,
                     "en",
                     "user1@apple.id");
-            user1.setRole(roleService.getRole("ROLE_USER"));
+            user1.setRole(roleService.getByRoleName("ROLE_USER"));
             userService.createUser(user1);
 
             User user2 = new User(
@@ -128,7 +128,7 @@ public class EntityDataInitializer {
                     false,
                     "en",
                     "user2@apple.id");
-            user2.setRole(roleService.getRole("ROLE_USER"));
+            user2.setRole(roleService.getByRoleName("ROLE_USER"));
             userService.createUser(user2);
         }
     }
@@ -175,8 +175,8 @@ public class EntityDataInitializer {
                             "The Jordan 14 Gym Red Toro features a red suede upper atop a black and white sole. A black woven tongue, " +
                             "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
                             "retailed for $190 USD.",
-                    brandService.getBrand("Jordan"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrandByName("Jordan"),
+                    styleService.getStyleByName("sports")));
 
             itemService.create(new Item(
                     "Adidas Yeezy Boost 380 Mist",
@@ -194,8 +194,8 @@ public class EntityDataInitializer {
                             "This 380 Mist] features a Mist Primeknit pattern on its upper and lacks the traditional " +
                             "lateral side stripe. An upgraded translucent Boost midsole and engineered gum outsole grip complete " +
                             "the design. These sneakers released in March of 2020 and retailed for $230.",
-                    brandService.getBrand("Adidas"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrandByName("Adidas"),
+                    styleService.getStyleByName("sports")));
 
             itemService.create(new Item(
                     "Nike React Element 87 Anthracite Black",
@@ -210,8 +210,8 @@ public class EntityDataInitializer {
                             "deconstructed style the react Element 87 features a transcluscent upper and a React-cushioned midsole. " +
                             "Released exclusively overseas in June, this pair saw an American release in July 2018 at a retail " +
                             "price of $160.",
-                    brandService.getBrand("Nike"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrandByName("Nike"),
+                    styleService.getStyleByName("sports")));
 
             itemService.create(new Item(
                     "Jordan 4 Retro Winterized Loyal Blue",
@@ -227,8 +227,8 @@ public class EntityDataInitializer {
                             "The difference between this winterized design and a traditional Jordan 4 lies in the material choices. " +
                             "The Winterized 4 replaces the classic mesh insert panels with a canvas-like material and adopts a fleece lining " +
                             "to retain warmth.",
-                    brandService.getBrand("Jordan"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrandByName("Jordan"),
+                    styleService.getStyleByName("sports")));
 
             itemService.create(new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
@@ -245,8 +245,8 @@ public class EntityDataInitializer {
                             "This AJ 1 features classic “Black Toe” color scheme. This design is constructed in a mix of leather and satin " +
                             "construction providing a luxury feel. A metal Wings logo on the heel completes the design. These sneakers released " +
                             "in August of 2019 and retailed for $160.",
-                    brandService.getBrand("Jordan"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrandByName("Jordan"),
+                    styleService.getStyleByName("sports")));
         }
     }
 
@@ -279,13 +279,13 @@ public class EntityDataInitializer {
 
             sellingInfoService.create(new SellingInfo(
                     userService.getUserById(1L),
-                    itemService.getItemById(1L),
+                    itemService.get(1L),
                     108L,
                     Status.DELIVERED));
 
             sellingInfoService.create(new SellingInfo(
                     userService.getUserById(2L),
-                    itemService.getItemById(2L),
+                    itemService.get(2L),
                     109L,
                     Status.ACCEPTED));
         }
@@ -297,7 +297,10 @@ public class EntityDataInitializer {
                     Money.parse("USD 200.0"),
                     false,
                     userService.getUserById(2L),
-                    itemService.getItemById(3L)));
+                    itemService.get(3L)));
         }
     }
+
+
+
 }
