@@ -1,14 +1,29 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.ItemDto;
 import jm.stockx.enums.ItemColors;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Getter
@@ -169,5 +184,19 @@ public class Item {
         this.brand = brand;
         this.itemImageUrl = itemImageUrl;
         this.style = style;
+    }
+
+    public Item(ItemDto itemDto) {
+        this.name = itemDto.getName();
+        this.price = itemDto.getPrice();
+        this.retailPrice = itemDto.getRetailPrice();
+        this.lowestAsk = itemDto.getLowestAsk();
+        this.highestBid = itemDto.getHighestBid();
+        this.releaseDate = itemDto.getReleaseDate();
+        this.condition = itemDto.getCondition();
+        this.description = itemDto.getDescription();
+        this.brand = itemDto.getBrand();
+        this.itemImageUrl = itemDto.getItemImageUrl();
+        this.style = itemDto.getStyle();
     }
 }

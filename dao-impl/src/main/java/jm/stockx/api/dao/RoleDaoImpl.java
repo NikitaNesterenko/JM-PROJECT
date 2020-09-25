@@ -9,14 +9,12 @@ public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
 
     @Override
     public RoleDto getByName(String name) {
-        return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.RoleDto(" +
-                "r.id, " +
-                "r.roleName)" +
+        Role role = entityManager.createQuery("" +
                 "FROM Role AS r " +
-                "WHERE r.roleName =: name", RoleDto.class)
-                .setParameter("name", name)
+                "WHERE r.roleName = :roleName", Role.class)
+                .setParameter("roleName", name)
                 .getSingleResult();
+        return new RoleDto(role);
     }
 
     @Override
@@ -26,7 +24,7 @@ public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
                 "r.id, " +
                 "r.roleName)" +
                 "FROM Role AS r " +
-                "WHERE r.id =: id", RoleDto.class)
+                "WHERE id =: id", RoleDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

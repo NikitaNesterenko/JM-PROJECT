@@ -13,9 +13,7 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 "SELECT NEW jm.stockx.dto.BidDto(" +
                 "b.id," +
                 "b.price," +
-                "b.success," +
-                "b.item.name," +
-                "b.user.username)" +
+                "b.success)" +
                 "FROM Bid AS b " +
                 "WHERE b.id =: id", BidDto.class)
                 .setParameter("id", id)
@@ -28,9 +26,7 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 "SELECT NEW jm.stockx.dto.BidDto(" +
                 "b.id," +
                 "b.price," +
-                "b.success," +
-                "b.item.name," +
-                "b.user.username)" +
+                "b.success)" +
                 "FROM Bid AS b, User AS u, Item AS i " +
                 "WHERE u.username =: userName AND i.name =: itemName ", BidDto.class)
                 .setParameter("userName", userName)

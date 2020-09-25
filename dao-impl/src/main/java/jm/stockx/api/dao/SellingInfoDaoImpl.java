@@ -5,7 +5,9 @@ import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 
@@ -25,12 +27,11 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     public SellingInfoDto getSellingInfoDtoById(Long id) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.SellingInfoDto(" +
-                "s.id," +
+                "s.id, " +
                 "s.orderDate," +
-                "s.price" +
-                ")" +
+                "s.price)" +
                 "FROM SellingInfo AS s " +
-                "WHERE s.id =: id", SellingInfoDto.class)
+                "WHERE id =: id", SellingInfoDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

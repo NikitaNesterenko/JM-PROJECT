@@ -16,7 +16,7 @@ public class SupportQuestionDaoImpl extends AbstractDAO<SupportQuestion, Long> i
                 "sq.orderNumber," +
                 "sq.dateTime)" +
                 "FROM SupportQuestion AS sq " +
-                "WHERE sq.id =: id", SupportQuestionDto.class)
+                "WHERE id =: id", SupportQuestionDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

@@ -9,14 +9,13 @@ public class CurrencyDaoImpl extends AbstractDAO<Currency, Long> implements Curr
 
     @Override
     public CurrencyDto getByName(String name) {
-        return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.CurrencyDto(" +
-                "c.id," +
-                "c.name)" +
-                "FROM Currency AS c " +
-                "WHERE c.name = : name", CurrencyDto.class)
-                .setParameter("name", name)
+        Currency currency = entityManager.createQuery("" +
+                "FROM Currency " +
+                "WHERE name = :currencyName", Currency.class)
+                .setParameter("currencyName", name)
                 .getSingleResult();
+
+        return new CurrencyDto(currency);
     }
 
     @Override

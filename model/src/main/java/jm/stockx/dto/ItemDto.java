@@ -62,7 +62,7 @@ public class ItemDto {
         this.highestBid = item.getHighestBid();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
-        this.description = item.getDescription();
+        this.condition = item.getDescription();
         this.itemColors = item.getItemColors();
     }
 }

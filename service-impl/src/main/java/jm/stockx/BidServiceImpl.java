@@ -52,7 +52,7 @@ public class BidServiceImpl implements BidService {
         Bid bid = new Bid();
         bid.setPrice(bidPostDto.getPrice());
         bid.setSuccess(bidPostDto.getSuccess());
-        bid.setItem(itemDAO.getByName(bidPostDto.getItemName()));
+        bid.setItem(itemDAO.getByName(bidPostDto.getItemName()).get());
         bid.setUser(userDAO.getByName(bidPostDto.getUserName()).get());
         bidDAO.add(bid);
     }
