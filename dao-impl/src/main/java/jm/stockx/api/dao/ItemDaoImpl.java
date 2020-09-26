@@ -17,10 +17,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.price," +
                 "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
@@ -97,10 +94,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.price," +
                 "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
@@ -118,10 +112,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.price," +
                 "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
