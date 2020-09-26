@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.exceptions.FileStorageException;
-import jm.stockx.exceptions.RuntimeFileNotFoundException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
