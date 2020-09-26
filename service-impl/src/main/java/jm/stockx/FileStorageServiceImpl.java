@@ -1,6 +1,5 @@
 package jm.stockx;
 
-import jm.stockx.entity.Item;
 import lombok.SneakyThrows;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -38,8 +36,6 @@ public class FileStorageServiceImpl implements FileStorageService {
             return "Transferred a non-existent file.";
         }
 
-        Item item = itemService.getItemById(id);
-
         String fileFormat = fileFormat(file.getOriginalFilename());
         if (!fileFormat.equals(".png")) {
             return "The file must be at .png format.";
@@ -52,8 +48,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         file.transferTo(Path.of(filePath));
 
-        item.setItemImageUrl(filePath);
-        itemService.update(item);
+        itemService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
 
         return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
     }

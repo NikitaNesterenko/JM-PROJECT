@@ -139,4 +139,9 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemById(Long id) {
         return itemDao.getItemById(id);
     }
+
+    @Override
+    public void updateItemImageUrl(Long id, String url) {
+        itemDao.updateItemImageUrl(id, url);
+    }
 }
