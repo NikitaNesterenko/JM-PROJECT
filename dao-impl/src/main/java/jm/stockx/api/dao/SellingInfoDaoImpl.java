@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.ItemTopInfoDto;
 import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
@@ -35,7 +36,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getSingleResult();
     }
 
-    public List<SellerTopInfoDto> getTopSellingUsers(){
+    public List<SellerTopInfoDto> getTopSellingUsers() {
         String sql = "" +
                 "SELECT NEW jm.stockx.dto.SellerTopInfoDto(" +
                 "u.id, " +
@@ -51,7 +52,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     public int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
-         List<SellingInfo> list = entityManager.createQuery("" +
+        List<SellingInfo> list = entityManager.createQuery("" +
                 "SELECT si " +
                 "FROM SellingInfo as si " +
                 "WHERE si.orderDate BETWEEN :begin AND :end", SellingInfo.class)
@@ -60,4 +61,24 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
         return list.size();
     }
+
+    public List<ItemTopInfoDto> getItemTopInfoDto(int maxResult) {
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.ItemTopInfoDto(" +
+                "i.id, " +
+                "i.name, " +
+                "i.itemImageUrl, " +
+                "i.lowestAsk, " +
+                "COUNT(si.item)) " +
+                "FROM SellingInfo as si " +
+                "LEFT JOIN Item as i " +
+                "ON si.item = i.id " +
+                "GROUP BY i.id " +
+                "ORDER BY COUNT(si.item) DESC";
+        return entityManager.createQuery(sql, ItemTopInfoDto.class)
+                .setMaxResults(maxResult)
+                .getResultList();
+    }
+
+
 }
