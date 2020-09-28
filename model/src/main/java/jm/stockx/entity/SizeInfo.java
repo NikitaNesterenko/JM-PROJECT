@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "shoe_info")
+@Table(name = "size_info")
 public class SizeInfo {
 
     @Id
