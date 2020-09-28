@@ -54,5 +54,7 @@ public class SizeInfo {
 
     public SizeInfo(Item item) {
         this.retailPrice = item.getRetailPrice();
+        this.itemName = item.getName();
+        this.condition = item.getCondition();
     }
 }
