@@ -63,10 +63,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/rest/api/**", "/registration/**", "/authorization/**", "/password-recovery/**", "/brand/all", "/news").permitAll()
-                    .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/", "/rest/api/**", "/registration/**", "/authorization/**",
+                        "/password-recovery/**", "/brand/all", "/news","/how-it-works", "/test-template", "/itemblock").permitAll()
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN");
+
+        http.csrf().disable()
+                .requestCache().requestCache(new CustomRequestCache(securityUtils))
+                .and().authorizeRequests()
+                //.requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
+                .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .loginPage("/login").permitAll()
+                .loginProcessingUrl("/login")
+                .failureUrl("/login?error")
+                .and().logout().logoutSuccessUrl("/login");
     }
 
     @Override
