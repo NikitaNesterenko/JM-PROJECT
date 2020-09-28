@@ -21,7 +21,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors" +
+                "i.itemColors," +
+                "i.shoeSizeStandards" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.name = :itemName", ItemDto.class)
@@ -98,7 +99,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors" +
+                "i.itemColors," +
+                "i.shoeSizeStandards" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.id =: id", ItemDto.class)
@@ -116,7 +118,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors" +
+                "i.itemColors," +
+                "i.shoeSizeStandards" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.itemColors =: itemColors", ItemDto.class)

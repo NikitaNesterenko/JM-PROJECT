@@ -1,6 +1,5 @@
 package jm.stockx.dto;
 
-import jm.stockx.entity.SizeInfo;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

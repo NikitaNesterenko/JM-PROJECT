@@ -1,6 +1,7 @@
 package jm.stockx.entity;
 
 import jm.stockx.enums.ItemColors;
+import jm.stockx.enums.ShoeSizeStandards;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -74,6 +75,10 @@ public class Item {
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
+
+    @Column(name = "size_standard")
+    @Enumerated(EnumType.STRING)
+    private ShoeSizeStandards shoeSizeStandards;
 
     public Item(Long id,
                 String name,
@@ -163,7 +168,8 @@ public class Item {
                 Money price,
                 Money lowestAsk,
                 Money highestBid,
-                List<ShoeSize> sizes) {
+                List<ShoeSize> sizes
+                ) {
         this.name = name;
         this.retailPrice = retailPrice;
         this.releaseDate = releaseDate;
