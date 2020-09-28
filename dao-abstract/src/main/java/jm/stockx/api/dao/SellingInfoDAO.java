@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.ItemTopInfoDto;
 import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.dto.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
@@ -15,4 +16,6 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
     List<SellerTopInfoDto> getTopSellingUsers();
 
     int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
+
+    List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
 }
