@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.ItemTopInfoDto;
 import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 
@@ -23,4 +24,6 @@ public interface SellingInfoService {
     List<SellerTopInfoDto> getTopSellingUsers();
 
     int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
+
+    List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
 }
