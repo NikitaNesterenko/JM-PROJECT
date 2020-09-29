@@ -5,10 +5,7 @@ import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.BuyingDto;
-import jm.stockx.dto.ItemDto;
-import jm.stockx.dto.ItemInfoDto;
-import jm.stockx.dto.PageDto;
+import jm.stockx.dto.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
@@ -20,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,8 +49,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItemByName(String name) {
-        return itemDao.getByName(name).orElse(null);
+    public ItemDto getItemDtoByName(String name) {
+        return itemDao.getItemDtoByName(name);
     }
 
     @Override
@@ -61,8 +59,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item get(Long id) {
-        return itemDao.getById(id);
+    public ItemDto getItemDtoById(Long id) {
+        return itemDao.getItemDtoById(id);
     }
 
     @Override
@@ -134,5 +132,20 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean isItemExist(Long id) {
         return itemDao.doesItExistEntity(id);
+    }
+
+    @Override
+    public Item getItemByName(String name) {
+        return itemDao.getItemByName(name);
+    }
+
+    @Override
+    public Item getItemById(Long id) {
+        return itemDao.getItemById(id);
+    }
+
+    @Override
+    public List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+        return itemDao.getReleaseItemsByPeriod(beginningPeriod, endPeriod);
     }
 }
