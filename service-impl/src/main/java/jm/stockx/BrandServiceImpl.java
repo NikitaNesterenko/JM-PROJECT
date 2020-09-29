@@ -63,4 +63,7 @@ public class BrandServiceImpl implements BrandService {
         return brandDAO.getBrand(name);
     }
 
-}
+    @Override
+    public List<Brand> getPopularBrandIn2Month() {
+        return brandDAO.getPopularBrandIn2Month();
+    }
