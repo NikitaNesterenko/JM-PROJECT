@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
+import jm.stockx.dto.ItemTopInfoDto;
 import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,10 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     @Override
     public int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         return sellingInfoDAO.getNumberSalesForSpecifiedPeriod(beginningPeriod, endPeriod);
+    }
+
+    @Override
+    public List<ItemTopInfoDto> getItemTopInfoDto(int maxResult) {
+        return sellingInfoDAO.getItemTopInfoDto(maxResult);
     }
 }

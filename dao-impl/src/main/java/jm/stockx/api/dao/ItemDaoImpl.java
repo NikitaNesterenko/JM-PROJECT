@@ -1,10 +1,12 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +19,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.price," +
                 "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
@@ -97,10 +96,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.price," +
                 "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
@@ -118,10 +114,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.price," +
                 "i.retailPrice," +
-                "i.lowestAsk," +
-                "i.highestBid," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
@@ -147,5 +140,24 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "FROM Item AS i WHERE i.id = : id", Item.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.ReleaseItemDto(" +
+                "i.id," +
+                "i.name," +
+                "i.condition, " +
+                "i.itemImageUrl, " +
+                "i.retailPrice, " +
+                "i.releaseDate) " +
+                "FROM Item AS i " +
+                "WHERE i.releaseDate BETWEEN :begin AND :end";
+        return entityManager.createQuery(sql, ReleaseItemDto.class)
+                .setParameter("begin", beginningPeriod)
+                .setParameter("end", endPeriod)
+                .getResultList();
+
     }
 }

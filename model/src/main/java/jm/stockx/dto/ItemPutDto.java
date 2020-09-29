@@ -1,6 +1,7 @@
 package jm.stockx.dto;
 
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -46,13 +47,21 @@ public class ItemPutDto {
 
     private String description;
 
+    public ItemPutDto(Item item, ItemInfo itemInfo) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.price = itemInfo.getPrice();
+        this.retailPrice = item.getRetailPrice();
+        this.lowestAsk = itemInfo.getLowestAsk();
+        this.highestBid = itemInfo.getHighestBid();
+        this.condition = item.getCondition();
+        this.condition = item.getDescription();
+    }
+
     public ItemPutDto(Item item) {
         this.id = item.getId();
         this.name = item.getName();
-        this.price = item.getPrice();
         this.retailPrice = item.getRetailPrice();
-        this.lowestAsk = item.getLowestAsk();
-        this.highestBid = item.getHighestBid();
         this.condition = item.getCondition();
         this.condition = item.getDescription();
     }

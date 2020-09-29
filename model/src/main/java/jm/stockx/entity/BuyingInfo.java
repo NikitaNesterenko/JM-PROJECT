@@ -1,13 +1,13 @@
 package jm.stockx.entity;
 
+import jm.stockx.dto.ItemInfoDto;
 import jm.stockx.enums.Status;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.EqualsAndHashCode;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.*;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -70,8 +70,8 @@ public class BuyingInfo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public BuyingInfo(Item item) {
+    public BuyingInfo(ItemInfoDto itemInfoDto) {
         this.buyingTimeStamp = LocalDateTime.now();
-        this.buyingPrice = item.getPrice();
+        this.buyingPrice = itemInfoDto.getPrice();
     }
 }
