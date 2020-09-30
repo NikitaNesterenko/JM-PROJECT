@@ -3,8 +3,9 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.CurrencyDto;
 import jm.stockx.entity.Currency;
 
-public interface CurrencyDAO extends GenericDao<Currency, Long> {
-    CurrencyDto getCurrencyDtoByName(String name);
+import java.util.Optional;
 
+public interface CurrencyDAO extends GenericDao<Currency, Long> {
+    Optional<Currency> getByName(String name);
     CurrencyDto getCurrencyDtoById(Long id);
 }

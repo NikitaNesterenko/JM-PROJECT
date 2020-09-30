@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,23 +45,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserDtoById(Long id) {
-        return userDao.getUserDtoById(id);
+    public User getUserById(Long id) {
+        return userDao.getById(id);
     }
 
     @Override
-    public UserDto getUserDtoByUserName(String userName) {
-        return userDao.getUserDtoByName(userName);
+    public User getUserByUserName(String userName) {
+        return userDao.getByName(userName).orElse(null);
     }
 
     @Override
-    public UserDto getUserDtoByEmail(String email) {
-        return userDao.getUserDtoByEmail(email);
+    public User getUserByEmail(String email) {
+        return userDao.getByEmail(email).orElse(null);
     }
 
     @Override
-    public UserDto getUserByAppleUserId(String appleId) {
-        return userDao.getUserDtoByAppleId(appleId);
+    public User getUserByAppleUserId(String appleId) {
+        return userDao.getByAppleId(appleId).orElse(null);
     }
 
     @Override
@@ -75,20 +74,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserExist(Long id) {
         return userDao.doesItExistEntity(id);
-    }
-
-    @Override
-    public User getUserByName(String name) {
-        return userDao.getUserByName(name);
-    }
-
-    @Override
-    public User getUserById(Long id) {
-        return userDao.getUserById(id);
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
     }
 }

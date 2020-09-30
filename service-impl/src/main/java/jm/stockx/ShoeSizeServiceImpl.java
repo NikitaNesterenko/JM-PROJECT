@@ -29,8 +29,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public ShoeSizeDto get(Long id) {
-        return shoeSizeDAO.getShoeSizeDtoById(id);
+    public ShoeSize get(Long id) {
+        return shoeSizeDAO.getById(id);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public ShoeSizeDto getShoeSizeByName(String name) {
-        return shoeSizeDAO.getShoeSizeDtoByName(name);
+    public ShoeSize getShoeSizeByName(String name) {
+        return shoeSizeDAO.getByName(name).orElse(null);
     }
 
     @Override

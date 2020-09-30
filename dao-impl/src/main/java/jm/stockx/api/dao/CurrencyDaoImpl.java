@@ -4,19 +4,19 @@ import jm.stockx.dto.CurrencyDto;
 import jm.stockx.entity.Currency;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class CurrencyDaoImpl extends AbstractDAO<Currency, Long> implements CurrencyDAO {
 
     @Override
-    public CurrencyDto getCurrencyDtoByName(String name) {
-        return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.CurrencyDto(" +
-                "c.id," +
-                "c.name)" +
-                "FROM Currency AS c " +
-                "WHERE c.name = : name", CurrencyDto.class)
-                .setParameter("name", name)
+    public Optional<Currency> getByName(String name) {
+        Currency currency = entityManager.createQuery("" +
+                "FROM Currency " +
+                "WHERE name = :currencyName", Currency.class)
+                .setParameter("currencyName", name)
                 .getSingleResult();
+        return Optional.of(currency);
     }
 
     @Override

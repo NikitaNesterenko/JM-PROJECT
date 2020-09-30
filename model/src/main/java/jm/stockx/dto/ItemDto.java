@@ -47,7 +47,7 @@ public class ItemDto {
         this.retailPrice = item.getRetailPrice();
         this.dateRelease = item.getReleaseDate();
         this.condition = item.getCondition();
-        this.description = item.getDescription();
+        this.condition = item.getDescription();
         this.itemColors = item.getItemColors();
     }
 }

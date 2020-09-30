@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.RoleDAO;
-import jm.stockx.dto.RoleDto;
 import jm.stockx.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto get(Long id) {
-        return roleDAO.getRoleDtoById(id);
+    public Role get(Long id) {
+        return roleDAO.getById(id);
     }
 
     @Override
@@ -46,17 +45,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto getByRoleName(String roleName) {
-        return roleDAO.getRoleDtoByName(roleName);
+    public Role getByRoleName(String roleName) {
+        return roleDAO.getByName(roleName).orElse(null);
     }
 
     @Override
     public boolean isRoleExist(Long id) {
         return roleDAO.doesItExistEntity(id);
-    }
-
-    @Override
-    public Role getRole(String name) {
-        return roleDAO.getRoleByName(name);
     }
 }

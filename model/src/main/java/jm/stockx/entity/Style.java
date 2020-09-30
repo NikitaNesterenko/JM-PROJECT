@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.StyleDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

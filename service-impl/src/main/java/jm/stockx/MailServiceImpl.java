@@ -1,8 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.TokenActivationDAO;
 import jm.stockx.entity.TokenRecovery;
-import jm.stockx.entity.TokenRegistration;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,11 +21,9 @@ public class MailServiceImpl implements MailService {
 
     public final JavaMailSender emailSender;
 
-    public final UserService userService;
-
     public final TokenRecoveryService tokenRecoveryService;
 
-    public final TokenActivationDAO tokenActivation;
+    public final UserService userService;
 
     @Value("${recovery.url}")
     private String urlRecoveryLink;
@@ -35,17 +31,12 @@ public class MailServiceImpl implements MailService {
     @Value("${recovery.expirationDays}")
     private int linkExpirationDays;
 
-    @Value("${registration.url}")
-    private String urlRegistrationLink;
-
 
     @Autowired
-    public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService,
-                           UserService userService, TokenActivationDAO tokenActivation) {
+    public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService, UserService userService) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
         this.userService = userService;
-        this.tokenActivation = tokenActivation;
     }
 
     @Override
@@ -59,7 +50,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean sendRecoveryLinkToUser(User user) {
-        if (user.getEmail() == null) {
+        if (user == null || user.getEmail() == null) {
             return false;
         }
         String hash = UUID.randomUUID().toString();
@@ -79,29 +70,10 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public boolean sendRegistrationLinkToUser(User user) {
-        if (user.getEmail() == null) {
-            return false;
-        }
-        String hash = UUID.randomUUID().toString();
-        String hashEmail = urlRegistrationLink + hash;
-        TokenRegistration token = new TokenRegistration();
-        token.setUser(user);
-        token.setHash(hash);
-        token.setHashEmail(hashEmail);
-        token.setStartTime(getCurrentDate());
-
-        try {
-            sendSimpleMessage(user.getEmail(), "Confirm your registration", hashEmail);
-            tokenActivation.save(token);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public boolean changePasswordByToken(String link, String password) {
+        if (!link.startsWith(urlRecoveryLink)) {
+            return false;
+        }
         TokenRecovery token = tokenRecoveryService.getTokenByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
@@ -111,22 +83,6 @@ public class MailServiceImpl implements MailService {
                 tokenRecoveryService.deleteToken(token.getId());
                 return true;
             } catch (Exception e) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean activateAccountByToken(String link) {
-        TokenRegistration token = tokenActivation.getByHashEmail(link);
-        if (token != null && isValidToken(token.getStartTime())) {
-
-            try {
-                tokenActivation.delete(token);
-                token.getUser().setActive(true);
-                return true;
-            } catch (Exception ex) {
                 return false;
             }
         }

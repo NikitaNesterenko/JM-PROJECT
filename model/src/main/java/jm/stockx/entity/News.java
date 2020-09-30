@@ -1,12 +1,12 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.NewsDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
 
 
 import javax.persistence.Column;
@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 
 @Getter
@@ -63,6 +64,7 @@ public class News {
         this.description = description;
         this.text = text;
     }
+
 
     public News(Long id, String name, LocalDateTime time, String title, String description, String text) {
         this.id = id;

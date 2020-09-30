@@ -11,6 +11,22 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ReleaseItemDto {
     @NotNull
+<<<<<<< HEAD
+    private String itemName;
+
+    @NotNull
+    private String itemCondition;
+
+    @NotNull
+    private String itemImgUrl;
+
+    @NotNull
+    private Money itemLowestAsk;
+
+    @NotNull
+    private LocalDate itemReleaseDate;
+}
+=======
     private Long id;
 
     @NotNull
@@ -28,3 +44,4 @@ public class ReleaseItemDto {
     @NotNull
     private LocalDate releaseDate;
 }
+>>>>>>> dev

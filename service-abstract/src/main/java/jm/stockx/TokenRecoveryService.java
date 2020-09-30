@@ -1,6 +1,5 @@
 package jm.stockx;
 
-import jm.stockx.dto.TokenRecoveryDto;
 import jm.stockx.entity.TokenRecovery;
 
 public interface TokenRecoveryService {
@@ -9,7 +8,7 @@ public interface TokenRecoveryService {
 
     void deleteToken(Long id);
 
-    TokenRecoveryDto getTokenById(Long id);
+    TokenRecovery getTokenById(Long id);
 
     TokenRecovery getTokenByHashEmail(String hashEmail);
 
