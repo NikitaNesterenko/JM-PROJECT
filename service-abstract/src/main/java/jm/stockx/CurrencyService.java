@@ -3,11 +3,11 @@ package jm.stockx;
 import jm.stockx.dto.CurrencyDto;
 import jm.stockx.entity.Currency;
 
-import java.util.List;
+import java.util.Set;
 
 public interface CurrencyService {
 
-    List<Currency> getAll();
+    Set<Currency> getAll();
 
     CurrencyDto get(Long id);
 

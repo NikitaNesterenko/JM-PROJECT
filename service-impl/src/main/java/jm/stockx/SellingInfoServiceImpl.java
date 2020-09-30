@@ -1,14 +1,13 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
-import jm.stockx.dto.ItemTopInfoDto;
 import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -25,7 +24,7 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     @Override
-    public List<SellingInfo> getAll() {
+    public Set<SellingInfo> getAll() {
         return sellingInfoDAO.getAll();
     }
 
@@ -50,17 +49,12 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     @Override
-    public List<SellerTopInfoDto> getTopSellingUsers(){
+    public Set<SellerTopInfoDto> getTopSellingUsers(){
         return sellingInfoDAO.getTopSellingUsers();
     }
 
     @Override
     public int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         return sellingInfoDAO.getNumberSalesForSpecifiedPeriod(beginningPeriod, endPeriod);
-    }
-
-    @Override
-    public List<ItemTopInfoDto> getItemTopInfoDto(int maxResult) {
-        return sellingInfoDAO.getItemTopInfoDto(maxResult);
     }
 }

@@ -94,7 +94,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     @Override
     public User getUserById(Long id) {
         return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.id = : name", User.class)
+                "FROM User AS u WHERE u.id = : id", User.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

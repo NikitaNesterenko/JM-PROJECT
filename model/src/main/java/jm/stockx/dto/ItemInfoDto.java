@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -49,7 +50,7 @@ public class ItemInfoDto {
         this.ItemId = itemInfo.getItem().getId();
     }
 
-    private List<Double> convertShoeSize(List<ShoeSize> shoeSizes){
+    private List<Double> convertShoeSize(Set<ShoeSize> shoeSizes){
         List<Double> sizes = new ArrayList<>();
         shoeSizes.forEach(e -> sizes.add(e.getSize()));
         return sizes;

@@ -6,7 +6,7 @@ import jm.stockx.entity.Style;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -19,7 +19,7 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    public List<Style> getAll() {
+    public Set<Style> getAll() {
         return styleDao.getAll();
     }
 

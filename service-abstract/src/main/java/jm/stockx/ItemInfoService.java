@@ -2,11 +2,11 @@ package jm.stockx;
 
 import jm.stockx.entity.ItemInfo;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ItemInfoService {
 
-    List<ItemInfo> getAllNews();
+    Set<ItemInfo> getAllNews();
 
     ItemInfo get(Long id);
 

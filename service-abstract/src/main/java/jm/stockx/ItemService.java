@@ -7,10 +7,11 @@ import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ItemService {
 
-    List<Item> getAll();
+    Set<Item> getAll();
 
     ItemDto getItemDtoById(Long id);
 

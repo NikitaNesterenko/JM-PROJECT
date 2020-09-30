@@ -1,17 +1,16 @@
 package jm.stockx;
 
-import jm.stockx.dto.ItemTopInfoDto;
 import jm.stockx.dto.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public interface SellingInfoService {
 
     Double getAverageSalesValue();
 
-    List<SellingInfo> getAll();
+    Set<SellingInfo> getAll();
 
     SellingInfo get(Long id);
 
@@ -21,9 +20,7 @@ public interface SellingInfoService {
 
     void delete(Long id);
 
-    List<SellerTopInfoDto> getTopSellingUsers();
+    Set<SellerTopInfoDto> getTopSellingUsers();
 
     int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
-
-    List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
 }
