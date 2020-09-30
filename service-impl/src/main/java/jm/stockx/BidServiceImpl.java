@@ -9,7 +9,7 @@ import jm.stockx.entity.Bid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,7 +26,7 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public Set<Bid> getAll() {
+    public List<Bid> getAll() {
         return bidDAO.getAll();
     }
 

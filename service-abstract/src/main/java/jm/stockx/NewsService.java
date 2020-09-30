@@ -3,11 +3,11 @@ package jm.stockx;
 import jm.stockx.dto.NewsDto;
 import jm.stockx.entity.News;
 
-import java.util.Set;
+import java.util.List;
 
 public interface NewsService {
 
-    Set<News> getAllNews();
+    List<News> getAllNews();
 
     NewsDto get(Long id);
 

@@ -6,7 +6,7 @@ import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,7 +19,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Set<Brand> getAll() {
+    public List<Brand> getAll() {
         return brandDAO.getAll();
     }
 

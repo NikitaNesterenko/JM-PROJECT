@@ -2,9 +2,7 @@ package jm.stockx.api.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
 
@@ -20,9 +18,8 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     }
 
     @SuppressWarnings("unchecked")
-    public Set<T> getAll() {
-        List<T> resultList = entityManager.createQuery("FROM " + clazz.getName()).getResultList();
-        return new HashSet<T>(resultList);
+    public List<T> getAll() {
+        return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
     public T getById(PK id) {
@@ -31,7 +28,6 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
 
     public void add(T t) {
         entityManager.persist(t);
-        entityManager.merge(t);
     }
 
     public T update(T t) {

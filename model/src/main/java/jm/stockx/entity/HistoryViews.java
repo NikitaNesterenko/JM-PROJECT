@@ -14,11 +14,11 @@ public class HistoryViews {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = Item.class)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 

@@ -3,11 +3,11 @@ package jm.stockx;
 import jm.stockx.dto.StyleDto;
 import jm.stockx.entity.Style;
 
-import java.util.Set;
+import java.util.List;
 
 public interface StyleService {
 
-    Set<Style> getAll();
+    List<Style> getAll();
 
     StyleDto get(Long id);
 

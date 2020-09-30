@@ -5,11 +5,11 @@ import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 public interface UserService {
 
-    Set<User> getAllUsers();
+    List<User> getAllUsers();
 
     void createUser(User user);
 

@@ -5,8 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +23,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "shoe_size")
 public class ShoeSize {
@@ -30,7 +40,8 @@ public class ShoeSize {
     @Enumerated(EnumType.STRING)
     private ShoeSizeTypes sizeTypes;
 
-    @ManyToMany(mappedBy = "sizes", fetch = FetchType.LAZY)
+
+    @ManyToMany(mappedBy = "sizes")
     private Set<ItemInfo> items = new HashSet<>();
 
     public ShoeSize(Double size, ShoeSizeTypes sizeTypes) {

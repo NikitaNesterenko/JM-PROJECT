@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<User> getAllUsers() {
+    public List<User> getAllUsers() {
         return userDao.getAll();
     }
 

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -25,7 +24,7 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
 
 
     @Override
-    public Set<ShoeSize> getAll() {
+    public List<ShoeSize> getAll() {
         return shoeSizeDAO.getAll();
     }
 

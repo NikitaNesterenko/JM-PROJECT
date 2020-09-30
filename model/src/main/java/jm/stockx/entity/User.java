@@ -70,7 +70,7 @@ public class User implements UserDetails {
     @Column(name = "locale_tag")
     private String localeTag;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "role_id", nullable = false)
     @NotNull
     private Role role;
@@ -85,7 +85,7 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_buying",
             joinColumns = @JoinColumn(name = "user_id"),

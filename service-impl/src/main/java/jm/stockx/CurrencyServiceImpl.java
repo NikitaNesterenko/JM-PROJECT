@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,7 +22,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
 
     @Override
-    public Set<Currency> getAll() {
+    public List<Currency> getAll() {
         return currencyDAO.getAll();
     }
 

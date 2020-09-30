@@ -6,10 +6,9 @@ import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ShoeSizeService {
-    Set<ShoeSize> getAll();
+    List<ShoeSize> getAll();
 
     ShoeSizeDto get(Long id);
 

@@ -9,11 +9,10 @@ import jm.stockx.entity.Item;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 public interface ItemService {
 
-    Set<Item> getAll();
+    List<Item> getAll();
 
     ItemDto getItemDtoById(Long id);
 

@@ -3,11 +3,11 @@ package jm.stockx;
 import jm.stockx.dto.BrandDto;
 import jm.stockx.entity.Brand;
 
-import java.util.Set;
+import java.util.List;
 
 public interface BrandService {
 
-    Set<Brand> getAll();
+    List<Brand> getAll();
 
     BrandDto get(Long id);
 
