@@ -5,7 +5,10 @@ import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.*;
+import jm.stockx.dto.BuyingDto;
+import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.ItemInfoDto;
+import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
@@ -17,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -145,7 +147,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
-        return itemDao.getReleaseItemsByPeriod(beginningPeriod, endPeriod);
+    public void updateItemImageUrl(Long id, String url) {
+        itemDao.updateItemImageUrl(id, url);
     }
 }
