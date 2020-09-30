@@ -45,13 +45,18 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
     @Override
     public List<Brand> getPopularBrandIn2Month() {
         LocalDateTime dateNow = LocalDateTime.now();
+        LocalDateTime date2MonthBack = dateNow.minusMonths(2L);
         return entityManager.createQuery("" +
-                "SELECT " +
-                "si.item.brand " +
-                "FROM SellingInfo si " +
-                "WHERE si.orderDate <= : dateNow " +
-                "ORDER BY si.orderDate DESC", Brand.class)
+                        "SELECT " +
+                        "b " +
+                        "FROM SellingInfo si " +
+                        "JOIN Brand b ON b.id = si.item.brand.id " +
+                        "WHERE si.orderDate <= : dateNow AND si.orderDate >= : date2MonthBack " +
+                        "GROUP BY b, si.orderDate " +
+                        "ORDER BY count(si.item) DESC, si.orderDate DESC ",
+                Brand.class)
                 .setParameter("dateNow", dateNow)
+                .setParameter("date2MonthBack", date2MonthBack)
                 .setMaxResults(5)
                 .getResultList();
     }

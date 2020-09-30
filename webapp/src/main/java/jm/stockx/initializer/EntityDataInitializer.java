@@ -11,25 +11,17 @@ import jm.stockx.SellingInfoService;
 import jm.stockx.ShoeSizeService;
 import jm.stockx.StyleService;
 import jm.stockx.UserService;
-import jm.stockx.entity.Admin;
-import jm.stockx.entity.Bid;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.Currency;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.News;
-import jm.stockx.entity.Role;
-import jm.stockx.entity.SellingInfo;
-import jm.stockx.entity.ShoeSize;
-import jm.stockx.entity.Style;
-import jm.stockx.entity.User;
+import jm.stockx.entity.*;
 import jm.stockx.enums.ShoeSizeTypes;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +83,7 @@ public class EntityDataInitializer {
         createStyles();
         createNews();
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-        //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
 
     }
@@ -290,19 +282,16 @@ public class EntityDataInitializer {
     private void createSellingInfo() {
         if (sellingInfoService.getAll().size() == 0) {
 
-            sellingInfoService.create(new SellingInfo(
-                    userService.getUserById(1L),
-                    itemService.getItemById(1L),
-                    itemInfoService.getItemInfoByItemId(1L),
-                    108L,
-                    Status.DELIVERED));
-
-            sellingInfoService.create(new SellingInfo(
-                    userService.getUserById(2L),
-                    itemService.getItemById(2L),
-                    itemInfoService.getItemInfoByItemId(2L),
-                    109L,
-                    Status.ACCEPTED));
+            for (int i = 0; i < 15; i++) {
+                Long itemId = (long) (1+Math.random()*5);
+                sellingInfoService.create(new SellingInfo(
+                        userService.getUserById((long) (1+Math.random()*2)),
+                        new ItemInfo(shoeSizeService.getAll(), Money.of(CurrencyUnit.USD, 250),Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
+                        itemService.getItemById(itemId),
+                        Status.DELIVERED
+                        )
+                );
+            }
         }
     }
 
@@ -339,4 +328,8 @@ public class EntityDataInitializer {
         }
     }
 
+    private LocalDateTime getLocalDateTime() {
+        LocalDateTime localDateTime = LocalDateTime.of(2020, Month.of((int)(1+Math.random()*11)),(int)(1 + Math.random()*30), (int) (Math.random()*24), (int) (Math.random()*59));
+        return localDateTime;
+    }
 }
