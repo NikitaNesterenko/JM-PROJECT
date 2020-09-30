@@ -3,9 +3,11 @@ package jm.stockx;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -38,4 +40,6 @@ public interface ItemService {
     Item getItemByName(String name);
 
     Item getItemById(Long id);
+
+    List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 }
