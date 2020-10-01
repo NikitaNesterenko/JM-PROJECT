@@ -12,7 +12,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
 
     @Override
     public ItemInfo getByItemId(Long itemId) {
-        return entityManager.createQuery("" +
+        return entityManager.createQuery(
                         "FROM ItemInfo AS i " +
                         "WHERE i.item.id = :itemId", ItemInfo.class)
                 .setParameter("itemId", itemId)
