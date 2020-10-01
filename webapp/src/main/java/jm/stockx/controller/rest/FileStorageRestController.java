@@ -24,8 +24,10 @@ public class FileStorageRestController {
     }
 
     @PostMapping("/item/img/upload")
-    public String uploadItemPicture(@RequestParam("id") Long id, MultipartFile file) {
-        return fileStorageService.storeFile(id, file);
+    public String uploadItemPicture(@RequestParam("id") Long id,
+                                    @RequestParam("type") String type,
+                                    @RequestParam("file") MultipartFile file) {
+        return fileStorageService.storeFile(id, type, file);
     }
 
     @GetMapping("/item/img/download")

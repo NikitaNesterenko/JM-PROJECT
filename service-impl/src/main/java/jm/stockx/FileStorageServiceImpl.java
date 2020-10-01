@@ -33,19 +33,24 @@ public class FileStorageServiceImpl implements FileStorageService {
 
 
     @Override
-    public String storeFile(Long id, MultipartFile file) {
+    public String storeFile(Long id, String type, MultipartFile file) {
         if (file == null || file.isEmpty()) {
             return "Transferred a non-existent file.";
         } else {
-            String fileFormat = fileFormat(file.getOriginalFilename());
-            if (!fileFormat.equals(".png")) {
-                return "The file must be at .png format.";
+            String format = fileFormat(file.getOriginalFilename());
+            if (!format.equals(".png")) {
+                return "The file must be at png format.";
             }
-            String filePath = uploadPath + "item_" + id + fileFormat;
+            String filePath;
+            if (type.equals("item") || type.equals("news")) {
+                filePath = uploadPath + type + "/item_" + id + format;
+            } else {
+                return "Invalid image type.\nSpecify \"item\" or \"news\".";
+            }
 
-            if (!new File(uploadPath).exists()) {
+            if (!new File(uploadPath + type + "/").exists()) {
                 try {
-                    Files.createDirectories(Path.of(uploadPath).toAbsolutePath().normalize());
+                    Files.createDirectories(Path.of(uploadPath + type + "/").toAbsolutePath().normalize());
                 } catch (IOException e) {
                     throw new FileStorageException("This directory already exists");
                 }
@@ -54,7 +59,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             try {
                 file.transferTo(Path.of(filePath));
             } catch (IOException e) {
-                throw new FileStorageException("Couldn't store file " + file.getName() + "\nPlease try again.", e);
+                throw new FileStorageException("Couldn't store file " + file.getOriginalFilename() + "\nPlease try again.", e);
             }
 
             itemService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
