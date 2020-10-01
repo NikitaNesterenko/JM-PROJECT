@@ -3,6 +3,7 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.condition," +
                 "i.description," +
                 "i.itemColors," +
-                "i.shoeSizeStandards" +
+                "i.shoeSize" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.name = :itemName", ItemDto.class)
@@ -100,7 +101,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.condition," +
                 "i.description," +
                 "i.itemColors," +
-                "i.shoeSizeStandards" +
+                "i.shoeSize" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.id =: id", ItemDto.class)
@@ -119,7 +120,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.condition," +
                 "i.description," +
                 "i.itemColors," +
-                "i.shoeSizeStandards" +
+                "i.shoeSize" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.itemColors =: itemColors", ItemDto.class)
@@ -140,6 +141,26 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
         return entityManager.createQuery("" +
                 "FROM Item AS i WHERE i.id = : id", Item.class)
                 .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    @Override
+    public ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.ItemDto(" +
+                "i.id," +
+                "i.name," +
+                "i.retailPrice," +
+                "i.releaseDate," +
+                "i.condition," +
+                "i.description," +
+                "i.itemColors," +
+                "i.shoeSize" +
+                ")" +
+                "FROM Item AS i, ShoeSize AS s " +
+                "WHERE i.retailPrice = :retailPrice AND s.size = :size", ItemDto.class)
+                .setParameter("size", size)
+                .setParameter("retailPrice", retailPrice)
                 .getSingleResult();
     }
 }

@@ -16,6 +16,7 @@ import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.User;
 import jm.stockx.enums.Status;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,5 +145,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item getItemById(Long id) {
         return itemDao.getItemById(id);
+    }
+
+    @Override
+    public ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice) {
+        return itemDao.getItemDtoBySizeInfo(size, retailPrice);
     }
 }

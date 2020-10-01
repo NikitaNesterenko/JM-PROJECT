@@ -1,7 +1,6 @@
 package jm.stockx.entity;
 
 import jm.stockx.enums.ItemColors;
-import jm.stockx.enums.ShoeSizeStandards;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,16 +13,7 @@ import org.hibernate.annotations.TypeDef;
 import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -76,9 +66,9 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
-    @Column(name = "size_standard")
-    @Enumerated(EnumType.STRING)
-    private ShoeSizeStandards shoeSizeStandards;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shoe_size_id", referencedColumnName = "id")
+    private ShoeSize shoeSize;
 
     public Item(Long id,
                 String name,
@@ -168,8 +158,7 @@ public class Item {
                 Money price,
                 Money lowestAsk,
                 Money highestBid,
-                List<ShoeSize> sizes
-                ) {
+                List<ShoeSize> sizes) {
         this.name = name;
         this.retailPrice = retailPrice;
         this.releaseDate = releaseDate;

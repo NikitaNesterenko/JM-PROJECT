@@ -1,6 +1,8 @@
 package jm.stockx.dto;
 
+import jm.stockx.enums.ShoeSizeStandards;
 import lombok.*;
+import org.joda.money.Money;
 
 import javax.validation.constraints.NotBlank;
 
@@ -23,5 +25,11 @@ public class SizeInfoDto {
     private String itemName;
 
     private String condition;
+
+    private Double size;
+
+    private ShoeSizeStandards shoeSizeStandards;
+
+    private Money retailPrice;
 
 }
