@@ -39,5 +39,7 @@ public interface ItemService {
 
     Item getItemById(Long id);
 
+    void updateItemImageUrl(Long id, String url);
+
     ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice);
 }

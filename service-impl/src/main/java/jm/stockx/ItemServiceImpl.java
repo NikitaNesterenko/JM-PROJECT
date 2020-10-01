@@ -148,6 +148,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void updateItemImageUrl(Long id, String url) {
+        itemDao.updateItemImageUrl(id, url);
+    }
+
+    @Override
     public ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice) {
         return itemDao.getItemDtoBySizeInfo(size, retailPrice);
     }

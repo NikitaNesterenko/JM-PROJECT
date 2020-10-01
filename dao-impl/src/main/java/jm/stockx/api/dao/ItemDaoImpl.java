@@ -145,6 +145,15 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
+    public void updateItemImageUrl(Long id, String url) {
+        entityManager.createQuery("" +
+                "UPDATE Item AS i SET i.itemImageUrl = : url WHERE i.id = : id  ")
+                .setParameter("url", url)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
     public ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.ItemDto(" +
