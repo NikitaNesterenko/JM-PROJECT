@@ -49,7 +49,7 @@ public class ItemInfoDto {
         this.ItemId = itemInfo.getItem().getId();
     }
 
-    private List<Double> convertShoeSize(List<ShoeSize> shoeSizes) {
+    private List<Double> convertShoeSize(List<ShoeSize> shoeSizes){
         List<Double> sizes = new ArrayList<>();
         shoeSizes.forEach(e -> sizes.add(e.getSize()));
         return sizes;
