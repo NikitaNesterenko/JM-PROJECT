@@ -69,8 +69,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public Resource loadFileAsResource(String filename) {
-        Path filePath = Path.of(uploadPath + filename).toAbsolutePath();
+    public Resource loadFileAsResource(String type, String filename) {
+        Path filePath = Path.of(uploadPath + type + "/" + filename).toAbsolutePath();
         Resource resource;
 
         try {

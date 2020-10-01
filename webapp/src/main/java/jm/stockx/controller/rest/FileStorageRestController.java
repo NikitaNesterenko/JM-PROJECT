@@ -32,8 +32,9 @@ public class FileStorageRestController {
 
     @GetMapping("/item/img/download")
     public ResponseEntity<Resource> downloadItemPicture(@RequestParam("filename") String filename,
+                                                        @RequestParam("type") String type,
                                                         HttpServletRequest request)  throws Exception{
-        Resource resource = fileStorageService.loadFileAsResource(filename);
+        Resource resource = fileStorageService.loadFileAsResource(type, filename);
 
         String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 
