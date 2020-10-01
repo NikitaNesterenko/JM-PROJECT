@@ -1,6 +1,8 @@
 package jm.stockx;
 
+import jm.stockx.dto.ItemCategoryDto;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.enums.ItemCategory;
 
 import java.util.List;
 
@@ -17,4 +19,6 @@ public interface ItemInfoService {
     void delete(Long id);
 
     ItemInfo getItemInfoByItemId(Long ItemId);
+
+    List<ItemCategoryDto> getItemCategoryDtoByCategory(ItemCategory category);
 }

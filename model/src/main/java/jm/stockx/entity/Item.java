@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -75,6 +76,10 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
+    @Column(name = "item_category")
+    @Enumerated(EnumType.STRING)
+    private ItemCategory itemCategory;
+
     public Item(Long id,
                 String name,
                 Money retailPrice,
@@ -132,6 +137,24 @@ public class Item {
                 Style style) {
         this(name, retailPrice, releaseDate, condition, description, brand);
         this.style = style;
+    }
+
+    public Item(String name,
+                Money retailPrice,
+                LocalDate releaseDate,
+                String condition,
+                String description,
+                Brand brand,
+                Style style,
+                ItemCategory itemCategory) {
+        this.name = name;
+        this.retailPrice = retailPrice;
+        this.releaseDate = releaseDate;
+        this.condition = condition;
+        this.description = description;
+        this.brand = brand;
+        this.style = style;
+        this.itemCategory = itemCategory;
     }
 
     public Item(String name,
