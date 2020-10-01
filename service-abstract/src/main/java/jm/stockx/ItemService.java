@@ -37,4 +37,6 @@ public interface ItemService {
     Item getItemByName(String name);
 
     Item getItemById(Long id);
+
+    void updateItemImageUrl(Long id, String url);
 }
