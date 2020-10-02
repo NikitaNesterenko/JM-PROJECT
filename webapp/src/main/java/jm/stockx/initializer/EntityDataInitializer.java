@@ -1,16 +1,5 @@
 package jm.stockx.initializer;
-
-import jm.stockx.BidService;
-import jm.stockx.BrandService;
-import jm.stockx.CurrencyService;
-import jm.stockx.ItemInfoService;
-import jm.stockx.ItemService;
-import jm.stockx.NewsService;
-import jm.stockx.RoleService;
-import jm.stockx.SellingInfoService;
-import jm.stockx.ShoeSizeService;
-import jm.stockx.StyleService;
-import jm.stockx.UserService;
+import jm.stockx.*;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ShoeSizeTypes;
 import jm.stockx.enums.Status;
@@ -21,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -224,8 +212,8 @@ public class EntityDataInitializer {
                     brandService.getBrand("Jordan"),
                     styleService.getStyle("sports")));
 
-            List<ShoeSize> sizes = shoeSizeService.getAll();
-            List<ShoeSize> menSizes = new ArrayList<>();
+            Set<ShoeSize> sizes = shoeSizeService.getAll();
+            Set<ShoeSize> menSizes = new HashSet<>();
             for(ShoeSize s : sizes){
                 if(s.getSizeTypes().equals(ShoeSizeTypes.MEN)){
                     menSizes.add(s);
