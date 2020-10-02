@@ -24,4 +24,7 @@ public interface BrandService {
     BrandDto getBrandDtoById(Long id);
 
     Brand getBrand(String name);
+
+    List<Brand> getPopularBrandIn2Month();
+
 }
