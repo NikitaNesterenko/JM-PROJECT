@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.ItemInfoGetDto;
 import jm.stockx.entity.ItemInfo;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ItemInfoService {
     void delete(Long id);
 
     ItemInfo getItemInfoByItemId(Long ItemId);
+
+    List<ItemInfoGetDto> getListAndOrderByCash(Integer cash);
 }
