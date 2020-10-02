@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.BrandDto;
 import jm.stockx.dto.BrandPostDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,9 +38,5 @@ public class Brand {
 
     public Brand(BrandPostDto brandPostDto) {
         this.name = brandPostDto.getName();
-    }
-
-    public Brand(BrandDto brandDto) {
-        this.name = brandDto.getName();
     }
 }
