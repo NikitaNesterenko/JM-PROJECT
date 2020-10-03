@@ -22,11 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userService.getUserByName(userName);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userService.getUserByEmail(email);
         if (user == null) {
-            logger.info("Пользователь {} не найден", userName);
-            throw new UsernameNotFoundException("Unknown user: " + userName);
+            logger.info("Пользователь {} не найден", email);
+            throw new UsernameNotFoundException("Unknown user: " + email);
         }
         return user;
     }

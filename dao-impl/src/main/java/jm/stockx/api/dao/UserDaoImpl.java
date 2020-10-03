@@ -103,13 +103,12 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     public User getUserByEmail(String email) {
         try {
             return entityManager.createQuery("" +
-                    "FROM User AS u WHERE u.id = : email", User.class)
+                    "FROM User u WHERE u.email = : email", User.class)
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (Exception e) {
             e.getMessage();
             return null;
         }
-
     }
 }
