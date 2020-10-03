@@ -4,9 +4,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileStorageService {
-    String storeFile(Long id, MultipartFile file);
+    String storeFile(Long id, String type, MultipartFile file);
 
-    Resource loadFileAsResource(String filename);
+    Resource loadFileAsResource(String type, String filename);
 
     String fileFormat(String filename);
 }
