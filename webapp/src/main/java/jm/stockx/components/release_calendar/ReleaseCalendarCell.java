@@ -3,7 +3,7 @@ package jm.stockx.components.release_calendar;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import jm.stockx.dto.ReleaseItemDto;
+import jm.stockx.dto.item.ReleaseItemDto;
 import lombok.NoArgsConstructor;
 
 import java.time.format.TextStyle;

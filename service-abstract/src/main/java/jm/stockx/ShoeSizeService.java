@@ -1,7 +1,7 @@
 package jm.stockx;
 
 
-import jm.stockx.dto.ShoeSizeDto;
+import jm.stockx.dto.shoeSize.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public interface ShoeSizeService {
     List<ShoeSize> getAll();
 
-    ShoeSizeDto get(Long id);
+    ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id);
 
     void create(ShoeSize shoeSize);
 
@@ -18,12 +18,10 @@ public interface ShoeSizeService {
 
     void update(ShoeSize shoeSize);
 
-    ShoeSizeDto getShoeSizeByName(String name);
+    ShoeSizeDto getShoeSizeDtoByShoeSizeName(String name);
 
     boolean isShoeSizeExist(Long id);
 
-    ShoeSizeDto getShoeSizedDtoById(Long id);
-
-    List<ShoeSizeDto> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType);
+    List<ShoeSizeDto> getShoeSizeDtoByShoeSizeType(ShoeSizeTypes sizeType);
 }
 

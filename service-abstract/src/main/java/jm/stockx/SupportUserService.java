@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.dto.CallbackFormDto;
+import jm.stockx.dto.support.CallbackFormDto;
 
 public interface SupportUserService {
     void askQuestionByUser(CallbackFormDto callbackFormDto);

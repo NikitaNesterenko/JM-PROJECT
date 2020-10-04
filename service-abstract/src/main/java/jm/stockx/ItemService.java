@@ -1,8 +1,8 @@
 package jm.stockx;
 
-import jm.stockx.dto.BuyingDto;
-import jm.stockx.dto.ItemDto;
-import jm.stockx.dto.PageDto;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 

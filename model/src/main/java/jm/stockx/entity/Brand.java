@@ -1,6 +1,6 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.BrandPostDto;
+import jm.stockx.dto.brand.BrandPostDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

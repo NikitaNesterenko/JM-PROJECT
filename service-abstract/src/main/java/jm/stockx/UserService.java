@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.dto.UserDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -17,13 +17,13 @@ public interface UserService {
 
     void updateUser(User user);
 
-    UserDto getUserDtoById(Long id);
+    UserDto getUserDtoByUserId(Long id);
 
     UserDto getUserDtoByUserName(String userName);
 
-    UserDto getUserDtoByEmail(String email);
+    UserDto getUserDtoByUserEmail(String email);
 
-    UserDto getUserByAppleUserId(String appleId);
+    UserDto getUserDtoByUserAppleId(String appleId);
 
     void login(String username, String password, Collection<? extends GrantedAuthority> authorities);
 

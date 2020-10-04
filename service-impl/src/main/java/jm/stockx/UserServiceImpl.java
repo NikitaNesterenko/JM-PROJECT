@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.UserDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,23 +46,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserDtoById(Long id) {
-        return userDao.getUserDtoById(id);
+    public UserDto getUserDtoByUserId(Long id) {
+        return userDao.getUserDtoByUserId(id);
     }
 
     @Override
     public UserDto getUserDtoByUserName(String userName) {
-        return userDao.getUserDtoByName(userName);
+        return userDao.getUserDtoByUserName(userName);
     }
 
     @Override
-    public UserDto getUserDtoByEmail(String email) {
-        return userDao.getUserDtoByEmail(email);
+    public UserDto getUserDtoByUserEmail(String email) {
+        return userDao.getUserDtoByUserEmail(email);
     }
 
     @Override
-    public UserDto getUserByAppleUserId(String appleId) {
-        return userDao.getUserDtoByAppleId(appleId);
+    public UserDto getUserDtoByUserAppleId(String appleId) {
+        return userDao.getUserDtoByUserAppleId(appleId);
     }
 
     @Override

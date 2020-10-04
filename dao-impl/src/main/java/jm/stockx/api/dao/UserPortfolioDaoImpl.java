@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class UserPortfolioDaoImpl extends AbstractDAO<UserPortfolio, Long> {
 
-    public UserPortfolio getUserPortfolioByUserId(Long id) {
+    public UserPortfolio getUserPortfolioById(Long id) {
         return  entityManager.createQuery("" +
                 "SELECT user_port " +
                 "FROM   UserPortfolio AS user_port " +

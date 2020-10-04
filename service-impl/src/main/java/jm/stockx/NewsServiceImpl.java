@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.NewsDAO;
-import jm.stockx.dto.NewsDto;
+import jm.stockx.dto.news.NewsDto;
 import jm.stockx.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDto get(Long id) {
-        return newsDAO.getNewsDtoById(id);
+    public NewsDto getNewsDtoByNewsId(Long id) {
+        return newsDAO.getNewsDtoByNewsId(id);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDto getNewsByName(String name) {
-        return newsDAO.getNewsDtoByName(name);
+    public NewsDto getNewsDtoByNewsName(String name) {
+        return newsDAO.getNewsDtoByNewsName(name);
     }
 
     @Override
