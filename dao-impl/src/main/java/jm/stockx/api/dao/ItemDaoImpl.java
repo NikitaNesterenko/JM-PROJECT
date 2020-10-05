@@ -143,6 +143,15 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
+    public void updateItemImageUrl(Long id, String url) {
+        entityManager.createQuery("" +
+                "UPDATE Item i SET i.itemImageUrl = : url WHERE i.id = : id  ")
+                .setParameter("url", url)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
     public List<ReleaseItemDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         String sql = "" +
                 "SELECT NEW jm.stockx.dto.item.ReleaseItemDto(" +
@@ -157,6 +166,5 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .setParameter("begin", beginningPeriod)
                 .setParameter("end", endPeriod)
                 .getResultList();
-
     }
 }

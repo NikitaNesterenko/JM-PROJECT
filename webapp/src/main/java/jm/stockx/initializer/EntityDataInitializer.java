@@ -1,4 +1,5 @@
 package jm.stockx.initializer;
+
 import jm.stockx.*;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ShoeSizeTypes;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -87,15 +89,16 @@ public class EntityDataInitializer {
     private void createUsers() {
         if (userService.getAllUsers().size() == 0) {
             Admin admin = new Admin(
-                    "Admin",
-                    "God",
-                    "admin.god@email.com",
+                    "Thor",
+                    "Odinson",
+                    "admin@mail.ru",
                     "admin",
                     "admin",
                     (byte) 100,
                     true,
                     "ru",
                     "admin@apple.id");
+            admin.setActive(true);
             admin.setRole(roleService.getRole("ROLE_ADMIN"));
             userService.createUser(admin);
 
