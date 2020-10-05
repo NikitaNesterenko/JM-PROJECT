@@ -30,5 +30,7 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     Item getItemById(Long id);
 
+    void updateItemImageUrl(Long id, String url);
+
     List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 }
