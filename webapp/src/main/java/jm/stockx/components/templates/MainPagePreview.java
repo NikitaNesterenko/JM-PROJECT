@@ -2,27 +2,18 @@ package jm.stockx.components.templates;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.Panel;
 import org.vaadin.addons.searchbox.SearchBox;
 
 @CssImport("./styles/main-page-view.css")
 public class MainPagePreview extends VerticalLayout {
 
-    // A container that is 100% wide by default
     VerticalLayout layout = new VerticalLayout();
-
-    // label will only take the space it needs
     Label label1 = new Label("Buy & Sell");
     Label label2 = new Label("Authentic Sneakers");
-
 
     public MainPagePreview() {
         Button searchButton = new Button("Find ");
@@ -41,7 +32,6 @@ public class MainPagePreview extends VerticalLayout {
         layout.add(textField);
 
         layout.add(searchButton);
-
         add(layout);
         configureLayout();
     }
@@ -63,7 +53,4 @@ public class MainPagePreview extends VerticalLayout {
         layout.setHeight("620px");
         layout.getStyle().set("padding", "80px 0");
     }
-
-
-
 }
