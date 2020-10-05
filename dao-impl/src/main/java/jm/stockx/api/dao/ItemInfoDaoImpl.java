@@ -31,7 +31,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 ")" +
                 "FROM ItemInfo if " +
                 "WHERE if.price > :price", ItemInfoCardDto.class)
-                .setParameter("price", price)
+                .setParameter("price", price.getAmount())
                 .getResultList();
     }
 
