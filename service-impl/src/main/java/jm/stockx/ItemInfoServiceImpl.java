@@ -1,7 +1,10 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.ItemInfoDAO;
+import jm.stockx.dto.ItemCategoryDto;
+import jm.stockx.dto.ItemInfoGetDto;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,5 +50,15 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     @Override
     public ItemInfo getItemInfoByItemId(Long itemId) {
         return itemInfoDAO.getByItemId(itemId);
+    }
+
+    @Override
+    public List<ItemCategoryDto> getItemCategoryDtoByCategory(ItemCategory category) {
+        return itemInfoDAO.getItemCategoryDtoByCategory(category);
+    }
+
+    @Override
+    public List<ItemInfoGetDto> getListAndOrderByCash(Integer cash) {
+        return itemInfoDAO.getListAndOrderByCash(cash);
     }
 }

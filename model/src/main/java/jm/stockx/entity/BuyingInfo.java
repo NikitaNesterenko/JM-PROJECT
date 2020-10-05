@@ -14,18 +14,7 @@ import org.hibernate.annotations.TypeDef;
 import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency;
 import org.joda.money.Money;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -52,14 +41,14 @@ public class BuyingInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money buyingPrice;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "buying_item",
             joinColumns = @JoinColumn(name = "buying_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> boughtItems;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "buying_payment",
             joinColumns = @JoinColumn(name = "buying_id"),
