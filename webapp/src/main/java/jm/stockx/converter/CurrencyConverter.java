@@ -1,57 +1,47 @@
 package jm.stockx.converter;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class CurrencyConverter {
     private static final String URL_OF_API = "https://www.cbr-xml-daily.ru/daily_json.js";
-    //Тут запрос выводит в формате
-    // 1 рубль равен
-    // "EUR": 0.01092,
-    private static final String URL_OF_API_FORMAT_RUB_TO_CURRENCY = "https://www.cbr-xml-daily.ru/latest.js";
 
-    public static Double convertToRub(Double digit, ValuteCharCode valuteCharCode) throws IOException, JSONException {
+    public static Money convertToRub(BigDecimal digit, CurrencyUnit currencyUnit) throws IOException, JSONException {
 
         if (digit == null) {
             throw new NullPointerException();
         }
-        if (digit < 0) {
+        if (digit.doubleValue() < 0) {
             throw new IllegalArgumentException();
         }
 
-        Valute tmp = getValuteByCharCode(valuteCharCode);
+        Valute tmp = getValuteByCharCode(currencyUnit);
 
-        return (digit * tmp.getValue()) / tmp.getNominal();
+        return (tmp.getValue().multipliedBy(digit, RoundingMode.DOWN).dividedBy(tmp.getNominal().longValue(), RoundingMode.DOWN));
     }
 
-    private static Valute getValuteByCharCode(ValuteCharCode valuteCharCode) throws IOException, JSONException {
-        return parseJsonToValute(getValuteJSONObject().getJSONObject(valuteCharCode.name()));
+    private static Valute getValuteByCharCode(CurrencyUnit currencyUnit) throws IOException, JSONException {
+        return parseJsonToValute(getValuteJSONObject().getJSONObject(currencyUnit.getCode()));
     }
 
-    public static Double convertUSDtoRUB(Double usd) throws IOException, JSONException {
-        return convertToRub(usd, ValuteCharCode.USD);
+    public static Money convertUSDtoRUB(BigDecimal usd) throws IOException, JSONException {
+        return convertToRub(usd, CurrencyUnit.of("USD"));
     }
 
-    public static Double convertEURtoRUB(Double eur) throws IOException, JSONException {
-        return convertToRub(eur, ValuteCharCode.EUR);
+    public static Money convertEURtoRUB(BigDecimal eur) throws IOException, JSONException {
+        return convertToRub(eur, CurrencyUnit.of("EUR"));
     }
 
     private static JSONObject getValuteJSONObject() throws IOException, JSONException {
         return readJsonFromUrl().getJSONObject("Valute");
-    }
-
-    private static String[] jsonKeysToStringArray() throws JSONException, IOException {
-        JSONArray jsonKeys = getValuteJSONObject().names();
-        String[] keysArray = new String[jsonKeys.length()];
-        for (int i = 0; i < jsonKeys.length(); i++) {
-            keysArray[i] = (String) jsonKeys.get(i);
-        }
-        return keysArray;
     }
 
     private static Valute parseJsonToValute(JSONObject jsonObject) throws JSONException {
@@ -60,8 +50,8 @@ public class CurrencyConverter {
                 jsonObject.getString("CharCode"),
                 jsonObject.getInt("Nominal"),
                 jsonObject.getString("Name"),
-                jsonObject.getDouble("Value"),
-                jsonObject.getDouble("Previous")
+                Money.of(CurrencyUnit.of("RUB"), jsonObject.getDouble("Value"), RoundingMode.HALF_UP),
+                Money.of(CurrencyUnit.of("RUB"), jsonObject.getDouble("Previous"), RoundingMode.HALF_UP)
         );
     }
 

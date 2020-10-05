@@ -1,16 +1,18 @@
 package jm.stockx.converter;
 
+import org.joda.money.Money;
+
 public class Valute {
     private final String ID;
     private final Integer NumCode;
     private final String CharCode;
     private final Integer Nominal;
     private final String Name;
-    private final Double Value;
-    private final Double Previous;
+    private final Money Value;
+    private final Money Previous;
 
 
-    public Valute(String id, Integer numCode, String charCode, Integer nominal, String name, Double value, Double previous) {
+    public Valute(String id, Integer numCode, String charCode, Integer nominal, String name, Money value, Money previous) {
         ID = id;
         NumCode = numCode;
         CharCode = charCode;
@@ -40,11 +42,11 @@ public class Valute {
         return Name;
     }
 
-    public Double getValue() {
+    public Money getValue() {
         return Value;
     }
 
-    public Double getPrevious() {
+    public Money getPrevious() {
         return Previous;
     }
 
