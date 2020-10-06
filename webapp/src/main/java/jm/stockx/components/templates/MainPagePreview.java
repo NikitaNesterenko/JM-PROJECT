@@ -3,35 +3,37 @@ package jm.stockx.components.templates;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.Sizeable;
 import org.vaadin.addons.searchbox.SearchBox;
 
 @CssImport("./styles/main-page-view.css")
 public class MainPagePreview extends VerticalLayout {
 
-    VerticalLayout layout = new VerticalLayout();
-    Label label1 = new Label("Buy & Sell");
-    Label label2 = new Label("Authentic Sneakers");
+    private final VerticalLayout layout = new VerticalLayout();
+    private final Label label1 = new Label("Buy & Sell");
+    private final Label label2 = new Label("Authentic Sneakers");
 
     public MainPagePreview() {
-        Button searchButton = new Button("Find ");
+        Button searchButton = new Button("",new Icon(VaadinIcon.SEARCH));
+        searchButton.addThemeVariants();
+
         TextField textField = new TextField();
-        textField.setPlaceholder("Search");
+        textField.setPlaceholder("Search....");
         textField.setClearButtonVisible(true);
         textField.setWidth("20%");
-        textField.setHeightFull();
-
-        SearchBox searchBox = new SearchBox(VaadinIcons.SEARCH, SearchBox.ButtonPosition.RIGHT);
-        searchBox.setButtonJoined(true);
-        searchBox.setPlaceholder("Search...");
+        textField.setHeight("400%");
+        textField.setSuffixComponent(searchButton);
 
         layout.add(label1);
         layout.add(label2);
         layout.add(textField);
 
-        layout.add(searchButton);
         add(layout);
         configureLayout();
     }
