@@ -1,12 +1,8 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -15,8 +11,8 @@ import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -52,20 +48,24 @@ public class Item {
     private String description;
 
     // @ManyToOne(targetEntity = Brand.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)     - так валится
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
     @Column(name = "item_image_url")
     private String itemImageUrl;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "style_id")
     private Style style;
 
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
+
+    @Column(name = "item_category")
+    @Enumerated(EnumType.STRING)
+    private ItemCategory itemCategory;
 
     @ManyToMany
     private Set<BuyingInfo> buyingInfoSet;
@@ -135,6 +135,24 @@ public class Item {
                 String condition,
                 String description,
                 Brand brand,
+                Style style,
+                ItemCategory itemCategory) {
+        this.name = name;
+        this.retailPrice = retailPrice;
+        this.releaseDate = releaseDate;
+        this.condition = condition;
+        this.description = description;
+        this.brand = brand;
+        this.style = style;
+        this.itemCategory = itemCategory;
+    }
+
+    public Item(String name,
+                Money retailPrice,
+                LocalDate releaseDate,
+                String condition,
+                String description,
+                Brand brand,
                 String itemImageUrl,
                 Style style) {
         this.name = name;
@@ -158,7 +176,7 @@ public class Item {
                 Money price,
                 Money lowestAsk,
                 Money highestBid,
-                List<ShoeSize> sizes) {
+                Set<ShoeSize> sizes) {
         this.name = name;
         this.retailPrice = retailPrice;
         this.releaseDate = releaseDate;
@@ -169,4 +187,5 @@ public class Item {
         this.style = style;
         ItemInfo itemInfo = new ItemInfo(sizes, price, lowestAsk, highestBid, this);
     }
+
 }

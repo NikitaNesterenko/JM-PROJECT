@@ -1,12 +1,14 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -145,29 +147,28 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public void updateItemImageUrl(Long id, String url) {
         entityManager.createQuery("" +
-                "UPDATE Item AS i SET i.itemImageUrl = : url WHERE i.id = : id  ")
+                "UPDATE Item i SET i.itemImageUrl = : url WHERE i.id = : id  ")
                 .setParameter("url", url)
                 .setParameter("id", id)
                 .executeUpdate();
     }
 
     @Override
-    public ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice) {
-        return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
+    public List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.ReleaseItemDto(" +
                 "i.id," +
                 "i.name," +
-                "i.retailPrice," +
-                "i.releaseDate," +
-                "i.condition," +
-                "i.description," +
-                "i.itemColors" +
-                ")" +
-                "FROM Item AS i, ShoeSize AS s " +
-                "WHERE i.retailPrice = :retailPrice AND s.size = :size", ItemDto.class)
-                .setParameter("size", size)
-                .setParameter("retailPrice", retailPrice)
-                .getSingleResult();
+                "i.condition, " +
+                "i.itemImageUrl, " +
+                "i.retailPrice, " +
+                "i.releaseDate) " +
+                "FROM Item AS i " +
+                "WHERE i.releaseDate BETWEEN :begin AND :end";
+        return entityManager.createQuery(sql, ReleaseItemDto.class)
+                .setParameter("begin", beginningPeriod)
+                .setParameter("end", endPeriod)
+                .getResultList();
     }
 
     @Override
@@ -193,4 +194,3 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .getResultList().get(0);
     }
 }
-
