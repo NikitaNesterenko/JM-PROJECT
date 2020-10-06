@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.joda.money.Money;
@@ -22,8 +23,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors," +
-                "i.shoeSize" +
+                "i.itemColors" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.name = :itemName", ItemDto.class)
@@ -100,8 +100,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors," +
-                "i.shoeSize" +
+                "i.itemColors" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.id =: id", ItemDto.class)
@@ -119,8 +118,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors," +
-                "i.shoeSize" +
+                "i.itemColors" +
                 ")" +
                 "FROM Item AS i " +
                 "WHERE i.itemColors =: itemColors", ItemDto.class)
@@ -163,8 +161,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
-                "i.itemColors," +
-                "i.shoeSize" +
+                "i.itemColors" +
                 ")" +
                 "FROM Item AS i, ShoeSize AS s " +
                 "WHERE i.retailPrice = :retailPrice AND s.size = :size", ItemDto.class)
@@ -172,4 +169,28 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .setParameter("retailPrice", retailPrice)
                 .getSingleResult();
     }
+
+    @Override
+    public SizeInfoDto getSizeItemDtoByItem(Money price, Double size) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
+                "ib.buyingPrice," +
+                "ii.lowestAsk," +
+                "ii.highestBid," +
+                "i.name," +
+                "i.condition" +
+                ") " +
+                "FROM Item i " +
+                "JOIN ItemInfo ii ON i.id = ii.item.id " +
+                "JOIN i.buyingInfoSet ib " +
+                "WHERE ii.price = :price " +
+                "AND ii.sizes.size = :shoeSize " +
+                "AND ib.id = BuyingInfo.id " +
+                "ORDER BY ib.buyingTimeStamp ", SizeInfoDto.class)
+                .setParameter("price", price)
+                .setParameter("shoeSize", size)
+                .setMaxResults(1)
+                .getResultList().get(0);
+    }
 }
+

@@ -16,6 +16,7 @@ import org.joda.money.Money;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -66,9 +67,8 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shoe_size_id", referencedColumnName = "id")
-    private ShoeSize shoeSize;
+    @ManyToMany
+    private Set<BuyingInfo> buyingInfoSet;
 
     public Item(Long id,
                 String name,
@@ -169,5 +169,4 @@ public class Item {
         this.style = style;
         ItemInfo itemInfo = new ItemInfo(sizes, price, lowestAsk, highestBid, this);
     }
-
 }

@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.joda.money.Money;
@@ -32,4 +33,6 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     void updateItemImageUrl(Long id, String url);
 
     ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice);
+
+    SizeInfoDto getSizeItemDtoByItem(Money price, Double size);
 }

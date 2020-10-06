@@ -1,7 +1,6 @@
 package jm.stockx.dto;
 
 import jm.stockx.entity.Item;
-import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ItemColors;
 import org.joda.money.Money;
 import lombok.Getter;
@@ -42,8 +41,6 @@ public class ItemDto {
 
     private ItemColors itemColors;
 
-    private ShoeSize shoeSize;
-
     public ItemDto(@NonNull Item item) {
         this.id = item.getId();
         this.name = item.getName();
@@ -52,6 +49,5 @@ public class ItemDto {
         this.condition = item.getCondition();
         this.description = item.getDescription();
         this.itemColors = item.getItemColors();
-        this.shoeSize = item.getShoeSize();
     }
 }

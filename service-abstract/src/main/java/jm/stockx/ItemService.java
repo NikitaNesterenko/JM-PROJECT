@@ -3,6 +3,7 @@ package jm.stockx;
 import jm.stockx.dto.BuyingDto;
 import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import org.joda.money.Money;
@@ -41,5 +42,6 @@ public interface ItemService {
 
     void updateItemImageUrl(Long id, String url);
 
-    ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice);
+    SizeInfoDto getSizeItemDtoByItem(Money price, Double size);
+
 }

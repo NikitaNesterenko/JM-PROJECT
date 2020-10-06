@@ -5,10 +5,7 @@ import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.BuyingDto;
-import jm.stockx.dto.ItemDto;
-import jm.stockx.dto.ItemInfoDto;
-import jm.stockx.dto.PageDto;
+import jm.stockx.dto.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
@@ -153,7 +150,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto getItemDtoBySizeInfo(Double size, Money retailPrice) {
-        return itemDao.getItemDtoBySizeInfo(size, retailPrice);
+    public SizeInfoDto getSizeItemDtoByItem(Money price, Double size) {
+        return itemDao.getSizeItemDtoByItem(price, size);
     }
 }
