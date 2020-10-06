@@ -15,8 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.Optional;
 
 
 @RestController
@@ -49,11 +55,19 @@ public class UserRestController {
                     ),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: no logged-in user found")
             })
-    public Response<User> getLoggedInUser() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("Получен пользователь: {}", user.getUsername());
-        return Response.ok(user);
+    public Response<UserDto> getCurrentLoggedInUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            Object principal = auth.getPrincipal();
+            if (principal instanceof UserDetails) {
+                User authorisedUser = (User) auth.getPrincipal();
+                logger.info("Получен пользователь: {}", authorisedUser.getUsername());
+                return Response.ok(userService.getUserDtoById(authorisedUser.getId()));
+            }
+        }
+        return Response.error(HttpStatus.BAD_REQUEST).build();
     }
+
 
     @GetMapping(value = "/password-recovery/{email}")
     @Operation(
