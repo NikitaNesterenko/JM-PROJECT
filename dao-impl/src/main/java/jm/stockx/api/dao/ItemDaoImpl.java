@@ -178,12 +178,11 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "ib.buyingPrice," +
                 "ii.lowestAsk," +
                 "ii.highestBid," +
-                "i.name," +
-                "i.condition" +
+                "ii.item.name," +
+                "ii.item.condition" +
                 ") " +
-                "FROM Item i " +
-                "JOIN ItemInfo ii ON i.id = ii.item.id " +
-                "JOIN i.buyingInfoSet ib " +
+                "FROM ItemInfo ii " +
+                "JOIN ii.item.buyingInfoSet ib " +
                 "WHERE ii.price = :price " +
                 "AND ii.sizes.size = :shoeSize " +
                 "AND ib.id = BuyingInfo.id " +
