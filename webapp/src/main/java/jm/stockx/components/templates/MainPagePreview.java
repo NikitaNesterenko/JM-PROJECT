@@ -6,11 +6,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.Sizeable;
-import org.vaadin.addons.searchbox.SearchBox;
 
 @CssImport("./styles/main-page-view.css")
 public class MainPagePreview extends VerticalLayout {
