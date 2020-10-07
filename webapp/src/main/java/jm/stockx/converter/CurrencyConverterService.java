@@ -30,8 +30,6 @@ public class CurrencyConverterService {
 
     private final String URL_OF_API_BASE_RUB = "https://www.cbr-xml-daily.ru/daily_json.js";
 
-    private final CloseableHttpClient httpClient = HttpClients.createDefault();
-
     public Money convertToRub(Money money) throws Exception {
         if (money.getCurrencyUnit() == CurrencyUnit.of("RUB")) {
             return money;
@@ -68,7 +66,7 @@ public class CurrencyConverterService {
     }
 
     private JSONObject getFullJSON() throws Exception {
-
+        CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet request = new HttpGet(URL_OF_API_BASE_RUB);
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
