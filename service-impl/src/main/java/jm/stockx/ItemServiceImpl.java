@@ -15,6 +15,7 @@ import jm.stockx.entity.Item;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ItemDirection;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -95,7 +97,7 @@ public class ItemServiceImpl implements ItemService {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         Item item = itemDao.getById(buyingDto.getItemId());
-        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getByItemId(buyingDto.getItemId()));
+        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getByItemInfoId(buyingDto.getItemId()));
         Set<Item> bougthItems = new HashSet<>();
         bougthItems.add(item);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
@@ -149,5 +151,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void updateItemImageUrl(Long id, String url) {
         itemDao.updateItemImageUrl(id, url);
+    }
+
+    @Override
+    public List<Item> searchItems(String search) {
+        return itemDao.searchItem(search);
+    }
+
+    @Override
+    public Map<ItemDirection, Long> getMap(String search) {
+        return itemDao.getMap(search);
     }
 }

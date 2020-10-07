@@ -1,5 +1,6 @@
 package jm.stockx.entity;
 
+import jm.stockx.enums.ItemDirection;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,16 +11,7 @@ import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +49,16 @@ public class ItemInfo {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    public ItemInfo(List<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item) {
+    @Column(name = "item_direction")
+    @Enumerated(EnumType.STRING)
+    private ItemDirection itemDirection;
+
+    public ItemInfo(List<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item, ItemDirection itemDirection) {
         this.sizes = sizes;
         this.price = price;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
         this.item = item;
+        this.itemDirection = itemDirection;
     }
 }

@@ -1,6 +1,7 @@
 package jm.stockx.entity;
 
 import jm.stockx.enums.ItemColors;
+import jm.stockx.enums.ItemDirection;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -163,7 +164,8 @@ public class Item {
                 Money price,
                 Money lowestAsk,
                 Money highestBid,
-                List<ShoeSize> sizes) {
+                List<ShoeSize> sizes,
+                ItemDirection itemDirection) {
         this.name = name;
         this.retailPrice = retailPrice;
         this.releaseDate = releaseDate;
@@ -172,7 +174,7 @@ public class Item {
         this.brand = brand;
         this.itemImageUrl = itemImageUrl;
         this.style = style;
-        ItemInfo itemInfo = new ItemInfo(sizes, price, lowestAsk, highestBid, this);
+        ItemInfo itemInfo = new ItemInfo(sizes, price, lowestAsk, highestBid, this, itemDirection);
     }
 
 }

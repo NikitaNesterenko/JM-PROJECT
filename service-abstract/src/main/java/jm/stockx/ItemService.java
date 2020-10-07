@@ -5,8 +5,10 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.enums.ItemDirection;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
@@ -39,4 +41,8 @@ public interface ItemService {
     Item getItemById(Long id);
 
     void updateItemImageUrl(Long id, String url);
+
+    List<Item> searchItems(String search);
+
+    Map<ItemDirection, Long> getMap(String search);
 }

@@ -11,17 +11,8 @@ import jm.stockx.SellingInfoService;
 import jm.stockx.ShoeSizeService;
 import jm.stockx.StyleService;
 import jm.stockx.UserService;
-import jm.stockx.entity.Admin;
-import jm.stockx.entity.Bid;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.Currency;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.News;
-import jm.stockx.entity.Role;
-import jm.stockx.entity.SellingInfo;
-import jm.stockx.entity.ShoeSize;
-import jm.stockx.entity.Style;
-import jm.stockx.entity.User;
+import jm.stockx.entity.*;
+import jm.stockx.enums.ItemDirection;
 import jm.stockx.enums.ShoeSizeTypes;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -174,7 +165,7 @@ public class EntityDataInitializer {
     private void createItems() {
         if (itemService.getAll().size() == 0) {
 
-            itemService.create(new Item(
+            Item item1 = new Item(
                     "Jordan 14 Retro Gym Red Toro",
                     Money.parse("RUB 200.0"),
                     LocalDate.of(2020, 7, 2),
@@ -187,9 +178,24 @@ public class EntityDataInitializer {
                             "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
                             "retailed for $190 USD.",
                     brandService.getBrand("Jordan"),
-                    styleService.getStyle("sports")));
+                    "www.someImageUrl.com",
+                    styleService.getStyle("sports"),
+                    Money.parse("RUB 300.0"),
+                    Money.parse("RUB 150.0"),
+                    Money.parse("RUB 350.0"),
+                    shoeSizeService.getAll(),
+                    ItemDirection.Sneakers);
 
-            itemService.create(new Item(
+            itemService.create(item1);
+            itemInfoService.create(new ItemInfo(
+                    shoeSizeService.getAll(),
+                    Money.parse("RUB 300.0"),
+                    Money.parse("RUB 150.0"),
+                    Money.parse("RUB 350.0"),
+                    item1,
+                    ItemDirection.Sneakers));
+
+            Item item2 = new Item(
                     "Adidas Yeezy Boost 380 Mist",
                     Money.parse("USD 240.0"),
                     LocalDate.of(2020, 3, 25),
@@ -203,9 +209,24 @@ public class EntityDataInitializer {
                             "lateral side stripe. An upgraded translucent Boost midsole and engineered gum outsole grip complete " +
                             "the design. These sneakers released in March of 2020 and retailed for $230.",
                     brandService.getBrand("Adidas"),
-                    styleService.getStyle("sports")));
+                    "www.someImageUrl.com",
+                    styleService.getStyle("sports"),
+                    Money.parse("RUB 300.0"),
+                    Money.parse("RUB 150.0"),
+                    Money.parse("RUB 350.0"),
+                    shoeSizeService.getAll(),
+                    ItemDirection.Streetwear);
 
-            itemService.create(new Item(
+            itemService.create(item2);
+            itemInfoService.create(new ItemInfo(
+                    shoeSizeService.getAll(),
+                    Money.parse("RUB 300.0"),
+                    Money.parse("RUB 150.0"),
+                    Money.parse("RUB 350.0"),
+                    item2,
+                    ItemDirection.Streetwear));
+
+            Item item3 = new Item(
                     "Nike React Element 87 Anthracite Black",
                     Money.parse("USD 190.0"),
                     LocalDate.of(2018, 6, 14),
@@ -215,10 +236,24 @@ public class EntityDataInitializer {
                             "deconstructed style the react Element 87 features a transcluscent upper and a React-cushioned midsole. " +
                             "Released exclusively overseas in June, this pair saw an American release in July 2018 at a retail " +
                             "price of $160.",
-                    brandService.getBrand("Nike"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrand("Nike"),"www.someImageUrl.com",
+                    styleService.getStyle("sports"),
+                    Money.parse("RUB 400.0"),
+                    Money.parse("RUB 370.0"),
+                    Money.parse("RUB 560.0"),
+                    shoeSizeService.getAll(),
+                    ItemDirection.Watches);
 
-            itemService.create(new Item(
+            itemService.create(item3);
+            itemInfoService.create(new ItemInfo(
+                    shoeSizeService.getAll(),
+                    Money.parse("RUB 400.0"),
+                    Money.parse("RUB 370.0"),
+                    Money.parse("RUB 560.0"),
+                    item3,
+                    ItemDirection.Watches));
+
+            Item item4 = new Item(
                     "Jordan 4 Retro Winterized Loyal Blue",
                     Money.parse("USD 210.0"),
                     LocalDate.of(2019, 12, 21),
@@ -229,18 +264,32 @@ public class EntityDataInitializer {
                             "The difference between this winterized design and a traditional Jordan 4 lies in the material choices. " +
                             "The Winterized 4 replaces the classic mesh insert panels with a canvas-like material and adopts a fleece lining " +
                             "to retain warmth.",
-                    brandService.getBrand("Jordan"),
-                    styleService.getStyle("sports")));
+                    brandService.getBrand("Jordan"),"www.someImageUrl.com",
+                    styleService.getStyle("sports"),
+                    Money.parse("RUB 290.0"),
+                    Money.parse("RUB 170.0"),
+                    Money.parse("RUB 340.0"),
+                    shoeSizeService.getAll(),
+                    ItemDirection.Collectibles);
+
+            itemService.create(item4);
+            itemInfoService.create(new ItemInfo(
+                    shoeSizeService.getAll(),
+                    Money.parse("RUB 290.0"),
+                    Money.parse("RUB 170.0"),
+                    Money.parse("RUB 340.0"),
+                    item4,
+                    ItemDirection.Collectibles));
 
             List<ShoeSize> sizes = shoeSizeService.getAll();
             List<ShoeSize> menSizes = new ArrayList<>();
-            for(ShoeSize s : sizes){
-                if(s.getSizeTypes().equals(ShoeSizeTypes.MEN)){
+            for (ShoeSize s : sizes) {
+                if (s.getSizeTypes().equals(ShoeSizeTypes.MEN)) {
                     menSizes.add(s);
                 }
             }
 
-            itemService.create(new Item(
+            Item item5 = new Item(
                     "Jordan 1 Retro High Satin Black Toe (W)",
                     Money.parse("USD 200.0"),
                     LocalDate.of(2019, 8, 17),
@@ -253,13 +302,22 @@ public class EntityDataInitializer {
                             "construction providing a luxury feel. A metal Wings logo on the heel completes the design. These sneakers released " +
                             "in August of 2019 and retailed for $160.",
                     brandService.getBrand("Jordan"),
-                    "URL",
+                    "www.someImageUrl.com",
                     styleService.getStyle("sports"),
-                    Money.parse("USD 200.0"),
-                    Money.parse("USD 342.0"),
-                    Money.parse("USD 442.0"),
-                    menSizes
-            ));
+                    Money.parse("RUB 310.0"),
+                    Money.parse("RUB 140.0"),
+                    Money.parse("RUB 380.0"),
+                    shoeSizeService.getAll(),
+                    ItemDirection.Sneakers);
+
+            itemService.create(item5);
+            itemInfoService.create(new ItemInfo(
+                    shoeSizeService.getAll(),
+                    Money.parse("RUB 310.0"),
+                    Money.parse("RUB 140.0"),
+                    Money.parse("RUB 380.0"),
+                    item5,
+                    ItemDirection.Sneakers));
         }
     }
 
@@ -338,5 +396,4 @@ public class EntityDataInitializer {
             shoeSizeService.create(new ShoeSize(18d, ShoeSizeTypes.MEN));
         }
     }
-
 }

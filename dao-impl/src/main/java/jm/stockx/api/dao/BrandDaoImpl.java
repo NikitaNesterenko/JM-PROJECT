@@ -34,7 +34,7 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
     @Override
     public Brand getBrand(String name) {
         return entityManager.createQuery("" +
-                "FROM Brand As b WHERE b.name = : brandName", Brand.class)
+                "SELECT b FROM Brand b WHERE b.name = : brandName", Brand.class)
                 .setParameter("brandName", name)
                 .getSingleResult();
     }
