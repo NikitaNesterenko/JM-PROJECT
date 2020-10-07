@@ -55,7 +55,7 @@ public class CurrencyConverterService {
         return getFullJSON().getJSONObject("Valute");
     }
 
-    private static Currency parseJsonToCurrency(JSONObject jsonObject) throws JSONException {
+    private Currency parseJsonToCurrency(JSONObject jsonObject) throws JSONException {
         String charCode = jsonObject.getString("CharCode");
         return new Currency(jsonObject.getString("ID"),
                 jsonObject.getInt("NumCode"),
