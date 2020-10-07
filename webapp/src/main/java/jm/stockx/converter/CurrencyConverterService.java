@@ -67,8 +67,7 @@ public class CurrencyConverterService {
 
     private JSONObject getFullJSON() throws Exception {
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(new HttpGet(URL_OF_API_BASE_RUB))) {
-            HttpEntity entity = response.getEntity();
-            return new JSONObject(EntityUtils.toString(entity));
+            return new JSONObject(EntityUtils.toString(response.getEntity()));
         }
     }
 
