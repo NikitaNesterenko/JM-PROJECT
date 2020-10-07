@@ -13,6 +13,12 @@ import java.util.List;
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
 
     @Override
+    public ItemInfo getByItemInfoId(Long itemId) {
+        return entityManager.createQuery(
+                     "SELECT i FROM ItemInfo AS i " +
+                        "WHERE i.item.id = :itemId", ItemInfo.class)
+                .setParameter("itemId", itemId)
+                .getSingleResult();
     public ItemInfo getByItemId(Long itemId) {
 //        return entityManager.createQuery(
 //                "SELECT i FROM ItemInfo AS i " +
@@ -49,7 +55,4 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .setParameter("itemCategory", category)
                 .getResultList();
     }
-
 }
-
-

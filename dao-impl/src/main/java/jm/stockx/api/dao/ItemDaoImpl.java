@@ -4,10 +4,13 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.enums.ItemDirection;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Repository
@@ -47,7 +50,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public List<Item> getMostPopularItems(String brand) {
         return entityManager.createQuery("" +
-                "FROM Item AS i " +
+                "SELECT i " +
+                "FROM Item i " +
                 "INNER JOIN BuyingInfo AS bi " +
                 "ON i.id = bi.id " +
                 "INNER JOIN Brand AS b " +
@@ -61,7 +65,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
         return entityManager.createQuery("" +
-                "FROM SellingInfo AS si " +
+                "SELECT i " +
+                "FROM SellingInfo si " +
                 "LEFT JOIN Item AS i " +
                 "ON si.id=i.id " +
                 "WHERE i.style = :styleId " +
@@ -74,18 +79,24 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
     public List<Item> getNotReleasedItems() {
+        LocalDateTime dateNow = LocalDateTime.now();
         return entityManager.createQuery("" +
-                "FROM Item AS i " +
-                "WHERE i.releaseDate >= GETDATE(current_date)", Item.class)
+                "SELECT i " +
+                "FROM Item i " +
+                "WHERE i.releaseDate >= : dateNow ", Item.class)
+                .setParameter("dateNow", dateNow)
                 .getResultList();
     }
 
     @Override
     public List<Item> getNotReleasedItemsByBrand(Brand brand) {
+        LocalDateTime dateNow = LocalDateTime.now();
         return entityManager.createQuery("" +
-                "FROM Item AS i " +
-                "WHERE i.releaseDate >= GETDATE(current_date) " +
+                "SELECT i " +
+                "FROM Item i " +
+                "WHERE i.releaseDate >= : dateNow " +
                 "AND i.brand =: brandId", Item.class)
+                .setParameter("dateNow", dateNow)
                 .setParameter("brandId", brand.getId())
                 .getResultList();
     }
@@ -102,7 +113,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.description," +
                 "i.itemColors" +
                 ")" +
-                "FROM Item AS i " +
+                "FROM Item i " +
                 "WHERE i.id =: id", ItemDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
@@ -120,7 +131,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "i.description," +
                 "i.itemColors" +
                 ")" +
-                "FROM Item AS i " +
+                "FROM Item i " +
                 "WHERE i.itemColors =: itemColors", ItemDto.class)
                 .setParameter("itemColors", itemColors)
                 .getResultList();
@@ -129,7 +140,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public Item getItemByName(String name) {
         return entityManager.createQuery("" +
-                "FROM Item AS i WHERE i.name = : name", Item.class)
+                "SELECT i " +
+                "FROM Item i WHERE i.name = : name", Item.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }
@@ -137,7 +149,8 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public Item getItemById(Long id) {
         return entityManager.createQuery("" +
-                "FROM Item AS i WHERE i.id = : id", Item.class)
+                "SELECT i " +
+                "FROM Item i WHERE i.id = : id", Item.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -149,6 +162,54 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .setParameter("url", url)
                 .setParameter("id", id)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<Item> searchItem(String search) {
+        return entityManager.createQuery("" +
+                "SELECT i FROM Item i " +
+                "WHERE LOWER(i.name)  LIKE LOWER(CONCAT(: search, '%'))", Item.class)
+                .setParameter("search", search)
+                .getResultList();
+    }
+
+    @Override
+    public Long getCountItemByItemDirection(String search, ItemDirection itemDirection) {
+        return entityManager.createQuery("" +
+                "SELECT count(i) FROM Item i " +
+                "JOIN ItemInfo ii ON i.id = ii.item.id " +
+                "WHERE LOWER(i.name) LIKE LOWER(CONCAT('%', : search, '%')) " +
+                "AND ii.itemDirection = : itemDirection " +
+                "GROUP BY ii.itemDirection" +
+                "", Long.class)
+                .setParameter("search", search)
+                .setParameter("itemDirection", itemDirection)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<ItemDirection> getItemDirection(String search) {
+        return entityManager.createQuery("" +
+                "SELECT ii.itemDirection FROM ItemInfo ii " +
+                "JOIN Item i ON i.id = ii.item.id " +
+                "WHERE LOWER(i.name) LIKE LOWER(CONCAT('%', : search, '%')) " +
+                "GROUP BY ii.itemDirection" +
+                "", ItemDirection.class)
+                .setParameter("search", search)
+                .getResultList();
+    }
+
+    @Override
+    public Map<ItemDirection, Long> getMap(String search) {
+        Map<ItemDirection, Long> map = new TreeMap<>();
+        List<ItemDirection> directions = getItemDirection(search);
+
+        for (ItemDirection id : directions) {
+            Long aLong = getCountItemByItemDirection(search, id);
+            map.put(id, aLong);
+        }
+
+        return map;
     }
 
     @Override

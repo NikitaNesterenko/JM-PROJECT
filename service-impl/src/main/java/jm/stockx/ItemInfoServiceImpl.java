@@ -49,7 +49,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 
     @Override
     public ItemInfo getItemInfoByItemId(Long itemId) {
-        return itemInfoDAO.getByItemId(itemId);
+        return itemInfoDAO.getByItemInfoId(itemId);
     }
 
     @Override

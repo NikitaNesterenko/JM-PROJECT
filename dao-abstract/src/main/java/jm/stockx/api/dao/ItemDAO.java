@@ -4,9 +4,11 @@ import jm.stockx.dto.ItemDto;
 import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.enums.ItemDirection;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface ItemDAO extends GenericDao<Item, Long> {
 
@@ -31,6 +33,14 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     Item getItemById(Long id);
 
     void updateItemImageUrl(Long id, String url);
+
+    List<Item> searchItem(String search);
+
+    Long getCountItemByItemDirection(String search, ItemDirection itemDirection);
+
+    List<ItemDirection> getItemDirection(String name);
+
+    Map<ItemDirection, Long> getMap(String search);
 
     List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 }

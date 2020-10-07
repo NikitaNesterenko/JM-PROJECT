@@ -1,6 +1,12 @@
 package jm.stockx.entity;
 
-import lombok.*;
+import jm.stockx.enums.ItemDirection;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.Money;
@@ -43,11 +49,16 @@ public class ItemInfo {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item) {
+    @Column(name = "item_direction")
+    @Enumerated(EnumType.STRING)
+    private ItemDirection itemDirection;
+
+    public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item, ItemDirection itemDirection) {
         this.sizes = sizes;
         this.price = price;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
         this.item = item;
+        this.itemDirection = itemDirection;
     }
 }
