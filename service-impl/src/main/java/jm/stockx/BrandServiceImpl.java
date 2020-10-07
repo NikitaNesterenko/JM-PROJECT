@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -19,7 +20,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public List<Brand> getAll() {
+    public Set<Brand> getAll() {
         return brandDAO.getAll();
     }
 

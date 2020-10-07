@@ -6,12 +6,13 @@ import jm.stockx.entity.SellingInfo;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface SellingInfoService {
 
     Double getAverageSalesValue();
 
-    List<SellingInfo> getAll();
+    Set<SellingInfo> getAll();
 
     SellingInfo get(Long id);
 

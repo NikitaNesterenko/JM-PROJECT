@@ -6,10 +6,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    Set<User> getAllUsers();
 
     void createUser(User user);
 

@@ -4,12 +4,11 @@ import jm.stockx.dto.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ShoeSizeDAO extends GenericDao<ShoeSize, Long> {
     ShoeSizeDto getShoeSizeDtoByName(String name);
 
     ShoeSizeDto getShoeSizeDtoById(Long id);
-
-    List<ShoeSize> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType);
+    Set<ShoeSize> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType);
 }
