@@ -6,6 +6,7 @@ import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode
 @ToString
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @Column(name = "id")
@@ -33,5 +34,10 @@ public class Role {
 
     public Role(String roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    public String getAuthority() {
+        return roleName;
     }
 }

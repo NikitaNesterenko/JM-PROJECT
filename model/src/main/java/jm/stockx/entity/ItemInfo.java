@@ -12,8 +12,8 @@ import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,10 +28,10 @@ public class ItemInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinTable(name = "itemInfo_shoe_size", joinColumns = @JoinColumn(name = "shoe_size_id"),
             inverseJoinColumns = @JoinColumn(name = "itemInfo_id"))
-    private List<ShoeSize> sizes = new ArrayList<>();
+    private Set<ShoeSize> sizes = new HashSet<>();
 
     @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
     @Type(type = "joda_MoneyAmountWithCurrencyType")
@@ -45,7 +45,7 @@ public class ItemInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
-    @OneToOne(targetEntity = Item.class)
+    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
@@ -53,7 +53,7 @@ public class ItemInfo {
     @Enumerated(EnumType.STRING)
     private ItemDirection itemDirection;
 
-    public ItemInfo(List<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item, ItemDirection itemDirection) {
+    public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item, ItemDirection itemDirection) {
         this.sizes = sizes;
         this.price = price;
         this.lowestAsk = lowestAsk;

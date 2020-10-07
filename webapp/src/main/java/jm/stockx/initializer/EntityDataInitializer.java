@@ -21,8 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Month;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -82,7 +81,7 @@ public class EntityDataInitializer {
         createStyles();
         createNews();
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-        //createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
 
     }
@@ -98,9 +97,9 @@ public class EntityDataInitializer {
     private void createUsers() {
         if (userService.getAllUsers().size() == 0) {
             Admin admin = new Admin(
-                    "Admin",
-                    "God",
-                    "admin.god@email.com",
+                    "Thor",
+                    "Odinson",
+                    "admin@mail.ru",
                     "admin",
                     "admin",
                     (byte) 100,
@@ -283,8 +282,8 @@ public class EntityDataInitializer {
 
             List<ShoeSize> sizes = shoeSizeService.getAll();
             List<ShoeSize> menSizes = new ArrayList<>();
-            for (ShoeSize s : sizes) {
-                if (s.getSizeTypes().equals(ShoeSizeTypes.MEN)) {
+            for(ShoeSize s : sizes){
+                if(s.getSizeTypes().equals(ShoeSizeTypes.MEN)){
                     menSizes.add(s);
                 }
             }
@@ -395,5 +394,15 @@ public class EntityDataInitializer {
             shoeSizeService.create(new ShoeSize(17d, ShoeSizeTypes.MEN));
             shoeSizeService.create(new ShoeSize(18d, ShoeSizeTypes.MEN));
         }
+    }
+
+    private LocalDateTime getLocalDateTime() {
+        LocalDateTime localDateTime = LocalDateTime.of(2020,
+                Month.of((int)(1+Math.random()*11)),
+                (int)(1 + Math.random()*30),
+                (int) (Math.random()*24),
+                (int) (Math.random()*59)
+        );
+        return localDateTime;
     }
 }

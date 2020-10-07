@@ -1,10 +1,12 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import jm.stockx.enums.ItemDirection;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -39,4 +41,6 @@ public interface ItemDAO extends GenericDao<Item, Long> {
     List<ItemDirection> getItemDirection(String name);
 
     Map<ItemDirection, Long> getMap(String search);
+
+    List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 }

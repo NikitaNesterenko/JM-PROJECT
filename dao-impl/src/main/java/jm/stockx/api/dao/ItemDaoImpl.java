@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ItemDto;
+import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import jm.stockx.enums.ItemDirection;
@@ -209,5 +210,23 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
         }
 
         return map;
+    }
+
+    @Override
+    public List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.ReleaseItemDto(" +
+                "i.id," +
+                "i.name," +
+                "i.condition, " +
+                "i.itemImageUrl, " +
+                "i.retailPrice, " +
+                "i.releaseDate) " +
+                "FROM Item AS i " +
+                "WHERE i.releaseDate BETWEEN :begin AND :end";
+        return entityManager.createQuery(sql, ReleaseItemDto.class)
+                .setParameter("begin", beginningPeriod)
+                .setParameter("end", endPeriod)
+                .getResultList();
     }
 }

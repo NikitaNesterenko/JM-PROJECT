@@ -1,6 +1,8 @@
 package jm.stockx.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.joda.money.Money;
 
 import javax.validation.constraints.NotNull;
@@ -11,20 +13,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ReleaseItemDto {
     @NotNull
-    private Long id;
+    private String itemName;
 
     @NotNull
-    private String name;
+    private String itemCondition;
 
     @NotNull
-    private String condition;
+    private String itemImgUrl;
 
     @NotNull
-    private String itemImageUrl;
+    private Money itemLowestAsk;
 
     @NotNull
-    private Money retailPrice;
-
-    @NotNull
-    private LocalDate releaseDate;
+    private LocalDate itemReleaseDate;
 }

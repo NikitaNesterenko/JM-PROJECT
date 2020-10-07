@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.handlers.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,12 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -23,12 +21,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     private final UserDetailsService userDetailsService;
     private final SecurityUtils securityUtils;
+    private final LoginSuccessHandler successHandler;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, SecurityUtils securityUtils) {
+    public SecurityConfig(UserDetailsService userDetailsService, SecurityUtils securityUtils, LoginSuccessHandler successHandler) {
         this.userDetailsService = userDetailsService;
         this.securityUtils = securityUtils;
+        this.successHandler = successHandler;
     }
 
     @Bean
@@ -57,29 +57,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .permitAll();
-
         http
                 .authorizeRequests()
-                .antMatchers("/", "/rest/api/**", "/registration/**", "/authorization/**",
-                        "/password-recovery/**", "/brand/all", "/news","/how-it-works", "/test-template",
-                        "/item/img/upload", "/item/img/download", "/search").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/admin/**").hasAuthority("ADMIN");
+                .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
+                        "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
+                        "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
+                        "/itemblock", "/brand").hasRole("ADMIN");
 
         http.csrf().disable()
                 .requestCache().requestCache(new CustomRequestCache(securityUtils))
-                .and().authorizeRequests()
-                //.requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
-                .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
-                .anyRequest().authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll()
                 .loginProcessingUrl("/login")
+                .successHandler(successHandler)
                 .failureUrl("/login?error")
                 .and().logout().logoutSuccessUrl("/login");
     }
