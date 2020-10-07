@@ -5,10 +5,11 @@ import jm.stockx.dto.BidPostDto;
 import jm.stockx.entity.Bid;
 
 import java.util.List;
+import java.util.Set;
 
 public interface BidService {
 
-    List<Bid> getAll();
+    Set<Bid> getAll();
 
     BidDto get(Long id);
 

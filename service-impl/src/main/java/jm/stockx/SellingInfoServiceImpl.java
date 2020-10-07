@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -25,7 +26,7 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     @Override
-    public List<SellingInfo> getAll() {
+    public Set<SellingInfo> getAll() {
         return sellingInfoDAO.getAll();
     }
 
