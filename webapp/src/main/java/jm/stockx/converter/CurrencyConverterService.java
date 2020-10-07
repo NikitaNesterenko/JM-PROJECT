@@ -66,14 +66,10 @@ public class CurrencyConverterService {
     }
 
     private JSONObject getFullJSON() throws Exception {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet request = new HttpGet(URL_OF_API_BASE_RUB);
-
-        try (CloseableHttpResponse response = httpClient.execute(request)) {
+        try (CloseableHttpResponse response = HttpClients.createDefault().execute(new HttpGet(URL_OF_API_BASE_RUB))) {
             HttpEntity entity = response.getEntity();
             return new JSONObject(EntityUtils.toString(entity));
         }
-
     }
 
 }
