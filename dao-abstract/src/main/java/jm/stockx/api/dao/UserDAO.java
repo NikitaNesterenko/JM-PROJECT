@@ -4,7 +4,7 @@ import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 
 public interface UserDAO extends GenericDao<User, Long> {
-    UserDto getUserDtoByUserName(String name);
+    UserDto getUserDtoByUserUsername(String name);
 
     UserDto getUserDtoByUserEmail(String name);
 
@@ -12,7 +12,7 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     UserDto getUserDtoByUserId(Long id);
 
-    User getUserByName(String name);
+    User getUserByUsername(String username);
 
     User getUserById(Long id);
 

@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserDtoByUserName(String userName) {
-        return userDao.getUserDtoByUserName(userName);
+    public UserDto getUserDtoByUserUsername(String username) {
+        return userDao.getUserDtoByUserUsername(username);
     }
 
     @Override
@@ -83,8 +83,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByName(String name) {
-        return userDao.getUserByName(name);
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
     }
 
     @Override

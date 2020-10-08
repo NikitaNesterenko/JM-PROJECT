@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
-    public UserDto getUserDtoByUserName(String name) {
+    public UserDto getUserDtoByUserUsername(String username) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.user.UserDto(" +
                 "u.firstName," +
@@ -21,8 +21,8 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "u.localeTag" +
                 ")" +
                 "FROM User AS u " +
-                "WHERE u.firstName =: name", UserDto.class)
-                .setParameter("name", name)
+                "WHERE u.username =: username", UserDto.class)
+                .setParameter("username", username)
                 .getSingleResult();
     }
 
@@ -84,10 +84,10 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User getUserByUsername(String username) {
         return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.name =: name", User.class)
-                .setParameter("name", name)
+                "FROM User AS u WHERE u.username =: username", User.class)
+                .setParameter("username", username)
                 .getSingleResult();
     }
 

@@ -19,7 +19,7 @@ public interface UserService {
 
     UserDto getUserDtoByUserId(Long id);
 
-    UserDto getUserDtoByUserName(String userName);
+    UserDto getUserDtoByUserUsername(String username);
 
     UserDto getUserDtoByUserEmail(String email);
 
@@ -29,7 +29,7 @@ public interface UserService {
 
     boolean isUserExist(Long id);
 
-    User getUserByName(String email);
+    User getUserByUsername(String username);
 
     User getUserById(Long id);
 
