@@ -20,27 +20,28 @@ public class RegistrationRestController {
 
     private final MailService mailService;
 
-    public RegistrationRestController(UserService userService, MailService mailService) {
+    private final PasswordGeneratorService passwordGeneratorService;
+
+    public RegistrationRestController(UserService userService, MailService mailService, PasswordGeneratorService passwordGeneratorService) {
         this.userService = userService;
         this.mailService = mailService;
+        this.passwordGeneratorService = passwordGeneratorService;
     }
 
     @PostMapping
     public Response.BodyBuilder registrationNewUser(@RequestBody UserRegistrationDto user) {
 
-        if (userService.getUserByEmail(user.getEmail()) == null) {
+        if (userService.getUserByEmail(user.getEmail()) != null) {
             return Response.error(HttpStatus.BAD_REQUEST);
-        } else if (user.getFirstName().isEmpty() | user.getFirstName().isBlank()) {
+        } else if (user.getFirstName().isEmpty() || user.getFirstName().isBlank()) {
             return Response.error(HttpStatus.BAD_REQUEST);
-        } else if (user.getLastName().isEmpty() | user.getLastName().isBlank()) {
+        } else if (user.getLastName().isEmpty() || user.getLastName().isBlank()) {
             return Response.error(HttpStatus.BAD_REQUEST);
         }
 
-        String password = new PasswordGeneratorService().generatePassword(8);
+        String password = passwordGeneratorService.generatePassword(8);
 
-        User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), password);
-
-        userService.createUser(newUser);
+        userService.createUser(new User(user.getFirstName(), user.getLastName(), user.getEmail(), password));
 
         mailService.sendSimpleMessage(
                 user.getEmail(),
