@@ -6,8 +6,10 @@ import jm.stockx.dto.UserTokenDto;
 import jm.stockx.jwt.JwtTokenProvider;
 import jm.stockx.util.Response;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,20 +33,23 @@ public class AuthenticationRestController {
 
     @PostMapping("/login")
     public Response<UserTokenDto> login(@RequestBody UserLoginDto loginUser) {
+        try {
+            final Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginUser.getEmail(),
+                            loginUser.getPassword()
+                    )
+            );
 
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getEmail(),
-                        loginUser.getPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return Response.ok(
-                new UserTokenDto(
-                        userService.getUserByEmail(loginUser.getEmail()),
-                        jwtTokenProvider.createToken(loginUser.getEmail(), userService.getUserByEmail(loginUser.getEmail()).getRole())
-                )
-        );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return Response.ok(
+                    new UserTokenDto(
+                            userService.getUserByEmail(loginUser.getEmail()),
+                            jwtTokenProvider.createToken(loginUser.getEmail())
+                    )
+            );
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username/password");
+        }
     }
 }

@@ -25,10 +25,9 @@ public class JwtTokenProvider {
     @Value("${jwt.sessionTime}")
     private String validityTime;
 
-    private final UserDetailsService userDetailsService;
-
-    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    @PostConstruct
+    protected void init() {
+        secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
     @Bean
@@ -36,14 +35,8 @@ public class JwtTokenProvider {
         return new BCryptPasswordEncoder();
     }
 
-    @PostConstruct
-    protected void init() {
-        secret = Base64.getEncoder().encodeToString(secret.getBytes());
-    }
-
-    public String createToken(String username, Role role) {
+    public String createToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("role", role.getRoleName());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + Long.parseLong(validityTime));
@@ -56,25 +49,41 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticationException("Jwt token invalid");
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            if (getUsernameFromJwtToken(token).equals(userDetails.getUsername())) {
+                return true;
+            }
+        } catch (SignatureException |
+                ExpiredJwtException |
+                MalformedJwtException |
+                UnsupportedJwtException |
+                IllegalArgumentException e) {
+            System.out.println(e);
         }
+        return false;
     }
 
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    private String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+    public String getUsernameFromJwtToken(String token) {
+        String username = null;
+        try {
+            username = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return username;
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("Authorization");
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
+            return bearerToken.substring(7, bearerToken.length());
+        }
+        return null;
     }
 }
