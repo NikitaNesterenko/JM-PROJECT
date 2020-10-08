@@ -1,6 +1,6 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ItemInfoDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

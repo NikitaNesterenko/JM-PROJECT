@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.dto.CurrencyDto;
+import jm.stockx.dto.currency.CurrencyDto;
 import jm.stockx.entity.Currency;
 
 import java.util.List;
@@ -9,7 +9,7 @@ public interface CurrencyService {
 
     List<Currency> getAll();
 
-    CurrencyDto get(Long id);
+    CurrencyDto getCurrencyDtoByCurrencyId(Long id);
 
     void create(Currency currency);
 
@@ -17,9 +17,8 @@ public interface CurrencyService {
 
     void delete(Long id);
 
-    CurrencyDto getCurrencyByName(String name);
+    CurrencyDto getCurrencyDtoByCurrencyName(String name);
 
     boolean doesItExistEntity(Long id);
 
-    CurrencyDto getCurrencyDtoById(Long id);
 }

@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.BuyingInfoDto;
+import jm.stockx.dto.buyingInfo.BuyingInfoDto;
 import jm.stockx.entity.BuyingInfo;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements BuyingInfoDAO {
 
     @Override
-    public BuyingInfoDto getBuyingInfoDtoById(Long id) {
+    public BuyingInfoDto getBuyingInfoDtoByBuyingInfoId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.BuyingInfoDto(" +
+                "SELECT NEW jm.stockx.dto.buyingInfo.BuyingInfoDto(" +
                 "b.id, " +
                 "b.buyingTimeStamp, " +
                 "b.buyingPrice," +

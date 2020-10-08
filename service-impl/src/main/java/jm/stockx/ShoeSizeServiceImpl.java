@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.ShoeSizeDAO;
-import jm.stockx.dto.ShoeSizeDto;
+import jm.stockx.dto.shoeSize.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public ShoeSizeDto get(Long id) {
-        return shoeSizeDAO.getShoeSizeDtoById(id);
+    public ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id) {
+        return shoeSizeDAO.getShoeSizeDtoByShoeSizeId(id);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public ShoeSizeDto getShoeSizeByName(String name) {
-        return shoeSizeDAO.getShoeSizeDtoByName(name);
+    public ShoeSizeDto getShoeSizeDtoByShoeSizeName(String name) {
+        return shoeSizeDAO.getShoeSizeDtoByShoeSizeName(name);
     }
 
     @Override
@@ -59,14 +59,9 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public ShoeSizeDto getShoeSizedDtoById(Long id) {
-        return shoeSizeDAO.getShoeSizeDtoById(id);
-    }
-
-    @Override
-    public List<ShoeSizeDto> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType) {
+    public List<ShoeSizeDto> getShoeSizeDtoByShoeSizeType(ShoeSizeTypes sizeType) {
         List<ShoeSizeDto> list = new ArrayList<>();
-        shoeSizeDAO.getShoeSizeDtoBySizeType(sizeType).forEach(x -> list.add(new ShoeSizeDto(x)));
+        shoeSizeDAO.getShoeSizeDtoByShoeSizeType(sizeType).forEach(x -> list.add(new ShoeSizeDto(x)));
         return list;
     }
 

@@ -5,10 +5,10 @@ import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.BuyingDto;
-import jm.stockx.dto.ItemDto;
-import jm.stockx.dto.ItemInfoDto;
-import jm.stockx.dto.PageDto;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
@@ -52,7 +52,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto getItemDtoByName(String name) {
-        return itemDao.getItemDtoByName(name);
+        return itemDao.getItemDtoByItemName(name);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto getItemDtoById(Long id) {
-        return itemDao.getItemDtoById(id);
+        return itemDao.getItemDtoByItemId(id);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class ItemServiceImpl implements ItemService {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         Item item = itemDao.getById(buyingDto.getItemId());
-        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getByItemId(buyingDto.getItemId()));
+        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId()));
         Set<Item> bougthItems = new HashSet<>();
         bougthItems.add(item);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
@@ -118,12 +118,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
-        return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
+        return itemDao.getMostPopularItemByStyleId(styleId, topLimit);
     }
 
     @Override
     public List<Item> getNotReleasedItems() {
-        return itemDao.getNotReleasedItems();
+        return itemDao.getNotReleasedItem();
     }
 
     @Override

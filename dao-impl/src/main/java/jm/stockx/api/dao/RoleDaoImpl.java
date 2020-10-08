@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.RoleDto;
+import jm.stockx.dto.security.role.RoleDto;
 import jm.stockx.entity.Role;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
 
     @Override
-    public RoleDto getRoleDtoByName(String name) {
+    public RoleDto getRoleDtoByRoleName(String name) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.RoleDto(" +
+                "SELECT NEW jm.stockx.dto.security.role.RoleDto(" +
                 "r.id, " +
                 "r.roleName)" +
                 "FROM Role AS r " +
@@ -20,9 +20,9 @@ public class RoleDaoImpl extends AbstractDAO<Role, Long> implements RoleDAO {
     }
 
     @Override
-    public RoleDto getRoleDtoById(Long id) {
+    public RoleDto getRoleDtoByRoleId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.RoleDto(" +
+                "SELECT NEW jm.stockx.dto.security.role.RoleDto(" +
                 "r.id, " +
                 "r.roleName)" +
                 "FROM Role AS r " +

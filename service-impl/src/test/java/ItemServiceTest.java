@@ -31,8 +31,8 @@ public class ItemServiceTest {
         items.add(new Item());
         items.add(new Item());
         items.add(new Item());
-        when(itemDao.getTopItemsByStyleFromSellingInfo(1L, top)).thenReturn(items);
+        when(itemDao.getMostPopularItemByStyleId(1L, top)).thenReturn(items);
         assertEquals(itemService.getTopItemsByStyle(1L, top).size(), top);
-        verify(itemDao).getTopItemsByStyleFromSellingInfo(1L,top);
+        verify(itemDao).getMostPopularItemByStyleId(1L,top);
     }
 }
