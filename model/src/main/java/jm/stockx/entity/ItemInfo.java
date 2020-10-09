@@ -6,7 +6,9 @@ import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -25,7 +27,7 @@ public class ItemInfo {
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinTable(name = "itemInfo_shoe_size", joinColumns = @JoinColumn(name = "shoe_size_id"),
             inverseJoinColumns = @JoinColumn(name = "itemInfo_id"))
-    private Set<ShoeSize> sizes = new HashSet<>();
+    private Set<ShoeSize>sizes = new HashSet<>();
 
     @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
     @Type(type = "joda_MoneyAmountWithCurrencyType")

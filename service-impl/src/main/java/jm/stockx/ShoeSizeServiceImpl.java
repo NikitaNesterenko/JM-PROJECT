@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -24,8 +26,10 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
 
 
     @Override
-    public List<ShoeSize> getAll() {
-        return shoeSizeDAO.getAll();
+    public Set<ShoeSize> getAll() {
+        List<ShoeSize> shoeSizeList = shoeSizeDAO.getAll();
+        Set<ShoeSize> shoeSizeSet = new HashSet<>(shoeSizeList);
+        return shoeSizeSet;
     }
 
     @Override
