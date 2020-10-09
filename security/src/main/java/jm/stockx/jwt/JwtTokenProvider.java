@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import java.util.Base64;
 import java.util.Date;
@@ -59,11 +61,11 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (SignatureException |
-                ExpiredJwtException |
-                MalformedJwtException |
+                IllegalArgumentException |
                 UnsupportedJwtException |
-                IllegalArgumentException e) {
-            System.out.println(e);
+                MalformedJwtException |
+                ExpiredJwtException e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }

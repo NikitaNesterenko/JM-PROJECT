@@ -11,8 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 
 
 public class JwtTokenFilter extends GenericFilterBean {
@@ -24,19 +24,18 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String token = this.resolveToken((HttpServletRequest) servletRequest);
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String token = this.resolveToken(httpServletRequest);
 
-        try {
-            if (StringUtils.hasText(token)) {
-                if (jwtTokenProvider.validateToken(token)) {
-                    Authentication authentication = jwtTokenProvider.getAuthentication(token);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            }
-            filterChain.doFilter(servletRequest, servletResponse);
-        } catch (ExpiredJwtException e) {
-            System.out.println(e.getMessage());
+        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+        filterChain.doFilter(servletRequest, servletResponse);
+
     }
 
     private String resolveToken(HttpServletRequest request) {
