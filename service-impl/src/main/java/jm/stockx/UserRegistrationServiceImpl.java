@@ -37,7 +37,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
                 user.getEmail(),
                 "Registration success",
                 "Thank you for your registration\n" +
-                        "your password:\n" + password
+                        "your password:" + password
         );
 
         return Response.ok(user);
