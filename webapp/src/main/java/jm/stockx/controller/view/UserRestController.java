@@ -15,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,33 +44,16 @@ public class UserRestController {
         this.mailService = mailService;
     }
 
-    @GetMapping(value = "/getLoggedInUser")
-    @Operation(
-            operationId = "getLoggedInUser",
-            summary = "Get logged-in user",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = User.class)
-                            ),
-                            description = "OK: get logged-in user"
-                    ),
-                    @ApiResponse(responseCode = "400", description = "NOT_FOUND: no logged-in user found")
-            })
-    public Response<UserDto> getCurrentLoggedInUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            Object principal = auth.getPrincipal();
-            if (principal instanceof UserDetails) {
-                User authorisedUser = (User) auth.getPrincipal();
-                logger.info("Получен пользователь: {}", authorisedUser.getUsername());
-                return Response.ok(userService.getUserDtoById(authorisedUser.getId()));
-            }
+    @PutMapping("/update")
+//    @PreAuthorize("#authentication.principal.id == #user.id or hasRole('ROLE_ADMIN')")
+    public Response<?> updateUser(@RequestBody User user){
+        if (!userService.isUserExist(user.getId())){
+            return Response.error(HttpStatus.NOT_FOUND, "user does not exist");
         }
-        return Response.error(HttpStatus.BAD_REQUEST).build();
+        User userFromDb = userService.getUserById(user.getId());
+        userService.updateUser(user);
+        return Response.ok().build();
     }
-
 
     @GetMapping(value = "/password-recovery/{email}")
     @Operation(
