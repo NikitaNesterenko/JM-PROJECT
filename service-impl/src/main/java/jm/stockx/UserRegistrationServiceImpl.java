@@ -6,6 +6,8 @@ import jm.stockx.util.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
@@ -22,13 +24,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     @Override
-    public Response<?> registrationUser(UserRegistrationDto user) {
+    public Response<?> registrationUser(@Valid UserRegistrationDto user) {
         if (userService.getUserByEmail(user.getEmail()) != null) {
-            return Response.ok(HttpStatus.BAD_REQUEST, user);
-        } else if (user.getFirstName().isEmpty() || user.getFirstName().isBlank()) {
-            return Response.ok(HttpStatus.BAD_REQUEST, user);
-        } else if (user.getLastName().isEmpty() || user.getLastName().isBlank()) {
-            return Response.ok(HttpStatus.BAD_REQUEST, user);
+            return Response.error(HttpStatus.BAD_REQUEST, "Пользователь с таким Email уже существует!");
         }
 
         String password = passwordGeneratorService.generatePassword(8);
@@ -43,6 +41,5 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         );
 
         return Response.ok(user);
-
     }
 }
