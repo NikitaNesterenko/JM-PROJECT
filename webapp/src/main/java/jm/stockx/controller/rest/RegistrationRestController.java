@@ -6,11 +6,12 @@ import jm.stockx.PasswordGeneratorService;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserRegistrationDto;
 import jm.stockx.entity.User;
-
-
 import jm.stockx.util.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/registration")
@@ -50,7 +51,7 @@ public class RegistrationRestController {
                         "your password:\n" + password
         );
 
-        return  Response.ok();
+        return Response.ok();
     }
 
 }
