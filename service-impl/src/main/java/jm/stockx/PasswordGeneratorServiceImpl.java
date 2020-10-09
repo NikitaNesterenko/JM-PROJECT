@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PasswordGeneratorService {
+public class PasswordGeneratorServiceImpl implements PasswordGeneratorService {
 
+    @Override
     public String generatePassword(@Positive Integer count) {
-
         String upperCaseLetters = RandomStringUtils.random(10, 65, 90, true, true);
         String lowerCaseLetters = RandomStringUtils.random(10, 97, 122, true, true);
         String numbers = RandomStringUtils.randomNumeric(10);
@@ -35,5 +35,4 @@ public class PasswordGeneratorService {
 
         return password.substring(0, count);
     }
-
 }
