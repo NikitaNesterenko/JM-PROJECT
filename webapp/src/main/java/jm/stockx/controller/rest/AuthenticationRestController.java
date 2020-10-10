@@ -3,6 +3,7 @@ package jm.stockx.controller.rest;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserLoginDto;
 import jm.stockx.dto.UserTokenDto;
+import jm.stockx.entity.Role;
 import jm.stockx.jwt.JwtTokenProvider;
 import jm.stockx.util.Response;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,10 +43,13 @@ public class AuthenticationRestController {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            String username = loginUser.getEmail();
+            Role role = userService.getUserByEmail(username).getRole();
+
             return Response.ok(
                     new UserTokenDto(
                             userService.getUserByEmail(loginUser.getEmail()),
-                            jwtTokenProvider.createToken(loginUser.getEmail())
+                            jwtTokenProvider.createToken(username, role)
                     )
             );
         } catch (AuthenticationException e) {
