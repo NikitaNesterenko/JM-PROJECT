@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.StyleDAO;
-import jm.stockx.dto.StyleDto;
+import jm.stockx.dto.style.StyleDto;
 import jm.stockx.entity.Style;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +24,13 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    public StyleDto get(Long id) {
-        return styleDao.getStyleDtoById(id);
+    public StyleDto getStyleDtoByStyleId(Long id) {
+        return styleDao.getStyleDtoByStyleId(id);
     }
 
     @Override
-    public StyleDto getStyleByName(String name) {
-        return styleDao.getStyleDtoByName(name);
+    public StyleDto getStyleDtoByStyleName(String name) {
+        return styleDao.getStyleDtoByStyleName(name);
     }
 
     @Override
@@ -54,13 +54,8 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    public StyleDto getStyleDtoById(Long id) {
-        return styleDao.getStyleDtoById(id);
-    }
-
-    @Override
-    public Style getStyle(String name) {
-        return styleDao.getStyle(name);
+    public Style getStyleByName(String name) {
+        return styleDao.getStyleByName(name);
     }
 
 }

@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.ShoeSizeDto;
+import jm.stockx.dto.shoeSize.ShoeSizeDto;
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 import org.springframework.stereotype.Repository;
@@ -11,11 +11,11 @@ import java.util.List;
 public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements ShoeSizeDAO {
 
     @Override
-    public ShoeSizeDto getShoeSizeDtoByName(String name) {
+    public ShoeSizeDto getShoeSizeDtoByShoeSizeName(String name) {
         for (ShoeSizeTypes type : ShoeSizeTypes.values()) {
             if (type.toString().equals(name)) {
                 return entityManager.createQuery("" +
-                        "SELECT NEW jm.stockx.dto.ShoeSizeDto(" +
+                        "SELECT NEW jm.stockx.dto.shoeSize.ShoeSizeDto(" +
                         "ss.id," +
                         "ss.size," +
                         "ss.sizeTypes)" +
@@ -32,9 +32,9 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
     }
 
     @Override
-    public ShoeSizeDto getShoeSizeDtoById(Long id) {
+    public ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ShoeSizeDto(" +
+                "SELECT NEW jm.stockx.dto.shoeSize.ShoeSizeDto(" +
                 "ss.id," +
                 "ss.size," +
                 "ss.sizeTypes)" +
@@ -45,11 +45,11 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
     }
 
     @Override
-    public List<ShoeSize> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType) {
+    public List<ShoeSize> getShoeSizeDtoByShoeSizeType(ShoeSizeTypes sizeType) {
         return entityManager.createQuery(
-                "FROM ShoeSize AS ss WHERE ss.sizeTypes =: type",
+                "FROM ShoeSize AS ss WHERE ss.sizeTypes =: sizeType",
                 ShoeSize.class)
-                .setParameter("type", sizeType)
+                .setParameter("sizeType", sizeType)
                 .getResultList();
     }
 }

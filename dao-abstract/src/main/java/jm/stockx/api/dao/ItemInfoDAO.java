@@ -1,19 +1,20 @@
 package jm.stockx.api.dao;
 
 
-import jm.stockx.dto.ItemCategoryDto;
-import jm.stockx.dto.ItemInfoGetDto;
+import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
+import org.joda.money.Money;
+
 import java.util.List;
 
 public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
-    ItemInfo getByItemId(Long itemId);
+    ItemInfo getItemInfoByItemId(Long itemId);
 
-    List<ItemCategoryDto> getItemCategoryDtoByCategory(ItemCategory category);
+    List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
 
-    List<ItemInfoGetDto> getListAndOrderByCash(Integer cash);
+    List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
 
 }

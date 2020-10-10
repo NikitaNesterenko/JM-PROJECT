@@ -1,18 +1,18 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.UserDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 
 public interface UserDAO extends GenericDao<User, Long> {
-    UserDto getUserDtoByName(String name);
+    UserDto getUserDtoByUserUsername(String name);
 
-    UserDto getUserDtoByEmail(String name);
+    UserDto getUserDtoByUserEmail(String name);
 
-    UserDto getUserDtoByAppleId(String appleId);
+    UserDto getUserDtoByUserAppleId(String appleId);
 
-    UserDto getUserDtoById(Long id);
+    UserDto getUserDtoByUserId(Long id);
 
-    User getUserByName(String name);
+    User getUserByUsername(String username);
 
     User getUserById(Long id);
 

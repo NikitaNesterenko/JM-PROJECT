@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.BrandDto;
+import jm.stockx.dto.brand.BrandDto;
 import jm.stockx.entity.Brand;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +11,9 @@ import java.util.List;
 public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
 
     @Override
-    public BrandDto getBrandDtoByName(String name) {
+    public BrandDto getBrandDtoByBrandName(String name) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.BrandDto(" +
+                "SELECT NEW jm.stockx.dto.brand.BrandDto(" +
                 "b.id," +
                 "b.name)" +
                 "FROM Brand AS b " +
@@ -23,9 +23,9 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
     }
 
     @Override
-    public BrandDto getBrandDtoById(Long id) {
+    public BrandDto getBrandDtoByBrandId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.BrandDto(" +
+                "SELECT NEW jm.stockx.dto.brand.BrandDto(" +
                 "b.id," +
                 "b.name)" +
                 "FROM Brand AS b " +
@@ -35,9 +35,9 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
     }
 
     @Override
-    public Brand getBrand(String name) {
+    public Brand getBrandByName(String name) {
         return entityManager.createQuery("" +
-                "select b FROM Brand AS b WHERE b.name LIKE : brandName", Brand.class)
+                "SELECT b FROM Brand AS b WHERE b.name LIKE : brandName", Brand.class)
                 .setParameter("brandName", name)
                 .getSingleResult();
     }

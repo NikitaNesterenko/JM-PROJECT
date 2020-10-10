@@ -38,15 +38,15 @@ public class TokenRecoveryServiceTest {
 
     @Test
     public void getTokenByHashEmailTest() {
-        when(tokenDao.getByHashEmail(any())).thenReturn(token);
-        assertEquals(tokenService.getTokenByHashEmail(any()), token);
-        verify(tokenDao).getByHashEmail(any());
+        when(tokenDao.getTokenRecoveryByHashEmail(any())).thenReturn(token);
+        assertEquals(tokenService.getTokenRecoveryByHashEmail(any()), token);
+        verify(tokenDao).getTokenRecoveryByHashEmail(any());
     }
 
     @Test
     public void getTokenByIdTest() {
         when(tokenDao.getById(1L)).thenReturn(token);
-        assertEquals(tokenService.getTokenById(1L), token);
+        assertEquals(tokenService.getTokenRecoveryDtoByTokenRecoveryId(1L), token);
         verify(tokenDao).getById(1L);
     }
 

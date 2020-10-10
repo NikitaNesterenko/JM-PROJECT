@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SupportQuestionDAO;
-import jm.stockx.dto.CallbackFormDto;
+import jm.stockx.dto.support.CallbackFormDto;
 import jm.stockx.entity.SupportQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

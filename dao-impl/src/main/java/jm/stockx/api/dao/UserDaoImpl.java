@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.UserDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
-    public UserDto getUserDtoByName(String name) {
+    public UserDto getUserDtoByUserUsername(String username) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.UserDto(" +
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
                 "u.firstName," +
                 "u.lastName," +
                 "u.email," +
@@ -21,15 +21,15 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "u.localeTag" +
                 ")" +
                 "FROM User AS u " +
-                "WHERE u.firstName =: name", UserDto.class)
-                .setParameter("name", name)
+                "WHERE u.username =: username", UserDto.class)
+                .setParameter("username", username)
                 .getSingleResult();
     }
 
     @Override
-    public UserDto getUserDtoByEmail(String email) {
+    public UserDto getUserDtoByUserEmail(String email) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.UserDto(" +
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
                 "u.firstName," +
                 "u.lastName," +
                 "u.email," +
@@ -46,9 +46,9 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public UserDto getUserDtoByAppleId(String appleId) {
+    public UserDto getUserDtoByUserAppleId(String appleId) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.UserDto(" +
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
                 "u.firstName," +
                 "u.lastName," +
                 "u.email," +
@@ -65,9 +65,9 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public UserDto getUserDtoById(Long id) {
+    public UserDto getUserDtoByUserId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.UserDto(" +
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
                 "u.firstName," +
                 "u.lastName," +
                 "u.email," +
@@ -84,17 +84,17 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User getUserByUsername(String username) {
         return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.name = : name", User.class)
-                .setParameter("name", name)
+                "FROM User AS u WHERE u.username =: username", User.class)
+                .setParameter("username", username)
                 .getSingleResult();
     }
 
     @Override
     public User getUserById(Long id) {
         return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.id = : id", User.class)
+                "FROM User AS u WHERE u.id =: id", User.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -103,9 +103,9 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     public User getUserByEmail(String email) {
         try {
             return entityManager.createQuery("" +
-                    "FROM User u WHERE u.email = : email", User.class)
-                    .setParameter("email", email)
-                    .getSingleResult();
+                "FROM User AS u WHERE u.email =: email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
         } catch (Exception e) {
             e.getMessage();
             return null;

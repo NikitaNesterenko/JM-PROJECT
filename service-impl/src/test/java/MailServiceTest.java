@@ -62,7 +62,7 @@ public class MailServiceTest {
         TokenRecovery token = new TokenRecovery();
         token.setHashEmail("hashEmail");
         token.setStartTime(new Date());
-        when(tokenService.getTokenByHashEmail("link")).thenReturn(token);
+        when(tokenService.getTokenRecoveryByHashEmail("link")).thenReturn(token);
         assertFalse(mailService.changePasswordByToken("link", anyString()));
     }
 
@@ -74,7 +74,7 @@ public class MailServiceTest {
         token.setUser(new User());
         token.setHashEmail("hashEmail");
         token.setStartTime(new Date());
-        when(tokenService.getTokenByHashEmail("link")).thenReturn(token);
+        when(tokenService.getTokenRecoveryByHashEmail("link")).thenReturn(token);
         assertTrue(mailService.changePasswordByToken("link", anyString()));
     }
 }

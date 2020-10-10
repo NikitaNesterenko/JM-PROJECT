@@ -1,7 +1,7 @@
 package jm.stockx;
 
-import jm.stockx.dto.ItemTopInfoDto;
-import jm.stockx.dto.SellerTopInfoDto;
+import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
+import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
 
 import java.time.LocalDateTime;
@@ -21,9 +21,9 @@ public interface SellingInfoService {
 
     void delete(Long id);
 
-    List<SellerTopInfoDto> getTopSellingUsers();
+    List<SellerTopInfoDto> getSellerTopInfoDto();
 
-    int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
+    int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 
     List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
 }
