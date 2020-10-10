@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -15,7 +16,9 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    User updateUser(User user);
+    void updateUser(User user);
+
+    public void updateUserFromDto(UserPutDto userPutDto);
 
     UserDto getUserDtoByUserId(Long id);
 

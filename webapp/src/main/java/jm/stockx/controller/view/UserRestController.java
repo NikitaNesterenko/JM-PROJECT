@@ -7,12 +7,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.MailService;
 import jm.stockx.RoleService;
 import jm.stockx.UserService;
+import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -43,14 +47,21 @@ public class UserRestController {
 
 
     @PutMapping("/update")
-//    @PreAuthorize("#authentication.principal.id == #user.id or hasRole('ROLE_ADMIN')")
-    public Response<?> updateUser(@RequestBody User user){
-        if (!userService.isUserExist(user.getId())){
+    @Operation(
+            operationId = "updateUser",
+            summary = "update user details from UserDto",
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "user does not exist"),
+                    @ApiResponse(responseCode = "200", description = "user successfully updated  ")
+            }
+    )
+    @PreAuthorize("#authentication.principal.id == #userDto.id or hasRole('ROLE_ADMIN')")
+    public Response<?> updateUser(@RequestBody UserPutDto userPutDto) {
+        if (!userService.isUserExist(userPutDto.getId())) {
             return Response.error(HttpStatus.NOT_FOUND, "user does not exist");
         }
-        user.setRole(roleService.getRole("ROLE_USER"));
-        userService.updateUser(user);
-        return Response.ok().build();
+        userService.updateUserFromDto(userPutDto);
+        return Response.ok(HttpStatus.OK).build();
     }
 
 

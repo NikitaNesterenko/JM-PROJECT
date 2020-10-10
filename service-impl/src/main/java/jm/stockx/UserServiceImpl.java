@@ -2,6 +2,7 @@ package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        return userDao.update(user);
+    public void updateUser(User user) {
+        userDao.update(user);
+    }
+
+    @Override
+    public void updateUserFromDto(UserPutDto userPutDto) {
+        User userFromDb = getUserById(userPutDto.getId());
+        userFromDb.setFirstName(userPutDto.getFirstName());
+        userFromDb.setLastName(userPutDto.getLastName());
+        userDao.update(userFromDb);
     }
 
     @Override
@@ -102,7 +111,7 @@ public class UserServiceImpl implements UserService {
             Object principal = auth.getPrincipal();
             if (principal instanceof UserDetails) {
                 User authorisedUser = (User) auth.getPrincipal();
-                return getUserDtoById(authorisedUser.getId());
+                return getUserDtoByUserId(authorisedUser.getId());
             }
         }
         return null;
