@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPurchaseDto;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.User;
@@ -8,6 +9,7 @@ import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +17,60 @@ import java.util.Set;
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     public HashMap<ItemCategory, Double> getPurchaseStatisticsByUserId(Long id) {
+        List<UserPurchaseDto> list = entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.user.UserPurchaseDto( " +
+                "ubb.itemCategory, " +
+                "count (ubb.itemCategory) " +
+                ")" +
+                "FROM User u, u.buyingInfo ub, ub.boughtItems  ubb  " +
+                "WHERE u.id =: id", UserPurchaseDto.class)
+                .setParameter("id", id)
+                .getResultList();
+
+        long count = 0;
+
+        for (UserPurchaseDto el : list
+        ) {
+            count = +el.getCount();
+        }
+
+        HashMap<ItemCategory, Double> hashMap = new HashMap<>();
+
+        for (UserPurchaseDto el : list
+        ) {
+            hashMap.put(el.getItemCategory(), (double) count / el.getCount());
+        }
+
+        return hashMap;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public HashMap<ItemCategory, Double> getPurchaseStatisticsByUserIdOld(Long id) {
         HashMap<ItemCategory, Double> hashMap = new HashMap<>();
 
         int all = 0;
