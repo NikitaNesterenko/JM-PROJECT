@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Repository
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
-
     public HashMap<ItemCategory, Double> getPurchaseStatisticsByUserId(Long id) {
         HashMap<ItemCategory, Double> hashMap = new HashMap<>();
 
@@ -32,12 +31,8 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
         }
 
         HashMap<ItemCategory, Double> result = new HashMap<>();
-        for (BuyingInfo el : buyingInfoSet
-        ) {
-            for (Item item : el.getBoughtItems()
-            ) {
-                hashMap.put(item.getItemCategory(), all / hashMap.get(item.getItemCategory()));
-            }
+        for (Map.Entry<ItemCategory, Double> pair : hashMap.entrySet()) {
+            hashMap.put(pair.getKey(), all / hashMap.get(pair.getKey()));
         }
 
         return result;
