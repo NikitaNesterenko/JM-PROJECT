@@ -2,8 +2,6 @@ package jm.stockx;
 
 import jm.stockx.dto.UserRegistrationDto;
 import jm.stockx.entity.User;
-import jm.stockx.util.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -24,10 +22,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     @Override
-    public Response<?> registrationUser(@Valid UserRegistrationDto user) {
-        if (userService.getUserByEmail(user.getEmail()) != null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "Пользователь с таким Email уже существует!");
-        }
+    public void registrationUser(@Valid UserRegistrationDto user) {
 
         String password = passwordGeneratorService.generatePassword(8);
 
@@ -39,7 +34,5 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
                 "Thank you for your registration\n" +
                         "your password:" + password
         );
-
-        return Response.ok(user);
     }
 }
