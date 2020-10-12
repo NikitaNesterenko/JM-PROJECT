@@ -37,7 +37,7 @@ public class ItemInfoDto {
     @NotNull
     private Money highestBid;
 
-    private Set<Double> sizes;
+    private List<ShoeSize> sizes;
 
     private Long ItemId;
 
@@ -46,14 +46,7 @@ public class ItemInfoDto {
         this.price = itemInfo.getPrice();
         this.lowestAsk = itemInfo.getLowestAsk();
         this.highestBid = itemInfo.getHighestBid();
-        this.sizes = convertShoeSize(itemInfo.getSizes());
+        this.sizes = itemInfo.getSizes();
         this.ItemId = itemInfo.getItem().getId();
     }
-
-    private Set<Double> convertShoeSize(Set<ShoeSize> shoeSizes){
-        List<Double> sizes = new ArrayList<>();
-        shoeSizes.forEach(e -> sizes.add(e.getSize()));
-        Set<Double> sizesSet = new HashSet<>(sizes);
-        return sizesSet;
-    } 
 }

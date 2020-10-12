@@ -26,10 +26,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
 
 
     @Override
-    public Set<ShoeSize> getAll() {
-        List<ShoeSize> shoeSizeList = shoeSizeDAO.getAll();
-        Set<ShoeSize> shoeSizeSet = new HashSet<>(shoeSizeList);
-        return shoeSizeSet;
+    public List<ShoeSize> getAll() {
+        return shoeSizeDAO.getAll();
     }
 
     @Override

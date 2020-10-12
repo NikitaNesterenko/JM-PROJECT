@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ShoeSizeService {
-    Set<ShoeSize> getAll();
+    List<ShoeSize> getAll();
 
     ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id);
 
