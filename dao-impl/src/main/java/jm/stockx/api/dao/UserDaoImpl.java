@@ -36,7 +36,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
         ) {
             for (Item item : el.getBoughtItems()
             ) {
-                all++;
                 hashMap.put(item.getItemCategory(), all / hashMap.get(item.getItemCategory()));
             }
         }
