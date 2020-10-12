@@ -27,7 +27,7 @@ public class RegistrationRestController {
     @PostMapping
     public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) {
         if (userService.getUserByEmail(user.getEmail()) != null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "");
+            return Response.error(HttpStatus.BAD_REQUEST, "Пользователь с таким Email уже существует");
         }
         userRegistrationService.registrationUser(user);
 
