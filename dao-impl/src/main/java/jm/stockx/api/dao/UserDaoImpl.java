@@ -7,10 +7,9 @@ import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
 
-import javax.mail.search.SearchTerm;
-import java.util.*;
-import java.util.concurrent.ConcurrentMap;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Repository
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
