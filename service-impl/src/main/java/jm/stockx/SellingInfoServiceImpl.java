@@ -25,6 +25,16 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     @Override
+    public Double getMinSalesValue() {
+        return sellingInfoDAO.getMinSalesValue();
+    }
+
+    @Override
+    public Double getMaxSalesValue() {
+        return sellingInfoDAO.getMaxSalesValue();
+    }
+
+    @Override
     public List<SellingInfo> getAll() {
         return sellingInfoDAO.getAll();
     }

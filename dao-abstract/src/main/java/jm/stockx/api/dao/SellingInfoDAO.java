@@ -11,6 +11,10 @@ import java.util.List;
 public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
     Double getAverageSalesValue();
 
+    Double getMinSalesValue();
+
+    Double getMaxSalesValue();
+
     SellingInfoDto getSellingInfoDtoBySellingInfoId(Long id);
 
     List<SellerTopInfoDto> getSellerTopInfoDto();
