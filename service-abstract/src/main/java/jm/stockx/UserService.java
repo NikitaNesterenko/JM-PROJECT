@@ -2,9 +2,11 @@ package jm.stockx;
 
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserService {
@@ -34,5 +36,7 @@ public interface UserService {
     User getUserById(Long id);
 
     User getUserByEmail(String email);
+
+    HashMap<ItemCategory, Double> getPurchaseStatisticsPercentageByUserId(Long id);
 
 }

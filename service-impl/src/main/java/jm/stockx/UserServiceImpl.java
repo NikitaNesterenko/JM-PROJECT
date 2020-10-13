@@ -2,7 +2,9 @@ package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPurchaseDto;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -95,5 +98,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public HashMap<ItemCategory, Double> getPurchaseStatisticsPercentageByUserId(Long id) {
+        List<UserPurchaseDto> list = userDao.getPurchaseStatisticsByUserId(id);
+        // Счётчик для определения общего количества айтемов
+        double count = 0;
+        HashMap<ItemCategory, Double> hashMap = new HashMap<>();
+        for (UserPurchaseDto el : list
+        ) {
+            // Подсчёт
+            count = +Double.valueOf(el.getCount());
+        }
+        for (UserPurchaseDto el : list
+        ) {
+            // Кладём всё в мапу, для человекочитаемости умножаем на 100
+            // так как 0.32 будет труден в понимании
+            hashMap.put(el.getItemCategory(), el.getCount() / count * 100);
+        }
+        return hashMap;
     }
 }
