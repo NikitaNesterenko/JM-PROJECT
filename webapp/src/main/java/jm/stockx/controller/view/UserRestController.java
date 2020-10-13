@@ -55,7 +55,6 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "user successfully updated  ")
             }
     )
-    @PreAuthorize("#authentication.principal.id == #userDto.id or hasRole('ROLE_ADMIN')")
     public Response<?> updateUser(@RequestBody UserPutDto userPutDto) {
         if (!userService.isUserExist(userPutDto.getId())) {
             return Response.error(HttpStatus.NOT_FOUND, "user does not exist");

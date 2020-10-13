@@ -52,10 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserFromDto(UserPutDto userPutDto) {
-        User userFromDb = getUserById(userPutDto.getId());
-        userFromDb.setFirstName(userPutDto.getFirstName());
-        userFromDb.setLastName(userPutDto.getLastName());
-        userDao.update(userFromDb);
+        userDao.updateUserFromDto(userPutDto);
     }
 
     @Override
