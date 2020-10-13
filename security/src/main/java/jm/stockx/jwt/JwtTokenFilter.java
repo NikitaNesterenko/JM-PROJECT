@@ -1,16 +1,15 @@
 package jm.stockx.jwt;
 
-import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import jm.stockx.SecurityConfig;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -18,64 +17,46 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Collections;
+import java.nio.charset.MalformedInputException;
 
-@Component
+
 public class JwtTokenFilter extends GenericFilterBean {
-    @Value("${jwt.secret}")
-    private String secret;
 
-    @PostConstruct
-    protected void init() {
-        secret = Base64.getEncoder().encodeToString(secret.getBytes());
+    private final JwtTokenProvider tokenProvider;
+
+    public JwtTokenFilter(JwtTokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
     }
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String token = this.resolveToken(httpServletRequest);
+       try {
+           HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+           String token = this.resolveToken(httpServletRequest);
 
-        if (StringUtils.hasText(token) && this.validateToken(token)) {
-            Authentication authentication = this.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-        filterChain.doFilter(servletRequest, servletResponse);
+           if (StringUtils.hasText(token)) {
+               if (this.tokenProvider.validateToken(token)) {
+                   Authentication authentication = this.tokenProvider.getAuthentication(token);
+                   SecurityContextHolder.getContext().setAuthentication(authentication);
+               }
+           }
+           filterChain.doFilter(servletRequest, servletResponse);
+       } catch (ExpiredJwtException | IllegalArgumentException | SignatureException | MalformedJwtException | UnsupportedJwtException e) {
+           ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+           System.out.println(e.getMessage());
+       }
     }
 
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
+
+        String bearerToken = request.getHeader(SecurityConfig.AUTHORIZATION_HEADER);
+        if (bearerToken != null && bearerToken.startsWith(SecurityConfig.TOKEN_PREFIX)) {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
     }
 
-    private boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return true;
-        } catch (SignatureException |
-                IllegalArgumentException |
-                UnsupportedJwtException |
-                MalformedJwtException |
-                ExpiredJwtException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
-        if (claims.getSubject() != null) {
-            return new UsernamePasswordAuthenticationToken(claims.getSubject(), null , Collections.singleton(new SimpleGrantedAuthority((String)claims.get("role"))));
-        }
-        return null;
-    }
+
 }

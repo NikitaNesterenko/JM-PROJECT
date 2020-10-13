@@ -6,6 +6,7 @@ import jm.stockx.dto.UserTokenDto;
 import jm.stockx.entity.Role;
 import jm.stockx.jwt.JwtTokenProvider;
 import jm.stockx.util.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -53,7 +54,7 @@ public class AuthenticationRestController {
                     )
             );
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username/password");
+            return Response.error(HttpStatus.BAD_REQUEST, "Invalid username/password");
         }
     }
 }
