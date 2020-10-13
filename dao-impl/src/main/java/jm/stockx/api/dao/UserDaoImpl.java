@@ -117,7 +117,9 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
         entityManager.createQuery("" +
                 "UPDATE User user SET" +
                 " user.firstName = :firstNameFromDto," +
-                " user.lastName = :lastNameFromDto ")
+                " user.lastName = :lastNameFromDto " +
+                "WHERE user.id = :idFromDto")
+                .setParameter("idFromDto",userPutDto.getId())
                 .setParameter("firstNameFromDto",userPutDto.getFirstName())
                 .setParameter("lastNameFromDto",userPutDto.getLastName())
                 .executeUpdate();

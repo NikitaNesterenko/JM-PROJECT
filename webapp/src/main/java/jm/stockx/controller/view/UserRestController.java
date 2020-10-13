@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,9 +56,12 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "user successfully updated  ")
             }
     )
-    public Response<?> updateUser(@RequestBody UserPutDto userPutDto) {
+    public Response<?> updateUser(@RequestBody UserPutDto userPutDto, @AuthenticationPrincipal User principal) {
         if (!userService.isUserExist(userPutDto.getId())) {
             return Response.error(HttpStatus.NOT_FOUND, "user does not exist");
+        }
+        if (!userService.getCurrentLoggedInUser().getId().equals(userPutDto.getId())){
+            return Response.error(HttpStatus.FORBIDDEN, "user does not have permission");
         }
         userService.updateUserFromDto(userPutDto);
         return Response.ok(HttpStatus.OK).build();
