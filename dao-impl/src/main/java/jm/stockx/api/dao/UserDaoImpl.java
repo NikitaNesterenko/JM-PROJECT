@@ -1,28 +1,29 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.user.UserDto;
-import jm.stockx.dto.user.UserPurchaseDto;
 import jm.stockx.entity.User;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 @Repository
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
-    public List<UserPurchaseDto> getPurchaseStatisticsByUserId(Long id) {
-
+    public List<Tuple> getPurchaseStatisticsByUserId(Long id) {
         return entityManager.createNativeQuery(
-                "SELECT i.item_category, count(i.item_category) " +
+                "SELECT i.item_category AS CategoryOfItem, " +
+                        "count(i.item_category) AS CountOfBoughtItems " +
                         "FROM userdb.public.items AS i " +
-                        "WHERE id IN " +
-                        "(SELECT bi.item_id FROM userdb.public.buying_item AS bi " +
-                        "WHERE buying_id IN " +
-                        "(SELECT ub.buying_id FROM userdb.public.user_buying AS ub " +
-                        "WHERE user_id = :userid)" +
-                        ")" +
-                        "group by i.item_category ", UserPurchaseDto.class)
+                        "JOIN buying_item b " +
+                        "    on i.id = b.item_id " +
+                        "JOIN user_buying u  " +
+                        "    on b.buying_id = u.buying_id " +
+                        "WHERE user_id = :userid " +
+                        "GROUP BY i.item_category " +
+                        "ORDER BY i.item_category" +
+                        "", Tuple.class)
                 .setParameter("userid", id)
                 .getResultList();
     }
