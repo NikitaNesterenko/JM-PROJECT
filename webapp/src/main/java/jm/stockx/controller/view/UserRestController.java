@@ -2,6 +2,8 @@ package jm.stockx.controller.view;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.MailService;
@@ -37,13 +39,11 @@ public class UserRestController {
 
     private final UserService userService;
     private final MailService mailService;
-    private final RoleService roleService;
 
     @Autowired
     public UserRestController(UserService userService, MailService mailService, RoleService roleService) {
         this.userService = userService;
         this.mailService = mailService;
-        this.roleService = roleService;
     }
 
 
@@ -60,13 +60,12 @@ public class UserRestController {
         if (!userService.isUserExist(userPutDto.getId())) {
             return Response.error(HttpStatus.NOT_FOUND, "user does not exist");
         }
-        if (!userService.getCurrentLoggedInUser().getId().equals(userPutDto.getId())){
+        if (!principal.getId().equals(userPutDto.getId())){
             return Response.error(HttpStatus.FORBIDDEN, "user does not have permission");
         }
         userService.updateUserFromDto(userPutDto);
         return Response.ok(HttpStatus.OK).build();
     }
-
 
     @GetMapping(value = "/password-recovery/{email}")
     @Operation(
