@@ -1,28 +1,19 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingInfoDAO;
-import jm.stockx.api.dao.ItemDAO;
-import jm.stockx.api.dao.ItemInfoDAO;
-import jm.stockx.api.dao.SellingInfoDAO;
-import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.api.dao.*;
 import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.item.ItemSearchDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.dto.page.PageDto;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.PaymentInfo;
-import jm.stockx.entity.SellingInfo;
-import jm.stockx.entity.User;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.entity.*;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -144,12 +135,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItemById(Long id) {
-        return itemDao.getItemById(id);
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        if (search.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return itemDao.getItemSearchDtoBySearch(search);
     }
 
     @Override
     public void updateItemImageUrl(Long id, String url) {
         itemDao.updateItemImageUrl(id, url);
     }
+
+
 }
