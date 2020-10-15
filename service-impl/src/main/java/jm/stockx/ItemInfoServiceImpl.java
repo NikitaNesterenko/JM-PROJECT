@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
 public class ItemInfoServiceImpl implements ItemInfoService {
 
-    private ItemInfoDAO itemInfoDAO;
+    private final ItemInfoDAO itemInfoDAO;
 
     @Autowired
     public ItemInfoServiceImpl(ItemInfoDAO itemInfoDAO) {
@@ -33,8 +34,9 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
-    public void create(ItemInfo itemInfo) {
-        itemInfoDAO.add(itemInfo);
+    public ItemInfo create(ItemInfo itemInfo) {
+
+        return itemInfoDAO.add(itemInfo);
     }
 
     @Override

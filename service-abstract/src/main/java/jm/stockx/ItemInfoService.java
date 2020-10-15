@@ -6,6 +6,7 @@ import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ItemInfoService {
 
@@ -13,7 +14,7 @@ public interface ItemInfoService {
 
     ItemInfo get(Long id);
 
-    void create(ItemInfo itemInfo);
+    ItemInfo create(ItemInfo itemInfo);
 
     void update(ItemInfo itemInfo);
 

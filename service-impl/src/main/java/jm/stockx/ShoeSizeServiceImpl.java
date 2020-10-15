@@ -34,6 +34,11 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
+    public ShoeSize findOneBySize(Double size) {
+        return shoeSizeDAO.findOneBySize(size);
+    }
+
+    @Override
     public void create(ShoeSize shoeSize) {
         shoeSizeDAO.add(shoeSize);
     }

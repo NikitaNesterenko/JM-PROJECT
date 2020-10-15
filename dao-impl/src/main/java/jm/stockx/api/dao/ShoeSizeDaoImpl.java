@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.ShoeSizeDto;
+import jm.stockx.entity.Brand;
 import jm.stockx.entity.ShoeSize;
 import jm.stockx.enums.ShoeSizeTypes;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,13 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
                 ShoeSize.class)
                 .setParameter("type", sizeType)
                 .getResultList();
+    }
+
+    @Override
+    public ShoeSize findOneBySize(Double size) {
+        return entityManager.createQuery("" +
+                "SELECT shoeSize from ShoeSize shoeSize WHERE shoeSize.size = :size", ShoeSize.class)
+                .setParameter("size", size)
+                .getSingleResult();
     }
 }

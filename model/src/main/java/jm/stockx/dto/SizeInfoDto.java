@@ -10,17 +10,29 @@ import org.joda.money.Money;
 @AllArgsConstructor
 public class SizeInfoDto {
 
-    private String lastSale;
+    private String lastSalePrice;
     private String lowestAsk;
     private String highestBid;
     private String itemName;
     private String condition;
 
-    public SizeInfoDto(Money lastSale, Money lowestAsk, Money highestBid, String itemName, String condition) {
-        this.lastSale = lastSale.toString();
+
+    public SizeInfoDto(Money lowestAsk, Money highestBid, String itemName, String condition, Money lastSalePrice) {
         this.lowestAsk = lowestAsk.toString();
         this.highestBid = highestBid.toString();
         this.itemName = itemName;
         this.condition = condition;
+        this.lastSalePrice = lastSalePrice.toString();
+    }
+
+    public SizeInfoDto(String itemName, String condition, Money lowestAsk, Money highestBid) {
+        this.lowestAsk = lowestAsk.toString();
+        this.highestBid = highestBid.toString();
+        this.condition = condition;
+        this.itemName = itemName;
+    }
+
+    public void setLastSalePrice(Money lastSalePrice) {
+        this.lastSalePrice = lastSalePrice.toString();
     }
 }

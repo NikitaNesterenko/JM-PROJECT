@@ -3,6 +3,7 @@ package jm.stockx.entity;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -12,8 +13,8 @@ import org.joda.money.Money;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.List;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -67,8 +68,12 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemCategory itemCategory;
 
-    @ManyToMany
-    private Set<BuyingInfo> buyingInfoSet;
+    @OneToOne(targetEntity = ItemInfo.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemInfo_id")
+    private ItemInfo itemInfo;
+
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
+    private BuyingInfo buyingInfo;
 
     public Item(Long id,
                 String name,
@@ -173,10 +178,10 @@ public class Item {
                 Brand brand,
                 String itemImageUrl,
                 Style style,
-                Money price,
-                Money lowestAsk,
-                Money highestBid,
-                Set<ShoeSize> sizes) {
+                BuyingInfo buyingInfo,
+                ItemInfo itemInfo
+
+    ) {
         this.name = name;
         this.retailPrice = retailPrice;
         this.releaseDate = releaseDate;
@@ -185,7 +190,8 @@ public class Item {
         this.brand = brand;
         this.itemImageUrl = itemImageUrl;
         this.style = style;
-        ItemInfo itemInfo = new ItemInfo(sizes, price, lowestAsk, highestBid, this);
-    }
+        this.buyingInfo = buyingInfo;
+        this.itemInfo = itemInfo;
 
+    }
 }

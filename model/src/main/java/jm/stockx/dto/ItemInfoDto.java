@@ -12,7 +12,9 @@ import org.joda.money.Money;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,7 +37,7 @@ public class ItemInfoDto {
     @NotNull
     private Money highestBid;
 
-    private List<Double> sizes;
+    private Set<Double> sizes;
 
     private Long ItemId;
 
@@ -46,11 +48,10 @@ public class ItemInfoDto {
         this.lowestAsk = itemInfo.getLowestAsk();
         this.highestBid = itemInfo.getHighestBid();
         this.sizes = convertShoeSize(itemInfo.getSizes());
-        this.ItemId = itemInfo.getItem().getId();
     }
 
-    private List<Double> convertShoeSize(List<ShoeSize> shoeSizes){
-        List<Double> sizes = new ArrayList<>();
+    private Set<Double> convertShoeSize(Set<ShoeSize> shoeSizes){
+        Set<Double> sizes = new HashSet<>();
         shoeSizes.forEach(e -> sizes.add(e.getSize()));
         return sizes;
     }

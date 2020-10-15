@@ -11,6 +11,7 @@ import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
+import jm.stockx.entity.ShoeSize;
 import jm.stockx.entity.User;
 import jm.stockx.enums.Status;
 import org.joda.money.Money;
@@ -32,6 +33,7 @@ public class ItemServiceImpl implements ItemService {
     private final MailService mailService;
     private final BuyingInfoDAO buyingInfoDAO;
     private final SellingInfoDAO sellingInfoDAO;
+    private final ShoeSizeService shoeSizeService;
 
     @Autowired
     public ItemServiceImpl(ItemDAO itemDao,
@@ -39,13 +41,14 @@ public class ItemServiceImpl implements ItemService {
                            MailService mailService,
                            BuyingInfoDAO buyingInfoDAO,
                            SellingInfoDAO sellingInfoDAO,
-                           ItemInfoDAO itemInfoDAO) {
+                           ItemInfoDAO itemInfoDAO, ShoeSizeService shoeSizeService) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
         this.sellingInfoDAO = sellingInfoDAO;
         this.buyingInfoDAO = buyingInfoDAO;
         this.itemInfoDAO = itemInfoDAO;
+        this.shoeSizeService = shoeSizeService;
     }
 
     @Override
@@ -150,7 +153,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public SizeInfoDto getSizeItemDtoByItem(Money price, Double size) {
-        return itemDao.getSizeItemDtoByItem(price, size);
+    public SizeInfoDto getSizeItemDtoByItem(Long itemId, Double size) {
+        return itemDao.getSizeItemDtoByItem(itemId, shoeSizeService.findOneBySize(size));
     }
 }

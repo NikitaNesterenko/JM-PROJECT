@@ -1,5 +1,6 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.Item;
 import jm.stockx.entity.ItemInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,9 +28,9 @@ public class ItemInfoGetDto {
     @NotNull
     private Money lowestAsk;
 
-    public ItemInfoGetDto(ItemInfo itemInfo) {
-        this.ItemName = itemInfo.getItem().getName();
-        this.itemImageUrl = itemInfo.getItem().getItemImageUrl();
-        this.lowestAsk = itemInfo.getLowestAsk();
+    public ItemInfoGetDto(Item item) {
+        this.ItemName = item.getName();
+        this.itemImageUrl = item.getItemImageUrl();
+        this.lowestAsk = item.getItemInfo().getLowestAsk();
     }
 }

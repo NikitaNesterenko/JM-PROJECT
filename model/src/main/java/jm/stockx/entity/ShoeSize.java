@@ -30,12 +30,20 @@ public class ShoeSize {
     @Enumerated(EnumType.STRING)
     private ShoeSizeTypes sizeTypes;
 
-    @ManyToMany(mappedBy = "sizes", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "sizes", fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     private Set<ItemInfo> items = new HashSet<>();
 
     public ShoeSize(Double size, ShoeSizeTypes sizeTypes) {
         this.size = size;
         this.sizeTypes = sizeTypes;
+    }
+
+    public ShoeSize(Double size) {
+        this.size = size;
     }
 
     @Override

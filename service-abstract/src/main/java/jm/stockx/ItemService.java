@@ -6,9 +6,11 @@ import jm.stockx.dto.PageDto;
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ShoeSize;
 import org.joda.money.Money;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ItemService {
 
@@ -42,6 +44,6 @@ public interface ItemService {
 
     void updateItemImageUrl(Long id, String url);
 
-    SizeInfoDto getSizeItemDtoByItem(Money price, Double size);
+    SizeInfoDto getSizeItemDtoByItem(Long itemId, Double size);
 
 }

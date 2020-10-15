@@ -5,6 +5,7 @@ import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ShoeSize;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
@@ -171,25 +172,55 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .getResultList();
     }
 
-    @Override
-    public SizeInfoDto getSizeItemDtoByItem(Money price, Double size) {
+    private Money findLastSalePriceByItemID(Long itemId) {
         return entityManager.createQuery("" +
+                "SELECT item.buyingInfo.buyingPrice " +
+                "FROM Item item " +
+                "WHERE item.id = :itemId", Money.class)
+                .setParameter("itemId", itemId)
+                .getSingleResult();
+
+    }
+
+    @Override
+    public SizeInfoDto getSizeItemDtoByItem(Long itemId, ShoeSize size) {
+        SizeInfoDto sizeInfoDto = entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
-                "ib.buyingPrice," +
-                "ii.lowestAsk," +
-                "ii.highestBid," +
-                "ii.item.name," +
-                "ii.item.condition" +
-                ") " +
-                "FROM ItemInfo ii " +
-                "JOIN ii.item.buyingInfoSet ib " +
-                "WHERE ii.price = :price " +
-                "AND ii.sizes.size = :shoeSize " +
-                "AND ib.id = BuyingInfo.id " +
-                "ORDER BY ib.buyingTimeStamp ", SizeInfoDto.class)
-                .setParameter("price", price)
+                "item.itemInfo.lowestAsk," +
+                "item.itemInfo.highestBid," +
+                "item.name," +
+                "item.condition," +
+                "item.buyingInfo.buyingPrice" +
+                ")" +
+                "FROM Item item " +
+                "WHERE item.id = :itemId " +
+                "AND :shoeSize MEMBER OF item.itemInfo.sizes", SizeInfoDto.class)
+                .setParameter("itemId", itemId)
                 .setParameter("shoeSize", size)
                 .setMaxResults(1)
                 .getResultList().get(0);
+        return sizeInfoDto;
     }
+
+//    @Override
+//    public SizeInfoDto getSizeItemDtoByItem(Money price, Double size) {
+//        return entityManager.createQuery("" +
+//                "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
+//                "ib.buyingPrice," +
+//                "ii.lowestAsk," +
+//                "ii.highestBid," +
+//                "ii.item.name," +
+//                "ii.item.condition" +
+//                ") " +
+//                "FROM ItemInfo ii " +
+//                "JOIN ii.item.buyingInfoSet ib " +
+//                "WHERE ii.price = :price " +
+//                "AND ii.sizes.size = :shoeSize " +
+//                "AND ib.id = BuyingInfo.id " +
+//                "ORDER BY ib.buyingTimeStamp ", SizeInfoDto.class)
+//                .setParameter("price", price)
+//                .setParameter("shoeSize", size)
+//                .setMaxResults(1)
+//                .getResultList().get(0);
+//    }
 }

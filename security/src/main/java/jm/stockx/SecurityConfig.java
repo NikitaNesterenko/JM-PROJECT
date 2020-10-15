@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         http
                 .authorizeRequests()
                 .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
+                .antMatchers("/rest/api/users/**").permitAll()
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
                         "/authorization/**", "/password-recovery/**", "/brand/all", "/news",

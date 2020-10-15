@@ -12,4 +12,6 @@ public interface ShoeSizeDAO extends GenericDao<ShoeSize, Long> {
     ShoeSizeDto getShoeSizeDtoById(Long id);
 
     List<ShoeSize> getShoeSizeDtoBySizeType(ShoeSizeTypes sizeType);
+
+    ShoeSize findOneBySize(Double size);
 }

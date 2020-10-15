@@ -13,7 +13,6 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
     List<ItemCategoryDto> getItemCategoryDtoByCategory(ItemCategory category);
 
-
     List<ItemInfoGetDto> getListAndOrderByCash(Integer cash);
 
 }

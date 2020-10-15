@@ -5,6 +5,7 @@ import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ShoeSize;
 import org.joda.money.Money;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     void updateItemImageUrl(Long id, String url);
 
-    SizeInfoDto getSizeItemDtoByItem(Money price, Double size);
+    SizeInfoDto getSizeItemDtoByItem(Long id, ShoeSize size);
 
     List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 }
