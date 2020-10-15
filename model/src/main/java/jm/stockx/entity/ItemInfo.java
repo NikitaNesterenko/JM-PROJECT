@@ -1,15 +1,12 @@
 package jm.stockx.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,8 +14,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Entity
+@ToString
 @Builder
+@Entity
 public class ItemInfo {
 
     @Id
@@ -42,10 +40,15 @@ public class ItemInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
+    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+
     public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item) {
         this.sizes = sizes;
         this.price = price;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
+        this.item = item;
     }
 }
