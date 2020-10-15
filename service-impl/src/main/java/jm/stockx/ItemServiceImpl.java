@@ -5,6 +5,7 @@ import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
+import jm.stockx.dto.item.ItemSearchDto;
 import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
@@ -15,14 +16,13 @@ import jm.stockx.entity.Item;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -142,12 +142,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItemById(Long id) {
-        return itemDao.getItemById(id);
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        if (search.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return itemDao.getItemSearchDtoBySearch(search);
     }
 
     @Override
     public void updateItemImageUrl(Long id, String url) {
         itemDao.updateItemImageUrl(id, url);
     }
+
+
 }

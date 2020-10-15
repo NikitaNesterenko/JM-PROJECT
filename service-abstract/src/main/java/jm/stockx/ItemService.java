@@ -1,12 +1,15 @@
 package jm.stockx;
 
+import jm.stockx.dto.item.ItemSearchDto;
 import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.enums.ItemCategory;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
@@ -36,7 +39,7 @@ public interface ItemService {
 
     Item getItemByName(String name);
 
-    Item getItemById(Long id);
-
     void updateItemImageUrl(Long id, String url);
+
+    List<ItemSearchDto> getItemSearchDtoBySearch(String search);
 }

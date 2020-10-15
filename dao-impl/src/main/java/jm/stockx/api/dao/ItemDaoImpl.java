@@ -1,13 +1,17 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.item.ItemSearchDto;
 import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Repository
@@ -152,6 +156,19 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.item.ItemSearchDto(i.itemCategory, COUNT(i)) " +
+                "FROM Item i " +
+                "WHERE TRIM(LOWER(i.name)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+                "GROUP BY i.itemCategory " +
+                "ORDER BY i.itemCategory DESC " +
+                "", ItemSearchDto.class)
+                .setParameter("search", search.trim())
+                .getResultList();
+    }
+
+    @Override
     public List<ReleaseItemDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         String sql = "" +
                 "SELECT NEW jm.stockx.dto.item.ReleaseItemDto(" +
@@ -167,4 +184,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .setParameter("end", endPeriod)
                 .getResultList();
     }
+
+
 }
