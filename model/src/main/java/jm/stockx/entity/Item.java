@@ -180,7 +180,6 @@ public class Item {
                 Style style,
                 BuyingInfo buyingInfo,
                 ItemInfo itemInfo
-
     ) {
         this.name = name;
         this.retailPrice = retailPrice;

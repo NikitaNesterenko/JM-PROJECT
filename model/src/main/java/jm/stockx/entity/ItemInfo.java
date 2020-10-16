@@ -40,15 +40,11 @@ public class ItemInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
-    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", nullable = false)
-    private Item item;
 
-    public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid, Item item) {
+    public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid) {
         this.sizes = sizes;
         this.price = price;
         this.lowestAsk = lowestAsk;
         this.highestBid = highestBid;
-        this.item = item;
     }
 }
