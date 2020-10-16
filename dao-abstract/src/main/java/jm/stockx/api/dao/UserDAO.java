@@ -1,9 +1,9 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 
-import javax.persistence.Tuple;
 import java.util.List;
 
 public interface UserDAO extends GenericDao<User, Long> {
@@ -21,5 +21,5 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     User getUserByEmail(String email);
 
-    List<Tuple> getPurchaseStatisticsByUserId(Long id);
+    List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id);
 }
