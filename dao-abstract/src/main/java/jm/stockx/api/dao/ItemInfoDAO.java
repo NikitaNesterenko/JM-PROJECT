@@ -14,7 +14,5 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
-
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
-
 }

@@ -1,8 +1,9 @@
 package jm.stockx.controller.rest;
 
 import jm.stockx.UserService;
-import jm.stockx.dto.UserLoginDto;
+import jm.stockx.dto.security.UserLoginDto;
 import jm.stockx.dto.UserTokenDto;
+import jm.stockx.dto.security.UserLoginDto;
 import jm.stockx.entity.Role;
 import jm.stockx.jwt.JwtTokenProvider;
 import jm.stockx.util.Response;

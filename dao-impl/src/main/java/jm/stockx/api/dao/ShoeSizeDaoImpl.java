@@ -25,7 +25,10 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
                         .getSingleResult();
             }
         }
-        return entityManager.createQuery("SELECT count(ss) FROM ShoeSize AS ss WHERE ss.sizeTypes = : name", ShoeSizeDto.class)
+        return entityManager.createQuery("" +
+                        "SELECT count(ss) " +
+                        "FROM ShoeSize AS ss " +
+                        "WHERE ss.sizeTypes = : name", ShoeSizeDto.class)
                 .setParameter("name", name)
                 .setMaxResults(1)
                 .getSingleResult();
@@ -34,20 +37,21 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ShoeSize, Long> implements Shoe
     @Override
     public ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.shoeSize.ShoeSizeDto(" +
-                "ss.id," +
-                "ss.size," +
-                "ss.sizeTypes)" +
-                "FROM ShoeSize AS ss " +
-                "WHERE ss.id =: id", ShoeSizeDto.class)
-                .setParameter("id", id)
-                .getSingleResult();
+                        "SELECT NEW jm.stockx.dto.shoeSize.ShoeSizeDto(" +
+                        "ss.id," +
+                        "ss.size," +
+                        "ss.sizeTypes)" +
+                        "FROM ShoeSize AS ss " +
+                        "WHERE ss.id =: id", ShoeSizeDto.class)
+                        .setParameter("id", id)
+                        .getSingleResult();
     }
 
     @Override
     public List<ShoeSize> getShoeSizeDtoByShoeSizeType(ShoeSizeTypes sizeType) {
-        return entityManager.createQuery(
-                "FROM ShoeSize AS ss WHERE ss.sizeTypes =: sizeType",
+        return entityManager.createQuery("" +
+                        "FROM ShoeSize AS ss " +
+                        "WHERE ss.sizeTypes =: sizeType",
                 ShoeSize.class)
                 .setParameter("sizeType", sizeType)
                 .getResultList();

@@ -11,6 +11,7 @@ import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
