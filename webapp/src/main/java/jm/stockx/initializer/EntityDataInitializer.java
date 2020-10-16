@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -218,7 +217,7 @@ public class EntityDataInitializer {
                     styleService.getStyleByName("sports")));
 
             List<ShoeSize> sizes = shoeSizeService.getAll();
-            List<ShoeSize> menSizes = new ArrayList<>();
+            Set<ShoeSize> menSizes = new HashSet<>();
             for(ShoeSize s : sizes){
                 if(s.getSizeTypes().equals(ShoeSizeTypes.MEN)){
                     menSizes.add(s);
@@ -279,7 +278,7 @@ public class EntityDataInitializer {
                 Long itemId = (long) (1+Math.random()*5);
                 sellingInfoService.create(new SellingInfo(
                         userService.getUserById((long) (1+Math.random()*2)),
-                        new ItemInfo(shoeSizeService.getAll(), Money.of(CurrencyUnit.USD, 250),Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
+                        new ItemInfo(new HashSet<>(shoeSizeService.getAll()), Money.of(CurrencyUnit.USD, 250),Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
                         itemService.getItemById(itemId),
                         Status.DELIVERED
                         )

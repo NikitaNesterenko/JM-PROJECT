@@ -46,7 +46,7 @@ public class ItemInfoDto {
         this.price = itemInfo.getPrice();
         this.lowestAsk = itemInfo.getLowestAsk();
         this.highestBid = itemInfo.getHighestBid();
-        this.sizes = itemInfo.getSizes();
+        this.sizes = new ArrayList<>(itemInfo.getSizes());
         this.ItemId = itemInfo.getItem().getId();
     }
 }
