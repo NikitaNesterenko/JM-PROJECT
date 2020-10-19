@@ -1,23 +1,22 @@
 package jm.stockx;
 
-import jm.stockx.dto.item.ItemSearchDto;
-import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.item.ItemSearchDto;
 import jm.stockx.dto.page.PageDto;
+import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
-import jm.stockx.enums.ItemCategory;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public interface ItemService {
 
-    List<Item> getAll();
+    Set<Item> getAll();
 
     ItemDto getItemDtoById(Long id);
 
-    void create(Item item);
+    Item create(Item item);
 
     void update(Item item);
 

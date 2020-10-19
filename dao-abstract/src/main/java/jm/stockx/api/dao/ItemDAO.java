@@ -2,15 +2,12 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.item.ItemSearchDto;
-import jm.stockx.dto.item.ItemSearchListDto;
 import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
-import jm.stockx.enums.ItemCategory;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 public interface ItemDAO extends GenericDao<Item, Long> {
 
