@@ -4,6 +4,7 @@ import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -17,16 +18,16 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     public ItemDto getItemDtoByItemName(String name) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.item.ItemDto(" +
-                "i.id," +
-                "i.name," +
-                "i.retailPrice," +
+                "i.item.id," +
+                "i.item.name," +
+                "i.price," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
                 "i.itemColors" +
                 ")" +
-                "FROM Item AS i " +
-                "WHERE i.name = :name", ItemDto.class)
+                "FROM ItemInfo AS i " +
+                "WHERE i.item.name = :name", ItemDto.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }
@@ -34,7 +35,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
         return entityManager.createQuery("" +
-                "FROM Item i  " +
+                "FROM ItemInfo i  " +
                 "WHERE i.name LIKE '%" + search + "%'", Item.class)
                 .setFirstResult(size * (page - 1) + 1)
                 .setMaxResults(size)
@@ -155,13 +156,13 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     public List<ReleaseItemDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         String sql = "" +
                 "SELECT NEW jm.stockx.dto.item.ReleaseItemDto(" +
-                "i.name," +
-                "i.condition, " +
-                "i.itemImageUrl, " +
-                "i.retailPrice, " +
-                "i.releaseDate) " +
-                "FROM Item AS i " +
-                "WHERE i.releaseDate BETWEEN :begin AND :end";
+                "info.item.name," +
+                "info.condition, " +
+                "info.itemImageUrl, " +
+                "info.price, " +
+                "info.releaseDate) " +
+                "FROM ItemInfo AS info " +
+                "WHERE info.releaseDate BETWEEN :begin AND :end";
         return entityManager.createQuery(sql, ReleaseItemDto.class)
                 .setParameter("begin", beginningPeriod)
                 .setParameter("end", endPeriod)

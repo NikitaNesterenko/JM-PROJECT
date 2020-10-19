@@ -14,7 +14,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 "b.id, " +
                 "b.buyingTimeStamp, " +
                 "b.buyingPrice," +
-                "b.boughtItems," +
+                "b.boughtItemsInfo," +
                 "b.paymentsInfo," +
                 "b.status)" +
                 "FROM BuyingInfo AS b " +

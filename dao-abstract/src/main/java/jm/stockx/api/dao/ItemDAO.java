@@ -4,6 +4,7 @@ import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 
 import java.time.LocalDateTime;
 import java.util.List;

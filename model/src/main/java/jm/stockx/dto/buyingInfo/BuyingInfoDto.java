@@ -2,6 +2,7 @@ package jm.stockx.dto.buyingInfo;
 
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.enums.Status;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class BuyingInfoDto {
     @NotNull
     private Money buyingPrice;
 
-    private Set<Item> boughtItems;
+    private Set<ItemInfo> boughtItems;
 
     private Set<PaymentInfo> paymentsInfo;
 
@@ -42,7 +43,7 @@ public class BuyingInfoDto {
 
     public BuyingInfoDto(LocalDateTime buyingTimeStamp,
                          Money buyingPrice,
-                         Set<Item> boughtItems,
+                         Set<ItemInfo> boughtItems,
                          Set<PaymentInfo> paymentsInfo,
                          Status status) {
         this.buyingTimeStamp = buyingTimeStamp;
@@ -56,7 +57,7 @@ public class BuyingInfoDto {
         this.id = buyingInfo.getId();
         this.buyingTimeStamp = buyingInfo.getBuyingTimeStamp();
         this.buyingPrice = buyingInfo.getBuyingPrice();
-        this.boughtItems = buyingInfo.getBoughtItems();
+        this.boughtItems = buyingInfo.getBoughtItemsInfo();
         this.paymentsInfo = buyingInfo.getPaymentsInfo();
         this.status = buyingInfo.getStatus();
     }

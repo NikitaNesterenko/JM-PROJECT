@@ -1,22 +1,27 @@
 package jm.stockx.entity;
 
-import jm.stockx.enums.ShoeSizeTypes;
+import jm.stockx.enums.ItemSizeTypes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "shoe_size")
-public class ShoeSize {
+@Table(name = "item_size")
+public class ItemSize {
 
     @Id
     @Column(name = "id")
@@ -24,16 +29,13 @@ public class ShoeSize {
     private Long id;
 
     @Column(name = "size", unique = true, precision = 10, scale = 2)
-    private Double size;
+    private String size;
 
     @Column(name = "size_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ShoeSizeTypes sizeTypes;
+    private ItemSizeTypes sizeTypes;
 
-    @ManyToMany(mappedBy = "sizes", fetch = FetchType.LAZY)
-    private Set<ItemInfo> items = new HashSet<>();
-
-    public ShoeSize(Double size, ShoeSizeTypes sizeTypes) {
+    public ItemSize(String size, ItemSizeTypes sizeTypes) {
         this.size = size;
         this.sizeTypes = sizeTypes;
     }
