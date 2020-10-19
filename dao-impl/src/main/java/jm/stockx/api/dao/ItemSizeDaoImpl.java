@@ -1,7 +1,6 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.shoeSize.ShoeSizeDto;
-import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
 import org.springframework.stereotype.Repository;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ShoeSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements ShoeSizeDAO {
+public class ItemSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements ItemSizeDAO {
 
     @Override
     public ShoeSizeDto getShoeSizeDtoByShoeSizeName(String name) {
@@ -62,6 +61,4 @@ public class ShoeSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements Shoe
                 .setParameter("itemSize", itemSize)
                 .getSingleResult();
     }
-
-
 }

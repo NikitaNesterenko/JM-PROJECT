@@ -311,7 +311,7 @@ public class EntityDataInitializer {
                     Money.parse("USD 200.0"),
                     false,
                     userService.getUserById(2L),
-                    itemService.getItemById(3L)));
+                    itemInfoService.getItemInfoByItemId(3L)));
         }
     }
 

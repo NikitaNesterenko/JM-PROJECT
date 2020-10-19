@@ -6,7 +6,7 @@ import jm.stockx.enums.ItemSizeTypes;
 
 import java.util.List;
 
-public interface ShoeSizeDAO extends GenericDao<ItemSize, Long> {
+public interface ItemSizeDAO extends GenericDao<ItemSize, Long> {
     ShoeSizeDto getShoeSizeDtoByShoeSizeName(String name);
 
     ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id);

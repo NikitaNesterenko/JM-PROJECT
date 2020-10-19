@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.ShoeSizeDAO;
+import jm.stockx.api.dao.ItemSizeDAO;
 import jm.stockx.dto.shoeSize.ShoeSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
@@ -16,58 +16,58 @@ import java.util.Set;
 @Transactional
 public class ItemSizeServiceImpl implements ItemSizeService {
 
-    private final ShoeSizeDAO shoeSizeDAO;
+    private final ItemSizeDAO itemSizeDAO;
 
     @Autowired
-    public ItemSizeServiceImpl(ShoeSizeDAO shoeSizeDAO) {
-        this.shoeSizeDAO = shoeSizeDAO;
+    public ItemSizeServiceImpl(ItemSizeDAO itemSizeDAO) {
+        this.itemSizeDAO = itemSizeDAO;
     }
 
 
     @Override
     public ItemSize findOneBySizeName(String sizeName) {
-        return shoeSizeDAO.findOneBySizeName(sizeName);
+        return itemSizeDAO.findOneBySizeName(sizeName);
     }
 
     @Override
     public Set<ItemSize> getAll() {
-        return shoeSizeDAO.getAll();
+        return itemSizeDAO.getAll();
     }
 
     @Override
     public ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id) {
-        return shoeSizeDAO.getShoeSizeDtoByShoeSizeId(id);
+        return itemSizeDAO.getShoeSizeDtoByShoeSizeId(id);
     }
 
     @Override
     public void create(ItemSize itemSize) {
-        shoeSizeDAO.add(itemSize);
+        itemSizeDAO.add(itemSize);
     }
 
     @Override
     public void delete(Long id) {
-        shoeSizeDAO.deleteById(id);
+        itemSizeDAO.deleteById(id);
     }
 
     @Override
     public void update(ItemSize itemSize) {
-        shoeSizeDAO.update(itemSize);
+        itemSizeDAO.update(itemSize);
     }
 
     @Override
     public ShoeSizeDto getShoeSizeDtoByShoeSizeName(String name) {
-        return shoeSizeDAO.getShoeSizeDtoByShoeSizeName(name);
+        return itemSizeDAO.getShoeSizeDtoByShoeSizeName(name);
     }
 
     @Override
     public boolean isShoeSizeExist(Long id) {
-        return shoeSizeDAO.doesItExistEntity(id);
+        return itemSizeDAO.doesItExistEntity(id);
     }
 
     @Override
     public List<ShoeSizeDto> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType) {
         List<ShoeSizeDto> list = new ArrayList<>();
-        shoeSizeDAO.getShoeSizeDtoByShoeSizeType(sizeType).forEach(x -> list.add(new ShoeSizeDto(x)));
+        itemSizeDAO.getShoeSizeDtoByShoeSizeType(sizeType).forEach(x -> list.add(new ShoeSizeDto(x)));
         return list;
     }
 

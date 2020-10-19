@@ -38,7 +38,7 @@ public class BidDto {
                 this.id = bid.getId();
                 this.price = bid.getPrice();
                 this.success = bid.getSuccess();
-                this.itemName = bid.getItem().getName();
+                this.itemName = bid.getItemInfo().getItem().getName();
                 this.userName = bid.getUser().getUsername();
         }
 }
