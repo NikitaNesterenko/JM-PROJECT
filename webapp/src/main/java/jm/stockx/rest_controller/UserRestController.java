@@ -8,12 +8,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.MailService;
 import jm.stockx.UserService;
+import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,26 @@ public class UserRestController {
     public UserRestController(UserService userService, MailService mailService) {
         this.userService = userService;
         this.mailService = mailService;
+    }
+
+    @PutMapping("/update")
+    @Operation(
+            operationId = "updateUser",
+            summary = "update user details from UserDto",
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "user does not exist"),
+                    @ApiResponse(responseCode = "200", description = "user successfully updated  ")
+            }
+    )
+    public Response<?> updateUser(@RequestBody UserPutDto userPutDto, @AuthenticationPrincipal User principal) {
+        if (!userService.isUserExist(userPutDto.getId())) {
+            return Response.error(HttpStatus.NOT_FOUND, "user does not exist");
+        }
+        if (!principal.getId().equals(userPutDto.getId())){
+            return Response.error(HttpStatus.FORBIDDEN, "user does not have permission");
+        }
+        userService.updateUserFromDto(userPutDto);
+        return Response.ok(HttpStatus.OK).build();
     }
 
     @GetMapping(value = "/getLoggedInUser")

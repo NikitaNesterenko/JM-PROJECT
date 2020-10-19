@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import org.springframework.stereotype.Repository;
 
@@ -110,5 +111,17 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
             e.getMessage();
             return null;
         }
+    }
+
+    public void updateUserFromDto(UserPutDto userPutDto){
+        entityManager.createQuery("" +
+                "UPDATE User user SET" +
+                " user.firstName = :firstNameFromDto," +
+                " user.lastName = :lastNameFromDto " +
+                "WHERE user.id = :idFromDto")
+                .setParameter("idFromDto",userPutDto.getId())
+                .setParameter("firstNameFromDto",userPutDto.getFirstName())
+                .setParameter("lastNameFromDto",userPutDto.getLastName())
+                .executeUpdate();
     }
 }
