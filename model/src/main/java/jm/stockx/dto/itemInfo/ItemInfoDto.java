@@ -1,7 +1,7 @@
 package jm.stockx.dto.itemInfo;
 
 import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.ShoeSize;
+import jm.stockx.entity.ItemSize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +11,7 @@ import org.joda.money.Money;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -37,7 +35,7 @@ public class ItemInfoDto {
     @NotNull
     private Money highestBid;
 
-    private Set<Double> sizes;
+    private String size;
 
     private Long ItemId;
 
@@ -47,13 +45,9 @@ public class ItemInfoDto {
         this.price = itemInfo.getPrice();
         this.lowestAsk = itemInfo.getLowestAsk();
         this.highestBid = itemInfo.getHighestBid();
-        this.sizes = convertShoeSize(itemInfo.getSizes());
+        this.size = itemInfo.getSize().getSize();
         this.ItemId = itemInfo.getItem().getId();
     }
 
-    private Set<Double> convertShoeSize(Set<ShoeSize> shoeSizes){
-        Set<Double> sizes = new HashSet<>();
-        shoeSizes.forEach(e -> sizes.add(e.getSize()));
-        return sizes;
-    }
+
 }

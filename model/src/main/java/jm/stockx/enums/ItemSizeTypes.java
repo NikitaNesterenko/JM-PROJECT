@@ -1,6 +1,6 @@
 package jm.stockx.enums;
 
-public enum ShoeSizeTypes {
+public enum ItemSizeTypes {
     MEN,
     WOMEN,
     CHILD,

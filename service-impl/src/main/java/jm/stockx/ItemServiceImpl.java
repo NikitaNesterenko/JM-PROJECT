@@ -12,6 +12,7 @@ import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.entity.User;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -56,7 +58,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getAll() {
+    public Set<Item> getAll() {
         return itemDao.getAll();
     }
 
@@ -94,26 +96,26 @@ public class ItemServiceImpl implements ItemService {
     public void buyItem(BuyingDto buyingDto) {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
-        Item item = itemDao.getById(buyingDto.getItemId());
+        ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
         ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId()));
-        Set<Item> bougthItems = new HashSet<>();
-        bougthItems.add(item);
+        Set<ItemInfo> bougthItems = new HashSet<>();
+        bougthItems.add(itemInfo);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
         //TODO : add actual paymentInfo
 
         BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
-        buyingInfo.setBoughtItems(bougthItems);
+        buyingInfo.setBoughtItemsInfo(bougthItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, item);
+        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, itemInfo);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);
 
-        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
+        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", itemInfo.toString());
     }
 
     @Override

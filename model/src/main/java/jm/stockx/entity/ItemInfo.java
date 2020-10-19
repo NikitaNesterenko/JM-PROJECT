@@ -2,15 +2,31 @@ package jm.stockx.entity;
 
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -26,14 +42,18 @@ public class ItemInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH})
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinTable(name = "itemInfo_shoe_size", joinColumns = @JoinColumn(name = "shoe_size_id"),
-            inverseJoinColumns = @JoinColumn(name = "itemInfo_id"))
-    private Set<ShoeSize> sizes = new HashSet<>();
+    @OneToOne(targetEntity = ItemSize.class, fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH})
+    private ItemSize size;
 
     @Columns(columns = {@Column(name = "item_currency"), @Column(name = "item_price")})
     @Type(type = "joda_MoneyAmountWithCurrencyType")
@@ -75,6 +95,4 @@ public class ItemInfo {
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
-
-
 }

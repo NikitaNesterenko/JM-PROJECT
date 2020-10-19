@@ -20,7 +20,7 @@ public class HistoryViews {
 
     @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
-    private Item item;
+    private ItemInfo itemInfo;
 
     @Column(name = "view_date")
     private LocalDateTime viewDate;

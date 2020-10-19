@@ -1,6 +1,6 @@
 package jm.stockx.dto.shoeSize;
 
-import jm.stockx.enums.ShoeSizeTypes;
+import jm.stockx.enums.ItemSizeTypes;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,9 +22,9 @@ public class ShoeSizePostDto {
     private Double size;
 
     @NotNull
-    private ShoeSizeTypes sizeTypes;
+    private ItemSizeTypes sizeTypes;
 
-    public ShoeSizePostDto(Long id, Double shoeSize, ShoeSizeTypes sizeTypes) {
+    public ShoeSizePostDto(Long id, Double shoeSize, ItemSizeTypes sizeTypes) {
         this.size = shoeSize;
         this.sizeTypes = sizeTypes;
     }

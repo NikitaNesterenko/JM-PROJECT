@@ -2,29 +2,35 @@ package jm.stockx;
 
 import jm.stockx.api.dao.ShoeSizeDAO;
 import jm.stockx.dto.shoeSize.ShoeSizeDto;
-import jm.stockx.entity.ShoeSize;
-import jm.stockx.enums.ShoeSizeTypes;
+import jm.stockx.entity.ItemSize;
+import jm.stockx.enums.ItemSizeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
-public class ShoeSizeServiceImpl implements ShoeSizeService {
+public class ItemSizeServiceImpl implements ItemSizeService {
 
     private final ShoeSizeDAO shoeSizeDAO;
 
     @Autowired
-    public ShoeSizeServiceImpl(ShoeSizeDAO shoeSizeDAO) {
+    public ItemSizeServiceImpl(ShoeSizeDAO shoeSizeDAO) {
         this.shoeSizeDAO = shoeSizeDAO;
     }
 
 
     @Override
-    public List<ShoeSize> getAll() {
+    public ItemSize findOneBySizeName(String sizeName) {
+        return shoeSizeDAO.findOneBySizeName(sizeName);
+    }
+
+    @Override
+    public Set<ItemSize> getAll() {
         return shoeSizeDAO.getAll();
     }
 
@@ -34,8 +40,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public void create(ShoeSize shoeSize) {
-        shoeSizeDAO.add(shoeSize);
+    public void create(ItemSize itemSize) {
+        shoeSizeDAO.add(itemSize);
     }
 
     @Override
@@ -44,8 +50,8 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public void update(ShoeSize shoeSize) {
-        shoeSizeDAO.update(shoeSize);
+    public void update(ItemSize itemSize) {
+        shoeSizeDAO.update(itemSize);
     }
 
     @Override
@@ -59,7 +65,7 @@ public class ShoeSizeServiceImpl implements ShoeSizeService {
     }
 
     @Override
-    public List<ShoeSizeDto> getShoeSizeDtoByShoeSizeType(ShoeSizeTypes sizeType) {
+    public List<ShoeSizeDto> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType) {
         List<ShoeSizeDto> list = new ArrayList<>();
         shoeSizeDAO.getShoeSizeDtoByShoeSizeType(sizeType).forEach(x -> list.add(new ShoeSizeDto(x)));
         return list;
