@@ -18,7 +18,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
         List<Tuple> list = entityManager.createNativeQuery(
                 "SELECT i.item_category AS COfI, " +
                         "count(i.item_category) AS Count " +
-                        "FROM userdb.public.items AS i " +
+                        "FROM userdb.public.item_info AS i " +
                         "JOIN buying_item b " +
                         "    on i.id = b.item_id " +
                         "JOIN user_buying u  " +
