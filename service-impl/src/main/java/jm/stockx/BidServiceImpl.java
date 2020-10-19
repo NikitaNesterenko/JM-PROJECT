@@ -10,7 +10,7 @@ import jm.stockx.entity.Bid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Transactional
