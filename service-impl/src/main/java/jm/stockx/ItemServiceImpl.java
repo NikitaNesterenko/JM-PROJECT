@@ -66,8 +66,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void create(Item item) {
-        itemDao.add(item);
+    public Item create(Item item) {
+        return itemDao.add(item);
     }
 
     @Override
