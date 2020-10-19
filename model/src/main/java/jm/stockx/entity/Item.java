@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Getter
@@ -26,6 +28,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "items")
 @TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Item {
 
     @Id
