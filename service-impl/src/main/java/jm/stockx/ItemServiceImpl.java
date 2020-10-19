@@ -59,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Set<Item> getAll() {
-        return itemDao.getAll();
+        return new HashSet<>(itemDao.getAll());
     }
 
     @Override
