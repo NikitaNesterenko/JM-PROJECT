@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
+import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Tuple;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional
@@ -100,25 +102,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public HashMap<String, Double> getPurchaseStatisticsPercentageByUserId(Long id) {
-        List<Tuple> list = userDao.getPurchaseStatisticsByUserId(id);
-        // Счётчик для определения общего количества айтемов
-        double count = 0.0;
-        for (Tuple el : list
-        ) {
-            //Считаем количество
-            count +=  Double.parseDouble(el.get(1).toString()) ;
-        }
+    public Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id) {
+        List<ItemPurchaseDto> list = userDao.getPurchaseStatisticsByUserId(id);
 
-        HashMap<String , Double> hashMap = new HashMap<>();
+        int count = list.stream().flatMapToInt(el -> IntStream.of(el.getCount())).sum();
 
-        for (Tuple el : list
-        ) {
-            // Кладём всё в мапу, для человекочитаемости умножаем на 100
-            // так как 0.32 будет труден в понимании
-            hashMap.put( el.get(0).toString(), Double.parseDouble(el.get(1).toString())  / count * 100);
-        }
-
-        return hashMap;
+        return list.stream().collect(Collectors.toMap(ItemPurchaseDto::getItemCategory, x -> x.getCount().doubleValue() * 100 / count));
     }
 }
