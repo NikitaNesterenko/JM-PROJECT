@@ -13,7 +13,7 @@ import java.util.List;
 public class SearchRestController {
     final ItemService itemService;
 
-    @Autowired
+    @Autowired 
     public SearchRestController(ItemService itemService) {
         this.itemService = itemService;
     }
