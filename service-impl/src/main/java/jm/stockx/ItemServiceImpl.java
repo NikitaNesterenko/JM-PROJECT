@@ -1,29 +1,16 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingInfoDAO;
-import jm.stockx.api.dao.ItemDAO;
-import jm.stockx.api.dao.ItemInfoDAO;
-import jm.stockx.api.dao.SellingInfoDAO;
-import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.api.dao.*;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.page.PageDto;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.PaymentInfo;
-import jm.stockx.entity.SellingInfo;
-import jm.stockx.entity.User;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.entity.*;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -53,18 +40,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto getItemDtoByName(String name) {
-        return itemDao.getItemDtoByItemName(name);
-    }
-
-    @Override
     public Set<Item> getAll() {
         return new HashSet<>(itemDao.getAll());
-    }
-
-    @Override
-    public ItemDto getItemDtoById(Long id) {
-        return itemDao.getItemDtoByItemId(id);
     }
 
     @Override
@@ -80,16 +57,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void delete(Long id) {
         itemDao.deleteById(id);
-    }
-
-    @Override
-    public PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size) {
-        List<ItemDto> foundItems = itemDao.searchItem(search, page, size);
-        int sizeItems = foundItems.size();
-        int totalEntitiesCount = foundItems.size();
-        int pageCount = totalEntitiesCount / size;
-        return new PageDto<>(sizeItems, page, pageCount,
-                size, foundItems);
     }
 
     @Override
@@ -118,24 +85,20 @@ public class ItemServiceImpl implements ItemService {
         mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", itemInfo.toString());
     }
 
-    @Override
-    public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
-        return itemDao.getMostPopularItemByStyleId(styleId, topLimit);
-    }
-
-    @Override
-    public List<Item> getNotReleasedItems() {
-        return itemDao.getNotReleasedItem();
-    }
-
-    @Override
-    public List<Item> getNotReleasedItemsByBrand(Brand brand) {
-        return itemDao.getNotReleasedItemsByBrand(brand);
-    }
 
     @Override
     public boolean isItemExist(Long id) {
         return itemDao.doesItExistEntity(id);
+    }
+
+    @Override
+    public ItemDto getItemDtoByItemName(String name) {
+        return itemDao.getItemDtoByItemName(name);
+    }
+
+    @Override
+    public ItemDto getItemDtoByItemId(Long id) {
+        return getItemDtoByItemId(id);
     }
 
     @Override
@@ -148,8 +111,4 @@ public class ItemServiceImpl implements ItemService {
         return itemDao.getItemById(id);
     }
 
-    @Override
-    public void updateItemImageUrl(Long id, String url) {
-        itemDao.updateItemImageUrl(id, url);
-    }
 }

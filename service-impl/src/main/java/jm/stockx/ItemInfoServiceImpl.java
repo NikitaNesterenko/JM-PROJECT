@@ -2,6 +2,11 @@ package jm.stockx;
 
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
+import jm.stockx.dto.itemInfo.ReleaseItemInfoDto;
+import jm.stockx.dto.page.PageDto;
+import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -9,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -51,6 +56,66 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     @Override
     public ItemInfo getItemInfoByItemId(Long itemId) {
         return itemInfoDAO.getItemInfoByItemId(itemId);
+    }
+
+    @Override
+    public ItemInfo getItemInfoByItemName(String itemName) {
+        return itemInfoDAO.getItemInfoByItemName(itemName);
+    }
+
+    @Override
+    public List<ReleaseItemInfoDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+        return itemInfoDAO.getReleaseItemDtoByPeriod(beginningPeriod, endPeriod);
+    }
+
+    @Override
+    public void updateItemImageUrl(Long id, String url) {
+        itemInfoDAO.updateItemImageUrl(id, url);
+    }
+
+    @Override
+    public List<NotReleaseItemInfoDto> getNotReleasedItem() {
+        return itemInfoDAO.getNotReleasedItem();
+    }
+
+    @Override
+    public List<NotReleaseItemInfoDto> getNotReleasedItemsByBrand(Brand brand) {
+        return itemInfoDAO.getNotReleasedItemsByBrand(brand);
+    }
+
+    @Override
+    public PageDto<ItemInfoDto> searchItem(String search, Integer page, Integer size) {
+        List<ItemInfoDto> foundItems = itemInfoDAO.searchItem(search, page, size);
+        int sizeItems = foundItems.size();
+        int totalEntitiesCount = foundItems.size();
+        int pageCount = totalEntitiesCount / size;
+        return new PageDto<>(sizeItems, page, pageCount,
+                size, foundItems);
+    }
+
+    @Override
+    public ItemInfoDto getItemInfoDtoByItemName(String name) {
+        return itemInfoDAO.getItemInfoDtoByItemName(name);
+    }
+
+    @Override
+    public ItemInfoDto getItemInfoDtoByItemId(Long id) {
+        return itemInfoDAO.getItemInfoDtoByItemId(id);
+    }
+
+    @Override
+    public List<ItemInfoDto> getItemInfoDtoByColor(String itemColors) {
+        return itemInfoDAO.getItemInfoDtoByColor(itemColors);
+    }
+
+    @Override
+    public List<ItemInfoDto> getMostPopularItemByBrandName(String name) {
+        return itemInfoDAO.getMostPopularItemByBrandName(name);
+    }
+
+    @Override
+    public List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit) {
+        return itemInfoDAO.getMostPopularItemByStyleId(id, topLimit);
     }
 
     @Override

@@ -15,10 +15,13 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     private final PasswordGeneratorServiceImpl passwordGeneratorService;
 
-    public UserRegistrationServiceImpl(UserService userService, MailService mailService, PasswordGeneratorServiceImpl passwordGeneratorService) {
+    private final RoleService roleService;
+
+    public UserRegistrationServiceImpl(UserService userService, MailService mailService, PasswordGeneratorServiceImpl passwordGeneratorService, RoleService roleService) {
         this.userService = userService;
         this.mailService = mailService;
         this.passwordGeneratorService = passwordGeneratorService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -26,7 +29,11 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
         String password = passwordGeneratorService.generatePassword(8);
 
-        userService.createUser(new User(user.getFirstName(), user.getLastName(), user.getEmail(), password));
+        User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), password);
+        newUser.setRole(roleService.getRole("ROLE_USER"));
+        newUser.setActive(true);
+
+        userService.createUser(newUser);
 
         mailService.sendSimpleMessage(
                 user.getEmail(),

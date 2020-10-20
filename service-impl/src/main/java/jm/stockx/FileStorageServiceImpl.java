@@ -20,11 +20,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Value("${upload.path}")
     private String uploadPath;
 
-    private ItemService itemService;
+    private ItemInfoService itemInfoService;
 
     @Autowired
     public FileStorageServiceImpl(ItemService itemService) {
-        this.itemService = itemService;
+        this.itemInfoService = itemInfoService;
     }
 
     private String hashGenerator(String src) {
@@ -57,7 +57,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 throw new FileStorageException("Couldn't store file " + file.getName() + "\nPlease try again.", e);
             }
 
-            itemService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
+            itemInfoService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
 
             return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
         }

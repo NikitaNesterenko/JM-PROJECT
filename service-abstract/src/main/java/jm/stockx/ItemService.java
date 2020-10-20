@@ -13,31 +13,21 @@ public interface ItemService {
 
     Set<Item> getAll();
 
-    ItemDto getItemDtoById(Long id);
-
     Item create(Item item);
 
     void update(Item item);
 
     void delete(Long id);
 
-    ItemDto getItemDtoByName(String name);
-
-    PageDto<ItemDto> getPageOfItems(Integer page, String search, Integer size);
-
     void buyItem(BuyingDto buyingDto);
 
-    List<Item> getTopItemsByStyle(Long styleId, Integer topLimit);
-
-    List<Item> getNotReleasedItems();
-
-    List<Item> getNotReleasedItemsByBrand(Brand brand);
-
     boolean isItemExist(Long id);
+
+    ItemDto getItemDtoByItemName(String name);
+
+    ItemDto getItemDtoByItemId(Long id);
 
     Item getItemByName(String name);
 
     Item getItemById(Long id);
-
-    void updateItemImageUrl(Long id, String url);
 }
