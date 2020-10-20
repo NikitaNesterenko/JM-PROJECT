@@ -11,6 +11,7 @@ import org.joda.money.Money;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -172,7 +173,7 @@ public class Item {
                 Money price,
                 Money lowestAsk,
                 Money highestBid,
-                Set<ShoeSize> sizes) {
+                List<ShoeSize> sizes) {
         this.name = name;
         this.retailPrice = retailPrice;
         this.releaseDate = releaseDate;

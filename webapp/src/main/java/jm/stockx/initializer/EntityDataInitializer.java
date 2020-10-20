@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -215,8 +217,8 @@ public class EntityDataInitializer {
                     brandService.getBrandByName("Jordan"),
                     styleService.getStyleByName("sports")));
 
-            Set<ShoeSize> sizes = shoeSizeService.getAll();
-            Set<ShoeSize> menSizes = new HashSet<>();
+            List<ShoeSize> sizes = shoeSizeService.getAll();
+            List<ShoeSize> menSizes = new ArrayList<>();
             for(ShoeSize s : sizes){
                 if(s.getSizeTypes().equals(ShoeSizeTypes.MEN)){
                     menSizes.add(s);
