@@ -46,7 +46,7 @@ public class BuyingInfo {
             name = "buying_item",
             joinColumns = @JoinColumn(name = "buying_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<ItemInfo> boughtItemsInfo;
+    private Set<Item> boughtItems;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(

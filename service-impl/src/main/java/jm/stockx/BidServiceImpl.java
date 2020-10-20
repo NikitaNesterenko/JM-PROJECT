@@ -2,7 +2,6 @@ package jm.stockx;
 
 import jm.stockx.api.dao.BidDAO;
 import jm.stockx.api.dao.ItemDAO;
-import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.bid.BidDto;
 import jm.stockx.dto.bid.BidPostDto;
@@ -17,12 +16,12 @@ import java.util.List;
 public class BidServiceImpl implements BidService {
 
     private final BidDAO bidDAO;
-    private final ItemInfoDAO itemInfoDAO;
+    private final ItemDAO itemDAO;
     private final UserDAO userDAO;
 
-    public BidServiceImpl(BidDAO bidDAO, ItemDAO itemDAO, ItemInfoDAO itemInfoDAO, UserDAO userDAO) {
+    public BidServiceImpl(BidDAO bidDAO, ItemDAO itemDAO, UserDAO userDAO) {
         this.bidDAO = bidDAO;
-        this.itemInfoDAO = itemInfoDAO;
+        this.itemDAO = itemDAO;
         this.userDAO = userDAO;
     }
 
@@ -51,8 +50,8 @@ public class BidServiceImpl implements BidService {
         Bid bid = new Bid();
         bid.setPrice(bidPostDto.getPrice());
         bid.setSuccess(bidPostDto.getSuccess());
-        bid.setItemInfo(itemInfoDAO.getItemInfoByItemName(bidPostDto.getItemName()));
-        bid.setUser(userDAO.getUserByUsername(bidPostDto.getUserName()));
+        bid.setItem(itemDAO.getItemByName(bidPostDto.getItemName()));
+        bid.setUser(userDAO.getUserByName(bidPostDto.getUserName()));
         bidDAO.add(bid);
     }
 

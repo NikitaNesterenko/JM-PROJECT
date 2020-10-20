@@ -4,11 +4,10 @@ import jm.stockx.dto.currency.CurrencyDto;
 import jm.stockx.entity.Currency;
 
 import java.util.List;
-import java.util.Set;
 
 public interface CurrencyService {
 
-    Set<Currency> getAll();
+    List<Currency> getAll();
 
     CurrencyDto getCurrencyDtoByCurrencyId(Long id);
 

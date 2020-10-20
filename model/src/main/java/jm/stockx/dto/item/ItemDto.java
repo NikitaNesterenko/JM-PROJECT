@@ -1,7 +1,6 @@
 package jm.stockx.dto.item;
 
 import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemColors;
 import org.joda.money.Money;
 import lombok.Getter;
@@ -42,16 +41,13 @@ public class ItemDto {
 
     private ItemColors itemColors;
 
-    public ItemDto(@NonNull ItemInfo itemInfo) {
-        this.id = itemInfo.getItem().getId();
-        this.name =itemInfo.getItem().getName();
-        this.retailPrice = itemInfo.getPrice();
-        this.dateRelease = itemInfo.getReleaseDate();
-        this.condition =   itemInfo.getCondition();
-        this.description = itemInfo.getDescription();
-        this.itemColors =  itemInfo.getItemColors();
-    }
-
-    public ItemDto(Item item) {
+    public ItemDto(@NonNull Item item) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.retailPrice = item.getRetailPrice();
+        this.dateRelease = item.getReleaseDate();
+        this.condition = item.getCondition();
+        this.description = item.getDescription();
+        this.itemColors = item.getItemColors();
     }
 }

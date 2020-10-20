@@ -34,9 +34,9 @@ public class SellingInfo {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(targetEntity = ItemInfo.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
-    private ItemInfo itemInfo;
+    private Item item;
 
     @Column(name = "order_number")
     private Long orderNumber;
@@ -54,9 +54,10 @@ public class SellingInfo {
 
     public SellingInfo(User user,
                        ItemInfo itemInfo,
+                       Item item,
                        Status status) {
         this.user = user;
-        this.itemInfo = itemInfo;
+        this.item = item;
         this.price = itemInfo.getPrice();
         this.orderDate = LocalDateTime.now();
         this.status = status;
@@ -64,17 +65,19 @@ public class SellingInfo {
 
     public SellingInfo(User user,
                        ItemInfoDto itemInfoDto,
-                       ItemInfo item) {
+                       Item item) {
         this.user = user;
+        this.item = item;
         this.price = itemInfoDto.getPrice();
         this.orderDate = LocalDateTime.now();
     }
 
     public SellingInfo(User user,
+                       Item item,
                        ItemInfo itemInfo,
                        Long orderNumber,
                        Status status) {
-        this(user, itemInfo, status);
+        this(user, itemInfo, item, status);
         this.orderNumber = orderNumber;
     }
 }

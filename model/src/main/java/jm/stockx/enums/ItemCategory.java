@@ -9,6 +9,5 @@ public enum ItemCategory {
     T_SHIRTS,
     TOPS_SWEATSHIRTS,
     BAGS,
-    BOX_LOGOS,
-    SNEAKERS
+    BOX_LOGOS
 }

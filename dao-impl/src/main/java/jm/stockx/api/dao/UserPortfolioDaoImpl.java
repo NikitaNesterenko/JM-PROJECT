@@ -34,7 +34,7 @@ public class UserPortfolioDaoImpl extends AbstractDAO<UserPortfolio, Long> {
 
     public List<Item> getItemByPortfolioId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT    bi.boughtItemsInfo " +
+                "SELECT    bi.boughtItems " +
                 "FROM      UserPortfolio AS up " +
                 "LEFT JOIN up.user AS us " +
                 "JOIN      us.buyingInfo AS bi " +

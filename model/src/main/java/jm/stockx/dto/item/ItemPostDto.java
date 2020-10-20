@@ -48,18 +48,18 @@ public class ItemPostDto {
 
     public ItemPostDto(Item item, ItemInfo itemInfo) {
         this.price = itemInfo.getPrice();
-        this.retailPrice = itemInfo.getPrice();
+        this.retailPrice = item.getRetailPrice();
         this.lowestAsk = itemInfo.getLowestAsk();
         this.highestBid = itemInfo.getHighestBid();
-        this.dateRelease = itemInfo.getReleaseDate();
-        this.condition = itemInfo.getCondition();
-        this.condition = itemInfo.getDescription();
+        this.dateRelease = item.getReleaseDate();
+        this.condition = item.getCondition();
+        this.condition = item.getDescription();
     }
 
-    public ItemPostDto(ItemInfo itemInfo) {
-        this.retailPrice = itemInfo.getPrice();
-        this.dateRelease = itemInfo.getReleaseDate();
-        this.condition = itemInfo.getCondition();
-        this.condition = itemInfo.getDescription();
+    public ItemPostDto(Item item) {
+        this.retailPrice = item.getRetailPrice();
+        this.dateRelease = item.getReleaseDate();
+        this.condition = item.getCondition();
+        this.condition = item.getDescription();
     }
 }

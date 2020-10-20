@@ -1,6 +1,6 @@
 package jm.stockx.dto.shoeSize;
 
-import jm.stockx.enums.ItemSizeTypes;
+import jm.stockx.enums.ShoeSizeTypes;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,5 +25,5 @@ public class ShoeSizePutDto {
     private Double size;
 
     @NotNull
-    private ItemSizeTypes sizeTypes;
+    private ShoeSizeTypes sizeTypes;
 }
