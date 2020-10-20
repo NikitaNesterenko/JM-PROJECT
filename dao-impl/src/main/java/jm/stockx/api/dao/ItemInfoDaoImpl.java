@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
+import jm.stockx.dto.itemInfo.ItemSearchDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -33,7 +34,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
                 "if.item.name," +
-                "if.item.itemImageUrl," +
+                "if.itemImageUrl," +
                 "if.lowestAsk" +
                 ")" +
                 "FROM ItemInfo if " +
@@ -43,15 +44,28 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     }
 
     @Override
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemSearchDto(i.itemCategory, COUNT(i)) " +
+                "FROM ItemInfo i " +
+                "WHERE TRIM(LOWER(i.item.name)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+                "GROUP BY i.itemCategory " +
+                "ORDER BY i.itemCategory DESC " +
+                "", ItemSearchDto.class)
+                .setParameter("search", search.trim())
+                .getResultList();
+    }
+
+    @Override
     public List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
                 "i.item.name," +
-                "i.item.itemImageUrl," +
+                "i.itemImageUrl," +
                 "i.lowestAsk" +
                 ")" +
                 "FROM ItemInfo AS i " +
-                "WHERE i.item.itemCategory =: itemCategory", ItemInfoCardDto.class)
+                "WHERE i.itemCategory =: itemCategory", ItemInfoCardDto.class)
                 .setParameter("itemCategory", category)
                 .getResultList();
     }

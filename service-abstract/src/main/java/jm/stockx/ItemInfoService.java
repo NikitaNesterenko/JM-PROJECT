@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
+import jm.stockx.dto.itemInfo.ItemSearchDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -24,4 +25,6 @@ public interface ItemInfoService {
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
+
+    List<ItemSearchDto> getItemSearchDtoBySearch(String search);
 }

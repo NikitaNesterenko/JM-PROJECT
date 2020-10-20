@@ -2,6 +2,7 @@ package jm.stockx.api.dao;
 
 
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
+import jm.stockx.dto.itemInfo.ItemSearchDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -17,5 +18,7 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
+
+    List<ItemSearchDto> getItemSearchDtoBySearch(String search);
 
 }

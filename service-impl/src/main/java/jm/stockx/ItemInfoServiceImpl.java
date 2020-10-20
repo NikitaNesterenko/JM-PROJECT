@@ -2,6 +2,7 @@ package jm.stockx;
 
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
+import jm.stockx.dto.itemInfo.ItemSearchDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -61,5 +62,10 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     @Override
     public List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price) {
         return itemInfoDAO.getItemInfoCardDtoMorePrice(price);
+    }
+
+    @Override
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        return itemInfoDAO.getItemSearchDtoBySearch(search);
     }
 }
