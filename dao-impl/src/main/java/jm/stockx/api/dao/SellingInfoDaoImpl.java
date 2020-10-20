@@ -23,20 +23,24 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
-    public Double getMinSalesValue() {
+    public Double getMinSalesValue(Long id) {
         return (Double) entityManager.createNativeQuery("" +
                 "SELECT MIN(si.price)" +
                 "FROM selling_info AS si " +
-                "WHERE si.order_status = 'DELIVERED'", SellingInfo.class)
+                "WHERE si.order_status = 'DELIVERED'" +
+                "AND si.item_id =: id", SellingInfo.class)
+                .setParameter("id", id)
                 .getSingleResult();
     }
 
     @Override
-    public Double getMaxSalesValue() {
+    public Double getMaxSalesValue(Long id) {
         return (Double) entityManager.createNativeQuery("" +
                 "SELECT MAX(si.price)" +
                 "FROM selling_info AS si " +
-                "WHERE si.order_status = 'DELIVERED'", SellingInfo.class)
+                "WHERE si.order_status = 'DELIVERED'" +
+                "AND si.item_id = id", SellingInfo.class)
+                .setParameter("id", id)
                 .getSingleResult();
     }
 
