@@ -1,28 +1,21 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingInfoDAO;
-import jm.stockx.api.dao.ItemDAO;
-import jm.stockx.api.dao.ItemInfoDAO;
-import jm.stockx.api.dao.SellingInfoDAO;
-import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.item.ItemSearchDto;
-import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.api.dao.*;
 import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.item.ItemSearchDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.dto.page.PageDto;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.PaymentInfo;
-import jm.stockx.entity.SellingInfo;
-import jm.stockx.entity.User;
-import jm.stockx.enums.ItemCategory;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.entity.*;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -56,8 +49,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getAll() {
-        return itemDao.getAll();
+    public Set<Item> getAll() {
+        return new HashSet<>(itemDao.getAll());
     }
 
     @Override
@@ -66,8 +59,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void create(Item item) {
-        itemDao.add(item);
+    public Item create(Item item) {
+        return itemDao.add(item);
     }
 
     @Override
@@ -94,26 +87,26 @@ public class ItemServiceImpl implements ItemService {
     public void buyItem(BuyingDto buyingDto) {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
-        Item item = itemDao.getById(buyingDto.getItemId());
+        ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
         ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId()));
-        Set<Item> bougthItems = new HashSet<>();
-        bougthItems.add(item);
+        Set<ItemInfo> bougthItems = new HashSet<>();
+        bougthItems.add(itemInfo);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
         //TODO : add actual paymentInfo
 
         BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
-        buyingInfo.setBoughtItems(bougthItems);
+        buyingInfo.setBoughtItemsInfo(bougthItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, item);
+        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, itemInfo);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);
 
-        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
+        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", itemInfo.toString());
     }
 
     @Override
