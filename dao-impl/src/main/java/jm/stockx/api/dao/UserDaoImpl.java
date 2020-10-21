@@ -1,11 +1,45 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Tuple;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
+
+    @Override
+    public List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id) {
+        List<Tuple> list = entityManager.createNativeQuery(
+                "SELECT i.item_category AS COfI, " +
+                        "count(i.item_category) AS Count " +
+                        "FROM userdb.public.item_info AS i " +
+                        "JOIN buying_item b " +
+                        "    on i.id = b.item_id " +
+                        "JOIN user_buying u  " +
+                        "    on b.buying_id = u.buying_id " +
+                        "WHERE user_id = :userid " +
+                        "GROUP BY i.item_category " +
+                        "ORDER BY i.item_category" +
+                        "", Tuple.class)
+                .setParameter("userid", id)
+                .getResultList();
+
+        List<ItemPurchaseDto> itemPurchaseDtoList = new ArrayList<>();
+        for (Tuple el : list
+        ) {
+            itemPurchaseDtoList.add(new ItemPurchaseDto(
+                    el.get("COfI", String.class),
+                    el.get("Count", BigInteger.class).intValue()
+            ));
+        }
+        return itemPurchaseDtoList;
+    }
 
     @Override
     public UserDto getUserDtoByUserUsername(String username) {
