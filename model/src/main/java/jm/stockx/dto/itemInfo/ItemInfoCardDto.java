@@ -29,7 +29,7 @@ public class ItemInfoCardDto {
 
     public ItemInfoCardDto(ItemInfo itemInfo) {
         this.ItemName = itemInfo.getItem().getName();
-        this.itemImageUrl = itemInfo.getItem().getItemImageUrl();
+        this.itemImageUrl = itemInfo.getItemImageUrl();
         this.lowestAsk = itemInfo.getLowestAsk();
     }
 }

@@ -2,7 +2,9 @@ package jm.stockx.api.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
 
@@ -26,8 +28,9 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
         return entityManager.find(clazz, id);
     }
 
-    public void add(T t) {
+    public T add(T t) {
         entityManager.persist(t);
+        return t;
     }
 
     public T update(T t) {

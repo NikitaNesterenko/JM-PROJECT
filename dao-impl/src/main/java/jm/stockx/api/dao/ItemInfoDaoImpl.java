@@ -14,12 +14,19 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
 
     @Override
     public ItemInfo getItemInfoByItemId(Long id) {
-//        return entityManager.createQuery(
-//                "SELECT i FROM ItemInfo AS i " +
-//                        "WHERE i.item.id = :itemId", ItemInfo.class)
-//                .setParameter("itemId", itemId)
-//                .getSingleResult();
-    return null;
+        return entityManager.createQuery(
+                "SELECT i FROM ItemInfo AS i " +
+                        "WHERE i.item.id = :itemId", ItemInfo.class)
+                .setParameter("itemId", id)
+                .getSingleResult();
+    }
+    @Override
+    public ItemInfo getItemInfoByItemName(String itemName) {
+        return entityManager.createQuery(
+                "SELECT i FROM ItemInfo AS i " +
+                        "WHERE i.item.name = :itemName", ItemInfo.class)
+                .setParameter("itemName", itemName)
+                .getSingleResult();
     }
 
     public List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price) {

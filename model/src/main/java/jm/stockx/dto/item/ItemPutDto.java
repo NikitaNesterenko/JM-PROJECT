@@ -51,18 +51,18 @@ public class ItemPutDto {
         this.id = item.getId();
         this.name = item.getName();
         this.price = itemInfo.getPrice();
-        this.retailPrice = item.getRetailPrice();
+        this.retailPrice = itemInfo.getPrice();
         this.lowestAsk = itemInfo.getLowestAsk();
         this.highestBid = itemInfo.getHighestBid();
-        this.condition = item.getCondition();
-        this.condition = item.getDescription();
+        this.condition = itemInfo.getCondition();
+        this.condition = itemInfo.getDescription();
     }
 
-    public ItemPutDto(Item item) {
-        this.id = item.getId();
-        this.name = item.getName();
-        this.retailPrice = item.getRetailPrice();
-        this.condition = item.getCondition();
-        this.condition = item.getDescription();
+    public ItemPutDto(ItemInfo itemInfo) {
+        this.id = itemInfo.getItem().getId();
+        this.name = itemInfo.getItem().getName();
+        this.retailPrice = itemInfo.getPrice();
+        this.condition = itemInfo.getCondition();
+        this.condition = itemInfo.getDescription();
     }
 }
