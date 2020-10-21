@@ -16,7 +16,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     @Override
     public Double getAverageSalesValue() {
         return (Double) entityManager.createNativeQuery("" +
-                "SELECT AVG(si.price)" +
+                "SELECT AVG(si.selling_info_price)" +
                 "FROM selling_info AS si " +
                 "WHERE si.order_status = 'DELIVERED'", SellingInfo.class)
                 .getSingleResult();
@@ -25,7 +25,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     @Override
     public Double getMinSalesValue(Long id) {
         return (Double) entityManager.createNativeQuery("" +
-                "SELECT MIN(si.price)" +
+                "SELECT MIN(si.selling_info_price)" +
                 "FROM selling_info AS si " +
                 "WHERE si.order_status = 'DELIVERED'" +
                 "AND si.item_id =: id", SellingInfo.class)
@@ -36,7 +36,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     @Override
     public Double getMaxSalesValue(Long id) {
         return (Double) entityManager.createNativeQuery("" +
-                "SELECT MAX(si.price)" +
+                "SELECT MAX(si.selling_info_price)" +
                 "FROM selling_info AS si " +
                 "WHERE si.order_status = 'DELIVERED'" +
                 "AND si.item_id =: id", SellingInfo.class)
