@@ -27,3 +27,4 @@ logs
 /UploadFile/
 /doc/
 /.bak/
+/node_modules/
