@@ -39,7 +39,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "SELECT MAX(si.price)" +
                 "FROM selling_info AS si " +
                 "WHERE si.order_status = 'DELIVERED'" +
-                "AND si.item_id = id", SellingInfo.class)
+                "AND si.item_id =: id", SellingInfo.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
