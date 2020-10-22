@@ -27,12 +27,4 @@ public class SizeInfoDto {
         this.lastSalePrice = lastSalePrice.toString();
         this.itemSize = itemSize.getSize();
     }
-
-    public void setLastSalePrice(Money lastSalePrice) {
-        this.lastSalePrice = lastSalePrice.toString();
-    }
-
-    public void setShoeSize(ItemSize itemSize) {
-        this.itemSize = itemSize.toString();
-    }
 }
