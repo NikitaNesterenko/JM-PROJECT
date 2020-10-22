@@ -3,6 +3,8 @@ package jm.stockx;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPutDto;
+import jm.stockx.entity.Currency;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -102,6 +104,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserFromDto(UserPutDto userPutDto) {
+        userDao.updateUserFromDto(userPutDto);
+    }
+
     public Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id) {
         List<ItemPurchaseDto> list = userDao.getPurchaseStatisticsByUserId(id);
 
