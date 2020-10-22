@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -38,4 +39,7 @@ public interface UserService {
     User getUserByEmail(String email);
 
     void updateUserFromDto(UserPutDto userPutDto);
+
+    Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id);
+
 }

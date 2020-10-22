@@ -1,9 +1,9 @@
 package jm.stockx.api.dao;
 
-import java.util.Set;
+import java.util.List;
 
 public interface GenericDao<T, PK> {
-    Set<T> getAll();
+    List<T> getAll();
 
     T getById(PK id);
 

@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
+import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.Currency;
@@ -16,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional
@@ -104,4 +108,11 @@ public class UserServiceImpl implements UserService {
         userDao.updateUserFromDto(userPutDto);
     }
 
+    public Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id) {
+        List<ItemPurchaseDto> list = userDao.getPurchaseStatisticsByUserId(id);
+
+        int count = list.stream().flatMapToInt(el -> IntStream.of(el.getCount())).sum();
+
+        return list.stream().collect(Collectors.toMap(ItemPurchaseDto::getItemCategory, x -> x.getCount().doubleValue() * 100 / count));
+    }
 }
