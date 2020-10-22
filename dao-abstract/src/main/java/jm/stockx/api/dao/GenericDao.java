@@ -2,10 +2,11 @@ package jm.stockx.api.dao;
 
 import jm.stockx.entity.Bid;
 
+import java.util.List;
 import java.util.Set;
 
 public interface GenericDao<T, PK> {
-    Set<T> getAll();
+    List<T> getAll();
 
     T getById(PK id);
 
