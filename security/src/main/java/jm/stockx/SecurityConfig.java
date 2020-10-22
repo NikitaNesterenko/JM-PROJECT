@@ -1,85 +1,56 @@
 package jm.stockx;
 
-import jm.stockx.handlers.LoginSuccessHandler;
+import jm.stockx.jwt.JwtTokenFilter;
+import jm.stockx.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String TOKEN_PREFIX = "Bearer_";
+    private final JwtTokenProvider jwtTokenProvider;
 
-    private final UserDetailsService userDetailsService;
-    private final SecurityUtils securityUtils;
-    private final LoginSuccessHandler successHandler;
-
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, SecurityUtils securityUtils, LoginSuccessHandler successHandler) {
-        this.userDetailsService = userDetailsService;
-        this.securityUtils = securityUtils;
-        this.successHandler = successHandler;
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(
-                "/VAADIN/**",
-                "/favicon.ico",
-                "/robots.txt",
-                "/manifest.webmanifest",
-                "/sw.js",
-                "/offline-page.html",
-                "/frontend/**",
-                "/webjars/**",
-                "/frontend-es5/**", "/frontend-es6/**");
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                .requestMatchers(securityUtils::isFrameworkInternalRequest).permitAll()
-                .antMatchers("/rest/api/users/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
                         "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
                         "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
-                        "/itemblock", "/brand").hasRole("ADMIN");
-
-        http.csrf().disable()
-                .requestCache().requestCache(new CustomRequestCache(securityUtils))
-                .and().formLogin()
-                .loginPage("/login").permitAll()
-                .loginProcessingUrl("/login")
-                .successHandler(successHandler)
-                .failureUrl("/login?error")
-                .and().logout().logoutSuccessUrl("/login");
-    }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+                        "/itemblock", "/brand", "/test").hasRole("ADMIN")
+                .anyRequest().authenticated();
     }
 }
-

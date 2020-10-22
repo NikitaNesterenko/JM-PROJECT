@@ -18,9 +18,9 @@ public class HistoryViews {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = ItemInfo.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
-    private Item item;
+    private ItemInfo itemInfo;
 
     @Column(name = "view_date")
     private LocalDateTime viewDate;

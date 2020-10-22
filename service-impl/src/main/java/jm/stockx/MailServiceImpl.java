@@ -102,7 +102,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean changePasswordByToken(String link, String password) {
-        TokenRecovery token = tokenRecoveryService.getTokenByHashEmail(link);
+        TokenRecovery token = tokenRecoveryService.getTokenRecoveryByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
             user.setPassword(password);

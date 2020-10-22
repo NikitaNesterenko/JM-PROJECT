@@ -5,21 +5,24 @@ import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.*;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.PaymentInfo;
 import jm.stockx.entity.SellingInfo;
-import jm.stockx.entity.ShoeSize;
 import jm.stockx.entity.User;
 import jm.stockx.enums.Status;
-import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +36,6 @@ public class ItemServiceImpl implements ItemService {
     private final MailService mailService;
     private final BuyingInfoDAO buyingInfoDAO;
     private final SellingInfoDAO sellingInfoDAO;
-    private final ShoeSizeService shoeSizeService;
 
     @Autowired
     public ItemServiceImpl(ItemDAO itemDao,
@@ -41,34 +43,33 @@ public class ItemServiceImpl implements ItemService {
                            MailService mailService,
                            BuyingInfoDAO buyingInfoDAO,
                            SellingInfoDAO sellingInfoDAO,
-                           ItemInfoDAO itemInfoDAO, ShoeSizeService shoeSizeService) {
+                           ItemInfoDAO itemInfoDAO) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
         this.sellingInfoDAO = sellingInfoDAO;
         this.buyingInfoDAO = buyingInfoDAO;
         this.itemInfoDAO = itemInfoDAO;
-        this.shoeSizeService = shoeSizeService;
     }
 
     @Override
     public ItemDto getItemDtoByName(String name) {
-        return itemDao.getItemDtoByName(name);
+        return itemDao.getItemDtoByItemName(name);
     }
 
     @Override
-    public List<Item> getAll() {
-        return itemDao.getAll();
+    public Set<Item> getAll() {
+        return new HashSet<>(itemDao.getAll());
     }
 
     @Override
     public ItemDto getItemDtoById(Long id) {
-        return itemDao.getItemDtoById(id);
+        return itemDao.getItemDtoByItemId(id);
     }
 
     @Override
-    public void create(Item item) {
-        itemDao.add(item);
+    public Item create(Item item) {
+        return itemDao.add(item);
     }
 
     @Override
@@ -95,36 +96,36 @@ public class ItemServiceImpl implements ItemService {
     public void buyItem(BuyingDto buyingDto) {
         // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
-        Item item = itemDao.getById(buyingDto.getItemId());
-        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getByItemId(buyingDto.getItemId()));
-        Set<Item> bougthItems = new HashSet<>();
-        bougthItems.add(item);
+        ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
+        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId()));
+        Set<ItemInfo> bougthItems = new HashSet<>();
+        bougthItems.add(itemInfo);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
         //TODO : add actual paymentInfo
 
         BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
-        buyingInfo.setBoughtItems(bougthItems);
+        buyingInfo.setBoughtItemsInfo(bougthItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, item);
+        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, itemInfo);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);
 
-        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", item.toString());
+        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", itemInfo.toString());
     }
 
     @Override
     public List<Item> getTopItemsByStyle(Long styleId, Integer topLimit) {
-        return itemDao.getTopItemsByStyleFromSellingInfo(styleId, topLimit);
+        return itemDao.getMostPopularItemByStyleId(styleId, topLimit);
     }
 
     @Override
     public List<Item> getNotReleasedItems() {
-        return itemDao.getNotReleasedItems();
+        return itemDao.getNotReleasedItem();
     }
 
     @Override
@@ -150,10 +151,5 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void updateItemImageUrl(Long id, String url) {
         itemDao.updateItemImageUrl(id, url);
-    }
-
-    @Override
-    public SizeInfoDto getSizeItemDtoByItem(Long itemId, Double size) {
-        return itemDao.getSizeItemDtoByItem(itemId, shoeSizeService.findOneBySize(size));
     }
 }

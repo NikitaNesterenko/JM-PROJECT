@@ -1,13 +1,32 @@
 package jm.stockx.entity;
 
-import lombok.*;
+import jm.stockx.enums.ItemCategory;
+import jm.stockx.enums.ItemColors;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,36 +34,65 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@Builder
 @Entity
+@Builder
 public class ItemInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
-    @JoinTable(name = "itemInfo_shoe_size", joinColumns = @JoinColumn(name = "shoe_size_id"),
-            inverseJoinColumns = @JoinColumn(name = "itemInfo_id"))
-    private Set<ShoeSize> sizes = new HashSet<>();
+    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH})
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 
-    @Columns(columns = { @Column(name = "item_currency"), @Column(name = "item_price") })
+    @OneToOne(targetEntity = ItemSize.class, fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH})
+    private ItemSize size;
+
+    @Columns(columns = {@Column(name = "item_currency"), @Column(name = "item_price")})
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money price;
 
-    @Columns(columns = { @Column(name = "lowest_ask_currency"), @Column(name = "item_lowest_ask") })
+    @Columns(columns = {@Column(name = "lowest_ask_currency"), @Column(name = "item_lowest_ask")})
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money lowestAsk;
 
-    @Columns(columns = { @Column(name = "highest_bid_currency"), @Column(name = "item_highest_bid") })
+    @Columns(columns = {@Column(name = "highest_bid_currency"), @Column(name = "item_highest_bid")})
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
 
-    public ItemInfo(Set<ShoeSize> sizes, Money price, Money lowestAsk, Money highestBid) {
-        this.sizes = sizes;
-        this.price = price;
-        this.lowestAsk = lowestAsk;
-        this.highestBid = highestBid;
-    }
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
+
+    @Column(name = "item_condition")
+    private String condition;
+
+    @Column(name = "description", length = 1500)
+    private String description;
+
+    @Column(name = "item_image_url")
+    private String itemImageUrl;
+
+    @Column(name = "item_category")
+    @Enumerated(EnumType.STRING)
+    private ItemCategory itemCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "style_id")
+    private Style style;
+
+    @Column(name = "item_colors")
+    @Enumerated(EnumType.STRING)
+    private ItemColors itemColors;
 }

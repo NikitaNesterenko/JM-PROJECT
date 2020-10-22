@@ -1,11 +1,9 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.entity.Bid;
-import jm.stockx.entity.ShoeSize;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
@@ -22,8 +20,8 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     }
 
     @SuppressWarnings("unchecked")
-    public Set<T> getAll() {
-        return new HashSet<T>(entityManager.createQuery("FROM " + clazz.getName()).getResultList());
+    public List<T> getAll() {
+        return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
     public T getById(PK id) {

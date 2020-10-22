@@ -2,9 +2,10 @@ package jm.stockx;
 
 import jm.stockx.api.dao.BidDAO;
 import jm.stockx.api.dao.ItemDAO;
+import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.BidDto;
-import jm.stockx.dto.BidPostDto;
+import jm.stockx.dto.bid.BidDto;
+import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.entity.Bid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +17,12 @@ import java.util.List;
 public class BidServiceImpl implements BidService {
 
     private final BidDAO bidDAO;
-    private final ItemDAO itemDAO;
+    private final ItemInfoDAO itemInfoDAO;
     private final UserDAO userDAO;
 
-    public BidServiceImpl(BidDAO bidDAO, ItemDAO itemDAO, UserDAO userDAO) {
+    public BidServiceImpl(BidDAO bidDAO, ItemDAO itemDAO, ItemInfoDAO itemInfoDAO, UserDAO userDAO) {
         this.bidDAO = bidDAO;
-        this.itemDAO = itemDAO;
+        this.itemInfoDAO = itemInfoDAO;
         this.userDAO = userDAO;
     }
 
@@ -31,13 +32,13 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public BidDto get(Long id) {
-        return bidDAO.getBidDtoById(id);
+    public BidDto getBidDtoByBidId(Long id) {
+        return bidDAO.getBidDtoByBidId(id);
     }
 
     @Override
-    public BidDto get(String itemName, String userName) {
-        return bidDAO.getBidDtoByItemAndUser(itemName, userName);
+    public BidDto getBidDtoByItemNameAndUserName(String itemName, String userName) {
+        return bidDAO.getBidDtoByItemNameAndUserName(itemName, userName);
     }
 
     @Override
@@ -50,8 +51,8 @@ public class BidServiceImpl implements BidService {
         Bid bid = new Bid();
         bid.setPrice(bidPostDto.getPrice());
         bid.setSuccess(bidPostDto.getSuccess());
-        bid.setItem(itemDAO.getItemByName(bidPostDto.getItemName()));
-        bid.setUser(userDAO.getUserByName(bidPostDto.getUserName()));
+        bid.setItemInfo(itemInfoDAO.getItemInfoByItemName(bidPostDto.getItemName()));
+        bid.setUser(userDAO.getUserByUsername(bidPostDto.getUserName()));
         bidDAO.add(bid);
     }
 

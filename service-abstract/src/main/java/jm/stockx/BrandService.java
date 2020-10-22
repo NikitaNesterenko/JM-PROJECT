@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.dto.BrandDto;
+import jm.stockx.dto.brand.BrandDto;
 import jm.stockx.entity.Brand;
 
 import java.util.List;
@@ -17,13 +17,13 @@ public interface BrandService {
 
     void delete(Long id);
 
-    BrandDto getBrandByName(String name);
+    BrandDto getBrandDtoByBrandName(String name);
 
     boolean isBrandExist(Long id);
 
-    BrandDto getBrandDtoById(Long id);
+    BrandDto getBrandDtoByBrandId(Long id);
 
-    Brand getBrand(String name);
+    Brand getBrandByName(String name);
 
     List<Brand> getPopularBrandIn2Month();
 

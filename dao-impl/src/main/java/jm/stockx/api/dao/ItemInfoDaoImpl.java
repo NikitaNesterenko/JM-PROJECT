@@ -1,9 +1,9 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.ItemCategoryDto;
-import jm.stockx.dto.ItemInfoGetDto;
+import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,39 +13,45 @@ import java.util.List;
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
 
     @Override
-    public ItemInfo getByItemId(Long itemId) {
-//        return entityManager.createQuery(
-//                "SELECT i FROM ItemInfo AS i " +
-//                        "WHERE i.item.id = :itemId", ItemInfo.class)
-//                .setParameter("itemId", itemId)
-//                .getSingleResult();
-    return null;
+    public ItemInfo getItemInfoByItemId(Long id) {
+        return entityManager.createQuery(
+                "SELECT i FROM ItemInfo AS i " +
+                        "WHERE i.item.id = :itemId", ItemInfo.class)
+                .setParameter("itemId", id)
+                .getSingleResult();
+    }
+    @Override
+    public ItemInfo getItemInfoByItemName(String itemName) {
+        return entityManager.createQuery(
+                "SELECT i FROM ItemInfo AS i " +
+                        "WHERE i.item.name = :itemName", ItemInfo.class)
+                .setParameter("itemName", itemName)
+                .getSingleResult();
     }
 
-    @Override
-    public List<ItemInfoGetDto> getListAndOrderByCash(Integer cash) {
-        return entityManager.createQuery("SELECT NEW " +
-                "jm.stockx.dto.ItemInfoGetDto(" +
+    public List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
                 "if.item.name," +
                 "if.item.itemImageUrl," +
                 "if.lowestAsk" +
                 ")" +
                 "FROM ItemInfo if " +
-                "WHERE if.price > :cash", ItemInfoGetDto.class)
-                .setParameter("cash", cash)
+                "WHERE if.price > :price", ItemInfoCardDto.class)
+                .setParameter("price", price.getAmount())
                 .getResultList();
     }
 
     @Override
-    public List<ItemCategoryDto> getItemCategoryDtoByCategory(ItemCategory category) {
+    public List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemCategoryDto(" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
                 "i.item.name," +
                 "i.item.itemImageUrl," +
                 "i.lowestAsk" +
                 ")" +
                 "FROM ItemInfo AS i " +
-                "WHERE i.item.itemCategory =: itemCategory", ItemCategoryDto.class)
+                "WHERE i.item.itemCategory =: itemCategory", ItemInfoCardDto.class)
                 .setParameter("itemCategory", category)
                 .getResultList();
     }

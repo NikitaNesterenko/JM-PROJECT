@@ -1,12 +1,10 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.ItemDto;
-import jm.stockx.dto.ReleaseItemDto;
-import jm.stockx.dto.SizeInfoDto;
+import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
-import jm.stockx.entity.ShoeSize;
-import org.joda.money.Money;
+import jm.stockx.entity.ItemInfo;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -17,27 +15,27 @@ import java.util.stream.Collectors;
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
     @Override
-    public ItemDto getItemDtoByName(String name) {
+    public ItemDto getItemDtoByItemName(String name) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
-                "i.id," +
-                "i.name," +
-                "i.retailPrice," +
+                "SELECT NEW jm.stockx.dto.item.ItemDto(" +
+                "i.item.id," +
+                "i.item.name," +
+                "i.price," +
                 "i.releaseDate," +
                 "i.condition," +
                 "i.description," +
                 "i.itemColors" +
                 ")" +
-                "FROM Item AS i " +
-                "WHERE i.name = :itemName", ItemDto.class)
-                .setParameter("itemName", name)
+                "FROM ItemInfo AS i " +
+                "WHERE i.item.name = :name", ItemDto.class)
+                .setParameter("name", name)
                 .getSingleResult();
     }
 
     @Override
     public List<ItemDto> searchItem(String search, Integer page, Integer size) {
         return entityManager.createQuery("" +
-                "FROM Item i  " +
+                "FROM ItemInfo i  " +
                 "WHERE i.name LIKE '%" + search + "%'", Item.class)
                 .setFirstResult(size * (page - 1) + 1)
                 .setMaxResults(size)
@@ -48,21 +46,21 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public List<Item> getMostPopularItems(String brand) {
+    public List<Item> getMostPopularItemByBrandName(String name) {
         return entityManager.createQuery("" +
                 "FROM Item AS i " +
                 "INNER JOIN BuyingInfo AS bi " +
                 "ON i.id = bi.id " +
                 "INNER JOIN Brand AS b " +
-                "WHERE b.name =:brand " +
+                "WHERE b.name =:name " +
                 "ORDER BY COUNT(i.id) DESC", Item.class)
-                .setParameter("brand", brand)
+                .setParameter("name", name)
                 .setMaxResults(10)
                 .getResultList();
     }
 
     @Override
-    public List<Item> getTopItemsByStyleFromSellingInfo(Long styleId, int topLimit) {
+    public List<Item> getMostPopularItemByStyleId(Long id, int topLimit) {
         return entityManager.createQuery("" +
                 "FROM SellingInfo AS si " +
                 "LEFT JOIN Item AS i " +
@@ -70,13 +68,13 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 "WHERE i.style = :styleId " +
                 "GROUP BY si.id " +
                 "ORDER BY count(si.id) DESC", Item.class)
-                .setParameter("styleId", styleId)
+                .setParameter("styleId", id)
                 .setMaxResults(topLimit)
                 .getResultList();
     }
 
     @Override
-    public List<Item> getNotReleasedItems() {
+    public List<Item> getNotReleasedItem() {
         return entityManager.createQuery("" +
                 "FROM Item AS i " +
                 "WHERE i.releaseDate >= GETDATE(current_date)", Item.class)
@@ -94,9 +92,9 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public ItemDto getItemDtoById(Long id) {
+    public ItemDto getItemDtoByItemId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
+                "SELECT NEW jm.stockx.dto.item.ItemDto(" +
                 "i.id," +
                 "i.name," +
                 "i.retailPrice," +
@@ -112,9 +110,9 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public List<ItemDto> getItemsByColors(String itemColors) {
+    public List<ItemDto> getItemDtoByColor(String itemColors) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.ItemDto(" +
+                "SELECT NEW jm.stockx.dto.item.ItemDto(" +
                 "i.id," +
                 "i.name," +
                 "i.retailPrice," +
@@ -155,73 +153,19 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public List<ReleaseItemDto> getReleaseItemsByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+    public List<ReleaseItemDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         String sql = "" +
-                "SELECT NEW jm.stockx.dto.ReleaseItemDto(" +
-                "i.id," +
-                "i.name," +
-                "i.condition, " +
-                "i.itemImageUrl, " +
-                "i.retailPrice, " +
-                "i.releaseDate) " +
-                "FROM Item AS i " +
-                "WHERE i.releaseDate BETWEEN :begin AND :end";
+                "SELECT NEW jm.stockx.dto.item.ReleaseItemDto(" +
+                "info.item.name," +
+                "info.condition, " +
+                "info.itemImageUrl, " +
+                "info.price, " +
+                "info.releaseDate) " +
+                "FROM ItemInfo AS info " +
+                "WHERE info.releaseDate BETWEEN :begin AND :end";
         return entityManager.createQuery(sql, ReleaseItemDto.class)
                 .setParameter("begin", beginningPeriod)
                 .setParameter("end", endPeriod)
                 .getResultList();
     }
-
-    private Money findLastSalePriceByItemID(Long itemId) {
-        return entityManager.createQuery("" +
-                "SELECT item.buyingInfo.buyingPrice " +
-                "FROM Item item " +
-                "WHERE item.id = :itemId", Money.class)
-                .setParameter("itemId", itemId)
-                .getSingleResult();
-
-    }
-
-    @Override
-    public SizeInfoDto getSizeItemDtoByItem(Long itemId, ShoeSize size) {
-        SizeInfoDto sizeInfoDto = entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
-                "item.itemInfo.lowestAsk," +
-                "item.itemInfo.highestBid," +
-                "item.name," +
-                "item.condition," +
-                "item.buyingInfo.buyingPrice" +
-                ")" +
-                "FROM Item item " +
-                "WHERE item.id = :itemId " +
-                "AND :shoeSize MEMBER OF item.itemInfo.sizes", SizeInfoDto.class)
-                .setParameter("itemId", itemId)
-                .setParameter("shoeSize", size)
-                .setMaxResults(1)
-                .getResultList().get(0);
-        sizeInfoDto.setShoeSize(size);
-        return sizeInfoDto;
-    }
-
-//    @Override
-//    public SizeInfoDto getSizeItemDtoByItem(Money price, Double size) {
-//        return entityManager.createQuery("" +
-//                "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
-//                "ib.buyingPrice," +
-//                "ii.lowestAsk," +
-//                "ii.highestBid," +
-//                "ii.item.name," +
-//                "ii.item.condition" +
-//                ") " +
-//                "FROM ItemInfo ii " +
-//                "JOIN ii.item.buyingInfoSet ib " +
-//                "WHERE ii.price = :price " +
-//                "AND ii.sizes.size = :shoeSize " +
-//                "AND ib.id = BuyingInfo.id " +
-//                "ORDER BY ib.buyingTimeStamp ", SizeInfoDto.class)
-//                .setParameter("price", price)
-//                .setParameter("shoeSize", size)
-//                .setMaxResults(1)
-//                .getResultList().get(0);
-//    }
 }

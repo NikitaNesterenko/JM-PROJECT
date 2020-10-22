@@ -38,7 +38,7 @@ public class UserPortfolioServiceImpl implements UserPortfolioService{
 
     @Override
     public UserPortfolio getUserPortfolioByUserId(Long id) {
-        return userPortfolioDao.getUserPortfolioByUserId(id);
+        return userPortfolioDao.getUserPortfolioById(id);
     }
 
     @Override

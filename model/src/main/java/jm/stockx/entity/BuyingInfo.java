@@ -1,6 +1,6 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ItemInfoDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +48,7 @@ public class BuyingInfo {
             name = "buying_item",
             joinColumns = @JoinColumn(name = "buying_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> boughtItems;
+    private Set<ItemInfo> boughtItemsInfo;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(

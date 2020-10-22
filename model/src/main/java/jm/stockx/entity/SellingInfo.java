@@ -1,6 +1,6 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.ItemInfoDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,9 +34,9 @@ public class SellingInfo {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = ItemInfo.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
-    private Item item;
+    private ItemInfo itemInfo;
 
     @Column(name = "order_number")
     private Long orderNumber;
@@ -54,10 +54,9 @@ public class SellingInfo {
 
     public SellingInfo(User user,
                        ItemInfo itemInfo,
-                       Item item,
                        Status status) {
         this.user = user;
-        this.item = item;
+        this.itemInfo = itemInfo;
         this.price = itemInfo.getPrice();
         this.orderDate = LocalDateTime.now();
         this.status = status;
@@ -65,19 +64,17 @@ public class SellingInfo {
 
     public SellingInfo(User user,
                        ItemInfoDto itemInfoDto,
-                       Item item) {
+                       ItemInfo item) {
         this.user = user;
-        this.item = item;
         this.price = itemInfoDto.getPrice();
         this.orderDate = LocalDateTime.now();
     }
 
     public SellingInfo(User user,
-                       Item item,
                        ItemInfo itemInfo,
                        Long orderNumber,
                        Status status) {
-        this(user, itemInfo, item, status);
+        this(user, itemInfo, status);
         this.orderNumber = orderNumber;
     }
 }

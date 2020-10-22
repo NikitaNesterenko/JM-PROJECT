@@ -1,10 +1,10 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.TokenRecoveryDto;
+import jm.stockx.dto.security.token.TokenRecoveryDto;
 import jm.stockx.entity.TokenRecovery;
 
 public interface TokenRecoveryDAO extends GenericDao<TokenRecovery, Long> {
-    TokenRecovery getByHashEmail(String hash);
+    TokenRecovery getTokenRecoveryByHashEmail(String hash);
 
-    TokenRecoveryDto getTokenRecoveryDtoById(Long id);
+    TokenRecoveryDto getTokenRecoveryDtoByTokenRecoveryId(Long id);
 }

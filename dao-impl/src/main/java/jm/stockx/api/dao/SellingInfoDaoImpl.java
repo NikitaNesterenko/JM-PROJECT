@@ -1,8 +1,8 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.ItemTopInfoDto;
-import jm.stockx.dto.SellerTopInfoDto;
-import jm.stockx.dto.SellingInfoDto;
+import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
+import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
+import jm.stockx.dto.sellingInfo.SellingInfoDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
 
@@ -23,9 +23,9 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
-    public SellingInfoDto getSellingInfoDtoById(Long id) {
+    public SellingInfoDto getSellingInfoDtoBySellingInfoId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.SellingInfoDto(" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.SellingInfoDto(" +
                 "s.id," +
                 "s.orderDate," +
                 "s.price" +
@@ -36,9 +36,9 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getSingleResult();
     }
 
-    public List<SellerTopInfoDto> getTopSellingUsers() {
+    public List<SellerTopInfoDto> getSellerTopInfoDto() {
         String sql = "" +
-                "SELECT NEW jm.stockx.dto.SellerTopInfoDto(" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.SellerTopInfoDto(" +
                 "u.id, " +
                 "u.username) " +
                 "FROM SellingInfo as si " +
@@ -51,7 +51,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
-    public int getNumberSalesForSpecifiedPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
+    public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         List<SellingInfo> list = entityManager.createQuery("" +
                 "SELECT si " +
                 "FROM SellingInfo as si " +
@@ -64,7 +64,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     public List<ItemTopInfoDto> getItemTopInfoDto(int maxResult) {
         String sql = "" +
-                "SELECT NEW jm.stockx.dto.ItemTopInfoDto(" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.ItemTopInfoDto(" +
                 "i.id, " +
                 "i.name, " +
                 "i.itemImageUrl, " +

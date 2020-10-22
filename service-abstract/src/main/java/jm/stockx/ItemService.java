@@ -1,24 +1,21 @@
 package jm.stockx;
 
-import jm.stockx.dto.BuyingDto;
-import jm.stockx.dto.ItemDto;
-import jm.stockx.dto.PageDto;
-import jm.stockx.dto.SizeInfoDto;
+import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
-import jm.stockx.entity.ShoeSize;
-import org.joda.money.Money;
 
 import java.util.List;
 import java.util.Set;
 
 public interface ItemService {
 
-    List<Item> getAll();
+    Set<Item> getAll();
 
     ItemDto getItemDtoById(Long id);
 
-    void create(Item item);
+    Item create(Item item);
 
     void update(Item item);
 
@@ -43,7 +40,4 @@ public interface ItemService {
     Item getItemById(Long id);
 
     void updateItemImageUrl(Long id, String url);
-
-    SizeInfoDto getSizeItemDtoByItem(Long itemId, Double size);
-
 }
