@@ -155,8 +155,10 @@ public class EntityDataInitializer {
     private void createItems() {
         if (itemService.getAll().size() == 0) {
 
+            Item jordan14 = new SneakersItem(("Jordan 14 Retro Gym Red Toro"));
+            itemService.create(jordan14);
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Jordan 14 Retro Gym Red Toro")))
+                    .item(jordan14)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("RUB 200.0"))
                     .highestBid(Money.parse("RUB 222.0"))
@@ -176,9 +178,10 @@ public class EntityDataInitializer {
                     .itemColors(ItemColors.BLACK)
                     .build());
 
-
+            Item adidasYeezy = new SneakersItem(("Adidas Yeezy Boost 380 Mist"));
+            itemService.create(adidasYeezy);
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Adidas Yeezy Boost 380 Mist")))
+                    .item(adidasYeezy)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 240.0"))
                     .highestBid(Money.parse("USD 272.0"))
@@ -199,8 +202,11 @@ public class EntityDataInitializer {
                     .itemColors(ItemColors.BLACK)
                     .build());
 
+
+            Item nikeReact = new SneakersItem(("Nike React Element 87 Anthracite Black"));
+            itemService.create(nikeReact);
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Nike React Element 87 Anthracite Black")))
+                    .item(nikeReact)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 190.0"))
                     .highestBid(Money.parse("USD 213.0"))
@@ -220,8 +226,10 @@ public class EntityDataInitializer {
 
                     .build());
 
+            Item jordan4 = new SneakersItem(("Jordan 4 Retro Winterized Loyal Blue"));
+            itemService.create(jordan4);
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Jordan 4 Retro Winterized Loyal Blue\"")))
+                    .item(jordan4)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 210.0"))
                     .highestBid(Money.parse("USD 237.0"))
@@ -242,8 +250,10 @@ public class EntityDataInitializer {
                     .build());
 
 
+            Item jordan1 = new SneakersItem(("Jordan 1 Retro High Satin Black Toe (W)"));
+            itemService.create(jordan1);
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Jordan 1 Retro High Satin Black Toe (W)")))
+                    .item(jordan1)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 200.0"))
                     .highestBid(Money.parse("USD 241.0"))

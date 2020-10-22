@@ -7,7 +7,7 @@ public interface GenericDao<T, PK> {
 
     T getById(PK id);
 
-    T add(T newInstance);
+    void add(T newInstance);
 
     T update(T transientObject);
 
