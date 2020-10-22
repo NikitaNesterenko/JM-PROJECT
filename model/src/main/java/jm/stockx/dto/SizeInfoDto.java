@@ -19,19 +19,13 @@ public class SizeInfoDto {
     private String itemSize;
 
 
-    public SizeInfoDto(Money lowestAsk, Money highestBid, String itemName, String condition, Money lastSalePrice) {
+    public SizeInfoDto(Money lowestAsk, Money highestBid, String itemName, String condition, Money lastSalePrice, ItemSize itemSize) {
         this.lowestAsk = lowestAsk.toString();
         this.highestBid = highestBid.toString();
         this.itemName = itemName;
         this.condition = condition;
         this.lastSalePrice = lastSalePrice.toString();
-    }
-
-    public SizeInfoDto(String itemName, String condition, Money lowestAsk, Money highestBid) {
-        this.lowestAsk = lowestAsk.toString();
-        this.highestBid = highestBid.toString();
-        this.condition = condition;
-        this.itemName = itemName;
+        this.itemSize = itemSize.getSize();
     }
 
     public void setLastSalePrice(Money lastSalePrice) {

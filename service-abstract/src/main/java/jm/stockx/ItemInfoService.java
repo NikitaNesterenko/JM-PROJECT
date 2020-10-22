@@ -1,12 +1,13 @@
 package jm.stockx;
 
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ItemInfoService {
 
@@ -14,7 +15,7 @@ public interface ItemInfoService {
 
     ItemInfo get(Long id);
 
-    ItemInfo create(ItemInfo itemInfo);
+    void create(ItemInfo itemInfo);
 
     void update(ItemInfo itemInfo);
 
@@ -25,4 +26,6 @@ public interface ItemInfoService {
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
+
+    SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize);
 }

@@ -55,8 +55,9 @@ public class ItemInfo {
                     CascadeType.REFRESH})
     private ItemSize size;
 
-    @OneToOne(targetEntity = BuyingInfo.class, fetch = FetchType.LAZY,
+    @ManyToOne(targetEntity = BuyingInfo.class, fetch = FetchType.LAZY,
             cascade = {
+                    CascadeType.PERSIST,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
     private BuyingInfo buyingInfo;

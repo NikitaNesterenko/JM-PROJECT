@@ -37,7 +37,5 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     void updateItemImageUrl(Long id, String url);
 
-    SizeInfoDto getItemDtoByItemIdandSize(Long itemId, ItemSize size);
-
 
 }
