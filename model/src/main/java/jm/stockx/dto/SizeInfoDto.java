@@ -1,6 +1,6 @@
 package jm.stockx.dto;
 
-import jm.stockx.entity.ShoeSize;
+import jm.stockx.entity.ItemSize;
 import lombok.*;
 import org.joda.money.Money;
 
@@ -16,7 +16,7 @@ public class SizeInfoDto {
     private String highestBid;
     private String itemName;
     private String condition;
-    private String shoeSize;
+    private String itemSize;
 
 
     public SizeInfoDto(Money lowestAsk, Money highestBid, String itemName, String condition, Money lastSalePrice) {
@@ -38,7 +38,7 @@ public class SizeInfoDto {
         this.lastSalePrice = lastSalePrice.toString();
     }
 
-    public void setShoeSize(ShoeSize shoeSize) {
-        this.shoeSize = shoeSize.toString();
+    public void setShoeSize(ItemSize itemSize) {
+        this.itemSize = itemSize.toString();
     }
 }

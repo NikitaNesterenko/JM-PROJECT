@@ -55,6 +55,12 @@ public class ItemInfo {
                     CascadeType.REFRESH})
     private ItemSize size;
 
+    @OneToOne(targetEntity = BuyingInfo.class, fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH})
+    private BuyingInfo buyingInfo;
+
     @Columns(columns = {@Column(name = "item_currency"), @Column(name = "item_price")})
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money price;
