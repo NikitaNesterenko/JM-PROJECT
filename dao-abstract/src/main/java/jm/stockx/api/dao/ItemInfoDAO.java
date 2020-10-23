@@ -1,8 +1,10 @@
 package jm.stockx.api.dao;
 
 
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 
@@ -17,5 +19,7 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
+
+    SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSize itemSize);
 
 }

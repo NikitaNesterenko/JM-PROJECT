@@ -1,10 +1,13 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -151,6 +154,7 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .setParameter("id", id)
                 .executeUpdate();
     }
+
 
     @Override
     public List<ReleaseItemDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {

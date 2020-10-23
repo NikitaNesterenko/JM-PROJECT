@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -68,8 +67,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item create(Item item) {
-        return itemDao.add(item);
+    public void create(Item item) {
+         itemDao.add(item);
     }
 
     @Override
@@ -152,4 +151,5 @@ public class ItemServiceImpl implements ItemService {
     public void updateItemImageUrl(Long id, String url) {
         itemDao.updateItemImageUrl(id, url);
     }
+
 }
