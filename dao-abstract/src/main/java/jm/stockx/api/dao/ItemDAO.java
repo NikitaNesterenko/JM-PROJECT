@@ -1,10 +1,12 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.item.ReleaseItemDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,9 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.entity.Bid;
+
 import java.util.List;
+import java.util.Set;
 
 public interface GenericDao<T, PK> {
     List<T> getAll();
