@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
@@ -54,4 +54,5 @@ public interface ItemInfoService {
 
     List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit);
 
+    SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize);
 }

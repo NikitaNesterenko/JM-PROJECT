@@ -45,8 +45,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item create(Item item) {
-        return itemDao.add(item);
+    public ItemDto getItemDtoById(Long id) {
+        return itemDao.getItemDtoByItemId(id);
+    }
+
+    @Override
+    public void create(Item item) {
+         itemDao.add(item);
     }
 
     @Override

@@ -1,12 +1,14 @@
 package jm.stockx.api.dao;
 
 
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
 import jm.stockx.dto.itemInfo.ReleaseItemInfoDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 
@@ -42,6 +44,8 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoDto> getMostPopularItemByBrandName(String name);
 
     List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit);
+
+    SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSize itemSize);
 
 
 }

@@ -1,19 +1,18 @@
 package jm.stockx;
 
-import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.dto.item.ItemDto;
-import jm.stockx.dto.page.PageDto;
-import jm.stockx.entity.Brand;
+import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.entity.Item;
 
-import java.util.List;
 import java.util.Set;
 
 public interface ItemService {
 
     Set<Item> getAll();
 
-    Item create(Item item);
+    ItemDto getItemDtoById(Long id);
+
+    void create(Item item);
 
     void update(Item item);
 

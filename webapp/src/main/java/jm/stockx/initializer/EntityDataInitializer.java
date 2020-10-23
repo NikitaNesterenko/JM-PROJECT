@@ -1,10 +1,13 @@
 package jm.stockx.initializer;
 
 import jm.stockx.*;
+import jm.stockx.api.dao.BuyingInfoDAO;
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import jm.stockx.enums.ItemSizeTypes;
+import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,7 @@ public class EntityDataInitializer {
     private BidService bidService;
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
+    private BuyingInfoService buyingInfoService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -73,9 +77,7 @@ public class EntityDataInitializer {
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
 //        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
-
     }
-
 
     private void createRoles() {
         if (roleService.getAll().size() == 0) {
@@ -155,12 +157,22 @@ public class EntityDataInitializer {
     private void createItems() {
         if (itemService.getAll().size() == 0) {
 
+            Item jordan14 = new SneakersItem(("Jordan 14 Retro Gym Red Toro"));
+            itemService.create(jordan14);
+
+            BuyingInfo buyingInfoJordan14 = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("RUB 205.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Jordan 14 Retro Gym Red Toro")))
+                    .item(jordan14)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("RUB 200.0"))
                     .highestBid(Money.parse("RUB 222.0"))
                     .lowestAsk(Money.parse("RUB 191.0"))
+                    .buyingInfo(buyingInfoJordan14)
                     .size(itemSizeService.findOneBySizeName("9"))
                     .releaseDate(LocalDate.of(2020, 7, 2))
                     .condition("New")
@@ -177,12 +189,22 @@ public class EntityDataInitializer {
                     .build());
 
 
+            Item adidasYeezy = new SneakersItem(("Adidas Yeezy Boost 380 Mist"));
+            itemService.create(adidasYeezy);
+
+            BuyingInfo buyingInfoAdidasYeezy = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("USD 250.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Adidas Yeezy Boost 380 Mist")))
+                    .item(adidasYeezy)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 240.0"))
                     .highestBid(Money.parse("USD 272.0"))
                     .lowestAsk(Money.parse("USD 204.0"))
+                    .buyingInfo(buyingInfoAdidasYeezy)
                     .size(itemSizeService.findOneBySizeName("9"))
                     .releaseDate(LocalDate.of(2020, 3, 25))
                     .condition("New")
@@ -199,12 +221,23 @@ public class EntityDataInitializer {
                     .itemColors(ItemColors.BLACK)
                     .build());
 
+
+            Item nikeReact = new SneakersItem(("Nike React Element 87 Anthracite Black"));
+            itemService.create(nikeReact);
+
+            BuyingInfo buyingInfoNikeReact = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("USD 200.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Nike React Element 87 Anthracite Black")))
+                    .item(nikeReact)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 190.0"))
                     .highestBid(Money.parse("USD 213.0"))
                     .lowestAsk(Money.parse("USD 166.0"))
+                    .buyingInfo(buyingInfoNikeReact)
                     .size(itemSizeService.findOneBySizeName("10"))
 
                     .releaseDate(LocalDate.of(2018, 6, 14))
@@ -217,15 +250,24 @@ public class EntityDataInitializer {
                     .brand(brandService.getBrandByName("Nike"))
                     .style(styleService.getStyleByName("sports"))
                     .itemColors(ItemColors.WHITE)
-
                     .build());
 
+            Item jordan4 = new SneakersItem(("Jordan 4 Retro Winterized Loyal Blue"));
+            itemService.create(jordan4);
+
+            BuyingInfo buyingInfoJordan4 = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("USD 220.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Jordan 4 Retro Winterized Loyal Blue\"")))
+                    .item(jordan4)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 210.0"))
                     .highestBid(Money.parse("USD 237.0"))
                     .lowestAsk(Money.parse("USD 195.0"))
+                    .buyingInfo(buyingInfoJordan4)
                     .size(itemSizeService.findOneBySizeName("10"))
 
                     .releaseDate(LocalDate.of(2019, 12, 21))
@@ -242,12 +284,22 @@ public class EntityDataInitializer {
                     .build());
 
 
+            Item jordan1 = new SneakersItem(("Jordan 1 Retro High Satin Black Toe (W)"));
+            itemService.create(jordan1);
+
+            BuyingInfo buyingInfoJordan1 = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("USD 214.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
             itemInfoService.create(ItemInfo.builder()
-                    .item(itemService.create(new SneakersItem("Jordan 1 Retro High Satin Black Toe (W)")))
+                    .item(jordan1)
                     .itemCategory(ItemCategory.SNEAKERS)
                     .price(Money.parse("USD 200.0"))
                     .highestBid(Money.parse("USD 241.0"))
                     .lowestAsk(Money.parse("USD 167.0"))
+                    .buyingInfo(buyingInfoJordan1)
                     .size(itemSizeService.findOneBySizeName("11"))
                     .releaseDate(LocalDate.of(2019, 8, 17))
                     .condition("New")

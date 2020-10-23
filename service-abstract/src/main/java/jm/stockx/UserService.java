@@ -1,11 +1,14 @@
 package jm.stockx;
 
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserPutDto;
+import jm.stockx.entity.Currency;
 import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -34,5 +37,9 @@ public interface UserService {
     User getUserById(Long id);
 
     User getUserByEmail(String email);
+
+    void updateUserFromDto(UserPutDto userPutDto);
+
+    Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id);
 
 }
