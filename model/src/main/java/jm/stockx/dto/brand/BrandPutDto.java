@@ -21,4 +21,6 @@ public class BrandPutDto {
 
     @NotBlank(message = "Добавьте название бренда. Название не может быть пустым или состоять из одних пробелов")
     private String name;
+
+    private String logoImage;
 }

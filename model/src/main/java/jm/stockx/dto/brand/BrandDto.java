@@ -21,8 +21,5 @@ public class BrandDto {
     @NotBlank(message = "Добавьте название бренда. Название не может быть пустым или состоять из одних пробелов")
     private String name;
 
-    public BrandDto(Brand brand) {
-        this.id = brand.getId();
-        this.name = brand.getName();
-    }
+    private String logoImage;
 }

@@ -32,6 +32,9 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "logo_image")
+    private String logoImage;
+
     public Brand(String name) {
         this.name = name;
     }
