@@ -28,4 +28,6 @@ public interface ItemInfoService {
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
 
     SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize);
+
+    List<ItemInfoCardDto> getAllItemInfoCardDtoForDisplay();
 }

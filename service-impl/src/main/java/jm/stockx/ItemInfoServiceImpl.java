@@ -73,4 +73,13 @@ public class ItemInfoServiceImpl implements ItemInfoService {
         return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId,sizeFromDb);
     }
 
+
+    /**
+     * Returns List of ItemInfoCardDto for display on main page
+     * @returnValue ItemInfoCardDto -> itemName, itemImageUrl, brandLogoUrl, lowestAsk
+     *
+     */
+    public List<ItemInfoCardDto> getAllItemInfoCardDtoForDisplay(){
+       return itemInfoDAO.getAllItemInfoCardDtoForDisplay();
+    }
 }
