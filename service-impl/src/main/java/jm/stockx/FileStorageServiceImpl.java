@@ -78,6 +78,13 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
+    /**
+     * Stores brand logo file in local project directory
+     * and updates brandLogoUrl in Brand entity
+     * @param brandId
+     * @param logoFileToUpdate
+     * @return
+     */
     @Transactional
     public void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate) {
         if (!logoFileToUpdate.isEmpty()) {
@@ -95,7 +102,6 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new FileStorageException("Uploaded file is Empty");
         }
     }
-
 
     @Override
     public Resource loadFileAsResource(String filename) {
