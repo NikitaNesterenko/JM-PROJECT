@@ -79,11 +79,13 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     /**
-     * Stores brand logo file in local project directory
-     * and updates brandLogoUrl in Brand entity
+     * Receives brand logo file from FileStorageController and stores it in a local project directory
+     * if storage successful, updates brandLogoUrl in Brand entity
+     *
      * @param brandId
      * @param logoFileToUpdate
-     * @return
+     * @throws FileStorageException if failed to store file
+     * @throws FileStorageException if passed MultipartFile is Null
      */
     @Transactional
     public void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate) {

@@ -1,5 +1,7 @@
 package jm.stockx.rest_controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jm.stockx.BrandService;
 import jm.stockx.FileStorageService;
 import jm.stockx.util.Response;
@@ -11,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,7 +50,16 @@ public class FileStorageRestController {
                 .body(resource);
     }
 
+
     @PostMapping("/brand/logo/upload")
+    @Operation(
+            operationId = "updateBrandLogo",
+            summary = "takes MultipartFile logoFileToUpdate and updates BrandLogo by Brand Id ",
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Unable to locate BrandDto with Id"),
+                    @ApiResponse(responseCode = "200", description = "Brand logo was successfully updated")
+            }
+    )
     public Response<?> updateBrandLogo(@RequestParam Long brandId, @RequestParam MultipartFile logoFileToUpdate) {
         if (!brandService.isBrandExist(brandId)) {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
