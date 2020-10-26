@@ -1,4 +1,6 @@
+import jm.stockx.ItemInfoServiceImpl;
 import jm.stockx.ItemServiceImpl;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.entity.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,22 +19,22 @@ import static org.mockito.Mockito.when;
 public class ItemServiceTest {
 
     @InjectMocks
-    private ItemServiceImpl itemService;
+    private ItemInfoServiceImpl itemService;
 
     @Mock
-    private jm.stockx.api.dao.ItemDAO itemDao;
+    private jm.stockx.api.dao.ItemInfoDAO itemInfoDao;
 
     @Test
     public void getTopItemsByStyle() {
         int top = 5;
-        List<Item> items = new ArrayList<>();
-        items.add(new Item());
-        items.add(new Item());
-        items.add(new Item());
-        items.add(new Item());
-        items.add(new Item());
-        when(itemDao.getMostPopularItemByStyleId(1L, top)).thenReturn(items);
-        assertEquals(itemService.getTopItemsByStyle(1L, top).size(), top);
-        verify(itemDao).getMostPopularItemByStyleId(1L,top);
+        List<ItemInfoDto> items = new ArrayList<>();
+        items.add(new ItemInfoDto());
+        items.add(new ItemInfoDto());
+        items.add(new ItemInfoDto());
+        items.add(new ItemInfoDto());
+        items.add(new ItemInfoDto());
+        when(itemInfoDao.getMostPopularItemByStyleId(1L, top)).thenReturn(items);
+        assertEquals(itemService.getMostPopularItemByStyleId(1L, top).size(), top);
+        verify(itemInfoDao).getMostPopularItemByStyleId(1L,top);
     }
 }
