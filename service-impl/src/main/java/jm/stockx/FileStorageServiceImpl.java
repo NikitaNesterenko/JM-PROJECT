@@ -82,20 +82,19 @@ public class FileStorageServiceImpl implements FileStorageService {
      * Receives brand logo file from FileStorageController and stores it in a local project directory
      * if storage successful, updates brandLogoUrl in Brand entity
      *
-     * @param brandId
-     * @param logoFileToUpdate
+     * @param brandId brand Id
+     * @param logoFileToUpdate logo to update
      * @throws FileStorageException if failed to store file
      * @throws FileStorageException if passed MultipartFile is Null
      */
     @Transactional
     public void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate) {
         if (!logoFileToUpdate.isEmpty()) {
-            String uniqueFilename = StringUtils.cleanPath(Objects.requireNonNull(logoFileToUpdate.getOriginalFilename()));
-            Path fileNameAndPath = Paths.get(uploadDirectory, uniqueFilename);
+            Path fileNameAndPath = Paths.get(uploadDirectory, logoFileToUpdate.getOriginalFilename());
             try {
                 byte[] fileToBytes = logoFileToUpdate.getBytes();
                 Files.write(fileNameAndPath, fileToBytes);
-                brandDAO.updateBrandLogo(brandId, uniqueFilename);
+                brandDAO.updateBrandLogo(brandId, logoFileToUpdate.getOriginalFilename());
             } catch (IOException exception) {
                 throw new FileStorageException("Failed to store file: " + exception.getMessage());
             }
