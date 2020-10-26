@@ -13,11 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/item")
-public class SearchRestController {
+public class ItemRestController {
     private final ItemInfoService itemInfoService;
 
     @Autowired
-    public SearchRestController(ItemInfoService itemInfoService) {
+    public ItemRestController(ItemInfoService itemInfoService) {
         this.itemInfoService = itemInfoService;
     }
 
