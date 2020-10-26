@@ -25,4 +25,6 @@ public interface UserDAO extends GenericDao<User, Long> {
     void updateUserFromDto(UserPutDto userPutDto);
   
     List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id);
+
+    boolean isUserExistByEmail(String email);
 }
