@@ -1,18 +1,11 @@
 package jm.stockx.dto.itemInfo;
 
 import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.ItemSize;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.joda.money.Money;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -38,7 +31,6 @@ public class ItemInfoDto {
     private String size;
 
     private Long ItemId;
-
 
     public ItemInfoDto(ItemInfo itemInfo) {
         this.id = itemInfo.getId();

@@ -12,11 +12,11 @@ public class HistoryViewsDaoImpl extends AbstractDAO<HistoryViews, Long> impleme
     public void clearHistoryOfViews() {
         entityManager.createQuery("" +
                 "DELETE FROM HistoryViews " +
-                "WHERE item IN " +
-                "(SELECT item " +
+                "WHERE itemInfo IN " +
+                "(SELECT itemInfo " +
                 "FROM HistoryViews " +
-                "GROUP BY item " +
-                "HAVING COUNT(item) > 4)")
+                "GROUP BY itemInfo " +
+                "HAVING COUNT(itemInfo) > 4)")
                 .executeUpdate();
     }
 }
