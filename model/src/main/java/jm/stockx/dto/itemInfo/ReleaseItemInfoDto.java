@@ -1,4 +1,4 @@
-package jm.stockx.dto.item;
+package jm.stockx.dto.itemInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReleaseItemDto {
+public class ReleaseItemInfoDto {
     @NotNull
     private String itemName;
 

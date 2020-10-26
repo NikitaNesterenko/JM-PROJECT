@@ -42,4 +42,6 @@ public interface UserService {
 
     Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id);
 
+    boolean isUserExistByEmail(String email);
+
 }

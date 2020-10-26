@@ -43,6 +43,18 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
+    public boolean isUserExistByEmail(String email) {
+        Long existingValue = entityManager.createQuery("" +
+                "SELECT COUNT(u.email) " +
+                "FROM User u " +
+                "WHERE u.email = :email", Long.class)
+                .setParameter("email", email)
+                .getSingleResult();
+
+        return existingValue > 0;
+    }
+
+    @Override
     public UserDto getUserDtoByUserUsername(String username) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.user.UserDto(" +
