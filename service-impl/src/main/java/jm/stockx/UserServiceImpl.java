@@ -115,4 +115,9 @@ public class UserServiceImpl implements UserService {
 
         return list.stream().collect(Collectors.toMap(ItemPurchaseDto::getItemCategory, x -> x.getCount().doubleValue() * 100 / count));
     }
+
+    @Override
+    public boolean isUserExistByEmail(String email) {
+        return userDao.isUserExistByEmail(email);
+    }
 }
