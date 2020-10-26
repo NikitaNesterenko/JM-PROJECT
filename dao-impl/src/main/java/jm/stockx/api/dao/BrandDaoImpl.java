@@ -60,4 +60,15 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
                 .setMaxResults(5)
                 .getResultList();
     }
+
+    @Override
+    public void updateBrandLogo(Long brandId, String logoFileName) {
+        entityManager.createQuery("" +
+                "UPDATE Brand brand " +
+                "SET brand.logoImage = :logoFileName " +
+                "WHERE brand.id = :brandId ")
+                .setParameter("brandId", brandId)
+                .setParameter("logoFileName", logoFileName)
+                .executeUpdate();
+    }
 }

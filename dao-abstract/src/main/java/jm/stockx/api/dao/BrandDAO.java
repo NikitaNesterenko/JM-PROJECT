@@ -14,5 +14,8 @@ public interface BrandDAO extends GenericDao<Brand, Long> {
 
     List<Brand> getPopularBrandIn2Month();
 
+    void updateBrandLogo(Long brandId, String logoFileName);
+
+
 
 }

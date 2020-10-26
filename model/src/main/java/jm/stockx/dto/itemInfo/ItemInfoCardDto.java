@@ -23,6 +23,8 @@ public class ItemInfoCardDto {
 
     private String itemImageUrl;
 
+    private String brandLogoUrl;
+
     @Positive(message = "Цена должна быть положительной")
     @NotNull
     private Money lowestAsk;
@@ -31,5 +33,6 @@ public class ItemInfoCardDto {
         this.ItemName = itemInfo.getItem().getName();
         this.itemImageUrl = itemInfo.getItemImageUrl();
         this.lowestAsk = itemInfo.getLowestAsk();
+        this.brandLogoUrl = itemInfo.getBrand().getLogoImage();
     }
 }

@@ -2,6 +2,7 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.ItemInfoCardDto;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
@@ -78,6 +79,18 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .setMaxResults(1)
                 .getResultList().get(0);
     }
-}
 
+    public List<ItemInfoCardDto> getAllItemInfoCardDtoForDisplay() {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
+                "item_info.item.name," +
+                "item_info.itemImageUrl," +
+                "item_info.brand.logoImage," +
+                "item_info.lowestAsk" +
+                ")" +
+                "FROM ItemInfo item_info", ItemInfoCardDto.class).getResultList();
+    }
+
+
+}
 

@@ -3,6 +3,7 @@ package jm.stockx.initializer;
 import jm.stockx.*;
 import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.dto.SizeInfoDto;
+import jm.stockx.dto.itemInfo.ItemInfoCardDto;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
 @Slf4j
 public class EntityDataInitializer {
