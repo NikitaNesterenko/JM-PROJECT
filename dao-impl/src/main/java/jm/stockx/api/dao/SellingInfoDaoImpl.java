@@ -3,6 +3,7 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingInfoDto;
+import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.SellingInfo;
 import org.springframework.stereotype.Repository;
 
@@ -43,10 +44,10 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "u.username) " +
                 "FROM SellingInfo as si " +
                 "LEFT JOIN User as u " +
-                "ON si.user = u.id " +
+                "ON si.user.id = u.id " +
                 "GROUP BY u.id " +
-                "ORDER BY COUNT(si.item) DESC";
-        return entityManager.createQuery(sql)
+                "ORDER BY COUNT(si.itemInfo) DESC";
+        return entityManager.createQuery(sql, SellerTopInfoDto.class)
                 .setMaxResults(20)
                 .getResultList();
     }
@@ -66,19 +67,35 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
         String sql = "" +
                 "SELECT NEW jm.stockx.dto.sellingInfo.ItemTopInfoDto(" +
                 "i.id, " +
-                "i.name, " +
+                "i.item.name, " +
                 "i.itemImageUrl, " +
                 "i.lowestAsk, " +
-                "COUNT(si.item)) " +
+                "COUNT(si.itemInfo)) " +
                 "FROM SellingInfo as si " +
-                "LEFT JOIN Item as i " +
-                "ON si.item = i.id " +
+                "LEFT JOIN ItemInfo as i " +
+                "ON si.itemInfo.id = i.id " +
                 "GROUP BY i.id " +
-                "ORDER BY COUNT(si.item) DESC";
+                "ORDER BY COUNT(si.itemInfo) DESC";
         return entityManager.createQuery(sql, ItemTopInfoDto.class)
                 .setMaxResults(maxResult)
                 .getResultList();
     }
 
+    @Override
+    public List<SellingItemDto> getAllSellingItemDtoToCurrentDate(Long itemId) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.SellingItemDto( " +
+                "si.itemInfo.item, " +
+                "si.orderDate, " +
+                "si.price " +
+                ") " +
+                "FROM SellingInfo si " +
+                "WHERE si.orderDate <= :date " +
+                "AND si.itemInfo.item.id = :id " +
+                "ORDER BY si.orderDate ", SellingItemDto.class)
+                .setParameter("date", LocalDateTime.now())
+                .setParameter("id", itemId)
+                .getResultList();
+    }
 
 }

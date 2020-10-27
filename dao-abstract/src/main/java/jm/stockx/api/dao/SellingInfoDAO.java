@@ -3,6 +3,7 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingInfoDto;
+import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.SellingInfo;
 
 import java.time.LocalDateTime;
@@ -18,4 +19,7 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
     int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 
     List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
+
+    List<SellingItemDto> getAllSellingItemDtoToCurrentDate(Long itemId);
+
 }
