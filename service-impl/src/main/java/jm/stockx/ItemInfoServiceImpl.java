@@ -3,10 +3,7 @@ package jm.stockx;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.ItemSizeDAO;
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.ItemInfoCardDto;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
-import jm.stockx.dto.itemInfo.ReleaseItemInfoDto;
+import jm.stockx.dto.itemInfo.*;
 import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
@@ -134,6 +131,10 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        return itemInfoDAO.getItemSearchDtoBySearch(search);
+    }
+
     public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize) {
         ItemSize sizeFromDb = itemSizeDAO.findOneBySizeName(itemSize);
         return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId,sizeFromDb);

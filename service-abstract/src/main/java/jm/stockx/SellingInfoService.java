@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.entity.SellingInfo;
@@ -26,4 +27,7 @@ public interface SellingInfoService {
     int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 
     List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
+
+    ItemPriceChangeDto getPriceChangeByItemId(Long id);
+
 }

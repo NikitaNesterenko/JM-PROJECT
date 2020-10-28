@@ -1,10 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.ItemInfoCardDto;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
-import jm.stockx.dto.itemInfo.ReleaseItemInfoDto;
+import jm.stockx.dto.itemInfo.*;
 import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
@@ -29,6 +26,8 @@ public interface ItemInfoService {
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
+
+    List<ItemSearchDto> getItemSearchDtoBySearch(String search);
 
     ItemInfo getItemInfoByItemId(Long itemId);
 

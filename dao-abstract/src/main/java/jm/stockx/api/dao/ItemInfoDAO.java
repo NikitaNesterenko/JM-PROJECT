@@ -2,10 +2,7 @@ package jm.stockx.api.dao;
 
 
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.ItemInfoCardDto;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
-import jm.stockx.dto.itemInfo.ReleaseItemInfoDto;
+import jm.stockx.dto.itemInfo.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.ItemSize;
@@ -24,6 +21,8 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
     List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price);
+
+    List<ItemSearchDto> getItemSearchDtoBySearch(String search);
 
     List<ReleaseItemInfoDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 
@@ -46,6 +45,5 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit);
 
     SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSize itemSize);
-
 
 }

@@ -1,10 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.ItemInfoCardDto;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.itemInfo.NotReleaseItemInfoDto;
-import jm.stockx.dto.itemInfo.ReleaseItemInfoDto;
+import jm.stockx.dto.itemInfo.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.ItemSize;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Repository
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
@@ -47,6 +43,19 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 "FROM ItemInfo i " +
                 "WHERE i.price > :price", ItemInfoCardDto.class)
                 .setParameter("price", price.getAmount())
+                .getResultList();
+    }
+
+    @Override
+    public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemSearchDto(i.itemCategory, COUNT(i)) " +
+                "FROM ItemInfo i " +
+                "WHERE TRIM(LOWER(i.item.name)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+                "GROUP BY i.itemCategory " +
+                "ORDER BY i.itemCategory DESC " +
+                "", ItemSearchDto.class)
+                .setParameter("search", search.trim())
                 .getResultList();
     }
 
