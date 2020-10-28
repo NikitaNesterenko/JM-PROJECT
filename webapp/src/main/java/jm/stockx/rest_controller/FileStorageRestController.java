@@ -51,7 +51,6 @@ public class FileStorageRestController {
                 .body(resource);
     }
 
-
     @PostMapping("/brand/logo/upload")
     @Operation(
             operationId = "updateBrandLogo",
@@ -69,7 +68,7 @@ public class FileStorageRestController {
         if (!brandService.isBrandExist(brandId)) {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
         }
-        fileStorageService.updateBrandLogo(brandId, logoFileToUpdate);
+        fileStorageService.updateBrandLogo(brandId, logoFileToUpdate, "brands");
         return Response.ok(HttpStatus.NO_CONTENT, "Brand logo was successfully updated");
     }
 }

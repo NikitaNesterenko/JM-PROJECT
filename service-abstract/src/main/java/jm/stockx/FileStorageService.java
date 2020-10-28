@@ -18,7 +18,5 @@ public interface FileStorageService {
 
     String fileFormat(String filename);
 
-    void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate);
-
-
+    void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate, String additionalPath);
 }

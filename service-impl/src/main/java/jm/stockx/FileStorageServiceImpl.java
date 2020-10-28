@@ -29,8 +29,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             System.getProperty("user.dir")
                     + File.separator
                     + "uploads"
-                    + File.separator
-                    + "images";
+                    + File.separator;
 
     private final ItemService itemService;
     private final BrandDAO brandDAO;
@@ -46,7 +45,6 @@ public class FileStorageServiceImpl implements FileStorageService {
         return DigestUtils.md5Hex(src);
     }
 
-
     @Override
     public String storeFile(Long id, MultipartFile file) {
         if (file == null || file.isEmpty()) {
@@ -56,6 +54,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             if (!fileFormat.equals(".png")) {
                 return "The file must be at .png format.";
             }
+
             String filePath = uploadPath + "item_" + id + fileFormat;
 
             if (!new File(uploadPath).exists()) {
@@ -82,15 +81,15 @@ public class FileStorageServiceImpl implements FileStorageService {
      * Receives brand logo file from FileStorageController and stores it in a local project directory
      * if storage successful, updates brandLogoUrl in Brand entity
      *
-     * @param brandId brand Id
+     * @param brandId          brand Id
      * @param logoFileToUpdate logo to update
      * @throws FileStorageException if failed to store file
      * @throws FileStorageException if passed MultipartFile is Null
      */
     @Transactional
-    public void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate) {
+    public void updateBrandLogo(Long brandId, MultipartFile logoFileToUpdate, String additionalPath) {
         if (!logoFileToUpdate.isEmpty()) {
-            Path fileNameAndPath = Paths.get(uploadDirectory, logoFileToUpdate.getOriginalFilename());
+            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath, logoFileToUpdate.getOriginalFilename());
             try {
                 byte[] fileToBytes = logoFileToUpdate.getBytes();
                 Files.write(fileNameAndPath, fileToBytes);
@@ -98,8 +97,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             } catch (IOException exception) {
                 throw new FileStorageException("Failed to store file: " + exception.getMessage());
             }
-        }
-        else {
+        } else {
             throw new FileStorageException("Uploaded file is Empty");
         }
     }
