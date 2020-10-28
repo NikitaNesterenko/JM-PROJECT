@@ -23,4 +23,6 @@ public interface BidService {
     void delete(Long id);
 
     Boolean isBidExist(Long id);
+
+    void placeBid(Bid newBid);
 }

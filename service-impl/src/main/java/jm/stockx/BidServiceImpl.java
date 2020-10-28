@@ -7,6 +7,7 @@ import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.bid.BidDto;
 import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.entity.Bid;
+import org.joda.money.Money;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,5 +70,9 @@ public class BidServiceImpl implements BidService {
     @Override
     public Boolean isBidExist(Long id) {
         return bidDAO.doesItExistEntity(id);
+    }
+
+    @Override
+    public void placeBid(Bid newBid) {
     }
 }
