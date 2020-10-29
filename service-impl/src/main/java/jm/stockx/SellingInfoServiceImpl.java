@@ -1,11 +1,14 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
+import jm.stockx.dto.itemInfo.InfoTickerDto;
 import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
+import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -86,4 +90,37 @@ public class SellingInfoServiceImpl implements SellingInfoService {
         return new ItemPriceChangeDto(diffPercent, diffMoney);
     }
 
+
+    @Override
+    public List<SellingItemDto> getSellingItemDtoByPeriodAndItemId(LocalDateTime begin, LocalDateTime end, Long itemId) {
+        return sellingInfoDAO.getSellingItemDtoByPeriodAndItemId(begin, end, itemId);
+    }
+
+    @Override
+    public List<InfoTickerDto> getInfoTickerDto(ItemCategory itemCategory, LocalDateTime begin, LocalDateTime end, int limit) {
+        List<Item> topSellItems = sellingInfoDAO.getTopItemByPeriodAndCategory(begin, end, itemCategory, limit);
+        List<InfoTickerDto> infoTickerDtoList = new ArrayList<>();
+
+        for (Item item : topSellItems) {
+            List<SellingItemDto> selling = this.getSellingItemDtoByPeriodAndItemId(begin, end, item.getId());
+
+            boolean flag = !selling.get(0).getPrice().isGreaterThan(selling.get(selling.size() - 1).getPrice());
+            Money price = selling.get(selling.size() - 1).getPrice();
+            String name = reductionName(item.getName());
+
+            infoTickerDtoList.add(new InfoTickerDto(name, price, flag));
+        }
+
+        return infoTickerDtoList;
+    }
+
+    private String reductionName(String name) {
+        StringBuilder reductionName = new StringBuilder();
+
+        for (String s : name.split(" ")) {
+            reductionName.append(s.charAt(0));
+        }
+
+        return reductionName.toString();
+    }
 }
