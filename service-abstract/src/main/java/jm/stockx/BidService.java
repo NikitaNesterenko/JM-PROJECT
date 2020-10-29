@@ -14,15 +14,11 @@ public interface BidService {
 
     BidDto getBidDtoByItemNameAndUserName(String itemName, String userName);
 
-    void create(Bid bid);
-
-    void create(BidPostDto bidPostDto);
+    void placeBid(BidPostDto bidPostDto);
 
     void update(Bid bid);
 
     void delete(Long id);
 
     Boolean isBidExist(Long id);
-
-    void placeBid(Bid newBid);
 }
