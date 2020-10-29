@@ -50,25 +50,4 @@ public class FileStorageRestController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
-
-    @PostMapping("/brand/logo/upload")
-    @Operation(
-            operationId = "updateBrandLogo",
-            summary = "takes MultipartFile logoFileToUpdate and updates BrandLogo by Brand Id ",
-            parameters = {
-                    @Parameter(name = "brandId", description = "Brand Id", schema = @Schema(implementation = Long.class)),
-                    @Parameter(name = "logoFileToUpdate", description = "MultipartFile Brand logo to update",
-                            schema = @Schema(implementation = MultipartFile.class))},
-            responses = {
-                    @ApiResponse(responseCode = "400", description = "Unable to locate BrandDto with Id"),
-                    @ApiResponse(responseCode = "200", description = "Brand logo was successfully updated"),
-            }
-    )
-    public Response<?> updateBrandLogo(@RequestParam Long brandId, @RequestParam MultipartFile logoFileToUpdate) {
-        if (!brandService.isBrandExist(brandId)) {
-            return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
-        }
-        fileStorageService.updateBrandLogo(brandId, logoFileToUpdate, "brands");
-        return Response.ok(HttpStatus.NO_CONTENT, "Brand logo was successfully updated");
-    }
 }
