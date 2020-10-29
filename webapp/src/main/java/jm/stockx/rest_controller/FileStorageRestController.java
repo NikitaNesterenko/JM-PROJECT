@@ -1,16 +1,9 @@
 package jm.stockx.rest_controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jm.stockx.BrandService;
 import jm.stockx.FileStorageService;
-import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class FileStorageRestController {
     private final FileStorageService fileStorageService;
-    private final BrandService brandService;
 
 
     @Autowired
-    public FileStorageRestController(FileStorageService fileStorageService, BrandService brandService) {
+    public FileStorageRestController(FileStorageService fileStorageService) {
         this.fileStorageService = fileStorageService;
-        this.brandService = brandService;
     }
 
     @PostMapping("/item/img/upload")
