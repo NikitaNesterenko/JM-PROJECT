@@ -37,7 +37,6 @@ public class BidRestController {
                     content = @Content(schema = @Schema(implementation = BidPostDto.class)))},
             responses = {
                     @ApiResponse(responseCode = "200", description = "successful operation"),
-                    @ApiResponse(responseCode = "400", description = "Invalid Employee ID supplied")
             }
     )
     public Response<?> placeBid(@RequestBody BidPostDto newBid) {
