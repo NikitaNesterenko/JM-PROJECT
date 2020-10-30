@@ -4,7 +4,9 @@ import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingInfoDto;
 import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -82,6 +84,24 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
+    public List<SellingItemDto> getSellingItemDtoByPeriodAndItemId(LocalDateTime begin, LocalDateTime end, Long itemId) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.SellingItemDto( " +
+                "si.itemInfo.item, " +
+                "si.orderDate, " +
+                "si.price " +
+                ") " +
+                "FROM SellingInfo si " +
+                "WHERE si.orderDate >= :begin AND si.orderDate <= :end " +
+                "AND si.itemInfo.item.id = :id " +
+                "ORDER BY si.orderDate ", SellingItemDto.class)
+                .setParameter("begin", begin)
+                .setParameter("end", end)
+                .setParameter("id", itemId)
+                .getResultList();
+    }
+
+    @Override
     public List<SellingItemDto> getAllSellingItemDtoToCurrentDate(Long itemId) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.sellingInfo.SellingItemDto( " +
@@ -95,6 +115,28 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "ORDER BY si.orderDate ", SellingItemDto.class)
                 .setParameter("date", LocalDateTime.now())
                 .setParameter("id", itemId)
+                .getResultList();
+    }
+
+    @Override
+    public List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
+                                                          LocalDateTime endPeriod,
+                                                          ItemCategory itemCategory,
+                                                          int limit) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.entity.Item( " +
+                "si.itemInfo.item.id, " +
+                "si.itemInfo.item.name " +
+                ")  " +
+                "FROM SellingInfo si " +
+                "WHERE si.orderDate >= :begin AND si.orderDate <= :end " +
+                "AND si.itemInfo.itemCategory = :itemCategory " +
+                "GROUP BY si.itemInfo.item.id, si.itemInfo.item.name " +
+                "ORDER BY COUNT(si.itemInfo.item.id) DESC ", Item.class)
+                .setParameter("begin", beginningPeriod)
+                .setParameter("end", endPeriod)
+                .setParameter("itemCategory", itemCategory)
+                .setMaxResults(limit)
                 .getResultList();
     }
 
