@@ -5,11 +5,13 @@ import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.entity.*;
+import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,7 +53,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void create(Item item) {
-         itemDao.add(item);
+
+        itemDao.add(item);
+
+        Long itemId = item.getId();
+        ItemInfo itemInfo = itemInfoDAO.getItemInfoByItemId(itemId);
+        ItemCategory itemCategory = itemInfo.getItemCategory();
+        LocalDate releaseDate = itemInfo.getReleaseDate();
+
     }
 
     @Override

@@ -42,6 +42,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 
     @Override
     public void create(ItemInfo itemInfo) {
+
         itemInfoDAO.add(itemInfo);
     }
 
