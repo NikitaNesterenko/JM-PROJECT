@@ -77,6 +77,7 @@ public class FileStorageServiceImpl implements FileStorageService {
      * @param logoFileToUpdate logo to update
      * @throws FileStorageException if failed to store file
      * @throws FileStorageException if passed MultipartFile is Null
+     * @return String of original file name
      */
     @Override
     public String uploadImage(MultipartFile logoFileToUpdate, String additionalPath) {

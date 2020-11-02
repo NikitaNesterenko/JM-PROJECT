@@ -38,6 +38,7 @@ public class BrandRestController {
                             schema = @Schema(implementation = MultipartFile.class))},
             responses = {
                     @ApiResponse(responseCode = "400", description = "Unable to locate BrandDto with Id"),
+                    @ApiResponse(responseCode = "400", description = "File name is not present"),
                     @ApiResponse(responseCode = "200", description = "Brand logo was successfully updated"),
             }
     )
@@ -46,9 +47,10 @@ public class BrandRestController {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
         }
         String fileName = fileStorageService.uploadImage(logoFileToUpdate, "brands");
-        if (!fileName.isEmpty()){
-            brandService.updateBrandLogo(brandId,fileName);
+        if (!fileName.isEmpty()) {
+            return Response.error(HttpStatus.NOT_FOUND, "File name is not present");
         }
+        brandService.updateBrandLogo(brandId, fileName);
         return Response.ok(HttpStatus.NO_CONTENT, "Image was successfully updated");
 
     }
