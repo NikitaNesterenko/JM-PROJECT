@@ -27,4 +27,6 @@ public interface BrandService {
 
     List<Brand> getPopularBrandIn2Month();
 
+    void updateBrandLogo(Long brandId,String logoName);
+
 }

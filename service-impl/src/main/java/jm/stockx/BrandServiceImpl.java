@@ -67,4 +67,9 @@ public class BrandServiceImpl implements BrandService {
     public List<Brand> getPopularBrandIn2Month() {
         return brandDAO.getPopularBrandIn2Month();
     }
+
+    @Override
+    public void updateBrandLogo(Long brandId,String logoName) {
+        brandDAO.updateBrandLogo(brandId,logoName);
+    }
 }

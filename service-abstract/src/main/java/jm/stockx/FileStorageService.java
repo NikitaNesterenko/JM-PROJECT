@@ -9,4 +9,6 @@ public interface FileStorageService {
     Resource loadFileAsResource(String filename);
 
     String fileFormat(String filename);
+
+    String uploadImage(MultipartFile logoFileToUpdate, String additionalPath);
 }

@@ -14,11 +14,18 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     @Value("${upload.path}")
     private String uploadPath;
+
+    private static final String uploadDirectory =
+            System.getProperty("user.dir")
+                    + File.separator
+                    + "uploads"
+                    + File.separator;
 
     private ItemInfoService itemInfoService;
 
@@ -62,6 +69,32 @@ public class FileStorageServiceImpl implements FileStorageService {
             return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
         }
     }
+
+    /**
+     * Receives brand logo file from FileStorageController and stores it in a local project directory
+     * if storage successful, updates brandLogoUrl in Brand entity
+     *
+     * @param logoFileToUpdate logo to update
+     * @throws FileStorageException if failed to store file
+     * @throws FileStorageException if passed MultipartFile is Null
+     */
+    @Override
+    public String uploadImage(MultipartFile logoFileToUpdate, String additionalPath) {
+        if (!logoFileToUpdate.isEmpty()) {
+            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath, logoFileToUpdate.getOriginalFilename());
+            try {
+                byte[] fileToBytes = logoFileToUpdate.getBytes();
+                Files.write(fileNameAndPath, fileToBytes);
+
+                return logoFileToUpdate.getOriginalFilename();
+            } catch (IOException exception) {
+                throw new FileStorageException("Failed to store file: " + exception.getMessage());
+            }
+        } else {
+            throw new FileStorageException("Uploaded file is Empty");
+        }
+    }
+
 
     @Override
     public Resource loadFileAsResource(String filename) {
