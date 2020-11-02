@@ -27,10 +27,10 @@ public class FileStorageServiceImpl implements FileStorageService {
                     + "uploads"
                     + File.separator;
 
-    private ItemInfoService itemInfoService;
+    private final ItemInfoService itemInfoService;
 
     @Autowired
-    public FileStorageServiceImpl(ItemService itemService) {
+    public FileStorageServiceImpl(ItemInfoService itemInfoService) {
         this.itemInfoService = itemInfoService;
     }
 
