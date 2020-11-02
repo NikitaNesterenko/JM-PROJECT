@@ -74,10 +74,11 @@ public class FileStorageServiceImpl implements FileStorageService {
      * Receives brand logo file from FileStorageController and stores it in a local project directory
      * if storage successful, updates brandLogoUrl in Brand entity
      *
-     * @param logoFileToUpdate logo to update
+     * @param  logoFileToUpdate logo to update
+     * @param  additionalPath - adds name of the folder to a directory path
      * @throws FileStorageException if failed to store file
      * @throws FileStorageException if passed MultipartFile is Null
-     * @return String of original file name
+     * @return logoFileToUpdate.getOriginalFilename(); String of original file name
      */
     @Override
     public String uploadImage(MultipartFile logoFileToUpdate, String additionalPath) {
