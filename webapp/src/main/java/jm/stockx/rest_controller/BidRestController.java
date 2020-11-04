@@ -31,7 +31,8 @@ public class BidRestController {
     @PostMapping
     @Operation(
             operationId = "placeBid",
-            description = "Takes bidDto from client and passes on to bidService",
+            description =
+                    "Takes bidDto and checks if Bid already exists, If exists price is updated, if does not already exists, new bid is placed",
             parameters = {
                     @Parameter(in = ParameterIn.QUERY, name = "newBid", description = "Bid placement Request",
                     content = @Content(schema = @Schema(implementation = BidPostDto.class)))},
