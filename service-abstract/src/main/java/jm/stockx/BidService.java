@@ -22,5 +22,7 @@ public interface BidService {
 
     Boolean isBidExist(Long id);
 
+    boolean isBidByCurrentUserExist(Long bidId, Long userId);
+
     void  updateBidPrice(String price, Long bidId);
 }

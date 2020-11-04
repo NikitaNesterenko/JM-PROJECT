@@ -40,7 +40,7 @@ public class BidRestController {
             }
     )
     public Response<?> placeBid(@RequestBody BidPostDto newBid) {
-        if (bidService.isBidExist(newBid.getId())){
+        if (bidService.isBidByCurrentUserExist(newBid.getId(), newBid.getUserId())){
             bidService.updateBidPrice(newBid.getPrice(),newBid.getId());
             return Response.ok(HttpStatus.ACCEPTED,"Bid price was successfully updated");
         }

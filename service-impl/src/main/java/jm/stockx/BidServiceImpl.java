@@ -60,9 +60,12 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public void updateBidPrice(String price, Long id) {
-
         bidDAO.updateBidPrice(Money.parse(price),id);
+    }
 
+    public boolean isBidByCurrentUserExist(Long bidId, Long userId){
+
+        return isBidExist(bidId) && userDAO.doesItExistEntity(userId);
     }
 
     /**
