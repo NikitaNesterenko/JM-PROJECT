@@ -58,6 +58,13 @@ public class BidServiceImpl implements BidService {
         return bidDAO.doesItExistEntity(id);
     }
 
+    @Override
+    public void updateBidPrice(String price, Long id) {
+
+        bidDAO.updateBidPrice(Money.parse(price),id);
+
+    }
+
     /**
      * Builds BidEntity from BidDto and saves it to Database
      *

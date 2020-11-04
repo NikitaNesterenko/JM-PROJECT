@@ -21,4 +21,6 @@ public interface BidService {
     void delete(Long id);
 
     Boolean isBidExist(Long id);
+
+    void  updateBidPrice(String price, Long bidId);
 }
