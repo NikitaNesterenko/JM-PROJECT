@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -25,6 +26,7 @@ public class ItemServiceImpl implements ItemService {
     private final MailService mailService;
     private final BuyingInfoDAO buyingInfoDAO;
     private final SellingInfoDAO sellingInfoDAO;
+    private final EmailService emailService;
 
     @Autowired
     public ItemServiceImpl(ItemDAO itemDao,
@@ -32,13 +34,15 @@ public class ItemServiceImpl implements ItemService {
                            MailService mailService,
                            BuyingInfoDAO buyingInfoDAO,
                            SellingInfoDAO sellingInfoDAO,
-                           ItemInfoDAO itemInfoDAO) {
+                           ItemInfoDAO itemInfoDAO,
+                           EmailService emailService) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
         this.sellingInfoDAO = sellingInfoDAO;
         this.buyingInfoDAO = buyingInfoDAO;
         this.itemInfoDAO = itemInfoDAO;
+        this.emailService = emailService;
     }
 
     @Override
@@ -56,11 +60,17 @@ public class ItemServiceImpl implements ItemService {
 
         itemDao.add(item);
 
-        Long itemId = item.getId();
-        ItemInfo itemInfo = itemInfoDAO.getItemInfoByItemId(itemId);
-        ItemCategory itemCategory = itemInfo.getItemCategory();
-        LocalDate releaseDate = itemInfo.getReleaseDate();
+        ItemInfo itemInfo = itemInfoDAO.getById(item.getId());
 
+        ItemCategory itemCategory = itemInfo.getItemCategory();
+
+        BuyingInfo buyingInfo = itemInfo.getBuyingInfo();
+
+        List<User> users = userDAO.getUsersByBuyingInfo(buyingInfo);
+
+        for (User user : users) {
+            emailService.sendSimpleEmail(user.getEmail(), "New item", item.getName());
+        }
     }
 
     @Override

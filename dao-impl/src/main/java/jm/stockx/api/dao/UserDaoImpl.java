@@ -3,7 +3,9 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
+import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
@@ -13,6 +15,9 @@ import java.util.List;
 
 @Repository
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
+
+    @Autowired
+    ItemInfoDAO itemInfoDAO;
 
     @Override
     public List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id) {
@@ -52,6 +57,17 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
 
         return existingValue > 0;
+    }
+
+    @Override
+    public List<User> getUsersByBuyingInfo(BuyingInfo buyingInfo) {
+
+        List<User> users = entityManager.createQuery("" +
+                "FROM User AS u " +
+                "WHERE u.buyingInfo = :buyingInfo", User.class)
+                .setParameter("buyingInfo", buyingInfo)
+                .getResultList();
+        return users;
     }
 
     @Override
