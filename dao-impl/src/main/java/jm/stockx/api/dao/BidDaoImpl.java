@@ -2,6 +2,7 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.bid.BidDto;
 import jm.stockx.entity.Bid;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,5 +37,16 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 .setParameter("userName", userName)
                 .setParameter("itemName", itemName)
                 .getSingleResult();
+    }
+
+    @Override
+    public void updateBidPrice(Money price, Long bidId) {
+        entityManager.createQuery("" +
+                "UPDATE Bid bid SET " +
+                "bid.price = :price " +
+                "WHERE bid.id = :bidId")
+                .setParameter("price", price)
+                .setParameter("bidId", bidId)
+                .executeUpdate();
     }
 }
