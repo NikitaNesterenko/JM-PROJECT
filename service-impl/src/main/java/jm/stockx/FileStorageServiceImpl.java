@@ -2,11 +2,13 @@ package jm.stockx;
 
 import jm.stockx.exceptions.FileStorageException;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
@@ -83,8 +86,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public String uploadImage(MultipartFile fileToUpload, String additionalPath) {
         if (!fileToUpload.isEmpty()) {
-            String uniqueFileName = hashGenerator(fileToUpload.getOriginalFilename()) + fileToUpload.getOriginalFilename();
+            String uniqueFileName = RandomStringUtils.randomAlphanumeric(8) + StringUtils.cleanPath(Objects.requireNonNull(fileToUpload.getOriginalFilename()));
             Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath + File.separator + uniqueFileName);
+
             try {
                 byte[] fileToBytes = fileToUpload.getBytes();
                 Files.write(fileNameAndPath, fileToBytes);
