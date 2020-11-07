@@ -9,7 +9,7 @@ import org.joda.money.Money;
 
 import javax.persistence.*;
 
-
+@Builder
 @Getter
 @Setter
 @ToString

@@ -7,6 +7,7 @@ import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.bid.BidDto;
 import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.entity.Bid;
+import org.joda.money.Money;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,20 +42,6 @@ public class BidServiceImpl implements BidService {
         return bidDAO.getBidDtoByItemNameAndUserName(itemName, userName);
     }
 
-    @Override
-    public void create(Bid bid) {
-        bidDAO.add(bid);
-    }
-
-    @Override
-    public void create(BidPostDto bidPostDto) {
-        Bid bid = new Bid();
-        bid.setPrice(bidPostDto.getPrice());
-        bid.setSuccess(bidPostDto.getSuccess());
-        bid.setItemInfo(itemInfoDAO.getItemInfoByItemName(bidPostDto.getItemName()));
-        bid.setUser(userDAO.getUserByUsername(bidPostDto.getUserName()));
-        bidDAO.add(bid);
-    }
 
     @Override
     public void update(Bid bid) {
@@ -69,5 +56,31 @@ public class BidServiceImpl implements BidService {
     @Override
     public Boolean isBidExist(Long id) {
         return bidDAO.doesItExistEntity(id);
+    }
+
+    @Override
+    public void updateBidPrice(String price, Long id) {
+        bidDAO.updateBidPrice(Money.parse(price),id);
+    }
+
+    public boolean isBidByCurrentUserExist(Long bidId, Long userId){
+
+        return isBidExist(bidId) && userDAO.doesItExistEntity(userId);
+    }
+
+    /**
+     * Builds BidEntity from BidDto and saves it to Database
+     *
+     * @param newBid bidDto from controller
+     */
+    @Override
+    public void placeBid(BidPostDto newBid) {
+        Bid bidEntity = Bid.builder()
+                .price(Money.parse(newBid.getPrice()))
+                .itemInfo(itemInfoDAO.getItemInfoByItemId(newBid.getItemInfoId()))
+                .user(userDAO.getUserById(newBid.getUserId()))
+                .success(true)
+                .build();
+        bidDAO.add(bidEntity);
     }
 }

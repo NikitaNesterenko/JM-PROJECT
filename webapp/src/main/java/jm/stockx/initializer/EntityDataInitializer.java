@@ -357,16 +357,6 @@ public class EntityDataInitializer {
 //        }
 //    }
 
-    private void createBid() {
-        if (bidService.getAll().size() == 0) {
-            bidService.create(new Bid(
-                    Money.parse("USD 200.0"),
-                    false,
-                    userService.getUserById(2L),
-                    itemInfoService.getItemInfoByItemId(3L)));
-        }
-    }
-
     private void createShoeSizes() {
         if (itemSizeService.getAll().size() == 0) {
             itemSizeService.create(new ItemSize("7", ItemSizeTypes.MEN));
