@@ -74,21 +74,22 @@ public class FileStorageServiceImpl implements FileStorageService {
      * Receives brand logo file from FileStorageController and stores it in a local project directory
      * if storage successful, updates brandLogoUrl in Brand entity
      *
-     * @param  logoFileToUpdate logo to update
+     * @param  fileToUpload file to update
      * @param  additionalPath - adds name of the folder to a directory path
      * @throws FileStorageException if failed to store file
      * @throws FileStorageException if passed MultipartFile is Null
-     * @return logoFileToUpdate.getOriginalFilename(); String of original file name
+     * @return fileToUpload.getOriginalFilename(); String of original file name
      */
     @Override
-    public String uploadImage(MultipartFile logoFileToUpdate, String additionalPath) {
-        if (!logoFileToUpdate.isEmpty()) {
-            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath, logoFileToUpdate.getOriginalFilename());
+    public String uploadImage(MultipartFile fileToUpload, String additionalPath) {
+        if (!fileToUpload.isEmpty()) {
+            String uniqueFileName = hashGenerator(fileToUpload.getOriginalFilename()) + fileToUpload.getOriginalFilename();
+            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath + File.separator + uniqueFileName);
             try {
-                byte[] fileToBytes = logoFileToUpdate.getBytes();
+                byte[] fileToBytes = fileToUpload.getBytes();
                 Files.write(fileNameAndPath, fileToBytes);
 
-                return logoFileToUpdate.getOriginalFilename();
+                return fileNameAndPath.toAbsolutePath().toString();
             } catch (IOException exception) {
                 throw new FileStorageException("Failed to store file: " + exception.getMessage());
             }
@@ -96,6 +97,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new FileStorageException("Uploaded file is Empty");
         }
     }
+
 
 
     @Override
