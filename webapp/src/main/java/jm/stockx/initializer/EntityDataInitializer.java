@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -75,7 +78,7 @@ public class EntityDataInitializer {
         createStyles();
         createNews();
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createSellingInfo();
         //createBid();
     }
 
@@ -341,21 +344,40 @@ public class EntityDataInitializer {
         }
     }
 
-//    private void createSellingInfo() {
-//        if (sellingInfoService.getAll().size() == 0) {
-//
-//            for (int i = 0; i < 15; i++) {
-//                Long itemId = (long) (1 + Math.random() * 5);
-//                sellingInfoService.create(new SellingInfo(
-//                                userService.getUserById((long) (1 + Math.random() * 2)),
-//                                new ItemInfo(shoeSizeService.getAll(), Money.of(CurrencyUnit.USD, 250), Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
-//                                itemService.getItemById(itemId),
-//                                Status.DELIVERED
-//                        )
-//                );
-//            }
-//        }
-//    }
+
+    private LocalDateTime generateRandomDateAndTime(){
+        long minDay = LocalDate.of(2015, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2020, 11, 9).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+
+        int randomHour = ThreadLocalRandom.current().nextInt(0, 24);
+        int randomMinute = ThreadLocalRandom.current().nextInt(0, 60);
+
+        return randomDate.atTime(randomHour,randomMinute).truncatedTo(ChronoUnit.MINUTES);
+    }
+
+    private Money generateRandomPrice(){
+        return Money.parse("USD" + (ThreadLocalRandom.current().nextInt(50, 400)));
+    }
+    private void createSellingInfo() {
+        for (int i = 0; i < 300 ; i++) {
+
+            Long randomUserId = (long)ThreadLocalRandom.current().nextInt(1, 4);
+            Long randomItemId = (long)ThreadLocalRandom.current().nextInt(1, 6);
+            LocalDateTime randomDateAndTime = generateRandomDateAndTime();
+            Money randomPrice = generateRandomPrice();
+
+            sellingInfoService.create(SellingInfo.builder()
+                    .itemInfo(itemInfoService.getItemInfoByItemId(randomItemId))
+                    .user(userService.getUserById(randomUserId))
+                    .orderDate(randomDateAndTime)
+                    .price(randomPrice)
+                    .status(Status.DELIVERED)
+                    .build());
+        }
+    }
 
     private void createShoeSizes() {
         if (itemSizeService.getAll().size() == 0) {

@@ -263,6 +263,8 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getResultList().get(0);
 
     }
+
+
 }
 
 
