@@ -84,7 +84,7 @@ public class FileStorageServiceImpl implements FileStorageService {
      * @return fileToUpload.getOriginalFilename(); String of original file name
      */
     @Override
-    public String uploadImage(MultipartFile fileToUpload, String additionalPath) {
+    public Path uploadImage(MultipartFile fileToUpload, String additionalPath) {
         if (!fileToUpload.isEmpty()) {
             String uniqueFileName = RandomStringUtils.randomAlphanumeric(8) + StringUtils.cleanPath(Objects.requireNonNull(fileToUpload.getOriginalFilename()));
             Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath + File.separator + uniqueFileName);
@@ -93,7 +93,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 byte[] fileToBytes = fileToUpload.getBytes();
                 Files.write(fileNameAndPath, fileToBytes);
 
-                return fileNameAndPath.toAbsolutePath().toString();
+                return fileNameAndPath;
             } catch (IOException exception) {
                 throw new FileStorageException("Failed to store file: " + exception.getMessage());
             }

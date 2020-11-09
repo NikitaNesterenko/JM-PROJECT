@@ -3,6 +3,8 @@ package jm.stockx;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+
 public interface FileStorageService {
     String storeFile(Long id, MultipartFile file);
 
@@ -10,5 +12,5 @@ public interface FileStorageService {
 
     String fileFormat(String filename);
 
-    String uploadImage(MultipartFile logoFileToUpdate, String additionalPath);
+    Path uploadImage(MultipartFile logoFileToUpdate, String additionalPath);
 }

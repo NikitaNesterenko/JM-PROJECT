@@ -49,11 +49,10 @@ public class BrandRestController {
         if (!brandService.isBrandExist(brandId)) {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
         }
-        String fileName = fileStorageService.uploadImage(logoFileToUpdate, "brands");
-        if (fileName.isEmpty()) {
-            return Response.error(HttpStatus.NOT_FOUND, "File name is not present");
-        }
-        brandService.updateBrandLogo(brandId, fileName);
-        return Response.ok(HttpStatus.NO_CONTENT, "Image was successfully updated");
+        Path fileNameAndPath = fileStorageService.uploadImage(logoFileToUpdate, "brands");
+        String fileNameForDb = brandId + fileNameAndPath.getFileName().toString().substring(8);
+
+        brandService.updateBrandLogo(brandId, fileNameForDb);
+        return Response.ok(HttpStatus.OK, "Image was successfully updated");
     }
 }
