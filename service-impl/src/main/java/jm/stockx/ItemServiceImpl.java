@@ -5,15 +5,12 @@ import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.dto.userPortfolio.BuyingDto;
 import jm.stockx.entity.*;
-import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -26,7 +23,6 @@ public class ItemServiceImpl implements ItemService {
     private final MailService mailService;
     private final BuyingInfoDAO buyingInfoDAO;
     private final SellingInfoDAO sellingInfoDAO;
-    private final EmailService emailService;
 
     @Autowired
     public ItemServiceImpl(ItemDAO itemDao,
@@ -34,15 +30,13 @@ public class ItemServiceImpl implements ItemService {
                            MailService mailService,
                            BuyingInfoDAO buyingInfoDAO,
                            SellingInfoDAO sellingInfoDAO,
-                           ItemInfoDAO itemInfoDAO,
-                           EmailService emailService) {
+                           ItemInfoDAO itemInfoDAO) {
         this.itemDao = itemDao;
         this.userDAO = userDAO;
         this.mailService = mailService;
         this.sellingInfoDAO = sellingInfoDAO;
         this.buyingInfoDAO = buyingInfoDAO;
         this.itemInfoDAO = itemInfoDAO;
-        this.emailService = emailService;
     }
 
     @Override

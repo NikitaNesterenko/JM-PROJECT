@@ -1,5 +1,12 @@
 package jm.stockx;
 
+import jm.stockx.api.dao.BuyingInfoDAO;
+import jm.stockx.api.dao.ItemInfoDAO;
+import jm.stockx.api.dao.UserDAO;
+import jm.stockx.entity.BuyingInfo;
+import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.User;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,12 +18,23 @@ import org.springframework.util.ResourceUtils;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
-public class AdvertisementEmailService implements EmailService {
+public class AdvertisementEmailServiceImpl implements AdvertisementEmailService {
 
     @Autowired
     public JavaMailSender emailSender;
+
+    @Autowired
+    private ItemInfoDAO itemInfoDAO;
+
+    @Autowired
+    private BuyingInfoDAO buyingInfoDAO;
+
+    @Autowired
+    private UserDAO userDAO;
 
 
     @Override
@@ -39,5 +57,16 @@ public class AdvertisementEmailService implements EmailService {
         FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
         messageHelper.addAttachment("Purchase Order", file);
         emailSender.send(mimeMessage);
+    }
+
+    public void sendEmailByReleaseDate(LocalDate releaseDate) {
+        ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
+        List<ItemInfo> itemInfos = itemInfoDAO.getItemInfosByItemCategory(itemCategory);
+        List<BuyingInfo> buyingInfos = buyingInfoDAO.getBuyingInfosByItemInfo(itemInfos);
+        List<User> users = userDAO.getUsersByBuyingInfos(buyingInfos);
+
+        for (User user : users) {
+            sendSimpleEmail(user.getEmail(), "New Item", "New Item released!");
+        }
     }
 }

@@ -1,6 +1,6 @@
 package jm.stockx.rest_controller;
 
-import jm.stockx.EmailService;
+import jm.stockx.AdvertisementEmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ public class EmailController {
     private static final Logger LOG = LoggerFactory.getLogger(EmailController.class);
 
     @Autowired
-    EmailService emailService;
+    AdvertisementEmailService advertisementEmailService;
 
     @GetMapping(value = "/simple-email/{user-email}")
     public @ResponseBody ResponseEntity sendSimpleEmail(@PathVariable("user-email") String email) {
 
         try {
-            emailService.sendSimpleEmail(email, "New Item", "New Items Released");
+            advertisementEmailService.sendSimpleEmail(email, "New Item", "New Items Released");
         } catch (MailException mailException) {
             LOG.error("Error while sending out email..{}", mailException.getStackTrace());
             return new ResponseEntity<>("Unable to send email", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -37,7 +37,7 @@ public class EmailController {
     public @ResponseBody ResponseEntity sendEmailAttachment(@PathVariable("user-email") String email) {
 
         try {
-            emailService.sendEmailWithAttachment(email, "Order Confirmation",
+            advertisementEmailService.sendEmailWithAttachment(email, "Order Confirmation",
                     "Thanks for your recent order", "classpath:purchase_order.pdf");
         } catch (MessagingException | FileNotFoundException mailException) {
             LOG.error("Error while sending out email..{}", mailException.getStackTrace());
