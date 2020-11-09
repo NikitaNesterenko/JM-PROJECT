@@ -9,6 +9,7 @@ import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,6 +32,24 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 "WHERE i.item.name = :itemName", ItemInfo.class)
                 .setParameter("itemName", itemName)
                 .getSingleResult();
+    }
+
+    @Override
+    public ItemCategory getItemCategoryByReleaseDate(LocalDate releaseDate) {
+        return entityManager.createQuery("" +
+                "SELECT i.itemCategory FROM ItemInfo AS i " +
+                "WHERE i.releaseDate = :releaseDate", ItemCategory.class)
+                .setParameter("releaseDate", releaseDate)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<ItemInfo> getItemInfosByItemCategory(ItemCategory itemCategory) {
+        return entityManager.createQuery("" +
+                "SELECT i FROM ItemInfo AS i " +
+                "WHERE i.itemCategory = :itemCategory", ItemInfo.class)
+                .setParameter("itemCategory", itemCategory)
+                .getResultList();
     }
 
     public List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price) {

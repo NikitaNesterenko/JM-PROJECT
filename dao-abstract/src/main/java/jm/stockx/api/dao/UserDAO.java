@@ -25,11 +25,11 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     User getUserByEmail(String email);
 
+    List<User> getUsersByBuyingInfos(List<BuyingInfo> buyingInfos);
+
     void updateUserFromDto(UserPutDto userPutDto);
   
     List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id);
 
     boolean isUserExistByEmail(String email);
-
-    List<User> getUsersByBuyingInfo(BuyingInfo buyingInfo);
 }

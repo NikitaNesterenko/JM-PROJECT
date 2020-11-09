@@ -4,7 +4,10 @@ import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.BuyingInfo;
+import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -57,17 +60,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
 
         return existingValue > 0;
-    }
-
-    @Override
-    public List<User> getUsersByBuyingInfo(BuyingInfo buyingInfo) {
-
-        List<User> users = entityManager.createQuery("" +
-                "FROM User AS u " +
-                "WHERE u.buyingInfo = :buyingInfo", User.class)
-                .setParameter("buyingInfo", buyingInfo)
-                .getResultList();
-        return users;
     }
 
     @Override
@@ -173,6 +165,15 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
             e.getMessage();
             return null;
         }
+    }
+
+    @Override
+    public List<User> getUsersByBuyingInfos(List<BuyingInfo> buyingInfos) {
+        return entityManager.createQuery("" +
+                "SELECT u FROM User AS u " +
+                "WHERE u.buyingInfo = :buyingInfos", User.class)
+                .setParameter("buyingInfos", buyingInfos)
+                .getResultList();
     }
 
     public void updateUserFromDto(UserPutDto userPutDto){

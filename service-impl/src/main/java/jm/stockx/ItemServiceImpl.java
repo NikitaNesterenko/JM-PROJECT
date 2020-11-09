@@ -59,18 +59,6 @@ public class ItemServiceImpl implements ItemService {
     public void create(Item item) {
 
         itemDao.add(item);
-
-        ItemInfo itemInfo = itemInfoDAO.getById(item.getId());
-
-        ItemCategory itemCategory = itemInfo.getItemCategory();
-
-        BuyingInfo buyingInfo = itemInfo.getBuyingInfo();
-
-        List<User> users = userDAO.getUsersByBuyingInfo(buyingInfo);
-
-        for (User user : users) {
-            emailService.sendSimpleEmail(user.getEmail(), "New item", item.getName());
-        }
     }
 
     @Override
