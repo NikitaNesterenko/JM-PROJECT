@@ -27,5 +27,7 @@ public interface ItemSizeService {
     boolean isShoeSizeExist(Long id);
 
     List<ShoeSizeDto> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType);
+
+    ItemSize getSizeById(Long id);
 }
 

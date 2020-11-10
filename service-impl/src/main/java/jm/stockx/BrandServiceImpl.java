@@ -23,6 +23,10 @@ public class BrandServiceImpl implements BrandService {
         return brandDAO.getAll();
     }
 
+    public Brand getBrandById(Long id){
+       return brandDAO.getById(id);
+    }
+
     @Override
     public BrandDto get(Long id) {
         return brandDAO.getBrandDtoByBrandId(id);

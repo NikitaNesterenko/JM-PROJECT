@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingInfoDto;
@@ -7,8 +8,11 @@ import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
+import org.hibernate.query.NativeQuery;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -120,9 +124,9 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
-                                                          LocalDateTime endPeriod,
-                                                          ItemCategory itemCategory,
-                                                          int limit) {
+                                                    LocalDateTime endPeriod,
+                                                    ItemCategory itemCategory,
+                                                    int limit) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.entity.Item( " +
                 "si.itemInfo.item.id, " +
@@ -140,4 +144,35 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
+
+    @Override
+    public AverageSalePriceDto getAverageItemPriceById(Long itemInfoId) {
+        //Вариант со стримами
+        List<Money> monies = entityManager.createQuery("" +
+                "SELECT sellingInfo.price " +
+                "FROM SellingInfo sellingInfo " +
+                "WHERE sellingInfo.itemInfo.id = 1", Money.class)
+                .getResultList();
+
+        double average = monies.stream().mapToDouble(Money::getAmountMajorInt).average().orElse(0.0);
+
+//        Вариант с HQL query
+        Double averagePrice = entityManager.createQuery("" +
+                "SELECT AVG(sellingInfo.price) " +
+                "from SellingInfo sellingInfo " +
+                "where sellingInfo.itemInfo.id = :itemInfoId", Double.class)
+                .setParameter("itemInfoId", itemInfoId)
+                .getSingleResult();
+
+//        Вариант с nativeQuery
+        Query query =  entityManager.createNativeQuery("" +
+                "SELECT AVG(selling_info_price) " +
+                "FROM selling_info si " +
+                "WHERE si.item_id = 1");
+       List d = query.getResultList();
+
+
+
+        return new AverageSalePriceDto(itemInfoId, Money.parse("USD" + d));
+    }
 }

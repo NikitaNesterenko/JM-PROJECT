@@ -2,6 +2,7 @@ package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.dto.itemInfo.InfoTickerDto;
+import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
 import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
@@ -122,5 +123,9 @@ public class SellingInfoServiceImpl implements SellingInfoService {
         }
 
         return reductionName.toString();
+    }
+
+    public AverageSalePriceDto getAverageItemPriceById(Long itemId){
+        return sellingInfoDAO.getAverageItemPriceById(itemId);
     }
 }
