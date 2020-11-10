@@ -407,12 +407,10 @@ public class EntityDataInitializer {
         long minDay = LocalDate.of(2015, 1, 1).toEpochDay();
         long maxDay = LocalDate.of(2020, 11, 9).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 
         int randomHour = ThreadLocalRandom.current().nextInt(0, 24);
         int randomMinute = ThreadLocalRandom.current().nextInt(0, 60);
-
         return randomDate.atTime(randomHour, randomMinute).truncatedTo(ChronoUnit.MINUTES);
     }
 

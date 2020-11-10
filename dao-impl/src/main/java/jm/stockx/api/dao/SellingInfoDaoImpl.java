@@ -13,6 +13,7 @@ import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -148,31 +149,49 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     @Override
     public AverageSalePriceDto getAverageItemPriceById(Long itemInfoId) {
         //Вариант со стримами
-        List<Money> monies = entityManager.createQuery("" +
-                "SELECT sellingInfo.price " +
-                "FROM SellingInfo sellingInfo " +
-                "WHERE sellingInfo.itemInfo.id = 1", Money.class)
-                .getResultList();
+//        List<Money> monies = entityManager.createQuery("" +
+//                "SELECT sellingInfo.price " +
+//                "FROM SellingInfo sellingInfo " +
+//                "WHERE sellingInfo.itemInfo.id = 1", Money.class)
+//                .getResultList();
+//
+//        double average = monies.stream().mapToDouble(Money::getAmountMajorInt).average().orElse(0.0);
 
-        double average = monies.stream().mapToDouble(Money::getAmountMajorInt).average().orElse(0.0);
+////        Вариант с HQL query
+//        BigDecimal averagePrice = entityManager.createQuery("" +
+//                "SELECT (AVG (sellingInfo.price))" +
+//                "from SellingInfo sellingInfo " +
+//                "where sellingInfo.itemInfo.id = :itemInfoId", BigDecimal.class)
+//                .setParameter("itemInfoId", itemInfoId)
+//                .getSingleResult();
+//
+////        Вариант с nativeQuery
+//        Query query =  entityManager.createNativeQuery("" +
+//                "SELECT AVG(selling_info_price) " +
+//                "FROM selling_info si " +
+//                "WHERE si.item_id = 1", SellingInfo.class);
+//       Double d = (Double) query.getSingleResult();
 
-//        Вариант с HQL query
-        Double averagePrice = entityManager.createQuery("" +
-                "SELECT AVG(sellingInfo.price) " +
-                "from SellingInfo sellingInfo " +
-                "where sellingInfo.itemInfo.id = :itemInfoId", Double.class)
-                .setParameter("itemInfoId", itemInfoId)
+//        Double d2 =  (Double) entityManager.createNativeQuery("" +
+//                "SELECT AVG(selling_info_price)" +
+//                "FROM selling_info AS si " +
+//                "WHERE si.order_status = 'DELIVERED'", SellingInfo.class)
+//                .getSingleResult();
+
+        BigDecimal averagePrice = (BigDecimal) entityManager.createNativeQuery("" +
+                "SELECT ROUND(AVG(selling_info_price)) " +
+                "FROM selling_info si " +
+                "WHERE si.user_id = ?1")
+                .setParameter(1,itemInfoId)
                 .getSingleResult();
 
-//        Вариант с nativeQuery
-        Query query =  entityManager.createNativeQuery("" +
-                "SELECT AVG(selling_info_price) " +
-                "FROM selling_info si " +
-                "WHERE si.item_id = 1");
-       List d = query.getResultList();
+        BigDecimal currentPrice = (BigDecimal) entityManager.createNativeQuery("" +
+                "SELECT ii.item_price " +
+                "from item_info ii " +
+                "where ii.id = ?1")
+                .setParameter(1,itemInfoId)
+                .getSingleResult();
 
-
-
-        return new AverageSalePriceDto(itemInfoId, Money.parse("USD" + d));
+        return new AverageSalePriceDto(itemInfoId, Money.parse("USD" + (averagePrice)), Money.parse("USD" + (currentPrice)));
     }
 }
