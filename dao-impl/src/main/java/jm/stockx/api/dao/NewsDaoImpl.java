@@ -1,8 +1,13 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.news.NewsDto;
+import jm.stockx.dto.news.NewsFiveDto;
 import jm.stockx.entity.News;
 import org.springframework.stereotype.Repository;
+
+import javax.management.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
@@ -34,4 +39,19 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
                 .setParameter("id", id)
                 .getSingleResult();
     }
+
+    @Override
+    public List<NewsFiveDto> getFiveNews() {
+        String str = "FROM News ORDER BY id DESC";
+        List<News> newsList = entityManager
+                .createQuery(str).setMaxResults(5).getResultList();
+        List<NewsFiveDto> newsFiveDto = new ArrayList<>();
+        for (News news : newsList) {
+            newsFiveDto.add(new NewsFiveDto(news));
+        }
+        return newsFiveDto;
+    }
+
 }
+
+

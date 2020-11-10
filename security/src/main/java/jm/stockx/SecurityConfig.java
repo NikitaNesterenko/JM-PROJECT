@@ -42,17 +42,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/api/bid").permitAll()
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
-                        "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
-                        "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
-                        "/itemblock", "/brand", "/test").hasRole("ADMIN")
-                .anyRequest().authenticated();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/auth/**").permitAll()
+//                .antMatchers("/registration").permitAll()
+//                .antMatchers("/api/bid").permitAll()
+//                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
+//                        "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
+//                        "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
+//                        "/itemblock", "/brand", "/test").hasRole("ADMIN")
+//                .anyRequest().authenticated();
     }
 }
