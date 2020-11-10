@@ -261,10 +261,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .setParameter("itemSize", itemSize)
                 .setMaxResults(1)
                 .getResultList().get(0);
-
     }
-
-
 }
 
 

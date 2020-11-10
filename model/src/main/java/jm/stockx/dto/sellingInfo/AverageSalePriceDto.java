@@ -27,9 +27,3 @@ public class AverageSalePriceDto {
         return (average - current) / current * 100;
     }
 }
-
-
-
-
-
-

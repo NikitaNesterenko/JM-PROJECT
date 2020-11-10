@@ -83,7 +83,6 @@ public class EntityDataInitializer {
         createNews();
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createSellingInfo();
-//        test();
         //createBid();
     }
 
@@ -336,7 +335,6 @@ public class EntityDataInitializer {
 
             for (int i = 0; i < 100; i++) {
 
-
                 Item fakeItem = new Item(faker.commerce().productName());
                 itemService.create(fakeItem);
 
@@ -388,6 +386,19 @@ public class EntityDataInitializer {
                     "Заголовок новости - ясно",
                     "Описание новости - не очень ясно, но допустим",
                     "Вопрос: что такое name в сущности News? Может, удалить?"));
+
+
+            for (int i = 0; i < 20; i++) {
+
+                newsService.create(News.builder()
+                        .name(faker.book().title())
+                        .title(faker.gameOfThrones().quote())
+                        .description(faker.harryPotter().quote())
+                        .text(faker.lorem().paragraph())
+                        .time(generateRandomDateAndTime())
+                        .imageUrl(faker.internet().image())
+                        .build());
+            }
         }
     }
 
@@ -431,7 +442,7 @@ public class EntityDataInitializer {
                         .itemInfo(itemInfoService.getItemInfoByItemId(randomItemId))
                         .user(userService.getUserById(randomUserId))
                         .orderDate(randomDateAndTime)
-                        .orderNumber(faker.number().randomNumber(5,false))
+                        .orderNumber(faker.number().randomNumber(5, false))
                         .price(randomPrice)
                         .status(Status.DELIVERED)
                         .build());
@@ -470,11 +481,5 @@ public class EntityDataInitializer {
                 (int) (Math.random() * 59)
         );
         return localDateTime;
-    }
-
-    private void test() {
-        AverageSalePriceDto a = sellingInfoService.getAverageItemPriceById(1L);
-        System.out.println(a);
-
     }
 }
