@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,6 +27,7 @@ public class BrandRestController {
 
     private final BrandService brandService;
     private final FileStorageService fileStorageService;
+    private final String additionalPathForBrands = "brands" + File.separator;
 
     @Autowired
     public BrandRestController(BrandService brandService, FileStorageService fileStorageService) {
@@ -51,8 +53,8 @@ public class BrandRestController {
         if (!brandService.isBrandExist(brandId)) {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
         }
-        Path fileNameAndPath = fileStorageService.uploadImage(logoFileToUpdate, "brands");
-        String fileNameForDb = brandId + fileNameAndPath.getFileName().toString().substring(8);
+        Path fileNameAndPath = fileStorageService.uploadImage(logoFileToUpdate, additionalPathForBrands);
+        String fileNameForDb =  brandId + fileNameAndPath.getFileName().toString().substring(8);
 
         brandService.updateBrandLogo(brandId, fileNameForDb);
         return Response.ok(HttpStatus.OK, "Image was successfully updated");

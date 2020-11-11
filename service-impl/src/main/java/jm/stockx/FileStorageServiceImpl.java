@@ -87,7 +87,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     public Path uploadImage(MultipartFile fileToUpload, String additionalPath) {
         if (!fileToUpload.isEmpty()) {
             String uniqueFileName = RandomStringUtils.randomAlphanumeric(8) + StringUtils.cleanPath(Objects.requireNonNull(fileToUpload.getOriginalFilename()));
-            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath + File.separator + uniqueFileName);
+            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath + uniqueFileName);
 
             try {
                 byte[] fileToBytes = fileToUpload.getBytes();
