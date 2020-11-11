@@ -74,14 +74,13 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     /**
-     * Receives brand logo file from FileStorageController and stores it in a local project directory
-     * if storage successful, updates brandLogoUrl in Brand entity
+     * Receives brand logo file from BrandRestController and stores it in a local project directory
      *
-     * @param  fileToUpload file to update
-     * @param  additionalPath - adds name of the folder to a directory path
+     * @param  fileToUpload Multipart file to upload
+     * @param  additionalPath - adds additional name of the folder to a directory path
      * @throws FileStorageException if failed to store file
      * @throws FileStorageException if passed MultipartFile is Null
-     * @return fileToUpload.getOriginalFilename(); String of original file name
+     * @return Path file name and path
      */
     @Override
     public Path uploadImage(MultipartFile fileToUpload, String additionalPath) {
@@ -101,8 +100,6 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new FileStorageException("Uploaded file is Empty");
         }
     }
-
-
 
     @Override
     public Resource loadFileAsResource(String filename) {

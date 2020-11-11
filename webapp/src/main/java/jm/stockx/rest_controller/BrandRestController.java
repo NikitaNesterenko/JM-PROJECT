@@ -22,7 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping(value = "/api/brand")
+@RequestMapping(value = "")
 public class BrandRestController {
 
     private final BrandService brandService;
@@ -54,7 +54,7 @@ public class BrandRestController {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
         }
         Path fileNameAndPath = fileStorageService.uploadImage(logoFileToUpdate, additionalPathForBrands);
-        String fileNameForDb =  brandId + fileNameAndPath.getFileName().toString().substring(8);
+        String fileNameForDb = additionalPathForBrands + brandId + fileNameAndPath.getFileName().toString().substring(8);
 
         brandService.updateBrandLogo(brandId, fileNameForDb);
         return Response.ok(HttpStatus.OK, "Image was successfully updated");
