@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/email")
-public class EmailController {
+public class AdvertisementEmailController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EmailController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AdvertisementEmailController.class);
 
     @Autowired
     AdvertisementEmailService advertisementEmailService;
@@ -27,6 +28,17 @@ public class EmailController {
         try {
             advertisementEmailService.sendSimpleEmail(email, "New Item", "New Items Released");
         } catch (MailException mailException) {
+            LOG.error("Error while sending out email..{}", mailException.getStackTrace());
+            return new ResponseEntity<>("Unable to send email", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>("Please check your inbox", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/simple-email/{release-date}")
+    public @ResponseBody ResponseEntity sendEmailByReleaseDate(@PathVariable("release-date") LocalDate releaseDate) {
+        try {
+            advertisementEmailService.sendEmailByReleaseDate(releaseDate);
+        } catch (MailException | MessagingException | FileNotFoundException mailException) {
             LOG.error("Error while sending out email..{}", mailException.getStackTrace());
             return new ResponseEntity<>("Unable to send email", HttpStatus.INTERNAL_SERVER_ERROR);
         }

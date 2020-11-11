@@ -59,11 +59,12 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
         emailSender.send(mimeMessage);
     }
 
+    @Override
     public void sendEmailByReleaseDate(LocalDate releaseDate) {
         ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
-        List<ItemInfo> itemInfos = itemInfoDAO.getItemInfosByItemCategory(itemCategory);
-        List<BuyingInfo> buyingInfos = buyingInfoDAO.getBuyingInfosByItemInfo(itemInfos);
-        List<User> users = userDAO.getUsersByBuyingInfos(buyingInfos);
+        ItemInfo itemInfo = itemInfoDAO.getItemInfoByItemCategory(itemCategory);
+        BuyingInfo buyingInfo = buyingInfoDAO.getBuyingInfoByItemInfo(itemInfo);
+        List<User> users = userDAO.getUsersByBuyingInfo(buyingInfo);
 
         for (User user : users) {
             sendSimpleEmail(user.getEmail(), "New Item", "New Item released!");

@@ -2,9 +2,7 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.*;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.ItemSize;
+import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
@@ -37,19 +35,18 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public ItemCategory getItemCategoryByReleaseDate(LocalDate releaseDate) {
         return entityManager.createQuery("" +
-                "SELECT i.itemCategory FROM ItemInfo AS i " +
+                "SELECT DISTINCT i.itemCategory FROM ItemInfo AS i " +
                 "WHERE i.releaseDate = :releaseDate", ItemCategory.class)
                 .setParameter("releaseDate", releaseDate)
                 .getSingleResult();
     }
 
-    @Override
-    public List<ItemInfo> getItemInfosByItemCategory(ItemCategory itemCategory) {
+    public ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
                 "WHERE i.itemCategory = :itemCategory", ItemInfo.class)
                 .setParameter("itemCategory", itemCategory)
-                .getResultList();
+                .getSingleResult();
     }
 
     public List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price) {

@@ -63,6 +63,15 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
+    public List<User> getUsersByBuyingInfo(BuyingInfo buyingInfo) {
+        return entityManager.createQuery("" +
+                "SELECT u FROM User AS u " +
+                "WHERE u.buyingInfo = :buyingInfo", User.class)
+                .setParameter("buyingInfo", buyingInfo)
+                .getResultList();
+    }
+
+    @Override
     public UserDto getUserDtoByUserUsername(String username) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.user.UserDto(" +
@@ -165,15 +174,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
             e.getMessage();
             return null;
         }
-    }
-
-    @Override
-    public List<User> getUsersByBuyingInfos(List<BuyingInfo> buyingInfos) {
-        return entityManager.createQuery("" +
-                "SELECT u FROM User AS u " +
-                "WHERE u.buyingInfo = :buyingInfos", User.class)
-                .setParameter("buyingInfos", buyingInfos)
-                .getResultList();
     }
 
     public void updateUserFromDto(UserPutDto userPutDto){
