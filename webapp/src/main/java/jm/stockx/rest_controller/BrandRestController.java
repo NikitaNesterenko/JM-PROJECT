@@ -2,6 +2,8 @@ package jm.stockx.rest_controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jm.stockx.BrandService;
@@ -36,7 +38,7 @@ public class BrandRestController {
             operationId = "updateBrandLogo",
             summary = "takes MultipartFile logoFileToUpdate and updates BrandLogo by Brand Id ",
             parameters = {
-                    @Parameter(name = "brandId", description = "Brand Id", schema = @Schema(implementation = Long.class)),
+                    @Parameter(in = ParameterIn.QUERY, name = "brandId", description = "Brand Id", schema = @Schema(implementation = Long.class)),
                     @Parameter(name = "logoFileToUpdate", description = "MultipartFile Brand logo to update",
                             schema = @Schema(implementation = MultipartFile.class))},
             responses = {
