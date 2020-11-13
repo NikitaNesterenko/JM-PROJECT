@@ -2,11 +2,13 @@ package jm.stockx;
 
 import jm.stockx.exceptions.FileStorageException;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,16 +16,24 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     @Value("${upload.path}")
     private String uploadPath;
 
-    private ItemInfoService itemInfoService;
+    private static final String uploadDirectory =
+            System.getProperty("user.dir")
+                    + File.separator
+                    + "uploads"
+                    + File.separator;
+
+    private final ItemInfoService itemInfoService;
 
     @Autowired
-    public FileStorageServiceImpl(ItemService itemService) {
+    public FileStorageServiceImpl(ItemInfoService itemInfoService) {
         this.itemInfoService = itemInfoService;
     }
 
@@ -60,6 +70,34 @@ public class FileStorageServiceImpl implements FileStorageService {
             itemInfoService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
 
             return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
+        }
+    }
+
+    /**
+     * Receives brand logo file from BrandRestController and stores it in a local project directory
+     *
+     * @param  fileToUpload Multipart file to upload
+     * @param  additionalPath - adds additional name of the folder to a directory path
+     * @throws FileStorageException if failed to store file
+     * @throws FileStorageException if passed MultipartFile is Null
+     * @return Path file name and path
+     */
+    @Override
+    public Path uploadImage(MultipartFile fileToUpload, String additionalPath) {
+        if (!fileToUpload.isEmpty()) {
+            String uniqueFileName = RandomStringUtils.randomAlphanumeric(8) + StringUtils.cleanPath(Objects.requireNonNull(fileToUpload.getOriginalFilename()));
+            Path fileNameAndPath = Paths.get(uploadDirectory + additionalPath + uniqueFileName);
+
+            try {
+                byte[] fileToBytes = fileToUpload.getBytes();
+                Files.write(fileNameAndPath, fileToBytes);
+
+                return fileNameAndPath;
+            } catch (IOException exception) {
+                throw new FileStorageException("Failed to store file: " + exception.getMessage());
+            }
+        } else {
+            throw new FileStorageException("Uploaded file is Empty");
         }
     }
 
