@@ -2,7 +2,6 @@ package jm.stockx.rest_controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @RestController
 @RequestMapping(value = "")
@@ -54,7 +52,7 @@ public class BrandRestController {
             return Response.error(HttpStatus.NOT_FOUND, "Unable to locate BrandDto with Id" + brandId);
         }
         Path fileNameAndPath = fileStorageService.uploadImage(logoFileToUpdate, additionalPathForBrands);
-        String fileNameForDb = additionalPathForBrands + brandId + fileNameAndPath.getFileName().toString().substring(8);
+        String fileNameForDb = fileNameAndPath.getFileName().toString().substring(8);
 
         brandService.updateBrandLogo(brandId, fileNameForDb);
         return Response.ok(HttpStatus.OK, "Image was successfully updated");
