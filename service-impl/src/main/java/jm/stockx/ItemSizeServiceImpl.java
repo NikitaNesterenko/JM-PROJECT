@@ -25,6 +25,10 @@ public class ItemSizeServiceImpl implements ItemSizeService {
     }
 
 
+    public ItemSize getSizeById(Long id){
+        return itemSizeDAO.getById(id);
+    }
+
     @Override
     public ItemSize findOneBySizeName(String sizeName) {
         return itemSizeDAO.findOneBySizeName(sizeName);

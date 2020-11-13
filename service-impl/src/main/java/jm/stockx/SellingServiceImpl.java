@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
+import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.Status;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,6 @@ public class SellingServiceImpl implements SellingService {
         sellingInfo.setStatus(status);
         sellingInfoDAO.update(sellingInfo);
     }
+
+
 }

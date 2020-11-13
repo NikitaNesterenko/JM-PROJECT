@@ -21,6 +21,7 @@ public interface StyleService {
 
     boolean isStyleExist(Long id);
 
+    Style getStyleById(Long id);
 
     Style getStyleByName(String name);
 }

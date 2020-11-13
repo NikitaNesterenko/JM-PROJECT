@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingInfoDto;
@@ -7,8 +8,12 @@ import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
+import org.hibernate.query.NativeQuery;
+import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -120,9 +125,9 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
-                                                          LocalDateTime endPeriod,
-                                                          ItemCategory itemCategory,
-                                                          int limit) {
+                                                    LocalDateTime endPeriod,
+                                                    ItemCategory itemCategory,
+                                                    int limit) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.entity.Item( " +
                 "si.itemInfo.item.id, " +
@@ -140,4 +145,23 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
+
+    @Override
+    public AverageSalePriceDto getAverageItemPriceById(Long itemInfoId) {
+        BigDecimal averagePrice = (BigDecimal) entityManager.createNativeQuery("" +
+                "SELECT ROUND(AVG(selling_info_price)) " +
+                "FROM selling_info si " +
+                "WHERE si.user_id = ?1")
+                .setParameter(1,itemInfoId)
+                .getSingleResult();
+
+        BigDecimal currentPrice = (BigDecimal) entityManager.createNativeQuery("" +
+                "SELECT ii.item_price " +
+                "FROM item_info ii " +
+                "WHERE ii.id = ?1")
+                .setParameter(1,itemInfoId)
+                .getSingleResult();
+
+        return new AverageSalePriceDto(itemInfoId, Money.parse("USD" + (averagePrice)), Money.parse("USD" + (currentPrice)));
+    }
 }

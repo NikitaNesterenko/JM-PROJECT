@@ -1,7 +1,9 @@
 package jm.stockx.entity;
 
+import jdk.jfr.Timestamp;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.enums.Status;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +18,7 @@ import org.joda.money.Money;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,6 +28,7 @@ import java.time.LocalDateTime;
 @Table(name = "selling_info")
 @TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 public class SellingInfo {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

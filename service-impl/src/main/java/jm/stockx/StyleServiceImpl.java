@@ -54,6 +54,11 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
+    public Style getStyleById(Long id) {
+       return styleDao.getById(id);
+    }
+
+    @Override
     public Style getStyleByName(String name) {
         return styleDao.getStyleByName(name);
     }
