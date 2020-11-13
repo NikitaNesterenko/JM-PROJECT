@@ -126,6 +126,12 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     public AverageSalePriceDto getAverageItemPriceById(Long itemId){
-        return sellingInfoDAO.getAverageItemPriceById(itemId);
+        AverageSalePriceDto averageSalePriceDto = sellingInfoDAO.getAverageItemPriceById(itemId);
+        averageSalePriceDto.setDifferenceInPrice(calculatePercentDifferenceInPrice(averageSalePriceDto.getCurrentPrice().getAmount(),averageSalePriceDto.getAveragePrice().getAmount()));
+        return averageSalePriceDto;
+    }
+
+    private double calculatePercentDifferenceInPrice(BigDecimal current, BigDecimal average){
+        return (average.doubleValue() - current.doubleValue()) / current.doubleValue() * 100;
     }
 }

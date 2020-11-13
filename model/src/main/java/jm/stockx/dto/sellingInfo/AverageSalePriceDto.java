@@ -20,10 +20,4 @@ public class AverageSalePriceDto {
         this.averagePrice = averagePrice;
         this.currentPrice = currentPrice;
     }
-
-    public double calculatePercentDifferenceInPrice(){
-        double current = currentPrice.getAmount().doubleValue();
-        double average = averagePrice.getAmount().doubleValue();
-        return (average - current) / current * 100;
-    }
 }
