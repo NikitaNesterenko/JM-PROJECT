@@ -1,12 +1,10 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.User;
+import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.enums.ItemCategory;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -25,13 +23,10 @@ import java.util.List;
 public class AdvertisementEmailServiceImpl implements AdvertisementEmailService {
 
     @Autowired
-    public JavaMailSender emailSender;
+    public JavaMailSender javaMailSender;
 
     @Autowired
     private ItemInfoDAO itemInfoDAO;
-
-    @Autowired
-    private BuyingInfoDAO buyingInfoDAO;
 
     @Autowired
     private UserDAO userDAO;
@@ -43,31 +38,32 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
         simpleMailMessage.setTo(toAddress);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message);
-        emailSender.send(simpleMailMessage);
+        javaMailSender.send(simpleMailMessage);
     }
 
     @Override
     public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment)
             throws MessagingException, FileNotFoundException {
-        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
         messageHelper.setTo(toAddress);
         messageHelper.setSubject(subject);
         messageHelper.setText(message);
         FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
         messageHelper.addAttachment("Purchase Order", file);
-        emailSender.send(mimeMessage);
+        javaMailSender.send(mimeMessage);
     }
 
     @Override
+    @SneakyThrows
     public void sendEmailByReleaseDate(LocalDate releaseDate) {
-        ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
-        ItemInfo itemInfo = itemInfoDAO.getItemInfoByItemCategory(itemCategory);
-        BuyingInfo buyingInfo = buyingInfoDAO.getBuyingInfoByItemInfo(itemInfo);
-        List<User> users = userDAO.getUsersByBuyingInfo(buyingInfo);
 
-        for (User user : users) {
-            sendSimpleEmail(user.getEmail(), "New Item", "New Item released!");
+        ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
+
+        List<UserEmailDto> userEmailDtoList = userDAO.getUserEmailDtoByItemCategory(itemCategory);
+
+        for (UserEmailDto userEmailDto : userEmailDtoList) {
+            sendSimpleEmail(userEmailDto.getEmail(), "New Item", "New Item released!");
         }
     }
 }

@@ -8,10 +8,13 @@ import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import jm.stockx.enums.ItemSizeTypes;
 import jm.stockx.enums.Status;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.mail.MessagingException;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -31,6 +34,7 @@ public class EntityDataInitializer {
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
     private BuyingInfoService buyingInfoService;
+    private AdvertisementEmailService advertisementEmailService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -43,7 +47,8 @@ public class EntityDataInitializer {
                              CurrencyService currencyService,
                              BidService bidService,
                              ItemInfoService itemInfoService,
-                             ItemSizeService itemSizeService) {
+                             ItemSizeService itemSizeService,
+                             AdvertisementEmailService advertisementEmailService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -55,10 +60,11 @@ public class EntityDataInitializer {
         this.bidService = bidService;
         this.itemInfoService = itemInfoService;
         this.itemSizeService = itemSizeService;
+        this.advertisementEmailService = advertisementEmailService;
     }
 
-
-    private void init() {
+    @SneakyThrows
+    private void init()  {
         log.info("Data init has been started!!!");
 
         fillDataBase();
@@ -66,7 +72,7 @@ public class EntityDataInitializer {
         log.info("Data init has been done!!!");
     }
 
-    private void fillDataBase() {
+    private void fillDataBase() throws FileNotFoundException, MessagingException {
         createShoeSizes();
         createRoles();
         createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
@@ -77,7 +83,12 @@ public class EntityDataInitializer {
         createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
 //        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
+        //advSendTest(); //4
     }
+    /*
+    private void advSendTest() throws FileNotFoundException, MessagingException {
+        advertisementEmailService.sendEmailByReleaseDate(LocalDate.of(2020,03,25)); //
+    } */
 
     private void createRoles() {
         if (roleService.getAll().size() == 0) {

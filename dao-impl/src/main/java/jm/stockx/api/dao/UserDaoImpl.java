@@ -2,6 +2,7 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
@@ -63,11 +64,16 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public List<User> getUsersByBuyingInfo(BuyingInfo buyingInfo) {
+    public List<UserEmailDto> getUserEmailDtoByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
-                "SELECT u FROM User AS u " +
-                "WHERE u.buyingInfo = :buyingInfo", User.class)
-                .setParameter("buyingInfo", buyingInfo)
+                "SELECT NEW jm.stockx.dto.user.UserEmailDto(" +
+                "u.email" +
+                ")" +
+                "FROM User AS u " +
+                "JOIN u.buyingInfo b " +
+                "JOIN b.boughtItemsInfo i " +
+                "WHERE i.itemCategory = :itemCategory", UserEmailDto.class)
+                .setParameter("itemCategory", itemCategory)
                 .getResultList();
     }
 
