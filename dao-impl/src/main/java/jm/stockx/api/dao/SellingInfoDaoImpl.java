@@ -148,24 +148,6 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public AverageSalePriceDto getAverageItemPriceById(Long itemInfoId) {
-        //Вариант со стримами - Работает
-        List<Money> monies = entityManager.createQuery("" +
-                "SELECT sellingInfo.price " +
-                "FROM SellingInfo sellingInfo " +
-                "WHERE sellingInfo.itemInfo.id = 1", Money.class)
-                .getResultList();
-
-        double average = monies.stream().mapToDouble(Money::getAmountMajorInt).average().orElse(0.0);
-
-//        Вариант с HQL query - Не Работает
-        BigDecimal avgPrice = entityManager.createQuery("" +
-                "SELECT (AVG (sellingInfo.price))" +
-                "from SellingInfo sellingInfo " +
-                "where sellingInfo.itemInfo.id = :itemInfoId", BigDecimal.class)
-                .setParameter("itemInfoId", itemInfoId)
-                .getSingleResult();
-
-//        Вариант с nativeQuery - Рабочий!
         BigDecimal averagePrice = (BigDecimal) entityManager.createNativeQuery("" +
                 "SELECT ROUND(AVG(selling_info_price)) " +
                 "FROM selling_info si " +

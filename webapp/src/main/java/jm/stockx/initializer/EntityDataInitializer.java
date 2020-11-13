@@ -3,8 +3,6 @@ package jm.stockx.initializer;
 import com.github.javafaker.Faker;
 import jm.stockx.*;
 import jm.stockx.api.dao.BuyingInfoDAO;
-import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
@@ -19,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
@@ -36,6 +35,7 @@ public class EntityDataInitializer {
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
     private BuyingInfoService buyingInfoService;
+    private BuyingInfoDAO buyingInfoDAO;
     Faker faker = new Faker();
 
 
@@ -50,7 +50,8 @@ public class EntityDataInitializer {
                              CurrencyService currencyService,
                              BidService bidService,
                              ItemInfoService itemInfoService,
-                             ItemSizeService itemSizeService) {
+                             ItemSizeService itemSizeService,
+    BuyingInfoDAO buyingInfoDAO) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -62,6 +63,7 @@ public class EntityDataInitializer {
         this.bidService = bidService;
         this.itemInfoService = itemInfoService;
         this.itemSizeService = itemSizeService;
+        this.buyingInfoDAO = buyingInfoDAO;
     }
 
 
@@ -74,17 +76,19 @@ public class EntityDataInitializer {
     }
 
     private void fillDataBase() {
+//        createBuyingInfo();
         createShoeSizes();
         createRoles();
-        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createBrands();
         createCurrency();
         createStyles();
         createNews();
-        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createItems();
+        createUsers();
         createSellingInfo();
         //createBid();
     }
+
 
     private void createRoles() {
         if (roleService.getAll().size() == 0) {
@@ -135,7 +139,17 @@ public class EntityDataInitializer {
             user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
 
+
             for (int i = 0; i < 200; i++) {
+                            BuyingInfo fakeBuyingInfo = BuyingInfo.builder()
+                    .buyingPrice(generateRandomPrice(50, 900))
+                    .status(getRandomStatus())
+                    .buyingTimeStamp(generateRandomDateAndTime())
+                    .build();
+
+//            buyingInfoService.create(fakeBuyingInfo);
+
+
                 userService.createUser(User.builder()
                         .firstName(faker.name().firstName())
                         .lastName(faker.name().lastName())
@@ -145,6 +159,7 @@ public class EntityDataInitializer {
                         .imageUrl(faker.internet().image())
                         .password(faker.internet().password())
                         .role(roleService.getRole("ROLE_USER"))
+                        .buyingInfo(Set.of(fakeBuyingInfo))
                         .build());
 
             }
@@ -312,7 +327,7 @@ public class EntityDataInitializer {
 
             BuyingInfo buyingInfoJordan1 = BuyingInfo.builder()
                     .buyingPrice(Money.parse("USD 214.0"))
-                    .status(Status.DELIVERED)
+                    .status(getRandomStatus())
                     .buyingTimeStamp(LocalDateTime.now())
                     .build();
 
@@ -338,11 +353,7 @@ public class EntityDataInitializer {
                 Item fakeItem = new Item(faker.commerce().productName());
                 itemService.create(fakeItem);
 
-                BuyingInfo fakeBuyingInfo = BuyingInfo.builder()
-                        .buyingPrice(generateRandomPrice(50, 900))
-                        .status(Status.DELIVERED)
-                        .buyingTimeStamp(generateRandomDateAndTime())
-                        .build();
+
 
                 itemInfoService.create(ItemInfo.builder()
                         .item(fakeItem)
@@ -350,7 +361,6 @@ public class EntityDataInitializer {
                         .price(generateRandomPrice(200, 500))
                         .highestBid(generateRandomPrice(450, 900))
                         .lowestAsk(generateRandomPrice(50, 450))
-                        .buyingInfo(fakeBuyingInfo)
                         .size(itemSizeService.getSizeById((long) faker.random().nextInt(1, 18)))
                         .releaseDate(LocalDate.of(2019, 8, 17))
                         .condition("New")
@@ -411,6 +421,10 @@ public class EntityDataInitializer {
     private ItemCategory getRandomItemCategory() {
         Random random = new Random();
         return ItemCategory.values()[random.nextInt(ItemCategory.values().length)];
+    }
+    private Status getRandomStatus() {
+        Random random = new Random();
+        return Status.values()[random.nextInt(Status.values().length)];
     }
 
 
