@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewsFiveDto {
+public class NewsLastDto {
 
     @NotBlank
     private String title;
@@ -18,7 +18,7 @@ public class NewsFiveDto {
     @NotBlank
     private String text;
 
-    public NewsFiveDto(News news) {
+    public NewsLastDto(News news) {
         this.title = news.getTitle();
         this.text = news.getText();
     }

@@ -1,7 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.news.NewsDto;
-import jm.stockx.dto.news.NewsFiveDto;
+import jm.stockx.dto.news.NewsLastDto;
 import jm.stockx.entity.News;
 import org.springframework.stereotype.Repository;
 
@@ -40,16 +40,16 @@ public class NewsDaoImpl extends AbstractDAO<News, Long> implements NewsDAO {
                 .getSingleResult();
     }
 
-    @Override
-    public List<NewsFiveDto> getFiveNews() {
-        String str = "FROM News ORDER BY id DESC";
-        List<News> newsList = entityManager
-                .createQuery(str).setMaxResults(5).getResultList();
-        List<NewsFiveDto> newsFiveDto = new ArrayList<>();
-        for (News news : newsList) {
-            newsFiveDto.add(new NewsFiveDto(news));
-        }
-        return newsFiveDto;
+        @Override
+        public List<NewsLastDto> getLastNews() {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.news.NewsLastDto(" +
+                "n.title," +
+                "n.text" +
+                ") " +
+                "FROM News AS n " +
+                "ORDER BY n.id DESC")
+                .setMaxResults(5).getResultList();
     }
 
 }

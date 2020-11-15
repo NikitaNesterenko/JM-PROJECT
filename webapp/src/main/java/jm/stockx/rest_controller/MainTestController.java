@@ -1,7 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.NewsService;
-import jm.stockx.dto.news.NewsFiveDto;
+import jm.stockx.dto.news.NewsLastDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,14 @@ public class MainTestController {
         this.newsService = newsService;
     }
 
-    @GetMapping("/fiveNews")
-    public List<NewsFiveDto> getNewsFiveDto(){
-        return newsService.getFiveNews();
+    @GetMapping("/lastNews")
+    public List<NewsLastDto> getLastNewsDto(){
+        return newsService.getLastNews();
+    }
+
+    @GetMapping("/")
+    public String getTest(){
+        return "Hello word";
     }
 
 }
