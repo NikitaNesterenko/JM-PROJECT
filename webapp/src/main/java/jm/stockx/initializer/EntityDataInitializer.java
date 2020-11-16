@@ -8,10 +8,10 @@ import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import jm.stockx.enums.ItemSizeTypes;
 import jm.stockx.enums.Status;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,7 +35,6 @@ public class EntityDataInitializer {
     private BidService bidService;
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
-    private AdvertisementEmailService advertisementEmailService;
     private BuyingInfoService buyingInfoService;
     private BuyingInfoDAO buyingInfoDAO;
     Faker faker = new Faker();
@@ -68,7 +67,7 @@ public class EntityDataInitializer {
         this.buyingInfoDAO = buyingInfoDAO;
     }
 
-    @SneakyThrows
+
     private void init() {
         log.info("Data init has been started!!!");
 

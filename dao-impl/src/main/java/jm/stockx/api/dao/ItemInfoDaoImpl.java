@@ -37,7 +37,8 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public ItemCategory getItemCategoryByReleaseDate(LocalDate releaseDate) {
         return entityManager.createQuery("" +
-                "SELECT DISTINCT i.itemCategory FROM ItemInfo AS i " +
+                "SELECT DISTINCT i.itemCategory " +
+                "FROM ItemInfo AS i " +
                 "WHERE i.releaseDate = :releaseDate", ItemCategory.class)
                 .setParameter("releaseDate", releaseDate)
                 .getSingleResult();
