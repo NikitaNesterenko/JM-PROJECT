@@ -61,6 +61,10 @@ public class BuyingInfo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public BuyingInfo(ItemInfoDto itemInfoDto) {
         this.buyingTimeStamp = LocalDateTime.now();
         this.buyingPrice = itemInfoDto.getPrice();

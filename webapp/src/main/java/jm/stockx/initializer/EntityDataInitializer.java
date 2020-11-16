@@ -8,10 +8,13 @@ import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import jm.stockx.enums.ItemSizeTypes;
 import jm.stockx.enums.Status;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessagingException;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -34,6 +37,7 @@ public class EntityDataInitializer {
     private BidService bidService;
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
+    private AdvertisementEmailService advertisementEmailService;
     private BuyingInfoService buyingInfoService;
     private BuyingInfoDAO buyingInfoDAO;
     Faker faker = new Faker();
@@ -50,8 +54,9 @@ public class EntityDataInitializer {
                              CurrencyService currencyService,
                              BidService bidService,
                              ItemInfoService itemInfoService,
+                             AdvertisementEmailService advertisementEmailService,
                              ItemSizeService itemSizeService,
-    BuyingInfoDAO buyingInfoDAO) {
+                             BuyingInfoDAO buyingInfoDAO) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -62,11 +67,12 @@ public class EntityDataInitializer {
         this.currencyService = currencyService;
         this.bidService = bidService;
         this.itemInfoService = itemInfoService;
+        this.advertisementEmailService = advertisementEmailService;
         this.itemSizeService = itemSizeService;
         this.buyingInfoDAO = buyingInfoDAO;
     }
 
-
+    @SneakyThrows
     private void init() {
         log.info("Data init has been started!!!");
 
@@ -75,7 +81,7 @@ public class EntityDataInitializer {
         log.info("Data init has been done!!!");
     }
 
-    private void fillDataBase() {
+    private void fillDataBase() throws FileNotFoundException {
 //        createBuyingInfo();
         createShoeSizes();
         createRoles();
@@ -87,8 +93,12 @@ public class EntityDataInitializer {
         createUsers();
         createSellingInfo();
         //createBid();
+        //advSendTest();
     }
-
+    /*
+    private void advSendTest() throws FileNotFoundException, MessagingException {
+        advertisementEmailService.sendEmailByReleaseDate(LocalDate.of(2020,03,25));
+    } */
 
     private void createRoles() {
         if (roleService.getAll().size() == 0) {

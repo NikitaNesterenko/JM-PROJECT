@@ -2,12 +2,15 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
+import jm.stockx.enums.ItemCategory;
 
 import java.util.List;
 
 public interface UserDAO extends GenericDao<User, Long> {
+
     UserDto getUserDtoByUserUsername(String name);
 
     UserDto getUserDtoByUserEmail(String name);
@@ -15,6 +18,8 @@ public interface UserDAO extends GenericDao<User, Long> {
     UserDto getUserDtoByUserAppleId(String appleId);
 
     UserDto getUserDtoByUserId(Long id);
+
+    List<UserEmailDto> getUserEmailDtoByItemCategory(ItemCategory itemCategory);
 
     User getUserByUsername(String username);
 
