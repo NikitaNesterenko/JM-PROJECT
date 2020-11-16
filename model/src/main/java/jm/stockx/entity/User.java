@@ -77,7 +77,9 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    @OneToMany( targetEntity = BuyingInfo.class, mappedBy = "user")
+    @OneToMany(mappedBy = "user",
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                            CascadeType.DETACH, CascadeType.REFRESH})
     private Set<BuyingInfo> buyingInfo;
 
     public User(String firstName,
