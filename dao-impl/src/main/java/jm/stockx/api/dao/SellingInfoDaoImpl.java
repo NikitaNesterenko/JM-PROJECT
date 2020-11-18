@@ -71,14 +71,23 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public int getPriceChangeInPercents(Item item) {
-        Money priceChange = entityManager.createQuery("" +
-                "SELECT si.price - i.price " +
+        Money sellingPrice = entityManager.createQuery("" +
+                "SELECT si.price " +
                 "FROM SellingInfo AS si " +
                 "JOIN si.itemInfo i " +
                 "WHERE i.item = :item " +
                 "ORDER BY si.id DESC", Money.class)
                 .setParameter("item", item)
                 .getResultList().get(0);
+
+        Money itemPrice = entityManager.createQuery("" +
+                "SELECT i.price " +
+                "FROM ItemInfo AS i " +
+                "WHERE i.item = :item", Money.class)
+                .setParameter("item", item)
+                .getSingleResult();
+
+        Money priceChange = sellingPrice.minus(itemPrice);
 
         return priceChange.getAmountMajorInt() * 100;
     }
