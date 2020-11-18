@@ -47,16 +47,20 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
     }
 
     @Override
-    public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment)
-            throws MessagingException, FileNotFoundException, javax.mail.MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-        messageHelper.setTo(toAddress);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(message);
-        FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
-        messageHelper.addAttachment("Purchase Order", file);
-        javaMailSender.send(mimeMessage);
+    public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+            messageHelper.setTo(toAddress);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(message);
+            FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
+            messageHelper.addAttachment("Purchase Order", file);
+            javaMailSender.send(mimeMessage);
+        } catch(MessagingException | FileNotFoundException | javax.mail.MessagingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

@@ -67,7 +67,6 @@ public class EntityDataInitializer {
         this.buyingInfoDAO = buyingInfoDAO;
     }
 
-
     private void init() {
         log.info("Data init has been started!!!");
 
@@ -76,7 +75,7 @@ public class EntityDataInitializer {
         log.info("Data init has been done!!!");
     }
 
-    private void fillDataBase() throws FileNotFoundException {
+    private void fillDataBase() {
 //        createBuyingInfo();
         createShoeSizes();
         createRoles();
