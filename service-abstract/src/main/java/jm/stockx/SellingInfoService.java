@@ -6,6 +6,7 @@ import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 
@@ -39,6 +40,4 @@ public interface SellingInfoService {
     List<InfoTickerDto> getInfoTickerDto(ItemCategory itemCategory, LocalDateTime begin, LocalDateTime end, int limit);
 
     AverageSalePriceDto getAverageItemPriceById(Long itemId);
-
-
 }

@@ -51,7 +51,7 @@ public class EntityDataInitializer {
                              BidService bidService,
                              ItemInfoService itemInfoService,
                              ItemSizeService itemSizeService,
-    BuyingInfoDAO buyingInfoDAO) {
+                             BuyingInfoDAO buyingInfoDAO) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -87,8 +87,8 @@ public class EntityDataInitializer {
         createUsers();
         createSellingInfo();
         //createBid();
-    }
 
+    }
 
     private void createRoles() {
         if (roleService.getAll().size() == 0) {

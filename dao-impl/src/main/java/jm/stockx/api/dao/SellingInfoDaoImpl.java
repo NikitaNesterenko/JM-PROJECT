@@ -8,11 +8,9 @@ import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
-import org.hibernate.query.NativeQuery;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,6 +55,32 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
         return entityManager.createQuery(sql, SellerTopInfoDto.class)
                 .setMaxResults(20)
                 .getResultList();
+    }
+
+    @Override
+    public int getCountOfSalesByItem(Item item) {
+        List<SellingInfo> salesList = entityManager.createQuery("" +
+                "SELECT COUNT(si) " +
+                "FROM SellingInfo si " +
+                "JOIN si.itemInfo i " +
+                "WHERE i.item = :item", SellingInfo.class)
+                .setParameter("item", item)
+                .getResultList();
+        return salesList.size();
+    }
+
+    @Override
+    public int getPriceChangeInPercents(Item item) {
+        Money priceChange = entityManager.createQuery("" +
+                "SELECT si.price - i.price " +
+                "FROM SellingInfo AS si " +
+                "JOIN si.itemInfo i " +
+                "WHERE i.item = :item " +
+                "ORDER BY si.id DESC", Money.class)
+                .setParameter("item", item)
+                .getResultList().get(0);
+
+        return priceChange.getAmountMajorInt() * 100;
     }
 
     public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {

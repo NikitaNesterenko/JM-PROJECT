@@ -19,6 +19,10 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
 
     List<SellerTopInfoDto> getSellerTopInfoDto();
 
+    int getCountOfSalesByItem(Item item);
+
+    int getPriceChangeInPercents(Item item);
+
     int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 
     List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);

@@ -74,7 +74,6 @@ public class ItemInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
-
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
