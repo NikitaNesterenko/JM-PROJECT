@@ -60,7 +60,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     @Override
     public int getCountOfSalesByItem(Item item) {
         List<SellingInfo> salesList = entityManager.createQuery("" +
-                "SELECT COUNT(si) " +
+                "SELECT si " +
                 "FROM SellingInfo si " +
                 "JOIN si.itemInfo i " +
                 "WHERE i.item = :item", SellingInfo.class)
