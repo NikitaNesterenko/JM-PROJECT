@@ -92,9 +92,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
         int itemPriceInt = itemPrice.getAmountMajorInt();
         int priceChangeInt = priceChange.getAmountMajorInt();
 
-        double change = (double)priceChangeInt / itemPriceInt;
-
-        return change * 100;
+        return (double)priceChangeInt * 100.0 / itemPriceInt;
     }
 
     public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
