@@ -1,14 +1,9 @@
 package jm.stockx;
 
-import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.user.UserEmailDto;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,9 +26,6 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
 
     @Autowired
     private ItemInfoDAO itemInfoDAO;
-
-    @Autowired
-    private BuyingInfoDAO buyingInfoDAO;
 
     @Autowired
     private UserDAO userDAO;
@@ -64,7 +56,6 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
     }
 
     @Override
-    @SneakyThrows
     public void sendEmailByReleaseDate(LocalDate releaseDate) {
 
         ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
