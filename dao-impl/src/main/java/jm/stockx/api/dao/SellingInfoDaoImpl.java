@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Repository
 public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implements SellingInfoDAO {
 
@@ -59,14 +58,15 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public int getCountOfSalesByItem(Item item) {
-        List<SellingInfo> salesList = entityManager.createQuery("" +
+
+        int salesCount = entityManager.createQuery("" +
                 "SELECT si " +
                 "FROM SellingInfo si " +
                 "JOIN si.itemInfo i " +
                 "WHERE i.item = :item", SellingInfo.class)
                 .setParameter("item", item)
-                .getResultList();
-        return salesList.size();
+                .getResultList().size();
+        return salesCount;
     }
 
     @Override
