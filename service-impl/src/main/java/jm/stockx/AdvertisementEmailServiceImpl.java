@@ -31,9 +31,9 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
     @Autowired
     private UserDAO userDAO;
 
-
     @Override
     public void sendSimpleEmail(String toAddress, String subject, String message) {
+
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toAddress);
         simpleMailMessage.setSubject(subject);
@@ -42,20 +42,23 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
     }
 
     @Override
-    public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment)
-            throws MessagingException, FileNotFoundException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-        messageHelper.setTo(toAddress);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(message);
-        FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
-        messageHelper.addAttachment("Purchase Order", file);
-        javaMailSender.send(mimeMessage);
+    public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+            messageHelper.setTo(toAddress);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(message);
+            FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
+            messageHelper.addAttachment("Purchase Order", file);
+            javaMailSender.send(mimeMessage);
+        }
+        catch(MessagingException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    @SneakyThrows
     public void sendEmailByReleaseDate(LocalDate releaseDate) {
 
         ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
