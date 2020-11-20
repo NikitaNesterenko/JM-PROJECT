@@ -19,7 +19,7 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     UserDto getUserDtoByUserId(Long id);
 
-    List<UserEmailDto> getUserEmailDtoByItemCategory(ItemCategory itemCategory);
+    List<UserEmailDto> getUserEmailByItemCategory(ItemCategory itemCategory);
 
     User getUserByUsername(String username);
 

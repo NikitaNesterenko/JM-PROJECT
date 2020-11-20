@@ -133,11 +133,9 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public List<UserEmailDto> getUserEmailDtoByItemCategory(ItemCategory itemCategory) {
+    public List<UserEmailDto> getUserEmailByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.user.UserEmailDto(" +
-                "u.email" +
-                ")" +
+                "SELECT u.email " +
                 "FROM User AS u " +
                 "JOIN u.buyingInfo b " +
                 "JOIN b.boughtItemsInfo i " +

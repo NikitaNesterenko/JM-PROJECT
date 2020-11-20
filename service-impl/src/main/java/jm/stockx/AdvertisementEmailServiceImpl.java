@@ -52,7 +52,6 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
         } catch(MessagingException | FileNotFoundException | javax.mail.MessagingException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -60,9 +59,9 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
 
         ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
 
-        List<UserEmailDto> userEmailDtoList = userDAO.getUserEmailDtoByItemCategory(itemCategory);
+        List<UserEmailDto> userEmailList = userDAO.getUserEmailByItemCategory(itemCategory);
 
-        for (UserEmailDto userEmailDto : userEmailDtoList) {
+        for (UserEmailDto userEmailDto : userEmailList) {
             sendSimpleEmail(userEmailDto.getEmail(), "New Item", "New Item released!");
         }
     }
