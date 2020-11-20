@@ -51,7 +51,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void create(Item item) {
-         itemDao.add(item);
+
+        itemDao.add(item);
     }
 
     @Override

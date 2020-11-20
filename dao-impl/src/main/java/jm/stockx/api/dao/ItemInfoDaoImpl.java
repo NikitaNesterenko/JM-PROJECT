@@ -2,13 +2,12 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.*;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.ItemSize;
+import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,6 +29,23 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 "SELECT i FROM ItemInfo AS i " +
                 "WHERE i.item.name = :itemName", ItemInfo.class)
                 .setParameter("itemName", itemName)
+                .getSingleResult();
+    }
+
+    @Override
+    public ItemCategory getItemCategoryByReleaseDate(LocalDate releaseDate) {
+        return entityManager.createQuery("" +
+                "SELECT DISTINCT i.itemCategory FROM ItemInfo AS i " +
+                "WHERE i.releaseDate = :releaseDate", ItemCategory.class)
+                .setParameter("releaseDate", releaseDate)
+                .getSingleResult();
+    }
+
+    public ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory) {
+        return entityManager.createQuery("" +
+                "SELECT i FROM ItemInfo AS i " +
+                "WHERE i.itemCategory = :itemCategory", ItemInfo.class)
+                .setParameter("itemCategory", itemCategory)
                 .getSingleResult();
     }
 
