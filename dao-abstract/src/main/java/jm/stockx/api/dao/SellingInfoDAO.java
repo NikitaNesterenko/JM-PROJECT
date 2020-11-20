@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingInfoDto;
@@ -30,4 +31,6 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
                                             int limit);
 
     List<SellingItemDto> getSellingItemDtoByPeriodAndItemId(LocalDateTime begin, LocalDateTime end, Long itemId);
+
+    AverageSalePriceDto getAverageItemPriceById(Long itemId);
 }

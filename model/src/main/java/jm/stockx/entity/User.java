@@ -1,6 +1,9 @@
 package jm.stockx.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
@@ -14,10 +17,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @Getter
 @Setter
 @ToString
-//@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {

@@ -1,6 +1,8 @@
 package jm.stockx.initializer;
 
 import jm.stockx.*;
+import jm.stockx.api.dao.BuyingInfoDAO;
+import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
@@ -56,7 +58,7 @@ public class EntityDataInitializer {
     }
 
 
-    private void init()  {
+    private void init() {
         log.info("Data init has been started!!!");
 
         fillDataBase();

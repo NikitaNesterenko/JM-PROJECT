@@ -27,4 +27,6 @@ public interface BrandService {
 
     List<Brand> getPopularBrandIn2Month();
 
+    Brand getBrandById(Long id);
+
 }
