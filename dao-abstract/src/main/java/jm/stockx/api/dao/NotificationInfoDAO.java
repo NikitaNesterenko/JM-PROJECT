@@ -28,4 +28,6 @@ public interface NotificationInfoDAO extends GenericDao<NotificationInfo, Long>{
     void updatePriceDropEmail(Long userId, boolean state);
     void updateWelcomeSeries(Long userId, boolean state);
     void updateCollectiblesNews(Long userId, boolean state);
+    void updateField(Long userId, String nameField, boolean state);
+
 }

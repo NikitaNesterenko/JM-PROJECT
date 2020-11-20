@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 @Builder
 @Getter
@@ -17,8 +18,12 @@ public class NotificationInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    private User user;
+
+    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 
@@ -102,4 +107,24 @@ public class NotificationInfo implements Serializable {
 
     public NotificationInfo() {
     }
+
+    public boolean getStateField(String name)  {
+        Field field = null;
+        try {
+            field = this.getClass().getDeclaredField(name);
+            boolean state = field.getBoolean(this);
+            return state;
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
 }

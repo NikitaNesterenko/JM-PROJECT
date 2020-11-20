@@ -36,6 +36,9 @@ public class EntityDataInitializer {
     private ItemSizeService itemSizeService;
     private BuyingInfoService buyingInfoService;
     private BuyingInfoDAO buyingInfoDAO;
+
+    private NotificationInfoService notificationInfoService;
+
     Faker faker = new Faker();
 
 
@@ -51,7 +54,7 @@ public class EntityDataInitializer {
                              BidService bidService,
                              ItemInfoService itemInfoService,
                              ItemSizeService itemSizeService,
-    BuyingInfoDAO buyingInfoDAO) {
+    BuyingInfoDAO buyingInfoDAO, NotificationInfoService notificationInfoService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -64,6 +67,7 @@ public class EntityDataInitializer {
         this.itemInfoService = itemInfoService;
         this.itemSizeService = itemSizeService;
         this.buyingInfoDAO = buyingInfoDAO;
+        this.notificationInfoService = notificationInfoService;
     }
 
 
@@ -139,7 +143,6 @@ public class EntityDataInitializer {
             user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
 
-
             for (int i = 0; i < 200; i++) {
                             BuyingInfo fakeBuyingInfo = BuyingInfo.builder()
                     .buyingPrice(generateRandomPrice(50, 900))
@@ -147,7 +150,8 @@ public class EntityDataInitializer {
                     .buyingTimeStamp(generateRandomDateAndTime())
                     .build();
 
-//            buyingInfoService.create(fakeBuyingInfo);
+
+                            buyingInfoService.create(fakeBuyingInfo);
 
 
                 userService.createUser(User.builder()

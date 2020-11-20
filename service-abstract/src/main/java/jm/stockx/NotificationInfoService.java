@@ -29,6 +29,8 @@ public interface NotificationInfoService {
     void updateWelcomeSeries(Long userId, boolean state);
     void updateCollectiblesNews(Long userId, boolean state);
     void createNotificationInfo(NotificationInfo notificationInfo);
+    void updateField(Long userId, String nameField, boolean state);
+    NotificationInfo getNotificationInfoById(Long userId);
 
 
 
