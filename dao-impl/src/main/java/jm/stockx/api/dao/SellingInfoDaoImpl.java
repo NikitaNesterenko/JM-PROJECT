@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Repository
 public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implements SellingInfoDAO {
 
@@ -57,16 +58,15 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
-    public int getCountOfSalesByItem(Item item) {
-
-        int salesCount = entityManager.createQuery("" +
-                "SELECT si " +
-                "FROM SellingInfo si " +
+    public Long getCountOfSalesByItem(Item item) {
+        Long sellingCount = entityManager.createQuery("" +
+                "SELECT COUNT(si) " +
+                "FROM SellingInfo AS si " +
                 "JOIN si.itemInfo i " +
-                "WHERE i.item = :item", SellingInfo.class)
+                "WHERE i.item = :item", Long.class)
                 .setParameter("item", item)
-                .getResultList().size();
-        return salesCount;
+                .getSingleResult();
+        return sellingCount;
     }
 
     @Override
@@ -76,9 +76,10 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "FROM SellingInfo AS si " +
                 "JOIN si.itemInfo i " +
                 "WHERE i.item = :item " +
-                "ORDER BY si.id DESC", Money.class)
+                "ORDER BY si.id DESC ", Money.class)
                 .setParameter("item", item)
-                .getResultList().get(0);
+                .setMaxResults(1)
+                .getSingleResult();
 
         Money itemPrice = entityManager.createQuery("" +
                 "SELECT i.price " +
