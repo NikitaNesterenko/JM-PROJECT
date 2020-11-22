@@ -4,10 +4,9 @@ import jm.stockx.NotificationInfoService;
 import jm.stockx.entity.NotificationInfo;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/notification")
@@ -21,9 +20,20 @@ public class NotificationInfoRestController {
         this.notificationInfoService = notificationInfoService;
     }
 
-    @GetMapping("/change")
-    public Response<?> changeNotificationInfo(@RequestParam(name = "nameField") String nameField, @RequestParam(name="userId") Long userId, @RequestParam(name="state") boolean state){
-            notificationInfoService.updateField(userId, nameField, state);
+    @PostMapping("/change")
+    public Response<?> changeNotificationInfo(@RequestParam(name = "nameField") String nameField, @RequestParam(name="userId") String userId, @RequestParam(name="state") String state){
+        Long userIdN =     Long.valueOf(userId);
+        boolean stateN = Boolean.parseBoolean(state);
+        notificationInfoService.updateField(userIdN, nameField, stateN);
+        return Response.ok().build();
+    }
+
+    @PostMapping("/change1")
+    public Response<?> changeNotificationInfo1(@RequestBody Map<String, String> json){
+        String nameField = json.get("nameField");
+        Long userId = Long.valueOf(json.get("userId"));
+        boolean state = Boolean.parseBoolean(json.get("state"));
+        notificationInfoService.updateField(userId, nameField, state);
         return Response.ok().build();
     }
 }

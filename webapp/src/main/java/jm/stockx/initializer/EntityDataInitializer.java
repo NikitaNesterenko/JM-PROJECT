@@ -151,7 +151,7 @@ public class EntityDataInitializer {
                     .build();
 
 
-                            buyingInfoService.create(fakeBuyingInfo);
+                      //      buyingInfoService.create(fakeBuyingInfo);
 
 
                 userService.createUser(User.builder()
