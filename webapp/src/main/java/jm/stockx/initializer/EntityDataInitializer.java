@@ -87,7 +87,6 @@ public class EntityDataInitializer {
         createUsers();
         createSellingInfo();
         //createBid();
-
     }
 
     private void createRoles() {

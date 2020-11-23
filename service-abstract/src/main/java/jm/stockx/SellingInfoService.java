@@ -15,6 +15,10 @@ import java.util.List;
 
 public interface SellingInfoService {
 
+    Long getCountOfSalesByItem(Item item);
+    
+    double getPriceChangeInPercents(Item item);
+
     Double getAverageSalesValue();
 
     List<SellingInfo> getAll();
