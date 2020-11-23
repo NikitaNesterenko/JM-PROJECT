@@ -59,10 +59,10 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
 
         ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
 
-        List<UserEmailDto> userEmailList = userDAO.getUserEmailByItemCategory(itemCategory);
+        List<String> userEmailList = userDAO.getUserEmailByItemCategory(itemCategory);
 
-        for (UserEmailDto userEmailDto : userEmailList) {
-            sendSimpleEmail(userEmailDto.getEmail(), "New Item", "New Item released!");
+        for (String email : userEmailList) {
+            sendSimpleEmail(email, "New Item", "New Item released!");
         }
     }
 }
