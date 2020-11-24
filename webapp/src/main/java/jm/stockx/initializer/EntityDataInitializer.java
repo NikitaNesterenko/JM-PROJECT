@@ -149,9 +149,7 @@ public class EntityDataInitializer {
                     .status(getRandomStatus())
                     .buyingTimeStamp(generateRandomDateAndTime())
                     .build();
-
-
-                            buyingInfoService.create(fakeBuyingInfo);
+                            //       buyingInfoService.create(fakeBuyingInfo);
 
 
                 userService.createUser(User.builder()
