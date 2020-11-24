@@ -61,6 +61,11 @@ public class BuyingInfo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public BuyingInfo(ItemInfoDto itemInfoDto) {
         this.buyingTimeStamp = LocalDateTime.now();
         this.buyingPrice = itemInfoDto.getPrice();

@@ -9,7 +9,6 @@ import jm.stockx.entity.Item;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
@@ -151,6 +150,18 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "WHERE u.id =: id", UserDto.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<String> getUserEmailByItemCategory(ItemCategory itemCategory) {
+        return entityManager.createQuery("" +
+                "SELECT u.email " +
+                "FROM User AS u " +
+                "JOIN u.buyingInfo b " +
+                "JOIN b.boughtItemsInfo i " +
+                "WHERE i.itemCategory = :itemCategory", String.class)
+                .setParameter("itemCategory", itemCategory)
+                .getResultList();
     }
 
     @Override

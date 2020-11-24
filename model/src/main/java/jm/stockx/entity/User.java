@@ -77,11 +77,9 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_buying",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "buying_id"))
+    @OneToMany(mappedBy = "user",
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                            CascadeType.DETACH, CascadeType.REFRESH})
     private Set<BuyingInfo> buyingInfo;
 
     public User(String firstName,

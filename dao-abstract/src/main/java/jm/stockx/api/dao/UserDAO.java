@@ -12,6 +12,7 @@ import jm.stockx.enums.ItemCategory;
 import java.util.List;
 
 public interface UserDAO extends GenericDao<User, Long> {
+
     UserDto getUserDtoByUserUsername(String name);
 
     UserDto getUserDtoByUserEmail(String name);
@@ -19,6 +20,8 @@ public interface UserDAO extends GenericDao<User, Long> {
     UserDto getUserDtoByUserAppleId(String appleId);
 
     UserDto getUserDtoByUserId(Long id);
+
+    List<String> getUserEmailByItemCategory(ItemCategory itemCategory);
 
     User getUserByUsername(String username);
 

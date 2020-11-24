@@ -2,18 +2,16 @@ package jm.stockx;
 
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.enums.ItemCategory;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -31,9 +29,7 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
     @Autowired
     private UserDAO userDAO;
 
-    @Override
     public void sendSimpleEmail(String toAddress, String subject, String message) {
-
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toAddress);
         simpleMailMessage.setSubject(subject);
@@ -52,8 +48,7 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
             FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
             messageHelper.addAttachment("Purchase Order", file);
             javaMailSender.send(mimeMessage);
-        }
-        catch(MessagingException | FileNotFoundException e) {
+        } catch(MessagingException | FileNotFoundException | javax.mail.MessagingException e) {
             e.printStackTrace();
         }
     }
@@ -63,10 +58,10 @@ public class AdvertisementEmailServiceImpl implements AdvertisementEmailService 
 
         ItemCategory itemCategory = itemInfoDAO.getItemCategoryByReleaseDate(releaseDate);
 
-        List<UserEmailDto> userEmailDtoList = userDAO.getUserEmailDtoByItemCategory(itemCategory);
+        List<String> userEmailList = userDAO.getUserEmailByItemCategory(itemCategory);
 
-        for (UserEmailDto userEmailDto : userEmailDtoList) {
-            sendSimpleEmail(userEmailDto.getEmail(), "New Item", "New Item released!");
+        for (String email : userEmailList) {
+            sendSimpleEmail(email, "New Item", "New Item released!");
         }
     }
 }
