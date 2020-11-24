@@ -133,7 +133,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
 
     @Override
     public List<String> getUserEmailByItemCategory(ItemCategory itemCategory) {
-        List<String> emails = entityManager.createQuery("" +
+        return entityManager.createQuery("" +
                 "SELECT u.email " +
                 "FROM User AS u " +
                 "JOIN u.buyingInfo b " +
@@ -141,7 +141,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "WHERE i.itemCategory = :itemCategory", String.class)
                 .setParameter("itemCategory", itemCategory)
                 .getResultList();
-        return emails;
     }
 
     @Override

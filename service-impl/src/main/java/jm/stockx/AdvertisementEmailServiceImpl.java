@@ -2,7 +2,6 @@ package jm.stockx;
 
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.enums.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
