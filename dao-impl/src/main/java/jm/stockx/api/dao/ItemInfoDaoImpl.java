@@ -2,9 +2,7 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.itemInfo.*;
-import jm.stockx.entity.Brand;
-import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.ItemSize;
+import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;

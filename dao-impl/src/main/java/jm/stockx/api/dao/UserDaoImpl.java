@@ -2,7 +2,11 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
+import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
+import jm.stockx.entity.BuyingInfo;
+import jm.stockx.entity.Item;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
@@ -14,6 +18,9 @@ import java.util.List;
 
 @Repository
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
+
+    @Autowired
+    ItemInfoDAO itemInfoDAO;
 
     @Override
     public List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id) {
@@ -53,6 +60,20 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
 
         return existingValue > 0;
+    }
+
+    @Override
+    public List<UserEmailDto> getUserEmailDtoByItemCategory(ItemCategory itemCategory) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.user.UserEmailDto(" +
+                "u.email" +
+                ")" +
+                "FROM User AS u " +
+                "JOIN u.buyingInfo b " +
+                "JOIN b.boughtItemsInfo i " +
+                "WHERE i.itemCategory = :itemCategory", UserEmailDto.class)
+                .setParameter("itemCategory", itemCategory)
+                .getResultList();
     }
 
     @Override

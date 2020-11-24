@@ -39,7 +39,6 @@ public class EntityDataInitializer {
     private BuyingInfoDAO buyingInfoDAO;
     Faker faker = new Faker();
 
-
     @Autowired
     private void SetServices(RoleService roleService,
                              UserService userService,
