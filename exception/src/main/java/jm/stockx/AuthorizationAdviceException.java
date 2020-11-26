@@ -1,7 +1,7 @@
 package jm.stockx;
 
-public class AuthorizationException extends Exception{
-    public AuthorizationException(){
+public class AuthorizationAdviceException extends Exception{
+    public AuthorizationAdviceException(){
         super("Логин или пароль введны не верно");
     }
 }
