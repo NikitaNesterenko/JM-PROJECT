@@ -110,6 +110,7 @@ public class EntityDataInitializer {
                     true,
                     "en",
                     "user1@apple.id");
+            user1.setActive(true);
             user1.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user1);
 
@@ -123,6 +124,7 @@ public class EntityDataInitializer {
                     false,
                     "en",
                     "user2@apple.id");
+            user2.setActive(true);
             user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
         }
