@@ -1,6 +1,5 @@
 package jm.stockx.rest_controller;
 
-import jm.stockx.AuthorizationAdviceException;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserTokenDto;
 import jm.stockx.dto.security.UserLoginDto;
@@ -34,7 +33,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
-    public Response<UserTokenDto> login(@RequestBody UserLoginDto loginUser) throws AuthenticationException, AuthorizationAdviceException {
+    public Response<UserTokenDto> login(@RequestBody UserLoginDto loginUser) {
         try {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
