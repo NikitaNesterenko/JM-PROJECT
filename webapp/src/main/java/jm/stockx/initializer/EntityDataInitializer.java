@@ -1,6 +1,8 @@
 package jm.stockx.initializer;
 
+import com.github.javafaker.Faker;
 import jm.stockx.*;
+import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
@@ -13,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class EntityDataInitializer {
@@ -29,6 +35,9 @@ public class EntityDataInitializer {
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
     private BuyingInfoService buyingInfoService;
+    private BuyingInfoDAO buyingInfoDAO;
+    Faker faker = new Faker();
+
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -41,7 +50,8 @@ public class EntityDataInitializer {
                              CurrencyService currencyService,
                              BidService bidService,
                              ItemInfoService itemInfoService,
-                             ItemSizeService itemSizeService) {
+                             ItemSizeService itemSizeService,
+                             BuyingInfoDAO buyingInfoDAO) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -53,10 +63,11 @@ public class EntityDataInitializer {
         this.bidService = bidService;
         this.itemInfoService = itemInfoService;
         this.itemSizeService = itemSizeService;
+        this.buyingInfoDAO = buyingInfoDAO;
     }
 
 
-    private void init()  {
+    private void init() {
         log.info("Data init has been started!!!");
 
         fillDataBase();
@@ -65,15 +76,16 @@ public class EntityDataInitializer {
     }
 
     private void fillDataBase() {
+//        createBuyingInfo();
         createShoeSizes();
         createRoles();
-        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
         createBrands();
         createCurrency();
         createStyles();
         createNews();
-        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createItems();
+        createUsers();
+        createSellingInfo();
         //createBid();
     }
 
@@ -125,7 +137,34 @@ public class EntityDataInitializer {
                     "user2@apple.id");
             user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
+
+
+            for (int i = 0; i < 200; i++) {
+                            BuyingInfo fakeBuyingInfo = BuyingInfo.builder()
+                    .buyingPrice(generateRandomPrice(50, 900))
+                    .status(getRandomStatus())
+                    .buyingTimeStamp(generateRandomDateAndTime())
+                    .build();
+
+//            buyingInfoService.create(fakeBuyingInfo);
+
+
+                userService.createUser(User.builder()
+                        .firstName(faker.name().firstName())
+                        .lastName(faker.name().lastName())
+                        .email(faker.internet().emailAddress())
+                        .username(faker.funnyName().name())
+                        .active(true)
+                        .imageUrl(faker.internet().image())
+                        .password(faker.internet().password())
+                        .role(roleService.getRole("ROLE_USER"))
+                        .buyingInfo(Set.of(fakeBuyingInfo))
+                        .build());
+
+            }
         }
+
+
     }
 
     private void createBrands() {
@@ -287,7 +326,7 @@ public class EntityDataInitializer {
 
             BuyingInfo buyingInfoJordan1 = BuyingInfo.builder()
                     .buyingPrice(Money.parse("USD 214.0"))
-                    .status(Status.DELIVERED)
+                    .status(getRandomStatus())
                     .buyingTimeStamp(LocalDateTime.now())
                     .build();
 
@@ -298,21 +337,41 @@ public class EntityDataInitializer {
                     .highestBid(Money.parse("USD 241.0"))
                     .lowestAsk(Money.parse("USD 167.0"))
                     .buyingInfo(buyingInfoJordan1)
-                    .size(itemSizeService.findOneBySizeName("11"))
-                    .releaseDate(LocalDate.of(2019, 8, 17))
+                    .size(itemSizeService.findOneBySizeName("12.5"))
+                    .releaseDate(generateRandomDateAndTime().toLocalDate())
                     .condition("New")
-                    .description("Jordan Brand adds a twist to a classic with the Air Jordan 1 WMNS Satin “Black Toe”, now available on StockX. " +
-                            "Jordan is no stranger to adding satin to the Jordan 1. In May of 2018, they released a satin rendition of the " +
-                            "“Shattered Backboard” 1 in a similar fashion, revealing that the release would be in women’s sizing.\n" +
-                            "\n" +
-                            "This AJ 1 features classic “Black Toe” color scheme. This design is constructed in a mix of leather and satin " +
-                            "construction providing a luxury feel. A metal Wings logo on the heel completes the design. These sneakers released " +
-                            "in August of 2019 and retailed for $160.")
+                    .description(faker.lorem().paragraph())
                     .brand(brandService.getBrandByName("Jordan"))
                     .style(styleService.getStyleByName("sports"))
                     .itemColors(ItemColors.BROWN)
                     .build());
+
+
+            for (int i = 0; i < 100; i++) {
+
+                Item fakeItem = new Item(faker.commerce().productName());
+                itemService.create(fakeItem);
+
+
+
+                itemInfoService.create(ItemInfo.builder()
+                        .item(fakeItem)
+                        .itemCategory(getRandomItemCategory())
+                        .price(generateRandomPrice(200, 500))
+                        .highestBid(generateRandomPrice(450, 900))
+                        .lowestAsk(generateRandomPrice(50, 450))
+                        .size(itemSizeService.getSizeById((long) faker.random().nextInt(1, 18)))
+                        .releaseDate(LocalDate.of(2019, 8, 17))
+                        .condition("New")
+                        .description(faker.gameOfThrones().quote())
+                        .brand(brandService.getBrandById((long) faker.random().nextInt(1, 4)))
+                        .style(styleService.getStyleById((long) faker.random().nextInt(1, 4)))
+                        .itemImageUrl(faker.internet().image())
+                        .itemColors(getRandomColor())
+                        .build());
+            }
         }
+
     }
 
     private void createNews() {
@@ -336,24 +395,73 @@ public class EntityDataInitializer {
                     "Заголовок новости - ясно",
                     "Описание новости - не очень ясно, но допустим",
                     "Вопрос: что такое name в сущности News? Может, удалить?"));
+
+
+            for (int i = 0; i < 20; i++) {
+
+                newsService.create(News.builder()
+                        .name(faker.book().title())
+                        .title(faker.gameOfThrones().quote())
+                        .description(faker.harryPotter().quote())
+                        .text(faker.lorem().paragraph())
+                        .time(generateRandomDateAndTime())
+                        .imageUrl(faker.internet().image())
+                        .build());
+            }
         }
     }
 
-//    private void createSellingInfo() {
-//        if (sellingInfoService.getAll().size() == 0) {
-//
-//            for (int i = 0; i < 15; i++) {
-//                Long itemId = (long) (1 + Math.random() * 5);
-//                sellingInfoService.create(new SellingInfo(
-//                                userService.getUserById((long) (1 + Math.random() * 2)),
-//                                new ItemInfo(shoeSizeService.getAll(), Money.of(CurrencyUnit.USD, 250), Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
-//                                itemService.getItemById(itemId),
-//                                Status.DELIVERED
-//                        )
-//                );
-//            }
-//        }
-//    }
+
+    private ItemColors getRandomColor() {
+        Random random = new Random();
+        return ItemColors.values()[random.nextInt(ItemColors.values().length)];
+    }
+
+    private ItemCategory getRandomItemCategory() {
+        Random random = new Random();
+        return ItemCategory.values()[random.nextInt(ItemCategory.values().length)];
+    }
+    private Status getRandomStatus() {
+        Random random = new Random();
+        return Status.values()[random.nextInt(Status.values().length)];
+    }
+
+
+    private LocalDateTime generateRandomDateAndTime() {
+        long minDay = LocalDate.of(2015, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2020, 11, 9).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+
+        int randomHour = ThreadLocalRandom.current().nextInt(0, 24);
+        int randomMinute = ThreadLocalRandom.current().nextInt(0, 60);
+        return randomDate.atTime(randomHour, randomMinute).truncatedTo(ChronoUnit.MINUTES);
+    }
+
+    private Money generateRandomPrice(int minBound, int maxBound) {
+        return Money.parse("USD" + (ThreadLocalRandom.current().nextInt(minBound, maxBound)));
+    }
+
+    private void createSellingInfo() {
+        if (sellingInfoService.getAll().size() == 0) {
+            for (int i = 0; i < 3000; i++) {
+
+                Long randomUserId = (long) ThreadLocalRandom.current().nextInt(1, 204);
+                Long randomItemId = (long) ThreadLocalRandom.current().nextInt(1, 101);
+                LocalDateTime randomDateAndTime = generateRandomDateAndTime();
+                Money randomPrice = generateRandomPrice(50, 900);
+
+                sellingInfoService.create(SellingInfo.builder()
+                        .itemInfo(itemInfoService.getItemInfoByItemId(randomItemId))
+                        .user(userService.getUserById(randomUserId))
+                        .orderDate(randomDateAndTime)
+                        .orderNumber(faker.number().randomNumber(5, false))
+                        .price(randomPrice)
+                        .status(Status.DELIVERED)
+                        .build());
+            }
+        }
+    }
 
     private void createShoeSizes() {
         if (itemSizeService.getAll().size() == 0) {

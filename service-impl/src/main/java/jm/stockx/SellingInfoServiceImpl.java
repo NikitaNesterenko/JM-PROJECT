@@ -30,6 +30,16 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     @Override
+    public Long getCountOfSalesByItem(Long itemId) {
+        return sellingInfoDAO.getCountOfSalesByItem(itemId);
+    }
+
+    @Override
+    public double getPriceChangeInPercents(Item item) {
+        return sellingInfoDAO.getPriceChangeInPercents(item);
+    }
+
+    @Override
     public Double getAverageSalesValue() {
         return sellingInfoDAO.getAverageSalesValue();
     }

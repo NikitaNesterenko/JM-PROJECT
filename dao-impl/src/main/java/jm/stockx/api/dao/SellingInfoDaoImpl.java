@@ -8,11 +8,9 @@ import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
-import org.hibernate.query.NativeQuery;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,6 +55,45 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
         return entityManager.createQuery(sql, SellerTopInfoDto.class)
                 .setMaxResults(20)
                 .getResultList();
+    }
+
+    @Override
+    public Long getCountOfSalesByItem(Long itemId) {
+        Long sellingCount = entityManager.createQuery("" +
+                "SELECT COUNT(si) " +
+                "FROM SellingInfo AS si " +
+                "JOIN si.itemInfo i " +
+                "WHERE i.id = :itemId", Long.class)
+                .setParameter("itemId", itemId)
+                .getSingleResult();
+        return sellingCount;
+    }
+
+    @Override
+    public double getPriceChangeInPercents(Item item) {
+        Money sellingPrice = entityManager.createQuery("" +
+                "SELECT si.price " +
+                "FROM SellingInfo AS si " +
+                "JOIN si.itemInfo i " +
+                "WHERE i.item = :item " +
+                "ORDER BY si.id DESC ", Money.class)
+                .setParameter("item", item)
+                .setMaxResults(1)
+                .getSingleResult();
+
+        Money itemPrice = entityManager.createQuery("" +
+                "SELECT i.price " +
+                "FROM ItemInfo AS i " +
+                "WHERE i.item = :item", Money.class)
+                .setParameter("item", item)
+                .getSingleResult();
+
+        Money priceChange = sellingPrice.minus(itemPrice);
+
+        int itemPriceInt = itemPrice.getAmountMajorInt();
+        int priceChangeInt = priceChange.getAmountMajorInt();
+
+        return (double)priceChangeInt * 100.0 / itemPriceInt;
     }
 
     public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {

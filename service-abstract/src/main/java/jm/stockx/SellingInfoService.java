@@ -6,6 +6,7 @@ import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 
@@ -13,6 +14,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SellingInfoService {
+
+    Long getCountOfSalesByItem(Long itemId);
+    
+    double getPriceChangeInPercents(Item item);
 
     Double getAverageSalesValue();
 
@@ -39,6 +44,4 @@ public interface SellingInfoService {
     List<InfoTickerDto> getInfoTickerDto(ItemCategory itemCategory, LocalDateTime begin, LocalDateTime end, int limit);
 
     AverageSalePriceDto getAverageItemPriceById(Long itemId);
-
-
 }
