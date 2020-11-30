@@ -1,21 +1,20 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
-import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellingInfoDto;
-import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.*;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
-import org.hibernate.query.NativeQuery;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Period;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Repository
@@ -163,5 +162,29 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getSingleResult();
 
         return new AverageSalePriceDto(itemInfoId, Money.parse("USD" + (averagePrice)), Money.parse("USD" + (currentPrice)));
+    }
+
+    @Override
+    public List<SellingCountDto> getSellingCountDtoLastYear(Long itemId) {
+        LocalDate today = LocalDate.now();
+        LocalDate oneYearAgo = today.minusYears(1L);
+
+        List<SellingCountDto> countsList = entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.SellingCountDto(" +
+                "si.itemInfo.id, " +
+                "EXTRACT(MONTH FROM si.orderDate) AS month, " +
+                "COUNT(si.id)" +
+                ")" +
+                "FROM SellingInfo AS si " +
+                "JOIN ItemInfo AS i " +
+                "WHERE si.orderDate <= : today AND si.orderDate >= : oneYearAgo " +
+                "AND si.itemInfo.id = :itemId " +
+                "GROUP BY month " +
+                "ORDER BY month ASC ", SellingCountDto.class)
+                .setParameter("itemId", itemId)
+                .setParameter("today", today)
+                .setParameter("oneYearAgo", oneYearAgo)
+                .getResultList();
+        return countsList;
     }
 }
