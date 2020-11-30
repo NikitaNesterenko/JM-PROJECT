@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface SellingInfoService {
 
-    Long getCountOfSalesByItem(Item item);
+    Long getCountOfSalesByItem(Long itemId);
     
     double getPriceChangeInPercents(Item item);
 

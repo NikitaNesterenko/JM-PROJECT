@@ -30,8 +30,8 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     }
 
     @Override
-    public Long getCountOfSalesByItem(Item item) {
-        return sellingInfoDAO.getCountOfSalesByItem(item);
+    public Long getCountOfSalesByItem(Long itemId) {
+        return sellingInfoDAO.getCountOfSalesByItem(itemId);
     }
 
     @Override
