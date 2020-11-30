@@ -11,14 +11,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RealizeCalendarDTO {
+public class RealizeCalendarDto {
 
 //    дто {
 //        дата релиза,
 //        название итема,
 //        имейдж урл
 //        ловестаск
-//                итемайди
+//        итемайди
 //    }
 
     private Long      itemId;
@@ -27,7 +27,7 @@ public class RealizeCalendarDTO {
     private String    imageURL;
     private Money     lowestAsk;
 
-    public RealizeCalendarDTO(ItemInfo inf) {
+    public RealizeCalendarDto(ItemInfo inf) {
         this.itemId = inf.getItem().getId();
         this.realizeDate = inf.getReleaseDate();
         this.itemName = inf.getItem().getName();

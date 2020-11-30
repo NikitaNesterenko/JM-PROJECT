@@ -1,8 +1,7 @@
 package jm.stockx;
 
-import jm.stockx.RealizeCalendarService;
 import jm.stockx.api.dao.RealizeCalendarDAO;
-import jm.stockx.dto.realizeCalendar.RealizeCalendarDTO;
+import jm.stockx.dto.realizeCalendar.RealizeCalendarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class RealizeCalendarServiceImpl implements RealizeCalendarService {
     }
 
     @Override
-    public List<RealizeCalendarDTO> getSixImmediateRealizes() {
+    public List<RealizeCalendarDto> getSixImmediateRealizes() {
         return realizeCalendarDAO.getSixImmediateRealizes();
     }
 }
