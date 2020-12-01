@@ -2,7 +2,7 @@ package jm.stockx.dto.sellingInfo;
 
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.Month;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ public class SellingCountDto {
 
     private Long itemId;
 
-    private LocalDate month;
+    private Month month;
 
     private Long countOfSellings;
 }

@@ -167,22 +167,40 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public List<SellingCountDto> getSellingCountDtoLastYear(Long itemId) {
+        // дата сегодня
         LocalDate today = LocalDate.now();
+        // дата год назад
         LocalDate oneYearAgo = today.minusYears(1L);
-
-        List<LocalDate> months = oneYearAgo.datesUntil(today, Period.ofMonths(1)).collect(Collectors.toList());
+        // список дат с шагом в один месяц
+        List<LocalDate> oneMonthStepDates = oneYearAgo.datesUntil(today, Period.ofMonths(1)).collect(Collectors.toList());
+        // вот этот список будет заполняться нужными нам DTO
         List<SellingCountDto> sellingCountDtoList = new ArrayList<>();
 
-        for (LocalDate month : months) {
+        for (LocalDate date : oneMonthStepDates) {
+            // первый день месяца
+            LocalDate firstDayOfMonth = date.withDayOfMonth(1);
+            // уточняем до LocalDateTime
+            LocalDateTime start = firstDayOfMonth.atStartOfDay();
+            // последний день месяца
+            LocalDate lastDayOfMonth = date.withDayOfMonth(date.lengthOfMonth());
+            // уточняем до LocalDateTime
+            LocalDateTime end = lastDayOfMonth.atTime(23,59, 59);
+
             long count = entityManager.createQuery("" +
                     "SELECT COUNT(si.id) " +
                     "FROM SellingInfo si " +
                     "JOIN si.itemInfo i " +
-                    "WHERE i.id = :itemId", Long.class)
+                    "WHERE i.id = :itemId " +
+                    "AND si.orderDate <= : end " +
+                    "AND si.orderDate >= : start", Long.class)
                     .setParameter("itemId", itemId)
+                    .setParameter("start", start)
+                    .setParameter("end", end)
                     .getSingleResult();
-            sellingCountDtoList.add(new SellingCountDto(itemId, month, count));
+
+            sellingCountDtoList.add(new SellingCountDto(itemId, date.getMonth(), count));
         }
+
         return sellingCountDtoList;
     }
 }
