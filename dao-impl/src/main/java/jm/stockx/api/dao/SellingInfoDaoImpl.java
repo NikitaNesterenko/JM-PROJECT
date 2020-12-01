@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -169,22 +170,19 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
         LocalDate today = LocalDate.now();
         LocalDate oneYearAgo = today.minusYears(1L);
 
-        List<SellingCountDto> countsList = entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.sellingInfo.SellingCountDto(" +
-                "si.itemInfo.id, " +
-                "EXTRACT(MONTH FROM si.orderDate) AS month, " +
-                "COUNT(si.id)" +
-                ")" +
-                "FROM SellingInfo AS si " +
-                "JOIN ItemInfo AS i " +
-                "WHERE si.orderDate <= : today AND si.orderDate >= : oneYearAgo " +
-                "AND si.itemInfo.id = :itemId " +
-                "GROUP BY month " +
-                "ORDER BY month ASC ", SellingCountDto.class)
-                .setParameter("itemId", itemId)
-                .setParameter("today", today)
-                .setParameter("oneYearAgo", oneYearAgo)
-                .getResultList();
-        return countsList;
+        List<LocalDate> months = oneYearAgo.datesUntil(today, Period.ofMonths(1)).collect(Collectors.toList());
+        List<SellingCountDto> sellingCountDtoList = new ArrayList<>();
+
+        for (LocalDate month : months) {
+            long count = entityManager.createQuery("" +
+                    "SELECT COUNT(si.id) " +
+                    "FROM SellingInfo si " +
+                    "JOIN si.itemInfo i " +
+                    "WHERE i.id = :itemId", Long.class)
+                    .setParameter("itemId", itemId)
+                    .getSingleResult();
+            sellingCountDtoList.add(new SellingCountDto(itemId, month, count));
+        }
+        return sellingCountDtoList;
     }
 }

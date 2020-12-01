@@ -1,9 +1,7 @@
 package jm.stockx.entity;
 
-import jdk.jfr.Timestamp;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.enums.Status;
-import jm.stockx.util.LocalDateTimePersistenceConverter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +45,6 @@ public class SellingInfo {
     private Long orderNumber;
 
     @Column(name = "order_date")
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime orderDate;
 
     @Column(name = "order_status")
