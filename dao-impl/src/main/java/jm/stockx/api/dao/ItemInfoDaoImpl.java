@@ -278,6 +278,27 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .setMaxResults(1)
                 .getResultList().get(0);
     }
+
+    @Override
+    public List<ItemInfoImageDto> getItemsBuyingYearByUserid(Long id) {
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime begin = end.minusYears(1);
+
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoImageDto(" +
+                "i.item.id," +
+                "i.item.name," +
+                "i.itemImageUrl " +
+                ") " +
+                "FROM ItemInfo i " +
+                "WHERE i.buyingInfo.buyingTimeStamp BETWEEN :begin AND :end " +
+                "AND i.buyingInfo.id = :id", ItemInfoImageDto.class)
+                .setParameter("begin", begin)
+                .setParameter("end", end)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
 }
 
 
