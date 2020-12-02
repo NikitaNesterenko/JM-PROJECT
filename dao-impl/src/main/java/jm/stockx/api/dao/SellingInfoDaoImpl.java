@@ -167,24 +167,25 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
     @Override
     public List<SellingCountDto> getSellingCountDtoLastYear(Long itemId) {
-        // дата сегодня
-        LocalDate today = LocalDate.now();
-        // дата год назад
-        LocalDate oneYearAgo = today.minusYears(1L);
-        // список дат с шагом в один месяц
-        List<LocalDate> oneMonthStepDates = oneYearAgo.datesUntil(today, Period.ofMonths(1)).collect(Collectors.toList());
-        // вот этот список будет заполняться нужными нам DTO
-        List<SellingCountDto> sellingCountDtoList = new ArrayList<>();
+
+        LocalDate today = LocalDate.now(); // дата сегодня
+
+        LocalDate oneYearAgo = today.minusYears(1L); // дата год назад
+
+        List<LocalDate> oneMonthStepDates = oneYearAgo.datesUntil(today, Period.ofMonths(1))
+                .collect(Collectors.toList()); // список дат с шагом в один месяц
+
+        List<SellingCountDto> sellingCountDtoList = new ArrayList<>(); // этот список будет заполняться нужными нам DTO
 
         for (LocalDate date : oneMonthStepDates) {
-            // первый день месяца
-            LocalDate firstDayOfMonth = date.withDayOfMonth(1);
-            // уточняем до LocalDateTime
-            LocalDateTime start = firstDayOfMonth.atStartOfDay();
-            // последний день месяца
-            LocalDate lastDayOfMonth = date.withDayOfMonth(date.lengthOfMonth());
-            // уточняем до LocalDateTime
-            LocalDateTime end = lastDayOfMonth.atTime(23,59, 59);
+
+            LocalDate firstDayOfMonth = date.withDayOfMonth(1); // первый день месяца
+
+            LocalDateTime start = firstDayOfMonth.atStartOfDay(); // начало первого дня месяца
+
+            LocalDate lastDayOfMonth = date.withDayOfMonth(date.lengthOfMonth()); // последний день месяца
+
+            LocalDateTime end = lastDayOfMonth.atTime(23,59, 59); // конец последнего дня месяца
 
             long count = entityManager.createQuery("" +
                     "SELECT COUNT(si.id) " +
