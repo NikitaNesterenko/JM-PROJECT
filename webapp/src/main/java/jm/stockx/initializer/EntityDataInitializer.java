@@ -29,6 +29,7 @@ public class EntityDataInitializer {
     private ItemInfoService itemInfoService;
     private ItemSizeService itemSizeService;
     private BuyingInfoService buyingInfoService;
+    private NotificationInfoService notificationInfoService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -41,7 +42,7 @@ public class EntityDataInitializer {
                              CurrencyService currencyService,
                              BidService bidService,
                              ItemInfoService itemInfoService,
-                             ItemSizeService itemSizeService) {
+                             ItemSizeService itemSizeService, NotificationInfoService notificationInfoService) {
         this.userService = userService;
         this.itemService = itemService;
         this.roleService = roleService;
@@ -53,6 +54,7 @@ public class EntityDataInitializer {
         this.bidService = bidService;
         this.itemInfoService = itemInfoService;
         this.itemSizeService = itemSizeService;
+        this.notificationInfoService = notificationInfoService;
     }
 
 
@@ -125,6 +127,10 @@ public class EntityDataInitializer {
                     "user2@apple.id");
             user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
+
+            NotificationInfo notificationInfo = new NotificationInfo();
+            notificationInfo.setUser(user2);
+            notificationInfoService.createNotificationInfo(notificationInfo);
         }
     }
 
