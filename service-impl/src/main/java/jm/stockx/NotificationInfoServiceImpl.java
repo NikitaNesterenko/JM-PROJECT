@@ -24,8 +24,8 @@ public class NotificationInfoServiceImpl implements NotificationInfoService {
     }
 
     @Override
-    public void updateField(Long userId, String nameField, boolean state) {
-        notificationInfoDAO.updateField(userId, nameField, state);
+    public void updateField(Long userId, String nameField) {
+        notificationInfoDAO.updateField(userId, nameField);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class NotificationInfoDAOImpl extends AbstractDAO<NotificationInfo, Long>
 //    }
 
     @Override
-    public void updateField(Long userId, String nameField, boolean state) {
+    public void updateField(Long userId, String nameField) {
         entityManager.createNativeQuery("" +
                 "UPDATE notification_info  SET "  + nameField + " = NOT " + nameField +
                 " WHERE user_id = :userId")

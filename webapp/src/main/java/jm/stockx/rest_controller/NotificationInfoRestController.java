@@ -19,16 +19,16 @@ public class NotificationInfoRestController {
 
     @PostMapping("/change")
     public Response<?> changeNotificationInfo(@RequestBody NotificationInfoDTO notificationInfoDTO) {
-        notificationInfoService.updateField(notificationInfoDTO.getUserId(), notificationInfoDTO.getName(), notificationInfoDTO.isState());
+        notificationInfoService.updateField(notificationInfoDTO.getUserId(), notificationInfoDTO.getName());
         return Response.ok().build();
     }
 
-    @PostMapping("/change1")
-    public Response<?> changeNotificationInfo(@RequestParam(name = "nameField") String nameField, @RequestParam(name = "userId") String userID, @RequestParam(name = "state") String state) {
-       // notificationInfoService.updateField(notificationInfoDTO.getUserId(), notificationInfoDTO.getName(), notificationInfoDTO.isState());
-        notificationInfoService.updateField(Long.valueOf(userID), nameField, Boolean.parseBoolean(state));
-        return Response.ok().build();
-    }
+//    для тестов в Postman
+//    @PostMapping("/change1")
+//    public Response<?> changeNotificationInfo(@RequestParam(name = "nameField") String nameField, @RequestParam(name = "userId") String userID) {
+//        notificationInfoService.updateField(Long.valueOf(userID), nameField);
+//        return Response.ok().build();
+//    }
 
 
 

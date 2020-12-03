@@ -10,5 +10,4 @@ import lombok.*;
 public class NotificationInfoDTO {
     String name;
     Long UserId;
-    boolean state;
 }
