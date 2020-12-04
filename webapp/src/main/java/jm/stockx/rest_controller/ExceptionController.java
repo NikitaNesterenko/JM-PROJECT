@@ -16,6 +16,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AuthorizationAdviceException.class)
     public Response<?> AuthorizationNotFoundException(AuthorizationAdviceException e){
         logger.error(e.getMessage());
-        return Response.error(HttpStatus.NOT_FOUND, "Логин или пароль введны не верно");
+        return Response.error(HttpStatus.NOT_FOUND, e.getMessage());
     }
 }

@@ -23,14 +23,4 @@ public class NotificationInfoRestController {
         return Response.ok().build();
     }
 
-//    для тестов в Postman
-//    @PostMapping("/change1")
-//    public Response<?> changeNotificationInfo(@RequestParam(name = "nameField") String nameField, @RequestParam(name = "userId") String userID) {
-//        notificationInfoService.updateField(Long.valueOf(userID), nameField);
-//        return Response.ok().build();
-//    }
-
-
-
-
 }
