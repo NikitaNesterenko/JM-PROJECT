@@ -1,4 +1,4 @@
-package jm.stockx.dto.realizeCalendar;
+package jm.stockx.dto.releaseCalendar;
 
 import jm.stockx.entity.ItemInfo;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RealizeCalendarDto {
+public class ReleaseCalendarDto {
 
 //    дто {
 //        дата релиза,
@@ -27,7 +27,7 @@ public class RealizeCalendarDto {
     private String    imageURL;
     private Money     lowestAsk;
 
-    public RealizeCalendarDto(ItemInfo inf) {
+    public ReleaseCalendarDto(ItemInfo inf) {
         this.itemId = inf.getItem().getId();
         this.realizeDate = inf.getReleaseDate();
         this.itemName = inf.getItem().getName();
