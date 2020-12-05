@@ -41,12 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf().disable()//for test
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/**").permitAll()
-                .anyRequest().authenticated();
+//        http.csrf().disable()//for test
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/api/**").permitAll()
+//                .anyRequest().authenticated();
 
 
         http.csrf().disable()
@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/registration").permitAll()
                 .antMatchers("/api/bid").permitAll()
-                .antMatchers("/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/admin/**", "/", "/rest/api/**", "/api/registration/**",
                         "/api/authorization/**", "/api/password-recovery/**", "/api/brand/all", "/api/news",
                         "/api/how-it-works", "/test-template", "/api/item/img/upload", "/api/item/img/download",
