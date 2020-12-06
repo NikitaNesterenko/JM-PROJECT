@@ -27,7 +27,7 @@ public class FileStorageRestController {
     }
 
     @GetMapping("/img/download")
-    public ResponseEntity<Resource> downloadItemPicture(@RequestParam("filename") String filename,
+    public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename,
                                                         HttpServletRequest request)  throws Exception{
         Resource resource = fileStorageService.loadFileAsResource(filename);
 
