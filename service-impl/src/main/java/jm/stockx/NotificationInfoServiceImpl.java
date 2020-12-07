@@ -20,16 +20,19 @@ public class NotificationInfoServiceImpl implements NotificationInfoService {
 
     @Override
     public void createNotificationInfo(NotificationInfo notificationInfo) {
+
         notificationInfoDAO.add(notificationInfo);
     }
 
     @Override
     public void updateField(Long userId, String nameField) {
+
         notificationInfoDAO.updateField(userId, nameField);
     }
 
     @Override
     public NotificationInfo getNotificationInfoById(Long userId) {
+
         return notificationInfoDAO.getById(userId);
     }
 

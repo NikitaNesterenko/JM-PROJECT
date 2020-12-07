@@ -116,6 +116,12 @@
             <artifactId>swagger-annotations</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>groupId</groupId>
+            <artifactId>exception</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

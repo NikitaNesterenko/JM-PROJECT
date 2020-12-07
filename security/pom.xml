@@ -47,6 +47,18 @@
             <artifactId>tomcat-embed-core</artifactId>
             <version>9.0.38</version>
         </dependency>
+        <dependency>
+            <groupId>groupId</groupId>
+            <artifactId>exception</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>groupId</groupId>
+            <artifactId>exception</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

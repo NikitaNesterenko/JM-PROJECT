@@ -41,20 +41,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
+//        http.csrf().disable()//for test
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/api/**").permitAll()
+//                .anyRequest().authenticated();
+
+
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/api/notification/**").permitAll()
-                .antMatchers("/rest/api/notification/**").permitAll()
-                .antMatchers("/registration").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/registration").permitAll()
                 .antMatchers("/api/bid").permitAll()
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
-                        "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
-                        "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
-                        "/itemblock", "/brand", "/test").hasRole("ADMIN")
+                .antMatchers("/api/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/admin/**", "/", "/rest/api/**", "/api/registration/**",
+                        "/api/authorization/**", "/api/password-recovery/**", "/api/brand/all", "/api/news",
+                        "/api/how-it-works", "/test-template", "/api/item/img/upload", "/api/item/img/download",
+                        "/api/itemblock", "/api/brand", "/api/test").hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
 }

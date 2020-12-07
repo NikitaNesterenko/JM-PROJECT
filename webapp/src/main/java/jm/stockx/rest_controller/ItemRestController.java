@@ -1,7 +1,6 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.ItemInfoService;
-import jm.stockx.ItemService;
 import jm.stockx.dto.itemInfo.ItemSearchDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
