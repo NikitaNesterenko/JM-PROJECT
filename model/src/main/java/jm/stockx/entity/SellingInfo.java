@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jdk.jfr.Timestamp;
 import jm.stockx.dto.itemInfo.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.Builder;

@@ -9,11 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemInfoImageDto {
-
     private Long itemId;
-
     private String itemName;
-
     private String itemImageUrl;
 
     public ItemInfoImageDto(ItemInfo itemInfo) {
