@@ -6,6 +6,7 @@ import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
+import jm.stockx.util.Response;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 

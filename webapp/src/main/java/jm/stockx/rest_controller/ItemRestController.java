@@ -3,7 +3,9 @@ package jm.stockx.rest_controller;
 import jm.stockx.ItemInfoService;
 import jm.stockx.ItemService;
 import jm.stockx.dto.itemInfo.ItemSearchDto;
+import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,7 @@ public class ItemRestController {
 
     @GetMapping("/search")
     public List<ItemSearchDto> searchItem(@RequestParam(required = false, name = "s") String search) {
-        return itemInfoService.getItemSearchDtoBySearch(search);
+
+        return  itemInfoService.getItemSearchDtoBySearch(search);
     }
 }

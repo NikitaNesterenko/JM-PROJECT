@@ -4,17 +4,11 @@ import jm.stockx.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-
-@RestController
+@RequestMapping("/api")
 public class FileStorageRestController {
     private FileStorageService fileStorageService;
 
@@ -29,15 +23,13 @@ public class FileStorageRestController {
     }
 
     @GetMapping("/item/img/download")
-    public ResponseEntity<Resource> downloadItemPicture(@RequestParam("filename") String filename,
-                                                        HttpServletRequest request)  throws Exception{
+    public ResponseEntity<Resource> downloadItemPicture(@RequestParam("filename") String filename)  throws Exception{
+
         Resource resource = fileStorageService.loadFileAsResource(filename);
 
-        String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
 }
+
