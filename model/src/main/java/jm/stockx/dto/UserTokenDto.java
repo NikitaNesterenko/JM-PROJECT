@@ -1,5 +1,6 @@
 package jm.stockx.dto;
 
+import jm.stockx.entity.Role;
 import jm.stockx.entity.User;
 import lombok.*;
 
@@ -14,6 +15,7 @@ public class UserTokenDto {
     private String firstName;
     private String lastName;
     private String token;
+    private String role;
 
     public UserTokenDto(User user, String token) {
         this.id = user.getId();
@@ -21,5 +23,6 @@ public class UserTokenDto {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.token = token;
+        this.role = user.getRole().getRoleName();
     }
 }
