@@ -1,6 +1,7 @@
 package jm.stockx.rest_controller;
 
 
+import jm.stockx.UserExistsAdviceException;
 import jm.stockx.UserRegistrationService;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserRegistrationDto;
@@ -25,9 +26,9 @@ public class RegistrationRestController {
     }
 
     @PostMapping
-    public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) {
+    public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) throws UserExistsAdviceException {
         if (userService.getUserByEmail(user.getEmail()) != null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "Пользователь с таким Email уже существует");
+            throw new UserExistsAdviceException();
         }
         userRegistrationService.registrationUser(user);
 
