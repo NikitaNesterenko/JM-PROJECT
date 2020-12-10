@@ -1,13 +1,12 @@
 package jm.stockx.rest_controller;
 
-import jm.stockx.AuthorizationAdviceException;
+import jm.stockx.AuthorizationException;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserTokenDto;
 import jm.stockx.dto.security.UserLoginDto;
 import jm.stockx.entity.Role;
 import jm.stockx.jwt.JwtTokenProvider;
 import jm.stockx.util.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +33,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
-    public Response<?> login(@RequestBody UserLoginDto loginUser) throws AuthorizationAdviceException {
+    public Response<?> login(@RequestBody UserLoginDto loginUser) throws AuthorizationException {
         try {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -54,7 +53,7 @@ public class AuthenticationRestController {
                     )
             );
         } catch (AuthenticationException e) {
-            throw new AuthorizationAdviceException();
+            throw new AuthorizationException();
         }
     }
 }

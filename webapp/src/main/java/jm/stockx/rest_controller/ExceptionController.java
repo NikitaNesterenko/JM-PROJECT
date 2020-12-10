@@ -14,32 +14,32 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
 
-    @ExceptionHandler(AuthorizationAdviceException.class)
-    public Response<?> authorizationNotFoundException(AuthorizationAdviceException e){
+    @ExceptionHandler(AuthorizationException.class)
+    public Response<?> authorizationNotFoundException(AuthorizationException e){
         logger.error(e.getMessage());
         return Response.error(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
-    @ExceptionHandler(BidAdviceException.class)
-    public Response<?> bidPlaceException(BidAdviceException e) {
+    @ExceptionHandler(BidException.class)
+    public Response<?> bidPlaceException(BidException e) {
         logger.error(e.getMessage());
         return Response.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
-    @ExceptionHandler(UserNotFoundAdviceException.class)
-    public Response<?> userNotFoundException(UserNotFoundAdviceException e) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public Response<?> userNotFoundException(UserNotFoundException e) {
         logger.error((e.getMessage()));
         return Response.error(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
-    @ExceptionHandler(RecoveryAdviceException.class)
-    public Response<?> recoveryException(RecoveryAdviceException e) {
+    @ExceptionHandler(RecoveryException.class)
+    public Response<?> recoveryException(RecoveryException e) {
         logger.error(e.getMessage());
         return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
-    @ExceptionHandler(UserExistsAdviceException.class)
-    public Response<?> userExistsException(UserExistsAdviceException e) {
+    @ExceptionHandler(UserExistsException.class)
+    public Response<?> userExistsException(UserExistsException e) {
         logger.error(e.getMessage());
         return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
     }

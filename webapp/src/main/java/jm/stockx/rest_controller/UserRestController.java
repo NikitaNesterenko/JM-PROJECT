@@ -44,14 +44,8 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "user successfully updated  ")
             }
     )
-    public Response<?> updateUser(@RequestBody UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundAdviceException, ForbiddenAdviceException {
-        if (!userService.isUserExist(userPutDto.getId())) {
-            throw new UserNotFoundAdviceException();
-        }
-        if (!principal.getId().equals(userPutDto.getId())){
-            throw new ForbiddenAdviceException();
-        }
-        userService.updateUserFromDto(userPutDto);
+    public Response<?> updateUser(@RequestBody UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException {
+        userService.updateUserFromDto(userPutDto, principal);
         return Response.ok(HttpStatus.OK).build();
     }
 
@@ -83,15 +77,11 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: recovery password token was send"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to send password recovery token")
             })
-    public Response<?> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundAdviceException {
+    public Response<?> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundException {
         User user = userService.getUserByEmail(email);
-        if (user != null) {
-            mailService.sendRecoveryLinkToUser(user);
-            logger.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
-            return Response.ok().build();
-        }
-        logger.warn("Не определен email {} для восстаноления пароля", email);
-        throw new UserNotFoundAdviceException();
+        mailService.sendRecoveryLinkToUser(user);
+        logger.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
+        return Response.ok().build();
     }
 
     @PostMapping(value = "/password-recovery")
@@ -103,14 +93,11 @@ public class UserRestController {
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to recover password")
             })
     public Response<?> passwordRecovery(@RequestParam(name = "token") String link,
-                                        @RequestParam(name = "password") String newPassword) throws RecoveryAdviceException {
+                                        @RequestParam(name = "password") String newPassword) throws RecoveryException {
 
-        if (mailService.changePasswordByToken(link, newPassword)) {
-            logger.info("Пароль по адресу {} восстановлен", link);
-            return Response.ok().build();
-        }
-        logger.warn("Ошибка восстановления пароля по адресу {}", link);
-        throw new RecoveryAdviceException();
+        mailService.changePasswordByToken(link, newPassword);
+        logger.info("Пароль по адресу {} восстановлен", link);
+        return Response.ok().build();
     }
 
     @GetMapping(value = "/registration/{code}")
@@ -121,13 +108,10 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: account avtivated"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to activate account")
             })
-    public Response<?> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundAdviceException {
+    public Response<?> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundException {
 
-        if (mailService.activateAccountByToken(code)) {
-            logger.info("Аккаунт активирован = {}", code);
-            return Response.ok().build();
-        }
-        logger.warn("Не определен код активации {} для восстаноления пароля", code);
-        throw new UserNotFoundAdviceException();
+        mailService.activateAccountByToken(code)
+        logger.info("Аккаунт активирован = {}", code);
+        return Response.ok().build();
     }
 }
