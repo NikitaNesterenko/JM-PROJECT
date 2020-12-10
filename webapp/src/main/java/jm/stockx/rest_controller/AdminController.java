@@ -1,13 +1,12 @@
 package jm.stockx.rest_controller;
 
+import jm.stockx.ItemAdminDtoException;
 import jm.stockx.ItemAdminService;
+import jm.stockx.MailService;
 import jm.stockx.dto.item.ItemDtoAdmin;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,23 +14,25 @@ import java.util.List;
 @RequestMapping("/api/admin")
 public class AdminController {
     ItemAdminService itemAdminService;
+    MailService mailService;
 
     @Autowired
-    public AdminController(ItemAdminService itemAdminService) {
+    public AdminController(ItemAdminService itemAdminService, MailService mailService) {
+        this.mailService = mailService;
         this.itemAdminService = itemAdminService;
     }
 
     @PostMapping("/add/item")
-    public Response<?> addItem(@RequestBody ItemDtoAdmin itemDtoAdmin) {
+    public Response<?> addItem(@RequestBody ItemDtoAdmin itemDtoAdmin) throws ItemAdminDtoException {
        itemAdminService.addAdminItemInfo(itemDtoAdmin);
         return Response.ok().build();
     }
 
     @PostMapping("/add/listitem")
-    public Response<?> addListItem(@RequestBody List<ItemDtoAdmin> itemDtoAdmin) {
-        for (ItemDtoAdmin dto: itemDtoAdmin) {
-            addItem(dto);
-        }
+    public Response<?> addListItem(@RequestBody List<ItemDtoAdmin> listItemDtoAdmin) throws ItemAdminDtoException {
+        itemAdminService.addAdminListItemInfo(listItemDtoAdmin);
         return Response.ok().build();
     }
+
+
 }

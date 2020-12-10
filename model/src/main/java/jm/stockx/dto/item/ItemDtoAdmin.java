@@ -25,5 +25,13 @@ public class ItemDtoAdmin {
     private Money price;
 
     private String imageUrl;
-    
+
+    public boolean containsNull() {
+        if (this.name == null || this.dateRelease == null || this.price == null || this.imageUrl == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

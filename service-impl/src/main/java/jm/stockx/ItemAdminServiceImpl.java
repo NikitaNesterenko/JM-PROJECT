@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
-public class ItemAdminServiceImpl implements ItemAdminService{
+public class ItemAdminServiceImpl implements ItemAdminService {
 
     private final ItemInfoService itemInfoService;
     private final ItemService itemService;
@@ -21,10 +23,29 @@ public class ItemAdminServiceImpl implements ItemAdminService{
     }
 
     @Override
-    public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) {
-        Item item = new Item(itemDtoAdmin.getName());
-        itemService.create(item);
-        ItemInfo itemInfo = new ItemInfo(itemDtoAdmin);
-        itemInfoService.create(itemInfo);
+    public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) throws ItemAdminDtoException {
+        if (!itemDtoAdmin.containsNull()) {
+            throw new ItemAdminDtoException();
+        } else {
+            Item item = new Item(itemDtoAdmin.getName());
+            itemService.create(item);
+            ItemInfo itemInfo = new ItemInfo();
+            itemInfo.setPrice(itemDtoAdmin.getPrice());
+            itemInfo.setReleaseDate(itemDtoAdmin.getDateRelease());
+            itemInfo.setItem(item);
+            itemInfo.setItemImageUrl(itemDtoAdmin.getImageUrl());
+            itemInfoService.create(itemInfo);
+        }
     }
+
+    @Override
+    public void addAdminListItemInfo(List<ItemDtoAdmin> listItemAdminDto) throws ItemAdminDtoException {
+        for (ItemDtoAdmin item : listItemAdminDto) {
+            addAdminItemInfo(item);
+        }
+
+      //  listItemAdminDto.forEach(list -> addAdminItemInfo(list));
+    }
+
+
 }

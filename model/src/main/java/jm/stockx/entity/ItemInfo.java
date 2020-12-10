@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.item.ItemDtoAdmin;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
 import lombok.*;
@@ -86,10 +85,4 @@ public class ItemInfo {
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
 
-    public ItemInfo (ItemDtoAdmin itemDtoAdmin){
-        this.setPrice(itemDtoAdmin.getPrice());
-        this.setReleaseDate(itemDtoAdmin.getDateRelease());
-        this.setItem(item);
-        this.setItemImageUrl(itemDtoAdmin.getImageUrl());
-    }
 }

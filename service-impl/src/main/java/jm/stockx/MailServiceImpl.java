@@ -1,6 +1,8 @@
 package jm.stockx;
 
+import com.stripe.model.Order;
 import jm.stockx.api.dao.TokenActivationDAO;
+import jm.stockx.entity.News;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.TokenRegistration;
 import jm.stockx.entity.User;
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -117,6 +120,9 @@ public class MailServiceImpl implements MailService {
         return false;
     }
 
+
+
+
     @Override
     public boolean activateAccountByToken(String link) {
         TokenRegistration token = tokenActivation.getByHashEmail(link);
@@ -144,4 +150,23 @@ public class MailServiceImpl implements MailService {
         Date validDateCreate = c.getTime();
         return validDateCreate.after(getCurrentDate());
     }
+
+    @Override
+    public boolean sendPasswordFromClient(User user) {
+        sendSimpleMessage(user.getEmail(), user.getPassword(), "Your password");
+        return true;
+    }
+
+    @Override
+    public boolean sendOrderStatus(Order order) {
+        sendSimpleMessage(order.getEmail(), order.getStatus(), "Your order status");
+        return true;
+    }
+
+    @Override
+    public boolean sendLastNews(List<News> news) {
+        return true;
+    }
+
+
 }
