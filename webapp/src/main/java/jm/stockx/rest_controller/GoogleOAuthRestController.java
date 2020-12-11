@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class GoogleOAuthRestController {
     private final GoogleOAuth googleService;
 
@@ -30,7 +30,7 @@ public class GoogleOAuthRestController {
         this.googleService = googleService;
     }
 
-    @GetMapping("url/google")
+    @GetMapping("/url/google")
     public String authUrl() {
         return googleService.getAuthorizeUrl();
     }

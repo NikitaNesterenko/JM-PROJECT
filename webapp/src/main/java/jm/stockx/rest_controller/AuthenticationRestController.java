@@ -1,7 +1,6 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.UserService;
-
 import jm.stockx.dto.UserTokenDto;
 import jm.stockx.dto.security.UserLoginDto;
 import jm.stockx.entity.Role;
@@ -16,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationRestController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -31,7 +30,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
-    public Response<UserTokenDto> login(@RequestBody UserLoginDto loginUser) {
+    public Response<?> login(@RequestBody UserLoginDto loginUser) {
         try {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

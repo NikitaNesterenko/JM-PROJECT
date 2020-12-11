@@ -1,21 +1,21 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
-import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellingInfoDto;
-import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.*;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
-import org.hibernate.query.NativeQuery;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Repository
@@ -173,6 +173,45 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "ORDER BY si.orderDate DESC")
                 .setMaxResults(2).getResultList();
         return Math.abs(prices.get(0).getAmount().subtract(prices.get(1).getAmount()).doubleValue());
+    }
+
+    public List<SellingCountDto> getSellingCountDtoLastYear(Long itemId) {
+
+        LocalDate today = LocalDate.now(); // дата сегодня
+
+        LocalDate oneYearAgo = today.minusYears(1L); // дата год назад
+
+        List<LocalDate> oneMonthStepDates = oneYearAgo.datesUntil(today, Period.ofMonths(1))
+                .collect(Collectors.toList()); // список дат с шагом в один месяц
+
+        List<SellingCountDto> sellingCountDtoList = new ArrayList<>(); // этот список будет заполняться нужными нам DTO
+
+        for (LocalDate date : oneMonthStepDates) {
+
+            LocalDate firstDayOfMonth = date.withDayOfMonth(1); // первый день месяца
+
+            LocalDateTime start = firstDayOfMonth.atStartOfDay(); // начало первого дня месяца
+
+            LocalDate lastDayOfMonth = date.withDayOfMonth(date.lengthOfMonth()); // последний день месяца
+
+            LocalDateTime end = lastDayOfMonth.atTime(23,59, 59); // конец последнего дня месяца
+
+            long count = entityManager.createQuery("" +
+                    "SELECT COUNT(si.id) " +
+                    "FROM SellingInfo si " +
+                    "JOIN si.itemInfo i " +
+                    "WHERE i.id = :itemId " +
+                    "AND si.orderDate <= : end " +
+                    "AND si.orderDate >= : start", Long.class)
+                    .setParameter("itemId", itemId)
+                    .setParameter("start", start)
+                    .setParameter("end", end)
+                    .getSingleResult();
+
+            sellingCountDtoList.add(new SellingCountDto(itemId, date.getMonth(), count));
+        }
+
+        return sellingCountDtoList;
     }
 
 }

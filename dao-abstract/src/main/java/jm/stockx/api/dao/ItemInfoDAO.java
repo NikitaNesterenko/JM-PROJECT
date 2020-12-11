@@ -9,6 +9,7 @@ import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,6 +18,10 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     ItemInfo getItemInfoByItemId(Long itemId);
 
     ItemInfo getItemInfoByItemName(String itemName);
+
+    ItemCategory getItemCategoryByReleaseDate(LocalDate releaseDate);
+
+    ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory);
 
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 
@@ -45,5 +50,7 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit);
 
     SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSize itemSize);
+
+    List<ItemInfoImageDto> getItemsBuyingYearByUserid(Long id);
 
 }

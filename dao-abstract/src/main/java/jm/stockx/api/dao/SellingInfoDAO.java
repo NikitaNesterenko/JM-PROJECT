@@ -1,10 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
-import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellingInfoDto;
-import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.*;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
@@ -37,4 +33,5 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
 
     Double priceDifference();
 
+    List<SellingCountDto> getSellingCountDtoLastYear(Long itemId); 
 }

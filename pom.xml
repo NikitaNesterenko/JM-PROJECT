@@ -16,6 +16,7 @@
         <module>security</module>
         <module>service-abstract</module>
         <module>service-impl</module>
+        <module>exception</module>
     </modules>
 
     <parent>

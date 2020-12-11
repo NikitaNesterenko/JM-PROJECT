@@ -7,8 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-@RequestMapping("/api")
+import javax.servlet.http.HttpServletRequest;
+@RestController
+@RequestMapping("/api/item")
 public class FileStorageRestController {
     private FileStorageService fileStorageService;
 
@@ -17,10 +18,11 @@ public class FileStorageRestController {
         this.fileStorageService = fileStorageService;
     }
 
-    @PostMapping("/item/img/upload")
+    @PostMapping("/img/upload")
     public String uploadItemPicture(@RequestParam("id") Long id, MultipartFile file) {
         return fileStorageService.storeFile(id, file);
     }
+
 
     @GetMapping("/item/img/download")
     public ResponseEntity<Resource> downloadItemPicture(@RequestParam("filename") String filename)  throws Exception{
