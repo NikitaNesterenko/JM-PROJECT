@@ -2,6 +2,7 @@ package jm.stockx;
 
 import jm.stockx.api.dao.NewsDAO;
 import jm.stockx.dto.news.NewsDto;
+import jm.stockx.dto.news.NewsLastDto;
 import jm.stockx.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public boolean isNewsExist(Long id) {
         return newsDAO.doesItExistEntity(id);
+    }
+
+    @Override
+    public List<NewsLastDto> getLastNews() {
+        return newsDAO.getLastNews();
     }
 }

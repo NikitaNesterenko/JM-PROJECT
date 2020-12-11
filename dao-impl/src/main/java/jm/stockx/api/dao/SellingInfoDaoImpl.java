@@ -166,6 +166,15 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
+    public Double priceDifference(){
+        List<Money> prices = entityManager.createQuery("" +
+                "SELECT si.price "+
+                "FROM SellingInfo si " +
+                "ORDER BY si.orderDate DESC")
+                .setMaxResults(2).getResultList();
+        return Math.abs(prices.get(0).getAmount().subtract(prices.get(1).getAmount()).doubleValue());
+    }
+
     public List<SellingCountDto> getSellingCountDtoLastYear(Long itemId) {
 
         LocalDate today = LocalDate.now(); // дата сегодня
@@ -204,4 +213,6 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
         return sellingCountDtoList;
     }
+
 }
+

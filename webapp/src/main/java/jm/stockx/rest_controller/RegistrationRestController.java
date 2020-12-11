@@ -6,10 +6,7 @@ import jm.stockx.UserService;
 import jm.stockx.dto.UserRegistrationDto;
 import jm.stockx.util.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/registration")
@@ -24,13 +21,14 @@ public class RegistrationRestController {
         this.userService = userService;
     }
 
+
     @PostMapping
     public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) {
+        System.out.println("hello");
         if (userService.getUserByEmail(user.getEmail()) != null) {
             return Response.error(HttpStatus.BAD_REQUEST, "Пользователь с таким Email уже существует");
         }
         userRegistrationService.registrationUser(user);
-
         return Response.ok().build();
     }
 

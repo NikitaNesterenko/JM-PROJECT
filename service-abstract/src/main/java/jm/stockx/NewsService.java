@@ -1,6 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.news.NewsDto;
+import jm.stockx.dto.news.NewsLastDto;
 import jm.stockx.entity.News;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface NewsService {
     NewsDto getNewsDtoByNewsName(String name);
 
     boolean isNewsExist(Long id);
+
+    List<NewsLastDto> getLastNews();
 
 }

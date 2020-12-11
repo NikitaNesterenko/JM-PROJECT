@@ -41,26 +41,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-//        http.csrf().disable()//for test
+
+//        http.csrf().disable()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
 //                .authorizeRequests()
-//                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/auth/**", "/api/item/search").permitAll()
+//                .antMatchers("/api/registration").permitAll()
+//                .antMatchers("/api/bid").permitAll()
+//                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/admin/**", "/", "/rest/api/**",
+//                        "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
+//                        "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
+//                        "/itemblock", "/brand", "/test").hasRole("ADMIN")
 //                .anyRequest().authenticated();
-
-
         http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/registration").permitAll()
-                .antMatchers("/api/bid").permitAll()
-                .antMatchers("/api/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/admin/**", "/", "/rest/api/**", "/api/registration/**",
-                        "/api/authorization/**", "/api/password-recovery/**", "/api/brand/all", "/api/news",
-                        "/api/how-it-works", "/test-template", "/api/item/img/upload", "/api/item/img/download",
-                        "/api/itemblock", "/api/brand", "/api/test").hasRole("ADMIN")
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
     }
 }

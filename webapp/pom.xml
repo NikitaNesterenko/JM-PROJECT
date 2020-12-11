@@ -117,9 +117,9 @@
             <version>2.1.0</version>
         </dependency>
         <dependency>
-            <groupId>groupId</groupId>
-            <artifactId>exception</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
