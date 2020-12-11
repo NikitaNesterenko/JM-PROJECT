@@ -8,6 +8,7 @@ import jm.stockx.dto.sellingInfo.SellingItemDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
+import org.joda.money.Money;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,4 +34,7 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
     List<SellingItemDto> getSellingItemDtoByPeriodAndItemId(LocalDateTime begin, LocalDateTime end, Long itemId);
 
     AverageSalePriceDto getAverageItemPriceById(Long itemId);
+
+    Double priceDifference();
+
 }
