@@ -5,5 +5,7 @@ import jm.stockx.dto.releaseCalendar.ReleaseCalendarDto;
 import java.util.List;
 
 public interface ReleaseCalendarDAO {
-    List<ReleaseCalendarDto> getSixImmediateRealizes();
+
+    List<ReleaseCalendarDto> getSixImmediateReleases();
+
 }

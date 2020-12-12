@@ -16,9 +16,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String TOKEN_PREFIX = "Bearer_";
-    private final JwtTokenProvider jwtTokenProvider;
+    public static final String           AUTHORIZATION_HEADER = "Authorization";
+    public static final String           TOKEN_PREFIX         = "Bearer_";
+    private final       JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -49,10 +49,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/api/bid").permitAll()
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/admin/**", "/", "/rest/api/**", "/registration/**",
-                        "/authorization/**", "/password-recovery/**", "/brand/all", "/news",
-                        "/how-it-works", "/test-template", "/item/img/upload", "/item/img/download",
-                        "/itemblock", "/brand", "/test").hasRole("ADMIN")
+                /*.antMatchers("/admin/**",
+                        "/",
+                        "/rest/api/**",
+                        "/password-recovery/**",
+                        "/brand/all",
+                        "/news",
+                        "/how-it-works",
+                        "/test-template",
+                        "/item/img/upload",
+                        "/item/img/download",
+                        "/itemblock",
+                        "/brand",
+                        "/test").hasRole("ADMIN")*/
                 .anyRequest().authenticated();
     }
 }

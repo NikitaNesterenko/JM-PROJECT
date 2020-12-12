@@ -28,6 +28,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -75,7 +76,6 @@ public class ItemInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money highestBid;
 
-
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
@@ -103,4 +103,5 @@ public class ItemInfo {
     @Column(name = "item_colors")
     @Enumerated(EnumType.STRING)
     private ItemColors itemColors;
+
 }

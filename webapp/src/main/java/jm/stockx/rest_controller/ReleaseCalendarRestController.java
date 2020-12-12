@@ -27,7 +27,7 @@ public class ReleaseCalendarRestController {
     @GetMapping("/get")
     public Response<List<ReleaseCalendarDto>> getRealizes() {
 
-        return Response.ok(HttpStatus.OK, releaseCalendarService.getSixImmediateRealizes());
+        return Response.ok(HttpStatus.OK, releaseCalendarService.getSixImmediateReleases());
 
     }
 

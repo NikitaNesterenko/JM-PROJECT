@@ -48,10 +48,8 @@ public class AuthenticationRestController {
             Role role = userService.getUserByEmail(username).getRole();
 
             return Response.ok(
-                    new UserTokenDto(
-                            userService.getUserByEmail(loginUser.getEmail()),
-                            jwtTokenProvider.createToken(username, role)
-                    )
+                    new UserTokenDto(userService.getUserByEmail(loginUser.getEmail()),
+                            jwtTokenProvider.createToken(username, role))
             );
         } catch (AuthenticationException e) {
             return Response.error(HttpStatus.BAD_REQUEST, "Invalid username/password");

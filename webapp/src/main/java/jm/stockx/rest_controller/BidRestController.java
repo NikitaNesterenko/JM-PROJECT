@@ -9,12 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jm.stockx.BidService;
 import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.util.Response;
+import org.apache.http.entity.mime.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/bid")
@@ -40,10 +38,12 @@ public class BidRestController {
                     @ApiResponse(responseCode = "200", description = "successful operation"),
             }
     )
-    public Response<?> placeBid(@RequestBody BidPostDto newBid) {
+    public Response<?> placeBid(@RequestBody BidPostDto newBid, @RequestHeader(name = "Authorization") String s) {
         if (bidService.isBidByCurrentUserExist(newBid.getId(), newBid.getUserId())){
             bidService.updateBidPrice(newBid.getPrice(),newBid.getId());
+
             return Response.ok(HttpStatus.ACCEPTED,"Bid price was successfully updated");
+
         }
         bidService.placeBid(newBid);
         return Response.ok(HttpStatus.ACCEPTED, "Bid placed");

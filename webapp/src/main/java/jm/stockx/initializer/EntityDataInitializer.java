@@ -17,18 +17,21 @@ import java.time.Month;
 @Slf4j
 public class EntityDataInitializer {
 
-    private RoleService roleService;
-    private UserService userService;
-    private ItemService itemService;
-    private BrandService brandService;
-    private StyleService styleService;
-    private NewsService newsService;
-    private SellingInfoService sellingInfoService;
-    private CurrencyService currencyService;
-    private BidService bidService;
-    private ItemInfoService itemInfoService;
-    private ItemSizeService itemSizeService;
-    private BuyingInfoService buyingInfoService;
+    private RoleService            roleService;
+    private UserService            userService;
+    private ItemService            itemService;
+    private BrandService           brandService;
+    private StyleService           styleService;
+    private NewsService            newsService;
+    private SellingInfoService     sellingInfoService;
+    private CurrencyService        currencyService;
+    private BidService             bidService;
+    private ItemInfoService        itemInfoService;
+    private ItemSizeService        itemSizeService;
+    private BuyingInfoService            buyingInfoService;
+    @Autowired
+    private AvailabilityInCountryService availabilityInCountryService;
+
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -56,7 +59,7 @@ public class EntityDataInitializer {
     }
 
 
-    private void init()  {
+    private void init() {
         log.info("Data init has been started!!!");
 
         fillDataBase();
@@ -72,9 +75,28 @@ public class EntityDataInitializer {
         createCurrency();
         createStyles();
         createNews();
-        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createItems();
+
+        createCountryDelivery();
+
+
+        //DON'T WORKS with hibernate 6.0.0.Alpha5
+        //createSellingInfo();
+        //DON'T WORKS with hibernate 6.0.0.Alpha5
         //createBid();
+    }
+
+
+    private void createCountryDelivery() {
+
+      if (availabilityInCountryService.getAll().size() == 0) {
+            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(1L), true, true));
+            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(2L), true, false));
+            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(3L),false, true));
+            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(1L), false, false));
+            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(2L), false, false));
+        }
+
     }
 
     private void createRoles() {
@@ -92,10 +114,10 @@ public class EntityDataInitializer {
                     "admin@mail.ru",
                     "admin",
                     "admin",
-                    (byte) 100,
+                    (byte)100,
                     true,
-                    "ru",
-                    "admin@apple.id");
+                    "admin@apple.id",
+                    "ru");
             admin.setActive(true);
             admin.setRole(roleService.getRole("ROLE_ADMIN"));
             userService.createUser(admin);
@@ -108,8 +130,8 @@ public class EntityDataInitializer {
                     "1",
                     (byte) 10,
                     true,
-                    "en",
-                    "user1@apple.id");
+                    "user1@apple.id",
+                    "en");
             user1.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user1);
 
@@ -121,8 +143,8 @@ public class EntityDataInitializer {
                     "1",
                     (byte) 13,
                     false,
-                    "en",
-                    "user2@apple.id");
+                    "user2@apple.id",
+                    "en");
             user2.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user2);
         }

@@ -133,6 +133,7 @@ public class User implements UserDetails {
         this.vacationMode = vacationMode;
         this.appleUserId = appleUserId;
         this.localeTag = localeTag;
+
     }
 
     public User(String firstName, String lastName, String password) {

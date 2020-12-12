@@ -18,7 +18,7 @@ public class ReleaseCalendarServiceImpl implements ReleaseCalendarService {
     }
 
     @Override
-    public List<ReleaseCalendarDto> getSixImmediateRealizes() {
-        return releaseCalendarDAO.getSixImmediateRealizes();
+    public List<ReleaseCalendarDto> getSixImmediateReleases() {
+        return releaseCalendarDAO.getSixImmediateReleases();
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public class ReleaseCalendarDaoImpl extends AbstractDAO<ReleaseCalendarDto, Long> implements ReleaseCalendarDAO {
     @Override
-    public List<ReleaseCalendarDto> getSixImmediateRealizes() {
+    public List<ReleaseCalendarDto> getSixImmediateReleases() {
         return entityManager.createQuery("SELECT NEW jm.stockx.dto.releaseCalendar.ReleaseCalendarDto(inf) " +
                 "FROM ItemInfo inf " +
                 "WHERE inf.releaseDate >= :date")

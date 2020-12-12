@@ -1,10 +1,6 @@
 package jm.stockx.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 
@@ -23,8 +19,8 @@ public class Admin extends User {
                  String password,
                  Byte sellerLevel,
                  Boolean vacationMode,
-                 String localeTag,
-                 String appleUserId) {
-        super(firstName, lastName, email, username, password, sellerLevel, vacationMode, localeTag, appleUserId);
+                 String appleUserId,
+                 String localeTag) {
+        super(firstName, lastName, email, username, password, sellerLevel, vacationMode, appleUserId, localeTag);
     }
 }
