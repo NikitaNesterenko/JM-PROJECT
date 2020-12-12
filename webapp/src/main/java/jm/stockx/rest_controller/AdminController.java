@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    ItemAdminService itemAdminService;
-    MailService mailService;
+    private ItemAdminService itemAdminService;
+    private MailService mailService;
 
     @Autowired
     public AdminController(ItemAdminService itemAdminService, MailService mailService) {
@@ -24,7 +24,7 @@ public class AdminController {
 
     @PostMapping("/add/item")
     public Response<?> addItem(@RequestBody ItemDtoAdmin itemDtoAdmin) throws ItemAdminDtoException {
-       itemAdminService.addAdminItemInfo(itemDtoAdmin);
+        itemAdminService.addAdminItemInfo(itemDtoAdmin);
         return Response.ok().build();
     }
 

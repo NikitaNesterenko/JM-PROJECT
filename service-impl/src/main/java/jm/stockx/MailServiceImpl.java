@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,14 +42,17 @@ public class MailServiceImpl implements MailService {
     @Value("${registration.url}")
     private String urlRegistrationLink;
 
+    private JavaMailSenderImpl javaMailSender;
+
 
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService,
-                           UserService userService, TokenActivationDAO tokenActivation) {
+                           UserService userService, TokenActivationDAO tokenActivation, JavaMailSenderImpl javaMailSender) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
         this.userService = userService;
         this.tokenActivation = tokenActivation;
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
@@ -58,6 +62,16 @@ public class MailServiceImpl implements MailService {
         message.setSubject(subject);
         message.setText(text);
         emailSender.send(message);
+    }
+
+    public void sendSimpleMessageFrom(String to, String from, String password, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.setUsername(from);
+        javaMailSender.setPassword(password);
+        javaMailSender.send(message);
     }
 
     @Override
@@ -152,20 +166,18 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public boolean sendPasswordFromClient(User user) {
-        sendSimpleMessage(user.getEmail(), user.getPassword(), "Your password");
-        return true;
+    public void sendPasswordFromClient(User user, String sourceMail, String password) {
+        sendSimpleMessageFrom(user.getEmail(), sourceMail, password, user.getPassword(), "Your password");
+
     }
 
     @Override
-    public boolean sendOrderStatus(Order order) {
-        sendSimpleMessage(order.getEmail(), order.getStatus(), "Your order status");
-        return true;
+    public void sendOrderStatus(Order order, String sourceMail, String password) {
+        sendSimpleMessageFrom(order.getEmail(), sourceMail, password, order.getStatus(), "Your order status");
     }
 
     @Override
-    public boolean sendLastNews(List<News> news) {
-        return true;
+    public void sendLastNews(List<News> news, String sourceMail, String password) {
     }
 
 

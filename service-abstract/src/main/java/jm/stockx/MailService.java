@@ -10,6 +10,8 @@ public interface MailService {
 
     void sendSimpleMessage(String to, String subject, String text);
 
+    void sendSimpleMessageFrom(String to, String from, String password, String subject, String text);
+
     boolean sendRecoveryLinkToUser(User user);
 
     boolean sendRegistrationLinkToUser(User user);
@@ -18,10 +20,10 @@ public interface MailService {
 
     boolean changePasswordByToken(String link, String newPassword);
 
-    boolean sendPasswordFromClient (User user);
+    void sendPasswordFromClient(User user, String sourceMail, String password);
 
-    boolean sendOrderStatus (Order order);
+    void sendOrderStatus (Order order, String sourceMail, String password);
 
-    boolean sendLastNews (List<News> news);
+    void sendLastNews (List<News> news, String sourceMail, String password);
 
 }

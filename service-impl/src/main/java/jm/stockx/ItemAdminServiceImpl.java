@@ -39,12 +39,15 @@ public class ItemAdminServiceImpl implements ItemAdminService {
     }
 
     @Override
-    public void addAdminListItemInfo(List<ItemDtoAdmin> listItemAdminDto) throws ItemAdminDtoException {
-        for (ItemDtoAdmin item : listItemAdminDto) {
-            addAdminItemInfo(item);
-        }
+    public void addAdminListItemInfo(List<ItemDtoAdmin> listItemAdminDto) {
+        listItemAdminDto.forEach(list -> {
+            try {
+                addAdminItemInfo(list);
+            } catch (ItemAdminDtoException e) {
+                e.printStackTrace();
+            }
+        });
 
-      //  listItemAdminDto.forEach(list -> addAdminItemInfo(list));
     }
 
 
