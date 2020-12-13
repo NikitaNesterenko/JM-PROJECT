@@ -17,19 +17,22 @@ import java.time.Month;
 @Slf4j
 public class EntityDataInitializer {
 
-    private RoleService roleService;
-    private UserService userService;
-    private ItemService itemService;
-    private BrandService brandService;
-    private StyleService styleService;
-    private NewsService newsService;
-    private SellingInfoService sellingInfoService;
-    private CurrencyService currencyService;
-    private BidService bidService;
-    private ItemInfoService itemInfoService;
-    private ItemSizeService itemSizeService;
-    private BuyingInfoService buyingInfoService;
+    private RoleService             roleService;
+    private UserService             userService;
+    private ItemService             itemService;
+    private BrandService            brandService;
+    private StyleService            styleService;
+    private NewsService             newsService;
+    private SellingInfoService      sellingInfoService;
+    private CurrencyService         currencyService;
+    private BidService              bidService;
+    private ItemInfoService         itemInfoService;
+    private ItemSizeService         itemSizeService;
+    private BuyingInfoService       buyingInfoService;
     private NotificationInfoService notificationInfoService;
+
+    @Autowired
+    private AllItemSalesService allItemSalesService;
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -58,7 +61,7 @@ public class EntityDataInitializer {
     }
 
 
-    private void init()  {
+    private void init() {
         log.info("Data init has been started!!!");
 
         fillDataBase();
@@ -69,14 +72,21 @@ public class EntityDataInitializer {
     private void fillDataBase() {
         createShoeSizes();
         createRoles();
-        createUsers();              // DON'T WORKS with hibernate 6.0.0.Alpha5
+        createUsers();
         createBrands();
         createCurrency();
         createStyles();
         createNews();
-        createItems();              // DON'T WORKS with hibernate 6.0.0.Alpha5
-//        createSellingInfo();        // DON'T WORKS with hibernate 6.0.0.Alpha5
-        //createBid();
+        createItems();
+        printSales();
+
+    }
+
+    void printSales() {
+
+        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////");
+        allItemSalesService.getAllItemSalesById(1L).forEach(System.out::println);
+
     }
 
     private void createRoles() {
@@ -162,10 +172,24 @@ public class EntityDataInitializer {
         if (itemService.getAll().size() == 0) {
 
             Item jordan14 = new SneakersItem(("Jordan 14 Retro Gym Red Toro"));
+
             itemService.create(jordan14);
+
 
             BuyingInfo buyingInfoJordan14 = BuyingInfo.builder()
                     .buyingPrice(Money.parse("RUB 205.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
+            BuyingInfo buyingInfoJordan15 = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("RUB 206.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
+            BuyingInfo buyingInfoJordan16 = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("RUB 207.0"))
                     .status(Status.DELIVERED)
                     .buyingTimeStamp(LocalDateTime.now())
                     .build();
@@ -176,8 +200,52 @@ public class EntityDataInitializer {
                     .price(Money.parse("RUB 200.0"))
                     .highestBid(Money.parse("RUB 222.0"))
                     .lowestAsk(Money.parse("RUB 191.0"))
-                    .buyingInfo(buyingInfoJordan14)
+                    .buyingInfo(buyingInfoJordan15)
                     .size(itemSizeService.findOneBySizeName("9"))
+                    .releaseDate(LocalDate.of(2020, 7, 2))
+                    .condition("New")
+                    .description("Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
+                            "This release draws a close resemblance to the Jordan 14 Challenge Red, but instead of yellow detailing to mimic it’s " +
+                            "Ferrari inspiration, the Gym Red 14 implements white panels to create the Bulls uniform vibe.\n" +
+                            "\n" +
+                            "The Jordan 14 Gym Red Toro features a red suede upper atop a black and white sole. A black woven tongue, " +
+                            "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
+                            "retailed for $190 USD.")
+                    .brand(brandService.getBrandByName("Jordan"))
+                    .style(styleService.getStyleByName("sports"))
+                    .itemColors(ItemColors.BLACK)
+                    .build());
+
+            itemInfoService.create(ItemInfo.builder()
+                    .item(jordan14)
+                    .itemCategory(ItemCategory.SNEAKERS)
+                    .price(Money.parse("RUB 200.0"))
+                    .highestBid(Money.parse("RUB 222.0"))
+                    .lowestAsk(Money.parse("RUB 191.0"))
+                    .buyingInfo(buyingInfoJordan16)
+                    .size(itemSizeService.findOneBySizeName("8"))
+                    .releaseDate(LocalDate.of(2020, 7, 2))
+                    .condition("New")
+                    .description("Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
+                            "This release draws a close resemblance to the Jordan 14 Challenge Red, but instead of yellow detailing to mimic it’s " +
+                            "Ferrari inspiration, the Gym Red 14 implements white panels to create the Bulls uniform vibe.\n" +
+                            "\n" +
+                            "The Jordan 14 Gym Red Toro features a red suede upper atop a black and white sole. A black woven tongue, " +
+                            "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
+                            "retailed for $190 USD.")
+                    .brand(brandService.getBrandByName("Jordan"))
+                    .style(styleService.getStyleByName("sports"))
+                    .itemColors(ItemColors.BLACK)
+                    .build());
+
+            itemInfoService.create(ItemInfo.builder()
+                    .item(jordan14)
+                    .itemCategory(ItemCategory.SNEAKERS)
+                    .price(Money.parse("RUB 200.0"))
+                    .highestBid(Money.parse("RUB 222.0"))
+                    .lowestAsk(Money.parse("RUB 191.0"))
+                    .buyingInfo(buyingInfoJordan14)
+                    .size(itemSizeService.findOneBySizeName("7"))
                     .releaseDate(LocalDate.of(2020, 7, 2))
                     .condition("New")
                     .description("Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +

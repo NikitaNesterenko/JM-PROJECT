@@ -56,11 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/registration").permitAll()
                 .antMatchers("/api/bid").permitAll()
+                .antMatchers("/api/rest/get/*").permitAll()
                 .antMatchers("/api/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/admin/**", "/", "/rest/api/**", "/api/registration/**",
-                        "/api/authorization/**", "/api/password-recovery/**", "/api/brand/all", "/api/news",
-                        "/api/how-it-works", "/test-template", "/api/item/img/upload", "/api/item/img/download",
-                        "/api/itemblock", "/api/brand", "/api/test").hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
 }

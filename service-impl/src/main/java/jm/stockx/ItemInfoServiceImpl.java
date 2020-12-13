@@ -44,6 +44,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     public void create(ItemInfo itemInfo) {
 
         itemInfoDAO.add(itemInfo);
+
     }
 
     @Override
