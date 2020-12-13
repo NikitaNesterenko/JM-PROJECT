@@ -7,6 +7,6 @@ import javax.validation.Valid;
 
 public interface UserRegistrationService {
 
-    void registrationUser(@Valid UserRegistrationDto user);
+    void registrationUser(@Valid UserRegistrationDto user) throws UserExistsException;
 
 }
