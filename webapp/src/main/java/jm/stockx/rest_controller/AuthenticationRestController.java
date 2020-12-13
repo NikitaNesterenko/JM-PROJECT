@@ -33,7 +33,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
-    public Response<?> login(@RequestBody UserLoginDto loginUser) throws AuthorizationException {
+    public Response<?> login(@RequestBody UserLoginDto loginUser) {
         try {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
