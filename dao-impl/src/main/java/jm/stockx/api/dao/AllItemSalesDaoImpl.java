@@ -22,11 +22,15 @@ public class AllItemSalesDaoImpl extends AbstractDAO<BuyingInfo, Long> implement
 
     public List<AllItemSalesDto> getAllItemSalesByItem(Item item) {
 
-        return this.entityManager.createQuery("SELECT NEW jm.stockx.dto.allItemSales.AllItemSalesDto(buyInf, itemSize) " +
-                "FROM BuyingInfo buyInf " +
-                "JOIN ItemInfo itemInf ON buyInf = itemInf.buyingInfo " +
-                "JOIN ItemSize itemSize ON itemSize = itemInf.size " +
-                "WHERE itemInf.item = :item")
+        return this.entityManager.createQuery(
+                "SELECT NEW jm.stockx.dto.allItemSales.AllItemSalesDto" +
+                        "(" +
+                        "buyInf.buyingPrice, buyInf.buyingTimeStamp, itemSize" +
+                        ") " +
+                        "FROM BuyingInfo buyInf " +
+                        "JOIN ItemInfo itemInf ON buyInf = itemInf.buyingInfo " +
+                        "JOIN ItemSize itemSize ON itemSize = itemInf.size " +
+                        "WHERE itemInf.item = :item")
                 .setParameter("item", item)
                 .getResultList();
 
@@ -34,7 +38,7 @@ public class AllItemSalesDaoImpl extends AbstractDAO<BuyingInfo, Long> implement
 
     public List<AllItemSalesDto> getAllItemSalesById(Long itemId) {
 
-        Item item = this.itemDAO.getItemById(itemId);
+        Item item = itemDAO.getItemById(itemId);
         return this.getAllItemSalesByItem(item);
 
     }
