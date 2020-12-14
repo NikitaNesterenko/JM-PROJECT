@@ -17,18 +17,19 @@ import java.time.Month;
 @Slf4j
 public class EntityDataInitializer {
 
-    private RoleService            roleService;
-    private UserService            userService;
-    private ItemService            itemService;
-    private BrandService           brandService;
-    private StyleService           styleService;
-    private NewsService            newsService;
-    private SellingInfoService     sellingInfoService;
-    private CurrencyService        currencyService;
-    private BidService             bidService;
-    private ItemInfoService        itemInfoService;
-    private ItemSizeService        itemSizeService;
-    private BuyingInfoService            buyingInfoService;
+    private RoleService        roleService;
+    private UserService        userService;
+    private ItemService        itemService;
+    private BrandService       brandService;
+    private StyleService       styleService;
+    private NewsService        newsService;
+    private SellingInfoService sellingInfoService;
+    private CurrencyService    currencyService;
+    private BidService         bidService;
+    private ItemInfoService    itemInfoService;
+    private ItemSizeService    itemSizeService;
+    private BuyingInfoService  buyingInfoService;
+
     @Autowired
     private AvailabilityInCountryService availabilityInCountryService;
 
@@ -77,8 +78,9 @@ public class EntityDataInitializer {
         createNews();
         createItems();
 
-        createCountryDelivery();
+        createAvailabilityInCountry();
 
+        createItemForReleasesCalendarTest();
 
         //DON'T WORKS with hibernate 6.0.0.Alpha5
         //createSellingInfo();
@@ -86,15 +88,72 @@ public class EntityDataInitializer {
         //createBid();
     }
 
+    public void createItemForReleasesCalendarTest() {
 
-    private void createCountryDelivery() {
+        Item item = new Item("Abibas");
+        itemService.create(item);
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(1L))
+                .build());
 
-      if (availabilityInCountryService.getAll().size() == 0) {
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(2L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(3L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(4L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(5L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(6L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(7L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(8L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(9L))
+                .build());
+
+        itemInfoService.create(ItemInfo.builder()
+                .item(item)
+                .releaseDate(LocalDate.now().plusDays(10L))
+                .build());
+
+    }
+
+    private void createAvailabilityInCountry() {
+
+        if (availabilityInCountryService.getAll().size() == 0) {
+
             availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(1L), true, true));
             availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(2L), true, false));
-            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(3L),false, true));
+            availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(3L), false, true));
             availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(1L), false, false));
             availabilityInCountryService.add(new AvailabilityInCountry(userService.getUserById(2L), false, false));
+
         }
 
     }
@@ -114,7 +173,7 @@ public class EntityDataInitializer {
                     "admin@mail.ru",
                     "admin",
                     "admin",
-                    (byte)100,
+                    (byte) 100,
                     true,
                     "admin@apple.id",
                     "ru");

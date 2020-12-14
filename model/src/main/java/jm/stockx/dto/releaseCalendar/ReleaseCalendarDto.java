@@ -35,5 +35,11 @@ public class ReleaseCalendarDto {
         this.lowestAsk = inf.getLowestAsk();
     }
 
-
+    public ReleaseCalendarDto(Long itemId, LocalDate realizeDate, String itemName, String imageURL, Money lowestAsk) {
+        this.itemId = itemId;
+        this.realizeDate = realizeDate;
+        this.itemName = itemName;
+        this.imageURL = imageURL;
+        this.lowestAsk = lowestAsk;
+    }
 }
