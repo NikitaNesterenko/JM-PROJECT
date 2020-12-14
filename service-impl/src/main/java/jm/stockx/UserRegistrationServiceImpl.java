@@ -25,8 +25,10 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     @Override
-    public void registrationUser(@Valid UserRegistrationDto user) {
-
+    public void registrationUser(@Valid UserRegistrationDto user) throws UserExistsException {
+        if (userService.getUserByEmail(user.getEmail()) != null) {
+            throw new UserExistsException();
+        }
         String password = passwordGeneratorService.generatePassword(8);
 
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), password);
