@@ -5,6 +5,7 @@ import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.Currency;
 import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.Collection;
 import java.util.List;
@@ -36,9 +37,9 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User getUserByEmail(String email);
+    User getUserByEmail(String email) throws UserNotFoundException;
 
-    void updateUserFromDto(UserPutDto userPutDto);
+    void updateUserFromDto(UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException;
 
     Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id);
 

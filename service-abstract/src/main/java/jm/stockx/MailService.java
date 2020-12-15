@@ -16,9 +16,9 @@ public interface MailService {
 
     boolean sendRegistrationLinkToUser(User user);
 
-    boolean activateAccountByToken(String link);
+    boolean activateAccountByToken(String link) throws UserNotFoundException;
 
-    boolean changePasswordByToken(String link, String newPassword);
+    boolean changePasswordByToken(String link, String newPassword) throws RecoveryException;
 
     void sendPasswordFromClient(User user, String sourceMail, String password);
 

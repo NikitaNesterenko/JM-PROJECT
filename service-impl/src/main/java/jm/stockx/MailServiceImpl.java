@@ -118,7 +118,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public boolean changePasswordByToken(String link, String password) {
+    public boolean changePasswordByToken(String link, String password) throws RecoveryException {
         TokenRecovery token = tokenRecoveryService.getTokenRecoveryByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
@@ -128,17 +128,17 @@ public class MailServiceImpl implements MailService {
                 tokenRecoveryService.deleteToken(token.getId());
                 return true;
             } catch (Exception e) {
-                return false;
+                throw new RecoveryException();
             }
         }
-        return false;
+        throw new RecoveryException();
     }
 
 
 
 
     @Override
-    public boolean activateAccountByToken(String link) {
+    public boolean activateAccountByToken(String link) throws UserNotFoundException {
         TokenRegistration token = tokenActivation.getByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
 
@@ -147,10 +147,10 @@ public class MailServiceImpl implements MailService {
                 token.getUser().setActive(true);
                 return true;
             } catch (Exception ex) {
-                return false;
+                throw new UserNotFoundException();
             }
         }
-        return false;
+        throw new UserNotFoundException();
     }
 
     private Date getCurrentDate() {

@@ -14,7 +14,7 @@ public interface BidService {
 
     BidDto getBidDtoByItemNameAndUserName(String itemName, String userName);
 
-    void placeBid(BidPostDto bidPostDto);
+    void placeBid(BidPostDto bidPostDto) throws BidException;
 
     void update(Bid bid);
 
