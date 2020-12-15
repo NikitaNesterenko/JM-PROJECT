@@ -23,7 +23,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     private ItemInfoService itemInfoService;
 
     @Autowired
-    public FileStorageServiceImpl(ItemService itemService) {
+    public FileStorageServiceImpl(ItemInfoService itemInfoService) {
         this.itemInfoService = itemInfoService;
     }
 
@@ -43,6 +43,8 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
             String filePath = uploadPath + "item_" + id + fileFormat;
 
+            String pathReturn = "item_" + id + fileFormat;
+
             if (!new File(uploadPath).exists()) {
                 try {
                     Files.createDirectories(Path.of(uploadPath).toAbsolutePath().normalize());
@@ -56,10 +58,10 @@ public class FileStorageServiceImpl implements FileStorageService {
             } catch (IOException e) {
                 throw new FileStorageException("Couldn't store file " + file.getName() + "\nPlease try again.", e);
             }
-
             itemInfoService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
-
+            
             return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
+
         }
     }
 
@@ -67,7 +69,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     public Resource loadFileAsResource(String filename) {
         Path filePath = Path.of(uploadPath + filename).toAbsolutePath();
         Resource resource;
-
+        System.out.println("+++++++++++++++++++++" + filePath);
         try {
             resource = new UrlResource(filePath.toUri());
         } catch (MalformedURLException e) {
