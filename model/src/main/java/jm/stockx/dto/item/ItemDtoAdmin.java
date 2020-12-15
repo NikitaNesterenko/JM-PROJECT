@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class ItemDtoAdmin {
     private Long id;
 
+    @NotNull
     @NotBlank
     private String name;
 
@@ -24,14 +25,7 @@ public class ItemDtoAdmin {
     @NotNull
     private Money price;
 
+    @NotNull
     private String imageUrl;
-
-    public boolean containsNull() {
-        if (this.name == null || this.dateRelease == null || this.price == null || this.imageUrl == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
+    
 }

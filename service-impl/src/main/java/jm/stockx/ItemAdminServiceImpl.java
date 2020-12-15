@@ -23,31 +23,20 @@ public class ItemAdminServiceImpl implements ItemAdminService {
     }
 
     @Override
-    public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) throws ItemAdminDtoException {
-        if (!itemDtoAdmin.containsNull()) {
-            throw new ItemAdminDtoException();
-        } else {
-            Item item = new Item(itemDtoAdmin.getName());
-            itemService.create(item);
-            ItemInfo itemInfo = new ItemInfo();
-            itemInfo.setPrice(itemDtoAdmin.getPrice());
-            itemInfo.setReleaseDate(itemDtoAdmin.getDateRelease());
-            itemInfo.setItem(item);
-            itemInfo.setItemImageUrl(itemDtoAdmin.getImageUrl());
-            itemInfoService.create(itemInfo);
-        }
+    public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) {
+        Item item = new Item(itemDtoAdmin.getName());
+        itemService.create(item);
+        ItemInfo itemInfo = new ItemInfo();
+        itemInfo.setPrice(itemDtoAdmin.getPrice());
+        itemInfo.setReleaseDate(itemDtoAdmin.getDateRelease());
+        itemInfo.setItem(item);
+        itemInfo.setItemImageUrl(itemDtoAdmin.getImageUrl());
+        itemInfoService.create(itemInfo);
     }
 
     @Override
     public void addAdminListItemInfo(List<ItemDtoAdmin> listItemAdminDto) {
-        listItemAdminDto.forEach(list -> {
-            try {
-                addAdminItemInfo(list);
-            } catch (ItemAdminDtoException e) {
-                e.printStackTrace();
-            }
-        });
-
+        listItemAdminDto.forEach(list -> addAdminItemInfo(list));
     }
 
 
