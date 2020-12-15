@@ -22,15 +22,16 @@ public class FileStorageRestController {
     }
 
     @PostMapping("/img/upload")
-    public String uploadItemPicture(@RequestParam("id") Long id, MultipartFile file) {
+    public String uploadItemPicture(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {
         return fileStorageService.storeFile(id, file);
     }
 
     @GetMapping("/img/download")
     public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename,
                                                         HttpServletRequest request)  throws Exception{
+        System.out.println("++++++++++++++" + filename);
         Resource resource = fileStorageService.loadFileAsResource(filename);
-
+        System.out.println(resource.getFile().getAbsolutePath());
         String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 
         return ResponseEntity.ok()

@@ -1,6 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.AuthorizationException;
+import jm.stockx.UserNotFoundException;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserTokenDto;
 import jm.stockx.dto.security.UserLoginDto;
@@ -52,7 +53,7 @@ public class AuthenticationRestController {
                             jwtTokenProvider.createToken(username, role)
                     )
             );
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | UserNotFoundException e) {
             throw new AuthorizationException();
         }
     }
