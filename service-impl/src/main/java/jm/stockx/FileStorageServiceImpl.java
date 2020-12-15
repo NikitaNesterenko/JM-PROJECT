@@ -42,7 +42,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 return "The file must be at .png format.";
             }
             String filePath = uploadPath + "item_" + id + fileFormat;
-
+            String pathReturn = "item_" + id + fileFormat;
             if (!new File(uploadPath).exists()) {
                 try {
                     Files.createDirectories(Path.of(uploadPath).toAbsolutePath().normalize());
@@ -59,7 +59,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
             itemInfoService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
 
-            return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
+            return pathReturn + hashGenerator(file.getName());
         }
     }
 
