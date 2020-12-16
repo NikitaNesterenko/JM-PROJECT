@@ -25,7 +25,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     @Override
-    public void registrationUser(@Valid UserRegistrationDto user) throws UserExistsException {
+    public void registrationUser(@Valid UserRegistrationDto user) throws UserExistsException, UserNotFoundException {
         if (userService.getUserByEmail(user.getEmail()) != null) {
             throw new UserExistsException();
         }

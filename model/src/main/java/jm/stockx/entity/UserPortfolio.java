@@ -10,7 +10,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name="portfolio")
+@Table(name= "portfolio")
 public class UserPortfolio {
 
     @Id

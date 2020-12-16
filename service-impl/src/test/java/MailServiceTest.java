@@ -1,3 +1,4 @@
+import jm.stockx.RecoveryException;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.TokenRecoveryService;
 import jm.stockx.entity.User;
@@ -50,13 +51,13 @@ public class MailServiceTest {
     }
 
     @Test
-    public void doNotChangePasswordIfLinkIsNotValidTest() {
+    public void doNotChangePasswordIfLinkIsNotValidTest() throws RecoveryException {
         ReflectionTestUtils.setField(mailService, "urlRecoveryLink", "link");
         assertFalse(mailService.changePasswordByToken("anotherLink", anyString()));
     }
 
     @Test
-    public void doNotChangePasswordIfTokenIsNotValidTest() {
+    public void doNotChangePasswordIfTokenIsNotValidTest() throws RecoveryException {
         ReflectionTestUtils.setField(mailService, "urlRecoveryLink", "link");
         ReflectionTestUtils.setField(mailService, "linkExpirationDays", -1);
         TokenRecovery token = new TokenRecovery();
@@ -67,7 +68,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void changePasswordIfTokenIsValidTest() {
+    public void changePasswordIfTokenIsValidTest() throws RecoveryException{
         ReflectionTestUtils.setField(mailService, "urlRecoveryLink", "link");
         ReflectionTestUtils.setField(mailService, "linkExpirationDays", 1);
         TokenRecovery token = new TokenRecovery();
