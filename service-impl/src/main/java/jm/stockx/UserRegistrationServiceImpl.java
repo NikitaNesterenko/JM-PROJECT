@@ -29,6 +29,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         if (userService.getUserByEmail(user.getEmail()) != null) {
             throw new UserExistsException();
         }
+
         String password = passwordGeneratorService.generatePassword(8);
 
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), password);
