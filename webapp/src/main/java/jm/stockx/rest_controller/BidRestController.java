@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jm.stockx.BidException;
 import jm.stockx.BidService;
 import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.util.Response;
@@ -40,7 +41,7 @@ public class BidRestController {
                     @ApiResponse(responseCode = "200", description = "successful operation"),
             }
     )
-    public Response<?> placeBid(@RequestBody BidPostDto newBid) {
+    public Response<?> placeBid(@RequestBody BidPostDto newBid) throws BidException {
         if (bidService.isBidByCurrentUserExist(newBid.getId(), newBid.getUserId())){
             bidService.updateBidPrice(newBid.getPrice(),newBid.getId());
             return Response.ok(HttpStatus.ACCEPTED,"Bid price was successfully updated");

@@ -9,6 +9,7 @@ import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,12 +100,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public User getUserByEmail(String email) throws UserNotFoundException {
+        User user = userDao.getUserByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
     }
 
     @Override
-    public void updateUserFromDto(UserPutDto userPutDto) {
+    public void updateUserFromDto(UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException {
+        if (!userDao.doesItExistEntity(userPutDto.getId())) {
+            throw new UserNotFoundException();
+        }
+        if (!principal.getId().equals(userPutDto.getId())) {
+            throw new ForbiddenException();
+        }
         userDao.updateUserFromDto(userPutDto);
     }
 
