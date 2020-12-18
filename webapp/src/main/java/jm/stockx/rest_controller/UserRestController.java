@@ -110,7 +110,7 @@ public class UserRestController {
             })
     public Response<?> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundException {
 
-        mailService.activateAccountByToken(code)
+        mailService.activateAccountByToken(code);
         logger.info("Аккаунт активирован = {}", code);
         return Response.ok().build();
     }

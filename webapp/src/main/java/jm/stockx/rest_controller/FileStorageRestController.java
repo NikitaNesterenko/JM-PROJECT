@@ -24,15 +24,11 @@ public class FileStorageRestController {
     }
 
     @GetMapping("/img/download")
-    //public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename,
-    //                                                    HttpServletRequest request)  throws Exception{
-        public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename)  throws Exception{
-        Resource resource = fileStorageService.loadFileAsResource(filename);
-        System.out.println("______________________" + resource.getFilename());
-        //String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-
+    public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename) throws Exception {
+        String[] fname = filename.split("-");
+        String str = fname[0] + "-" + fname[1] + ".png";
+        Resource resource = fileStorageService.loadFileAsResource(str);
         return ResponseEntity.ok()
-                //.contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }

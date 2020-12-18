@@ -1,6 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.AuthorizationException;
+import jm.stockx.UserNotFoundException;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserTokenDto;
 import jm.stockx.dto.security.UserLoginDto;
@@ -44,16 +45,26 @@ public class AuthenticationRestController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String username = loginUser.getEmail();
-            Role role = userService.getUserByEmail(username).getRole();
+            Role role = null;
+            try {
+                role = userService.getUserByEmail(username).getRole();
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return Response.ok(
-                    new UserTokenDto(
-                            userService.getUserByEmail(loginUser.getEmail()),
-                            jwtTokenProvider.createToken(username, role)
-                    )
-            );
+            try {
+                return Response.ok(
+                        new UserTokenDto(
+                                userService.getUserByEmail(loginUser.getEmail()),
+                                jwtTokenProvider.createToken(username, role)
+                        )
+                );
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
         } catch (AuthenticationException e) {
             throw new AuthorizationException();
         }
+        return null;
     }
 }

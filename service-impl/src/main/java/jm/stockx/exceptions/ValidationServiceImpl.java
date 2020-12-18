@@ -1,6 +1,6 @@
 package jm.stockx.exceptions;
 
-import jm.stockx.AuthorizationAdviceException;
+
 import jm.stockx.ValidationService;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.user.UserDto;
@@ -11,11 +11,8 @@ public class ValidationServiceImpl implements ValidationService {
     private UserDAO userDAO;
 
     @Override
-    public boolean validateUserDB(String email) throws AuthorizationAdviceException {
+    public boolean validateUserDB(String email)  {
         UserDto userDto = userDAO.getUserDtoByUserEmail(email);
-        if (userDto == null) {
-            throw new AuthorizationAdviceException();
-        }
         return true;
     }
 }
