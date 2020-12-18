@@ -1,11 +1,11 @@
 package jm.stockx.rest_controller;
 
 
+import jm.stockx.UserExistsException;
 import jm.stockx.UserRegistrationService;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserRegistrationDto;
 import jm.stockx.util.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +25,7 @@ public class RegistrationRestController {
     }
 
     @PostMapping
-    public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) {
-        if (userService.getUserByEmail(user.getEmail()) != null) {
-            return Response.error(HttpStatus.BAD_REQUEST, "Пользователь с таким Email уже существует");
-        }
+    public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) throws UserExistsException {
         userRegistrationService.registrationUser(user);
 
         return Response.ok().build();

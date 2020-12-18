@@ -1,12 +1,12 @@
 package jm.stockx.rest_controller;
 
+import jm.stockx.AuthorizationException;
 import jm.stockx.UserService;
 import jm.stockx.dto.UserTokenDto;
 import jm.stockx.dto.security.UserLoginDto;
 import jm.stockx.entity.Role;
 import jm.stockx.jwt.JwtTokenProvider;
 import jm.stockx.util.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,7 +53,7 @@ public class AuthenticationRestController {
                     )
             );
         } catch (AuthenticationException e) {
-            return Response.error(HttpStatus.BAD_REQUEST, "Invalid username/password");
+            throw new AuthorizationException();
         }
     }
 }

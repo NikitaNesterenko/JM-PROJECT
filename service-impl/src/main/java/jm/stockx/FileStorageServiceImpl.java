@@ -43,7 +43,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
             String filePath = uploadPath + "item_" + id + fileFormat;
 
-            String pathReturn = "item-" + id;
+            String pathReturn = "item_" + id + fileFormat;
 
             if (!new File(uploadPath).exists()) {
                 try {
@@ -58,15 +58,15 @@ public class FileStorageServiceImpl implements FileStorageService {
             } catch (IOException e) {
                 throw new FileStorageException("Couldn't store file " + file.getName() + "\nPlease try again.", e);
             }
-            String retPath = pathReturn + "-" + hashGenerator(file.getName());
-            itemInfoService.updateItemImageUrl(id, retPath);
-            return retPath;
+            itemInfoService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
+            
+            return Path.of(filePath).toAbsolutePath() + hashGenerator(file.getName());
+
         }
     }
 
     @Override
     public Resource loadFileAsResource(String filename) {
-
         Path filePath = Path.of(uploadPath + filename).toAbsolutePath();
         Resource resource;
         System.out.println("+++++++++++++++++++++" + filePath);
