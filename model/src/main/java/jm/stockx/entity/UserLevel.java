@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.enums.LevelName;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,15 +15,14 @@ public class UserLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    @Enumerated(EnumType.STRING)
-    private LevelName levelName;
+    @Column(name = "level")
+    private int level;
 
     @Column(name = "progress")
     private int levelProgress;
 
-    public UserLevel(LevelName levelName, int levelProgress) {
-        this.levelName = levelName;
+    public UserLevel(int level, int levelProgress) {
+        this.level = level;
         this.levelProgress = levelProgress;
     }
 
