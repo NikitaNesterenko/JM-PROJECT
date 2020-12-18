@@ -21,9 +21,9 @@ public class UserLevel {
     private LevelName levelName;
 
     @Column(name = "progress")
-    private Long levelProgress;
+    private int levelProgress;
 
-    public UserLevel(LevelName levelName, Long levelProgress) {
+    public UserLevel(LevelName levelName, int levelProgress) {
         this.levelName = levelName;
         this.levelProgress = levelProgress;
     }

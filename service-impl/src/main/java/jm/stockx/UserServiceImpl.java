@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setUserLevel(new UserLevel(LevelName.FIRST_LEVEL, 0L));
+        user.setUserLevel(new UserLevel(LevelName.FIRST_LEVEL, 0));
         userDao.add(user);
     }
 
