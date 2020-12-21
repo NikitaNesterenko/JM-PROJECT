@@ -6,6 +6,8 @@ import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.Currency;
 import jm.stockx.entity.User;
+import jm.stockx.entity.UserLevel;
+import jm.stockx.enums.LevelName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserLevel(new UserLevel(LevelName.FIRST_LEVEL, 0L));
         userDao.add(user);
     }
 

@@ -53,4 +53,6 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
     List<ItemInfoImageDto> getItemsBuyingYearByUserid(Long id);
 
+    Long getCountOfUserBuyingByUserId(Long userId);
+
 }
