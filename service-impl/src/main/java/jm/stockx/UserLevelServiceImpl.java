@@ -33,23 +33,23 @@ public class UserLevelServiceImpl implements UserLevelService{
     @Transactional
     @Override
     public void updateUserLevelByUserId(Long userId) {
-        int newLevel = 0;
-        int levelBalance = 0;
-        UserLevel userLevel = userDAO.getUserById(userId).getUserLevel();
+        int result = 0;
 
+        UserLevel userLevel = userLevelDAO.getUserLevelByUserId(userId);
         int levelProgress = (sellingInfoDAO.getCountOfUserSalesByUserId(userId) * 20)
                 + (itemInfoDAO.getCountOfUserBuyingByUserId(userId) * 10);
 
-        for (int levelTop = 100; levelProgress > 0; newLevel++) {
-            if (newLevel >= 5) { break; }
-            levelBalance = levelProgress;
-            levelProgress = levelProgress - levelTop;
-            levelTop = levelTop + 100;
-        }
+        int newLevel = (result = levelProgress/10) > 100 ? 5 :
+                result > 60 ? 4 : result > 30 ? 3 : result > 10 ? 2 : 1;
+
+        int levelBalance = (result = levelProgress/10) > 100 ? levelProgress - 1000 :
+                result > 60 ? levelProgress - 600 : result > 30 ? levelProgress - 300 :
+                        result > 10 ? levelProgress - 100 : levelProgress;
 
         userLevel.setLevel(newLevel);
         userLevel.setLevelProgress(levelBalance);
 
         userLevelDAO.update(userLevel);
     }
+
 }
