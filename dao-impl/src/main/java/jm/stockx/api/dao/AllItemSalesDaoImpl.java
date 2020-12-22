@@ -6,6 +6,7 @@ import jm.stockx.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
@@ -14,15 +15,16 @@ public class AllItemSalesDaoImpl extends AbstractDAO<BuyingInfo, Long> implement
     private final ItemDAO itemDAO;
 
     @Autowired
-    public AllItemSalesDaoImpl(ItemDAO itemDAO) {
+    public AllItemSalesDaoImpl(ItemDAO itemDAO, EntityManager entityManager) {
 
         this.itemDAO = itemDAO;
 
+        this.entityManager = entityManager;
     }
 
     public List<AllItemSalesDto> getAllItemSalesByItem(Item item) {
 
-        return this.entityManager.createQuery(
+        return entityManager.createQuery(
                 "SELECT NEW jm.stockx.dto.allItemSales.AllItemSalesDto" +
                         "(" +
                         "buyInf.buyingPrice, buyInf.buyingTimeStamp, itemSize" +
@@ -39,7 +41,7 @@ public class AllItemSalesDaoImpl extends AbstractDAO<BuyingInfo, Long> implement
     public List<AllItemSalesDto> getAllItemSalesById(Long itemId) {
 
         Item item = itemDAO.getItemById(itemId);
-        return this.getAllItemSalesByItem(item);
+        return getAllItemSalesByItem(item);
 
     }
 

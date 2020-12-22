@@ -1,6 +1,7 @@
 package jm.stockx.initializer;
 
 import jm.stockx.*;
+import jm.stockx.api.dao.ItemPriceChartDAO;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
@@ -17,6 +18,8 @@ import java.time.Month;
 @Slf4j
 public class EntityDataInitializer {
 
+    @Autowired
+    ItemPriceChartDAO DAO;
     private RoleService             roleService;
     private UserService             userService;
     private ItemService             itemService;
@@ -83,9 +86,9 @@ public class EntityDataInitializer {
     }
 
     void printSales() {
-
-        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////");
-        allItemSalesService.getAllItemSalesById(1L).forEach(System.out::println);
+       DAO.get12LatestSales(1L);
+//        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////");
+//        allItemSalesService.getAllItemSalesById(1L).forEach(System.out::println);
 
     }
 
