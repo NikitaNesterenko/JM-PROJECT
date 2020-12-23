@@ -74,7 +74,7 @@ public class BidServiceImpl implements BidService {
      * @param newBid bidDto from controller
      */
     @Override
-    public void placeBid(BidPostDto newBid) throws BidException {
+    public void placeBid(BidPostDto newBid) {
         Bid bidEntity = Bid.builder()
                 .price(Money.parse(newBid.getPrice()))
                 .itemInfo(itemInfoDAO.getItemInfoByItemId(newBid.getItemInfoId()))

@@ -204,4 +204,15 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
 
         return sellingCountDtoList;
     }
+
+    @Override
+    public int getCountOfUserSalesByUserId(Long userId) {
+        return entityManager.createQuery("" +
+                "SELECT COUNT(si.user.id) " +
+                "FROM SellingInfo si " +
+                "WHERE si.user.id = :userId " +
+                "AND NOT si.status = 'CANCELED'", Integer.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
 }
