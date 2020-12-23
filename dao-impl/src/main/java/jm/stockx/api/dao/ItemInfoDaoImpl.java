@@ -297,6 +297,16 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getResultList();
     }
 
+    @Override
+    public int getCountOfUserBuyingByUserId(Long userId) {
+        return entityManager.createQuery("" +
+                "SELECT COUNT(i.buyingInfo.id) " +
+                "FROM ItemInfo i " +
+                "WHERE i.buyingInfo.id = :id " +
+                "AND NOT i.buyingInfo.status = 'CANCELED'", Integer.class)
+                .setParameter("id", userId)
+                .getSingleResult();
+    }
 }
 
 

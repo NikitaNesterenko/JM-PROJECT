@@ -1,11 +1,6 @@
 package jm.stockx.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -83,6 +78,11 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "level_id", nullable = false)
+    @NonNull
+    private UserLevel userLevel;
 
     public User(String firstName,
                 String lastName,
