@@ -8,17 +8,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemPriceChartServiceImpl implements ItemPriceChartService {
 
-    private final ItemPriceChartDAO DAO;
+    private final ItemPriceChartDAO itemPriceChartDAO;
 
     @Autowired
-    public ItemPriceChartServiceImpl(ItemPriceChartDAO dao) {
-        DAO = dao;
+    public ItemPriceChartServiceImpl(ItemPriceChartDAO itemPriceChartDAO) {
+
+        this.itemPriceChartDAO = itemPriceChartDAO;
+
     }
 
     @Override
     public ItemPriceChartDto get12LatestSales(Long id) {
 
-        return DAO.get12LatestSales(id);
+        return itemPriceChartDAO.get12LatestSales(id);
 
     }
 }
