@@ -65,6 +65,6 @@ public class AuthenticationRestController {
         } catch (AuthenticationException e) {
             throw new AuthorizationException();
         }
-        return Response.ok().build();
+        return null;
     }
 }

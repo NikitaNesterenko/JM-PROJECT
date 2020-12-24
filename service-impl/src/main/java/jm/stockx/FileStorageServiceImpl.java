@@ -42,7 +42,6 @@ public class FileStorageServiceImpl implements FileStorageService {
                 return "The file must be at .png format.";
             }
             String filePath = uploadPath + "item-" + id + fileFormat;
-
             String pathReturn = "item-" + id;
 
             if (!new File(uploadPath).exists()) {
@@ -58,16 +57,16 @@ public class FileStorageServiceImpl implements FileStorageService {
             } catch (IOException e) {
                 throw new FileStorageException("Couldn't store file " + file.getName() + "\nPlease try again.", e);
             }
-            String retPath = pathReturn + "-" + hashGenerator(file.getName());
-            itemInfoService.updateItemImageUrl(id, retPath);
-            return retPath;
+            itemInfoService.updateItemImageUrl(id, String.valueOf(Path.of(filePath).toAbsolutePath()));
+
+            return pathReturn + "-" + hashGenerator(file.getName());
+
         }
     }
 
     @Override
     public Resource loadFileAsResource(String filename) {
-        String address = filename.replace(filename.substring(filename.lastIndexOf("-")),"");
-        Path filePath = Path.of(uploadPath + address + ".png").toAbsolutePath();
+        Path filePath = Path.of(uploadPath + filename).toAbsolutePath();
         Resource resource;
         try {
             resource = new UrlResource(filePath.toUri());
