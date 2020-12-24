@@ -45,16 +45,26 @@ public class AuthenticationRestController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String username = loginUser.getEmail();
-            Role role = userService.getUserByEmail(username).getRole();
+            Role role = null;
+            try {
+                role = userService.getUserByEmail(username).getRole();
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            return Response.ok(
-                    new UserTokenDto(
-                            userService.getUserByEmail(loginUser.getEmail()),
-                            jwtTokenProvider.createToken(username, role)
-                    )
-            );
-        } catch (AuthenticationException | UserNotFoundException e) {
+            try {
+                return Response.ok(
+                        new UserTokenDto(
+                                userService.getUserByEmail(loginUser.getEmail()),
+                                jwtTokenProvider.createToken(username, role)
+                        )
+                );
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (AuthenticationException e) {
             throw new AuthorizationException();
         }
+        return Response.ok().build();
     }
 }
