@@ -24,7 +24,7 @@ public class FileStorageRestController {
     }
 
     @GetMapping("/img/download")
-    public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename) throws Exception {
+    public ResponseEntity<?> downloadItemPicture(@RequestParam("filename") String filename) {
         String[] fname = filename.split("-");
         String str = fname[0] + "-" + fname[1] + ".png";
         Resource resource = fileStorageService.loadFileAsResource(str);
