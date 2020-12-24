@@ -22,7 +22,7 @@ public class PaymentInfRestController {
 
     @PostMapping("/add")
     public Response<?> addPaymentInformation(@RequestBody PaymentInfoDto paymentInfoDto) {
-        paymentInfoService.updateFromPaymentInfoDto(paymentInfoDto);
+       // paymentInfoService.updateFromPaymentInfoDto(paymentInfoDto);
         return Response.ok().build();
     }
 }

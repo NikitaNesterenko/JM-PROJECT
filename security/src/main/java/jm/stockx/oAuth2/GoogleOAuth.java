@@ -8,6 +8,7 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import jm.stockx.RoleService;
+import jm.stockx.UserNotFoundException;
 import jm.stockx.UserService;
 import jm.stockx.entity.User;
 import jm.stockx.jwt.JwtTokenProvider;
@@ -78,7 +79,11 @@ public class GoogleOAuth {
         String email = jsonObj.optString("email");
 
         if (userService.isUserExistByEmail(email)) {
-            user = userService.getUserByEmail(email);
+            try {
+                user = userService.getUserByEmail(email);
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
         } else {
             user = new User(firstName, lastName, email, basicPassword);
             user.setRole(roleService.getRole("ROLE_USER"));
