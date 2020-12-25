@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public class AvailabilityInCountryDaoImpl extends AbstractDAO<AvailabilityInCountry, Long> implements AvailabilityInCountryDAO {
 
-/*    @Override
+    @Override
     public List<AvailabilityInCountry> getAll() {
 
         return super.getAll();
@@ -27,5 +27,5 @@ public class AvailabilityInCountryDaoImpl extends AbstractDAO<AvailabilityInCoun
 
         return super.getById(id);
 
-    }*/
+    }
 }
