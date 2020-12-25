@@ -5,6 +5,7 @@ import jm.stockx.dto.releaseCalendar.ReleaseCalendarDto;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/api/realizes")
+@RequestMapping("/rest/api/releases")
 public class ReleaseCalendarRestController {
 
     private final ReleaseCalendarService releaseCalendarService;
@@ -25,9 +26,9 @@ public class ReleaseCalendarRestController {
     }
 
     @GetMapping("/get")
-    public Response<List<ReleaseCalendarDto>> getRealizes() {
+    public ResponseEntity<List<ReleaseCalendarDto>> getRealizes() {
 
-        return Response.ok(HttpStatus.OK, releaseCalendarService.getSixImmediateReleases());
+        return ResponseEntity.ok(releaseCalendarService.getSixImmediateReleases());
 
     }
 
