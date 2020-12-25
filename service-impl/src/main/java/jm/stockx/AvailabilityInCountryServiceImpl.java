@@ -12,28 +12,28 @@ import java.util.List;
 @Transactional
 public class AvailabilityInCountryServiceImpl implements AvailabilityInCountryService {
 
-    private final AvailabilityInCountryDAO DAO;
+    private final AvailabilityInCountryDAO availabilityInCountryDAO;
 
     @Autowired
     public AvailabilityInCountryServiceImpl(AvailabilityInCountryDAO dao) {
-        DAO = dao;
+        availabilityInCountryDAO = dao;
     }
 
     @Transactional
     @Override
     public AvailabilityInCountry getById(Long id) {
-        return DAO.getById(id);
+        return availabilityInCountryDAO.getById(id);
     }
 
     @Transactional
     @Override
     public void add(AvailabilityInCountry availabilityInCountry) {
-        DAO.add(availabilityInCountry);
+        availabilityInCountryDAO.add(availabilityInCountry);
     }
 
     @Transactional
     @Override
     public List<AvailabilityInCountry> getAll() {
-        return DAO.getAll();
+        return availabilityInCountryDAO.getAll();
     }
 }
