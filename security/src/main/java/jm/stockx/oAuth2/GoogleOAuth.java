@@ -8,6 +8,7 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import jm.stockx.RoleService;
+import jm.stockx.UserNotFoundException;
 import jm.stockx.UserService;
 import jm.stockx.entity.User;
 import jm.stockx.jwt.JwtTokenProvider;
@@ -65,7 +66,7 @@ public class GoogleOAuth {
         return auth20Service.getAccessToken(code);
     }
 
-    public String getGoogleUserToken(OAuth2AccessToken token) throws InterruptedException, ExecutionException, IOException {
+    public String getGoogleUserToken(OAuth2AccessToken token) throws InterruptedException, ExecutionException, IOException, UserNotFoundException {
 
         OAuthRequest request = new OAuthRequest(Verb.GET,  "https://www.googleapis.com/oauth2/v1/userinfo?alt=json");
         auth20Service.signRequest(token, request);
@@ -78,7 +79,11 @@ public class GoogleOAuth {
         String email = jsonObj.optString("email");
 
         if (userService.isUserExistByEmail(email)) {
-            user = userService.getUserByEmail(email);
+            try {
+                user = userService.getUserByEmail(email);
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
         } else {
             user = new User(firstName, lastName, email, basicPassword);
             user.setRole(roleService.getRole("ROLE_USER"));

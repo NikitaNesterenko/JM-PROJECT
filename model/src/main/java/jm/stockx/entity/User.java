@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -79,10 +78,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "level_id", nullable = false)
-    @NonNull
-    private UserLevel userLevel;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "level_id", nullable = false)
+//    private UserLevel userLevel;
 
     public User(String firstName,
                 String lastName,
