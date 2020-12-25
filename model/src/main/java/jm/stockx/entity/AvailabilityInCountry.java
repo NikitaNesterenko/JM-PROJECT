@@ -23,10 +23,10 @@ public class AvailabilityInCountry {
     private String localeTag;
 
     @Column(name = "delivery_from")
-    private boolean deliveryFrom;
+    private Boolean deliveryFrom;
 
     @Column(name = "delivery_to")
-    private boolean deliveryTo;
+    private Boolean deliveryTo;
 
     public AvailabilityInCountry(User user, boolean deliveryFrom, boolean deliveryTo) {
         this.localeTag = user.getLocaleTag();
