@@ -32,6 +32,9 @@ public class ItemInfoDto {
 
     private Long ItemId;
 
+    @NotNull
+    private String itemImgUrl;
+
     public ItemInfoDto(ItemInfo itemInfo) {
         this.id = itemInfo.getId();
         this.price = itemInfo.getPrice();
@@ -39,6 +42,7 @@ public class ItemInfoDto {
         this.highestBid = itemInfo.getHighestBid();
         this.size = itemInfo.getSize().getSize();
         this.ItemId = itemInfo.getItem().getId();
+        this.itemImgUrl = itemInfo.getItemImageUrl();
     }
 
 
