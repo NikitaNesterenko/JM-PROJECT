@@ -1,7 +1,9 @@
 package jm.stockx.initializer;
 
 import jm.stockx.*;
+import jm.stockx.api.dao.ItemListSalesDAO;
 import jm.stockx.api.dao.ItemPriceChartDAO;
+import jm.stockx.api.dao.RecommendedItemsDAO;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.ItemColors;
@@ -20,6 +22,12 @@ public class EntityDataInitializer {
 
     @Autowired
     ItemPriceChartDAO DAO;
+    @Autowired
+    ItemListSalesDAO  itemListSalesDAO;
+
+    @Autowired
+    RecommendedItemsDAO recommendedItemsDAO;
+
     private RoleService             roleService;
     private UserService             userService;
     private ItemService             itemService;
@@ -33,9 +41,9 @@ public class EntityDataInitializer {
     private ItemSizeService         itemSizeService;
     private BuyingInfoService       buyingInfoService;
     private NotificationInfoService notificationInfoService;
-
     @Autowired
-    private AllItemSalesService allItemSalesService;
+    private AllItemSalesService     allItemSalesService;
+
 
     @Autowired
     private void SetServices(RoleService roleService,
@@ -82,14 +90,21 @@ public class EntityDataInitializer {
         createNews();
         createItems();
         printSales();
+        printListSale();
 
     }
 
     void printSales() {
-       DAO.get12LatestSales(1L);
+
+        recommendedItemsDAO.get15RecommendedItems(ItemCategory.SNEAKERS).forEach(System.out::println);
+        // DAO.get12LatestSales(1L);
 //        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////");
 //        allItemSalesService.getAllItemSalesById(1L).forEach(System.out::println);
 
+    }
+
+    void printListSale() {
+        itemListSalesDAO.getSizesAndPricesByItemId(1L).forEach(System.out::println);
     }
 
     private void createRoles() {
@@ -173,6 +188,82 @@ public class EntityDataInitializer {
 
     private void createItems() {
         if (itemService.getAll().size() == 0) {
+
+            for (int i = 0; i < 15; i++) {
+                Item item = new SneakersItem("Sneakers#" + i);
+                itemService.create(item);
+                BuyingInfo buyingInfo = BuyingInfo.builder()
+                        .buyingPrice(Money.parse("RUB 100.0"))
+                        .status(Status.DELIVERED)
+                        .buyingTimeStamp(LocalDateTime.now())
+                        .build();
+
+                BuyingInfo buyingInfo2 = BuyingInfo.builder()
+                        .buyingPrice(Money.parse("RUB 101.0"))
+                        .status(Status.DELIVERED)
+                        .buyingTimeStamp(LocalDateTime.now())
+                        .build();
+
+                itemInfoService.create(ItemInfo.builder()
+                        .item(itemService.getItemById(item.getId()))
+                        .itemCategory(ItemCategory.SNEAKERS)
+                        .price(Money.parse("RUB 200.0"))
+                        .highestBid(Money.parse("RUB 222.0"))
+                        .lowestAsk(Money.parse("RUB 191.0"))
+                        .buyingInfo(buyingInfo)
+                        .size(itemSizeService.findOneBySizeName("9"))
+                        .releaseDate(LocalDate.of(2020, 7, 2))
+                        .condition("New")
+                        .description("description")
+                        .brand(brandService.getBrandById((long) (i % 3 + 1)))
+                        .style(styleService.getStyleByName("sports"))
+                        .itemColors(ItemColors.BLACK)
+                        .build());
+
+                itemInfoService.create(ItemInfo.builder()
+                        .item(itemService.getItemById(item.getId()))
+                        .itemCategory(ItemCategory.SNEAKERS)
+                        .price(Money.parse("RUB 200.0"))
+                        .highestBid(Money.parse("RUB 222.0"))
+                        .lowestAsk(Money.parse("RUB 191.0"))
+                        .buyingInfo(buyingInfo2)
+                        .size(itemSizeService.findOneBySizeName("9"))
+                        .releaseDate(LocalDate.of(2020, 7, 2))
+                        .condition("New")
+                        .description("description")
+                        .brand(brandService.getBrandById((long) (i % 3 + 1)))
+                        .style(styleService.getStyleByName("sports"))
+                        .itemColors(ItemColors.BLACK)
+                        .build());
+            }
+
+            for (int i = 0; i < 15; i++) {
+                Item item = new SneakersItem("Boots#" + i);
+                itemService.create(item);
+                BuyingInfo buyingInfo3 = BuyingInfo.builder()
+                        .buyingPrice(Money.parse("RUB 102.0"))
+                        .status(Status.DELIVERED)
+                        .buyingTimeStamp(LocalDateTime.now())
+                        .build();
+
+                itemInfoService.create(ItemInfo.builder()
+                        .item(itemService.getItemById(item.getId()))
+                        .itemCategory(ItemCategory.SNEAKERS)
+                        .price(Money.parse("RUB 200.0"))
+                        .highestBid(Money.parse("RUB 222.0"))
+                        .lowestAsk(Money.parse("RUB 191.0"))
+                        .buyingInfo(buyingInfo3)
+                        .size(itemSizeService.findOneBySizeName("9"))
+                        .releaseDate(LocalDate.of(2020, 7, 2))
+                        .condition("New")
+                        .description("description")
+                        .brand(brandService.getBrandById((long) (i % 3 + 1)))
+                        .style(styleService.getStyleByName("sports"))
+                        .itemColors(ItemColors.BLACK)
+                        .build());
+
+            }
+
 
             Item jordan14 = new SneakersItem(("Jordan 14 Retro Gym Red Toro"));
 
