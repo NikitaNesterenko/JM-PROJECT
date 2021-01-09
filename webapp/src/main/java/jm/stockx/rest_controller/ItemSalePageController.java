@@ -2,7 +2,9 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.ItemSalePageDtoService;
 import jm.stockx.dto.item.ItemSalePageDto;
+import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +22,8 @@ public class ItemSalePageController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<ItemSalePageDto> getById(@RequestParam Long id) {
+    public Response<ItemSalePageDto> getById(@RequestParam Long id) {
 
-        return ResponseEntity.ok().body(itemSalePageDtoService.getById(id));
+        return Response.ok(itemSalePageDtoService.getById(id));
     }
 }
