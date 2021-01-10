@@ -41,26 +41,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-//        http.csrf().disable()//for test
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/api/**").permitAll()
-//                .anyRequest().authenticated();
 
-
-
-        http.csrf().disable()
+        http.csrf().disable()//for test
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/registration").permitAll()
-                .antMatchers("/api/bid").permitAll()
-                .antMatchers("/api/rest/get/*").permitAll()
-                .antMatchers("/api/rest/sales/**").permitAll()
-                .antMatchers("/api/rest/chart/**").permitAll()
-                .antMatchers("/api/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
+
+
+
+//        http.csrf().disable()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/api/auth/**").permitAll()
+//                .antMatchers("/api/registration").permitAll()
+//                .antMatchers("/api/bid").permitAll()
+//                .antMatchers("/api/rest/get/*").permitAll()
+//                .antMatchers("/api/rest/sales/**").permitAll()
+//                .antMatchers("/api/rest/chart/**").permitAll()
+//                .antMatchers("/api/user/**", "/api/notification/**").hasAnyRole("ADMIN", "USER")
+//                .anyRequest().authenticated();
     }
 }

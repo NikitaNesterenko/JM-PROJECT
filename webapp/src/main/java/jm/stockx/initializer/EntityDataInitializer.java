@@ -125,6 +125,7 @@ public class EntityDataInitializer {
                     true,
                     "en",
                     "user1@apple.id");
+            user1.setActive(true);
             user1.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user1);
 
