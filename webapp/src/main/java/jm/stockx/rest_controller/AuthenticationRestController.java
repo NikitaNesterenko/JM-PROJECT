@@ -56,7 +56,8 @@ public class AuthenticationRestController {
                 return Response.ok(
                         new UserTokenDto(
                                 userService.getUserByEmail(loginUser.getEmail()),
-                                jwtTokenProvider.createToken(username, role)
+                                jwtTokenProvider.createToken(username, role),
+                                role.getRoleName()
                         )
                 );
             } catch (UserNotFoundException e) {

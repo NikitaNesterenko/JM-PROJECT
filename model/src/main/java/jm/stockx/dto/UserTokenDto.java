@@ -14,12 +14,14 @@ public class UserTokenDto {
     private String firstName;
     private String lastName;
     private String token;
+    private String role;
 
-    public UserTokenDto(User user, String token) {
+    public UserTokenDto(User user, String token, String role) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.token = token;
+        this.role = role;
     }
 }
