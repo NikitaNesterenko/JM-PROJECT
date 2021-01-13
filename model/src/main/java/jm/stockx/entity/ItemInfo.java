@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Builder
-public class ItemInfo {
+public class ItemInfo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

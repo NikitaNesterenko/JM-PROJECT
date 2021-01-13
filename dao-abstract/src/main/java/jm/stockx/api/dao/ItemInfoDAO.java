@@ -55,4 +55,10 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
     int getCountOfUserBuyingByUserId(Long userId);
 
+    List<ItemInfoDto> getAllItemInfoDto();
+
+    List<ItemInfoDtoDecimal> getAllItemInfoDtoDecimal();
+
+    ItemInfoDtoDecimal getItemInfoDecByItemId(Long id);
+
 }

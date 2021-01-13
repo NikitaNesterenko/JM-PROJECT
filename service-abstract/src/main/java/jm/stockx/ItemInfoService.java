@@ -54,4 +54,10 @@ public interface ItemInfoService {
     List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit);
 
     SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize);
+
+    List<ItemInfoDto> getAllItemInfoDto();
+
+    List<ItemInfoDtoDecimal> getAllItemInfoDtoDecimal();
+
+    ItemInfoDtoDecimal getItemInfoDtoDec(Long id);
 }

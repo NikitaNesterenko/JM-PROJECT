@@ -1,12 +1,14 @@
 package jm.stockx.rest_controller;
 
+import com.google.gson.Gson;
 import jm.stockx.ItemInfoService;
+import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.itemInfo.ItemInfoDtoDecimal;
 import jm.stockx.dto.itemInfo.ItemSearchDto;
+import jm.stockx.entity.ItemInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/item")
 public class ItemRestController {
     private final ItemInfoService itemInfoService;
+    private static final Gson gson = new Gson();
 
     @Autowired
     public ItemRestController(ItemInfoService itemInfoService) {
@@ -24,4 +27,26 @@ public class ItemRestController {
     public List<ItemSearchDto> searchItem(@RequestParam(required = false, name = "s") String search) {
         return itemInfoService.getItemSearchDtoBySearch(search);
     }
+
+    @GetMapping("/allItem")
+    public ResponseEntity<List<ItemInfoDtoDecimal>> getAllItemInfo(){
+
+        List<ItemInfoDtoDecimal> list = itemInfoService.getAllItemInfoDtoDecimal();
+        String str = "test responce entity";
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/item")
+    public ResponseEntity<ItemInfoDtoDecimal> getItemInfoDtoDec(@RequestParam (name = "id") Long id){
+        return ResponseEntity.ok(itemInfoService.getItemInfoDtoDec(id));
+    }
+
+
+//    @GetMapping("/allItem")
+//    public String getAllItemInfo(){
+//        List<ItemInfoDtoDecimal> list = itemInfoService.getAllItemInfoDtoDecimal();
+//        return list.get(1).toString();
+//    }
+
+
 }
