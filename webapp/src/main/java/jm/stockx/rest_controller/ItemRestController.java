@@ -32,7 +32,6 @@ public class ItemRestController {
     public ResponseEntity<List<ItemInfoDtoDecimal>> getAllItemInfo(){
 
         List<ItemInfoDtoDecimal> list = itemInfoService.getAllItemInfoDtoDecimal();
-        String str = "test responce entity";
         return ResponseEntity.ok(list);
     }
 
@@ -41,12 +40,6 @@ public class ItemRestController {
         return ResponseEntity.ok(itemInfoService.getItemInfoDtoDec(id));
     }
 
-
-//    @GetMapping("/allItem")
-//    public String getAllItemInfo(){
-//        List<ItemInfoDtoDecimal> list = itemInfoService.getAllItemInfoDtoDecimal();
-//        return list.get(1).toString();
-//    }
 
 
 }
