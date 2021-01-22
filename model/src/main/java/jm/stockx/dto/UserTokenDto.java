@@ -2,6 +2,7 @@ package jm.stockx.dto;
 
 import jm.stockx.entity.User;
 import lombok.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Getter
 @Setter
@@ -16,12 +17,19 @@ public class UserTokenDto {
     private String token;
     private String roleName;
 
-    public UserTokenDto(User user, String token) {
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
+    public UserTokenDto(String token) {
+        User principal = getPrincipal();
+        this.id = principal.getId();
+        this.email = principal.getEmail();
+        this.firstName = principal.getFirstName();
+        this.lastName = principal.getLastName();
         this.token = token;
-        this.roleName = user.getRole().getRoleName();
+        this.roleName = principal.getRole().getRoleName();
+    }
+
+    private User getPrincipal() {
+        return (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
     }
 }

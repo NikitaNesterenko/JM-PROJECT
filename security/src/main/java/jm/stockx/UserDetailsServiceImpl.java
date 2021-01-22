@@ -2,19 +2,17 @@ package jm.stockx;
 
 import jm.stockx.dto.security.UserLoginDto;
 import jm.stockx.entity.User;
+import jm.stockx.jwt.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -23,11 +21,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public UserDetailsServiceImpl(UserService userService,
-                                  AuthenticationManager authenticationManager) {
+                                  AuthenticationManager authenticationManager,
+                                  JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         try {
             user = userService.getUserByEmail(email);
         } catch (UserNotFoundException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         if (user == null) {
             logger.info("Пользователь {} не найден", email);
@@ -45,17 +46,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user;
     }
 
-    public Authentication authenticateUser(@RequestBody UserLoginDto loginUser) {
-        try {
-            Authentication authForCreation =
-                    new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword());
-            final Authentication authentication = authenticationManager.authenticate(authForCreation);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+    public String authenticateUser(UserLoginDto loginUser) {
+        Authentication authForCreation =
+                new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword());
+        final Authentication authentication = authenticationManager.authenticate(authForCreation);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return getToken(authentication);
+    }
 
-            return authentication;
-        } catch (AuthenticationException e) {
-            e.getMessage();
-            throw new AuthorizationException();
-        }
+    private String getToken(Authentication authForTokenGeneration) {
+        User details = (User) authForTokenGeneration.getPrincipal();
+        return jwtTokenProvider.createToken(details.getEmail(), details.getRole());
     }
 }
