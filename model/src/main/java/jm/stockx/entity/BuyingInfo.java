@@ -16,6 +16,7 @@ import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrenc
 import org.joda.money.Money;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 

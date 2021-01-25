@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -29,7 +30,7 @@ import javax.persistence.Table;
 @Table(name = "items")
 @TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Item {
+public class Item implements Serializable {
 
     @Id
     @Column(name = "id")

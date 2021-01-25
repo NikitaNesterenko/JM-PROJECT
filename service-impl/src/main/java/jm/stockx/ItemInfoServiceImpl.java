@@ -142,4 +142,19 @@ public class ItemInfoServiceImpl implements ItemInfoService {
         return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId,sizeFromDb);
     }
 
+    @Override
+    public List<ItemInfoDto> getAllItemInfoDto(){
+        return itemInfoDAO.getAllItemInfoDto();
+    }
+
+    @Override
+    public List<ItemInfoDtoDecimal> getAllItemInfoDtoDecimal() {
+        return itemInfoDAO.getAllItemInfoDtoDecimal();
+    }
+
+    @Override
+    public ItemInfoDtoDecimal getItemInfoDtoDec(Long id){
+        return itemInfoDAO.getItemInfoDecByItemId(id);
+    }
+
 }
