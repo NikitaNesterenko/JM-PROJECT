@@ -1,6 +1,5 @@
 package jm.stockx.rest_controller;
 
-import jm.stockx.ItemInfoService;
 import jm.stockx.MailService;
 import jm.stockx.UserService;
 import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
@@ -18,16 +17,14 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/buying")
 public class BuyingRestController {
-    BuyingInfo buyingInfo;
-    UserService userService;
-    User user;
-    ItemInfoService itemInfoService;
-    MailService mailService;
+    private BuyingInfo buyingInfo;
+    private UserService userService;
+    private User user;
+    private MailService mailService;
 
     @Autowired
-    public BuyingRestController(UserService userService, ItemInfoService itemInfoService, MailService mailService) {
+    public BuyingRestController(UserService userService, MailService mailService) {
         this.userService = userService;
-        this.itemInfoService = itemInfoService;
         this.mailService = mailService;
     }
 
