@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserLevelDaoImpl extends AbstractDAO<UserLevel, Long> implements UserLevelDAO {
 
+    // TODO: Использование Entity
     @Override
     public UserLevel getUserLevelByUserId(Long id) {
         return entityManager.createQuery("" +
