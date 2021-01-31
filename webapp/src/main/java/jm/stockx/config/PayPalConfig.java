@@ -1,8 +1,11 @@
-package jm.stockx.paypalintegration;
+package jm.stockx.config;
 
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
+import com.paypal.core.PayPalEnvironment;
+import com.paypal.core.PayPalHttpClient;
+import com.paypal.http.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +15,11 @@ import java.util.Map;
 
 @Configuration
 public class PayPalConfig {
-
     /**
-     * Параметры считываются из property файла.
+     * Параметры считываются из property файла:
+     * mode – указывает на режим проведения транзакций;
+     * clientId – идентификатор приложения;
+     * clientSecret – секрет приложения.
      */
     @Value("${paypal.mode}")
     private String mode;
@@ -25,10 +30,14 @@ public class PayPalConfig {
     @Value("${paypal.client.secret}")
     private String clientSecret;
 
+    // Creating a sandbox environment
+    private  PayPalEnvironment environment = new PayPalEnvironment.Sandbox(clientId, clientSecret);
+
+    // Creating a client for the environment
+    private PayPalHttpClient client = new PayPalHttpClient(environment);
 
     /**
-     * Создается с Map параметрами конфигурации SDK
-     * для дальнейшего переиспользования.
+     * Создается с Map параметрами конфигурации SDK для дальнейшего переиспользования.
      *
      * @return Map<String, String>
      */
@@ -40,7 +49,7 @@ public class PayPalConfig {
     }
 
     /**
-     * Создается OAuthTokenCredential для проверки при проведении транзации.
+     * Создается OAuthTokenCredential для проверки при проведении транзакции.
      *
      * @return OAuthTokenCredential
      */

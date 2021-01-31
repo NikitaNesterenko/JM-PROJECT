@@ -1,4 +1,4 @@
-package jm.stockx.paypalintegration;
+package jm.stockx.dto.paypalintegration;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +9,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PayPalOrder {
+public class PayPalOrderDto {
     private Double price;
     private String currency;
-    private String method;
-    private String intent;
     private String description;
-    private String cancelURL;
-    private String successURL;
 }
