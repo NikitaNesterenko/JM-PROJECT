@@ -30,12 +30,6 @@ public class PayPalConfig {
     @Value("${paypal.client.secret}")
     private String clientSecret;
 
-    // Creating a sandbox environment
-    private  PayPalEnvironment environment = new PayPalEnvironment.Sandbox(clientId, clientSecret);
-
-    // Creating a client for the environment
-    private PayPalHttpClient client = new PayPalHttpClient(environment);
-
     /**
      * Создается с Map параметрами конфигурации SDK для дальнейшего переиспользования.
      *
