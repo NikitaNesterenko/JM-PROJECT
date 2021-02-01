@@ -2,12 +2,13 @@ package jm.stockx;
 
 import jm.stockx.api.dao.BuyingInfoDAO;
 import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
-import jm.stockx.dto.buyingInfo.BuyingInfoPutDto;
 import jm.stockx.entity.BuyingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class BuyingInfoServiceImpl implements BuyingInfoService {
 
     private final BuyingInfoDAO buyingInfoDAO;

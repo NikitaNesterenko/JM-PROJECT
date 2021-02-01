@@ -35,14 +35,14 @@ public class BuyingRestController {
     }
 
     @PostMapping("/add")
-    public Response<?> addBuyingInfo (@RequestBody BuyingInfoPostDto buyingInfoPostDto) {
+    public Response<?> addBuyingInfo ( ) {//@RequestBody BuyingInfoPostDto buyingInfoPostDto) {
 
-//        BuyingInfoPostDto buyingInfoPostDto = new BuyingInfoPostDto();
-//        buyingInfoPostDto1.setBuyingPrice(Money.parse("RUB 205.0"));
-//        buyingInfoPostDto1.setBuyingTimeStamp(LocalDateTime.now());
-//        buyingInfoPostDto1.setStatus(Status.CANCELED);
-//        buyingInfoPostDto1.setBoughtItems(null);
-//        buyingInfoPostDto1.setPaymentsInfo(null);
+        BuyingInfoPostDto buyingInfoPostDto = new BuyingInfoPostDto();
+        buyingInfoPostDto.setBuyingPrice(Money.parse("RUB 205.0"));
+        buyingInfoPostDto.setBuyingTimeStamp(LocalDateTime.now());
+        buyingInfoPostDto.setStatus(Status.CANCELED);
+        buyingInfoPostDto.setBoughtItems(null);
+        buyingInfoPostDto.setPaymentsInfo(null);
 
         Long id = buyingInfoService.create(buyingInfoPostDto);
 
@@ -51,8 +51,9 @@ public class BuyingRestController {
         Set<BuyingInfo> buyingInfos= new HashSet<>();
         buyingInfos.add(buyingInfo);
 
-        user = userService.getUserByUsername(SecurityContextHolder.getContext()
-                .getAuthentication().getName());
+//        user = userService.getUserByUsername(SecurityContextHolder.getContext()
+//                .getAuthentication().getName());
+        user = userService.getUserById(1L);
         user.setBuyingInfo(buyingInfos);
         userService.updateUser(user);
 
