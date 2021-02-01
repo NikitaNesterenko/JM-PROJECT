@@ -1,6 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.BuyingInfoService;
+import jm.stockx.ItemInfoService;
 import jm.stockx.MailService;
 import jm.stockx.UserService;
 import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
@@ -35,14 +36,7 @@ public class BuyingRestController {
     }
 
     @PostMapping("/add")
-    public Response<?> addBuyingInfo ( ) {//@RequestBody BuyingInfoPostDto buyingInfoPostDto) {
-
-        BuyingInfoPostDto buyingInfoPostDto = new BuyingInfoPostDto();
-        buyingInfoPostDto.setBuyingPrice(Money.parse("RUB 205.0"));
-        buyingInfoPostDto.setBuyingTimeStamp(LocalDateTime.now());
-        buyingInfoPostDto.setStatus(Status.CANCELED);
-        buyingInfoPostDto.setBoughtItems(null);
-        buyingInfoPostDto.setPaymentsInfo(null);
+    public Response<?> addBuyingInfo (@RequestBody BuyingInfoPostDto buyingInfoPostDto) {
 
         Long id = buyingInfoService.create(buyingInfoPostDto);
 
@@ -51,9 +45,8 @@ public class BuyingRestController {
         Set<BuyingInfo> buyingInfos= new HashSet<>();
         buyingInfos.add(buyingInfo);
 
-//        user = userService.getUserByUsername(SecurityContextHolder.getContext()
-//                .getAuthentication().getName());
-        user = userService.getUserById(1L);
+        user = userService.getUserByUsername(SecurityContextHolder.getContext()
+                .getAuthentication().getName());
         user.setBuyingInfo(buyingInfos);
         userService.updateUser(user);
 
