@@ -15,15 +15,12 @@ public class UserLevelServiceImpl implements UserLevelService{
     private SellingInfoDAO sellingInfoDAO;
     private ItemInfoDAO itemInfoDAO;
     private UserLevelDAO userLevelDAO;
-    private UserDAO userDAO;
-
 
     @Autowired
     public UserLevelServiceImpl(SellingInfoDAO sellingInfoDAO, ItemInfoDAO itemInfoDAO, UserLevelDAO userLevelDAO, UserDAO userDAO) {
         this.sellingInfoDAO = sellingInfoDAO;
         this.itemInfoDAO = itemInfoDAO;
         this.userLevelDAO = userLevelDAO;
-        this.userDAO = userDAO;
     }
 
     public UserLevelServiceImpl() {
@@ -38,13 +35,36 @@ public class UserLevelServiceImpl implements UserLevelService{
         UserLevel userLevel = userLevelDAO.getUserLevelByUserId(userId);
         int levelProgress = (sellingInfoDAO.getCountOfUserSalesByUserId(userId) * 20)
                 + (itemInfoDAO.getCountOfUserBuyingByUserId(userId) * 10);
+        int newLevel;
+        if ((result = levelProgress / 10) > 100) {
+            newLevel = 5;
+        } else {
+            if (result > 60) newLevel = 4;
+            else {
+                if (result > 30) {
+                    newLevel = 3;
+                } else {
+                    if (result > 10) newLevel = 2;
+                    else newLevel = 1;
+                }
+            }
+        }
 
-        int newLevel = (result = levelProgress/10) > 100 ? 5 :
-                result > 60 ? 4 : result > 30 ? 3 : result > 10 ? 2 : 1;
 
-        int levelBalance = (result = levelProgress/10) > 100 ? levelProgress - 1000 :
-                result > 60 ? levelProgress - 600 : result > 30 ? levelProgress - 300 :
-                        result > 10 ? levelProgress - 100 : levelProgress;
+        int levelBalance;
+        if ((result = levelProgress / 10) > 100) {
+            levelBalance = levelProgress - 1000;
+        } else {
+            if (result > 60) levelBalance = levelProgress - 600;
+            else {
+                if (result > 30) {
+                    levelBalance = levelProgress - 300;
+                } else {
+                    if (result > 10) levelBalance = levelProgress - 100;
+                    else levelBalance = levelProgress;
+                }
+            }
+        }
 
         userLevel.setLevel(newLevel);
         userLevel.setLevelProgress(levelBalance);

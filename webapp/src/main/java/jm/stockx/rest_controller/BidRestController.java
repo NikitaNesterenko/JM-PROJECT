@@ -41,7 +41,7 @@ public class BidRestController {
                     @ApiResponse(responseCode = "200", description = "successful operation"),
             }
     )
-    public Response<?> placeBid(@RequestBody BidPostDto newBid) throws BidException {
+    public Response<String> placeBid(@RequestBody BidPostDto newBid) throws BidException {
         if (bidService.isBidByCurrentUserExist(newBid.getId(), newBid.getUserId())){
             bidService.updateBidPrice(newBid.getPrice(),newBid.getId());
             return Response.ok(HttpStatus.ACCEPTED,"Bid price was successfully updated");

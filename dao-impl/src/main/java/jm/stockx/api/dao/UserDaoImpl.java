@@ -4,9 +4,6 @@ import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +166,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
     }
 
+    //TODO какая-то фигня
     @Override
     public User getUserByEmail(String email) {
         try {

@@ -1,7 +1,5 @@
 import jm.stockx.ItemInfoServiceImpl;
-import jm.stockx.ItemServiceImpl;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.entity.Item;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

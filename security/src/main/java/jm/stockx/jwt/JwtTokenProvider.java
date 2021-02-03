@@ -2,6 +2,7 @@ package jm.stockx.jwt;
 
 import io.jsonwebtoken.*;
 import jm.stockx.entity.Role;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
     @Value("${jwt.secret}")
@@ -45,7 +47,7 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (SignatureException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return false;
         }
     }

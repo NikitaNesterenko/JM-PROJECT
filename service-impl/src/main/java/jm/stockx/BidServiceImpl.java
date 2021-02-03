@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.BidDAO;
-import jm.stockx.api.dao.ItemDAO;
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.dto.bid.BidDto;
@@ -21,7 +20,7 @@ public class BidServiceImpl implements BidService {
     private final ItemInfoDAO itemInfoDAO;
     private final UserDAO userDAO;
 
-    public BidServiceImpl(BidDAO bidDAO, ItemDAO itemDAO, ItemInfoDAO itemInfoDAO, UserDAO userDAO) {
+    public BidServiceImpl(BidDAO bidDAO, ItemInfoDAO itemInfoDAO, UserDAO userDAO) {
         this.bidDAO = bidDAO;
         this.itemInfoDAO = itemInfoDAO;
         this.userDAO = userDAO;

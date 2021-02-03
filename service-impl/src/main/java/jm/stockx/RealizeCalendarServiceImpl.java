@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.RealizeCalendarDAO;
-import jm.stockx.dto.realizeCalendar.RealizeCalendarDto;
+import jm.stockx.dto.realizecalendar.RealizeCalendarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

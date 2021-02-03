@@ -1,7 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.*;
+import jm.stockx.dto.iteminfo.*;
 import jm.stockx.entity.*;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -52,7 +52,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
 
     public List<ItemInfoCardDto> getItemInfoCardDtoMorePrice(Money price) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoCardDto(" +
                 "i.item.name, " +
                 "i.itemImageUrl, " +
                 "i.lowestAsk " +
@@ -66,7 +66,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemSearchDto(i.itemCategory, COUNT(i)) " +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemSearchDto(i.itemCategory, COUNT(i)) " +
                 "FROM ItemInfo i " +
                 "WHERE TRIM(LOWER(i.item.name)) LIKE LOWER(CONCAT('%', :search, '%')) " +
                 "GROUP BY i.itemCategory " +
@@ -79,7 +79,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoCardDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoCardDto(" +
                 "i.item.name," +
                 "i.itemImageUrl," +
                 "i.lowestAsk" +
@@ -103,7 +103,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ReleaseItemInfoDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ReleaseItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ReleaseItemInfoDto(" +
                 "i.item.name," +
                 "i.condition, " +
                 "i.itemImageUrl, " +
@@ -120,7 +120,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public ItemInfoDto getItemInfoDtoByItemId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +
@@ -137,7 +137,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<NotReleaseItemInfoDto> getNotReleasedItem() {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.NotReleaseItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.NotReleaseItemInfoDto(" +
                 "i.item.name, " +
                 "i.condition, " +
                 "i.itemImageUrl, " +
@@ -151,7 +151,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<NotReleaseItemInfoDto> getNotReleasedItemsByBrand(Brand brand) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.NotReleaseItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.NotReleaseItemInfoDto(" +
                 "i.item.name, " +
                 "i.condition, " +
                 "i.itemImageUrl, " +
@@ -167,7 +167,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ItemInfoDto> searchItem(String search, Integer page, Integer size) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +
@@ -186,7 +186,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public ItemInfoDto getItemInfoDtoByItemName(String name) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +
@@ -203,7 +203,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ItemInfoDto> getItemInfoDtoByColor(String itemColors) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +
@@ -220,7 +220,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ItemInfoDto> getMostPopularItemByBrandName(String name) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +
@@ -242,7 +242,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     @Override
     public List<ItemInfoDto> getMostPopularItemByStyleId(Long id, int topLimit) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +
@@ -284,7 +284,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     public List<ItemInfoImageDto> getItemsBuyingYearByUserid(Long id) {
         LocalDateTime end = LocalDateTime.now();
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoImageDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoImageDto(" +
                 "i.item.id," +
                 "i.item.name," +
                 "i.itemImageUrl " +
@@ -311,7 +311,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
 
     public List<ItemInfoDto> getAllItemInfoDto() {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "SELECT NEW jm.stockx.dto.iteminfo.ItemInfoDto(" +
                 "i.id, " +
                 "i.price, " +
                 "i.lowestAsk, " +

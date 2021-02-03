@@ -13,40 +13,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 
 @Slf4j
 public class EntityDataInitializer {
 
     @Autowired
-    ItemPriceChartDAO DAO;
+    ItemPriceChartDAO dao;
     private RoleService             roleService;
     private UserService             userService;
     private ItemService             itemService;
     private BrandService            brandService;
     private StyleService            styleService;
     private NewsService             newsService;
-    private SellingInfoService      sellingInfoService;
     private CurrencyService         currencyService;
-    private BidService              bidService;
     private ItemInfoService         itemInfoService;
     private ItemSizeService         itemSizeService;
-    private BuyingInfoService       buyingInfoService;
     private NotificationInfoService notificationInfoService;
 
     @Autowired
-    private AllItemSalesService allItemSalesService;
-
-    @Autowired
-    private void SetServices(RoleService roleService,
+    private void setServices(RoleService roleService,
                              UserService userService,
                              ItemService itemService,
                              BrandService brandService,
                              StyleService styleService,
                              NewsService newsService,
-                             SellingInfoService sellingInfoService,
                              CurrencyService currencyService,
-                             BidService bidService,
                              ItemInfoService itemInfoService,
                              ItemSizeService itemSizeService, NotificationInfoService notificationInfoService) {
         this.userService = userService;
@@ -55,9 +46,7 @@ public class EntityDataInitializer {
         this.brandService = brandService;
         this.styleService = styleService;
         this.newsService = newsService;
-        this.sellingInfoService = sellingInfoService;
         this.currencyService = currencyService;
-        this.bidService = bidService;
         this.itemInfoService = itemInfoService;
         this.itemSizeService = itemSizeService;
         this.notificationInfoService = notificationInfoService;
@@ -86,21 +75,18 @@ public class EntityDataInitializer {
     }
 
     void printSales() {
-       DAO.get12LatestSales(1L);
-//        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////");
-//        allItemSalesService.getAllItemSalesById(1L).forEach(System.out::println);
-
+       dao.get12LatestSales(1L);
     }
 
     private void createRoles() {
-        if (roleService.getAll().size() == 0) {
+        if (roleService.getAll().isEmpty()) {
             roleService.create(new Role("ROLE_ADMIN"));
             roleService.create(new Role("ROLE_USER"));
         }
     }
 
     private void createUsers() {
-        if (userService.getAllUsers().size() == 0) {
+        if (userService.getAllUsers().isEmpty()) {
             Admin admin = new Admin(
                     "Thor",
                     "Odinson",
@@ -148,7 +134,7 @@ public class EntityDataInitializer {
     }
 
     private void createBrands() {
-        if (brandService.getAll().size() == 0) {
+        if (brandService.getAll().isEmpty()) {
             brandService.create(new Brand("Jordan"));
             brandService.create(new Brand("Adidas"));
             brandService.create(new Brand("Nike"));
@@ -156,7 +142,7 @@ public class EntityDataInitializer {
     }
 
     private void createCurrency() {
-        if (currencyService.getAll().size() == 0) {
+        if (currencyService.getAll().isEmpty()) {
             currencyService.create(new Currency("USD"));
             currencyService.create(new Currency("EUR"));
             currencyService.create(new Currency("RUB"));
@@ -164,7 +150,7 @@ public class EntityDataInitializer {
     }
 
     private void createStyles() {
-        if (styleService.getAll().size() == 0) {
+        if (styleService.getAll().isEmpty()) {
             styleService.create(new Style("casual"));
             styleService.create(new Style("sports"));
             styleService.create(new Style("business"));
@@ -172,7 +158,7 @@ public class EntityDataInitializer {
     }
 
     private void createItems() {
-        if (itemService.getAll().size() == 0) {
+        if (itemService.getAll().isEmpty()) {
 
             Item jordan14 = new SneakersItem(("Jordan 14 Retro Gym Red Toro"));
 
@@ -393,7 +379,7 @@ public class EntityDataInitializer {
     }
 
     private void createNews() {
-        if (newsService.getAllNews().size() == 0) {
+        if (newsService.getAllNews().isEmpty()) {
 
             newsService.create(new News(
                     "First",
@@ -416,24 +402,8 @@ public class EntityDataInitializer {
         }
     }
 
-//    private void createSellingInfo() {
-//        if (sellingInfoService.getAll().size() == 0) {
-//
-//            for (int i = 0; i < 15; i++) {
-//                Long itemId = (long) (1 + Math.random() * 5);
-//                sellingInfoService.create(new SellingInfo(
-//                                userService.getUserById((long) (1 + Math.random() * 2)),
-//                                new ItemInfo(shoeSizeService.getAll(), Money.of(CurrencyUnit.USD, 250), Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
-//                                itemService.getItemById(itemId),
-//                                Status.DELIVERED
-//                        )
-//                );
-//            }
-//        }
-//    }
-
     private void createShoeSizes() {
-        if (itemSizeService.getAll().size() == 0) {
+        if (itemSizeService.getAll().isEmpty()) {
             itemSizeService.create(new ItemSize("7", ItemSizeTypes.MEN));
             itemSizeService.create(new ItemSize("7.5", ItemSizeTypes.MEN));
             itemSizeService.create(new ItemSize("8", ItemSizeTypes.MEN));
@@ -455,13 +425,4 @@ public class EntityDataInitializer {
         }
     }
 
-    private LocalDateTime getLocalDateTime() {
-        LocalDateTime localDateTime = LocalDateTime.of(2020,
-                Month.of((int) (1 + Math.random() * 11)),
-                (int) (1 + Math.random() * 30),
-                (int) (Math.random() * 24),
-                (int) (Math.random() * 59)
-        );
-        return localDateTime;
-    }
 }

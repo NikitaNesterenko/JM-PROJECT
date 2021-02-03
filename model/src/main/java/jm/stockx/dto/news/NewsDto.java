@@ -1,6 +1,5 @@
 package jm.stockx.dto.news;
 
-import jm.stockx.entity.News;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

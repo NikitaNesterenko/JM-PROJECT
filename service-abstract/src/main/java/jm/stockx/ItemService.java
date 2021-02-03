@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.item.ItemDto;
-import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.dto.userportfolio.BuyingDto;
 import jm.stockx.entity.Item;
 
 import java.util.Set;

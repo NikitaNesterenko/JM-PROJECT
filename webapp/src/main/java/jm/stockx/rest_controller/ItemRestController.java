@@ -2,10 +2,8 @@ package jm.stockx.rest_controller;
 
 import com.google.gson.Gson;
 import jm.stockx.ItemInfoService;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.itemInfo.ItemInfoDtoDecimal;
-import jm.stockx.dto.itemInfo.ItemSearchDto;
-import jm.stockx.entity.ItemInfo;
+import jm.stockx.dto.iteminfo.ItemInfoDtoDecimal;
+import jm.stockx.dto.iteminfo.ItemSearchDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

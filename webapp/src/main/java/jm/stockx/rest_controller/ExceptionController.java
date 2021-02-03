@@ -11,36 +11,36 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice (basePackages = "jm.stockx")
 public class ExceptionController extends ResponseEntityExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExceptionController.class);
 
 
     @ExceptionHandler(AuthorizationException.class)
     public Response<?> authorizationNotFoundException(AuthorizationException e){
-        logger.error(e.getMessage());
+        LOG.error(e.getMessage());
         return Response.error(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(BidException.class)
     public Response<?> bidPlaceException(BidException e) {
-        logger.error(e.getMessage());
+        LOG.error(e.getMessage());
         return Response.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public Response<?> userNotFoundException(UserNotFoundException e) {
-        logger.error((e.getMessage()));
+        LOG.error((e.getMessage()));
         return Response.error(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(RecoveryException.class)
     public Response<?> recoveryException(RecoveryException e) {
-        logger.error(e.getMessage());
+        LOG.error(e.getMessage());
         return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler(UserExistsException.class)
     public Response<?> userExistsException(UserExistsException e) {
-        logger.error(e.getMessage());
+        LOG.error(e.getMessage());
         return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 }

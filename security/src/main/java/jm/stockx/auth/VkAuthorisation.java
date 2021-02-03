@@ -12,7 +12,6 @@ import jm.stockx.entity.User;
 import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,31 +20,31 @@ import java.util.concurrent.ExecutionException;
 @Component
 public class VkAuthorisation {
 
-    public final String protectedResourceUrl = "https://api.vk.com/method/users.get?v=5.92";
-    final String clientId = "7535082";
-    final String clientSecret = "2DVvAzRziipUlJ9AZXq9";
-    final String customScope = "email";
+    public static final String PROTECTED_RESOURCE_URL = "https://api.vk.com/method/users.get?v=5.92";
+    static final String CLIENT_ID = "7535082";
+    static final String CLIENT_SECRET = "2DVvAzRziipUlJ9AZXq9";
+    static final String CUSTOM_SCOPE = "email";
 
     @Getter
-    final OAuth20Service service = new ServiceBuilder(clientId)
+    final OAuth20Service service = new ServiceBuilder(CLIENT_ID)
 
-            .apiSecret(clientSecret)
-            .defaultScope(customScope)
+            .apiSecret(CLIENT_SECRET)
+            .defaultScope(CUSTOM_SCOPE)
             .responseType("token")
             .callback("http://localhost:8080/authorization/returnCodeVK")
             .build(VkontakteApi.instance());
 
     @Getter
     final String authorizationUrl = service.createAuthorizationUrlBuilder()
-            .scope(customScope)
+            .scope(CUSTOM_SCOPE)
             .build();
 
     public OAuth2AccessToken toGetTokenVK(String code) throws InterruptedException, ExecutionException, IOException {
-        return service.getAccessToken(AccessTokenRequestParams.create(code).scope(customScope));
+        return service.getAccessToken(AccessTokenRequestParams.create(code).scope(CUSTOM_SCOPE));
     }
 
-    public User toCreateUser(OAuth2AccessToken token, String email) throws InterruptedException, ExecutionException {
-        final OAuthRequest request = new OAuthRequest(Verb.GET, protectedResourceUrl);
+    public User toCreateUser(OAuth2AccessToken token) throws InterruptedException, ExecutionException {
+        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
         service.signRequest(token, request);
         User user = null;
 
@@ -55,7 +54,6 @@ public class VkAuthorisation {
             String password = jArray.getJSONObject(0).optString("id");
             String firstName = jArray.getJSONObject(0).optString("first_name");
             String lastName = jArray.getJSONObject(0).optString("last_name");
-            String username = email;
             user = new User(firstName, lastName, password);
         } catch (IOException e) {
             e.printStackTrace();

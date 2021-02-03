@@ -2,7 +2,6 @@ package jm.stockx;
 
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.Currency;
 import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
