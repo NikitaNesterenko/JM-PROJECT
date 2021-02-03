@@ -22,9 +22,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/buying")
 public class BuyingRestController {
-    private BuyingInfo buyingInfo;
     private UserService userService;
-    private User user;
     private MailService mailService;
     private BuyingInfoService buyingInfoService;
 
@@ -40,12 +38,12 @@ public class BuyingRestController {
 
         Long id = buyingInfoService.create(buyingInfoPostDto);
 
-        buyingInfo = buyingInfoService.getBuyingInfoById(id);
+        BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
 
         Set<BuyingInfo> buyingInfos= new HashSet<>();
         buyingInfos.add(buyingInfo);
 
-        user = userService.getUserByUsername(SecurityContextHolder.getContext()
+        User user = userService.getUserByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
         user.setBuyingInfo(buyingInfos);
         userService.updateUser(user);
