@@ -46,4 +46,9 @@ public class NewsDto {
         this.name = name;
         this.title = title;
     }
+
+    public NewsDto(@NotBlank String name, @NotNull LocalDateTime time) {
+        this.name = name;
+        this.time = time;
+    }
 }

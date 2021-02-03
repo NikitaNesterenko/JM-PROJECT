@@ -43,23 +43,43 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
                 .getSingleResult();
     }
 
-    // TODO: использование Entity
     @Override
-    public List<Brand> getPopularBrandIn2Month() {
+    public List<BrandDto> getPopularBrands() {
+        return entityManager.createQuery("" +
+                        "SELECT NEW jm.stockx.dto.brand.BrandDto(" +
+                        "b.id," +
+                        "b.name" +
+                        ") " +
+                        "FROM Brand b",
+                BrandDto.class)
+                .setMaxResults(4)
+                .getResultList();
+    }
+
+    /**
+     * На данный момент возвращает пустой List, так как отсутствуют записи(объекты) в SellingInfo.
+     *
+     * @return List<BrandDto>
+     */
+    @Override
+    public List<BrandDto> getPopularBrandsInTwoMonths() {
         LocalDateTime dateNow = LocalDateTime.now();
         LocalDateTime date2MonthBack = dateNow.minusMonths(2L);
+
         return entityManager.createQuery("" +
-                        "SELECT " +
-                        "b " +
+                        "SELECT NEW jm.stockx.dto.brand.BrandDto(" +
+                        "b.id," +
+                        "b.name" +
+                        ") " +
                         "FROM SellingInfo si " +
-                        "JOIN Brand b ON b.id = si.item.brand.id " +
+                        "JOIN Brand b ON b.id = si.itemInfo.brand.id " +
                         "WHERE si.orderDate <= : dateNow AND si.orderDate >= : date2MonthBack " +
                         "GROUP BY b, si.orderDate " +
-                        "ORDER BY count(si.item) DESC, si.orderDate DESC ",
-                Brand.class)
+                        "ORDER BY count(si.itemInfo) DESC, si.orderDate DESC ",
+                BrandDto.class)
                 .setParameter("dateNow", dateNow)
                 .setParameter("date2MonthBack", date2MonthBack)
-                .setMaxResults(5)
+                .setMaxResults(4)
                 .getResultList();
     }
 }

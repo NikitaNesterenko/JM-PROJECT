@@ -8,30 +8,32 @@ import jm.stockx.enums.ItemColors;
 import jm.stockx.enums.ItemSizeTypes;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class EntityDataInitializer {
 
     @Autowired
     ItemPriceChartDAO DAO;
-    private RoleService             roleService;
-    private UserService             userService;
-    private ItemService             itemService;
-    private BrandService            brandService;
-    private StyleService            styleService;
-    private NewsService             newsService;
-    private SellingInfoService      sellingInfoService;
-    private CurrencyService         currencyService;
-    private BidService              bidService;
-    private ItemInfoService         itemInfoService;
-    private ItemSizeService         itemSizeService;
-    private BuyingInfoService       buyingInfoService;
+    private RoleService roleService;
+    private UserService userService;
+    private ItemService itemService;
+    private BrandService brandService;
+    private StyleService styleService;
+    private NewsService newsService;
+    private SellingInfoService sellingInfoService;
+    private CurrencyService currencyService;
+    private BidService bidService;
+    private ItemInfoService itemInfoService;
+    private ItemSizeService itemSizeService;
+    private BuyingInfoService buyingInfoService;
     private NotificationInfoService notificationInfoService;
 
     @Autowired
@@ -81,12 +83,12 @@ public class EntityDataInitializer {
         createStyles();
         createNews();
         createItems();
+//        createSellingInfo();
         printSales();
-
     }
 
     void printSales() {
-       DAO.get12LatestSales(1L);
+        DAO.get12LatestSales(1L);
 //        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////");
 //        allItemSalesService.getAllItemSalesById(1L).forEach(System.out::println);
 
@@ -148,10 +150,12 @@ public class EntityDataInitializer {
     }
 
     private void createBrands() {
-        if (brandService.getAll().size() == 0) {
+        if (brandService.getAll().isEmpty()) {
             brandService.create(new Brand("Jordan"));
             brandService.create(new Brand("Adidas"));
             brandService.create(new Brand("Nike"));
+            brandService.create(new Brand("New Balance"));
+            brandService.create(new Brand("Saucony"));
         }
     }
 
@@ -389,6 +393,60 @@ public class EntityDataInitializer {
                     .style(styleService.getStyleByName("sports"))
                     .itemColors(ItemColors.BROWN)
                     .build());
+
+            Item newBalance990v3JJJJound = new SneakersItem(("New Balance 990v3 JJJJound"));
+            itemService.create(newBalance990v3JJJJound);
+
+            BuyingInfo buyingInfoNewBalance990v3JJJJound = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("USD 3501.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
+            itemInfoService.create(ItemInfo.builder()
+                    .item(newBalance990v3JJJJound)
+                    .itemCategory(ItemCategory.SNEAKERS)
+                    .price(Money.parse("USD 1500.0"))
+                    .highestBid(Money.parse("USD 1787.0"))
+                    .lowestAsk(Money.parse("USD 9654.0"))
+                    .buyingInfo(buyingInfoNewBalance990v3JJJJound)
+                    .size(itemSizeService.findOneBySizeName("11"))
+                    .releaseDate(LocalDate.of(2018, 12, 3))
+                    .condition("New")
+                    .description("The neutral colorway is in keeping with Justin Saunders' signature aesthetic, " +
+                            "and is sure to be attractive to those with more toned-down sensibilities.")
+                    .brand(brandService.getBrandByName("New Balance"))
+                    .style(styleService.getStyleByName("casual"))
+                    .itemColors(ItemColors.GRAY)
+                    .build());
+
+            Item sauconyAzuraBodegaLucky13 = new SneakersItem(("Saucony Azura Bodega Lucky 13"));
+            itemService.create(sauconyAzuraBodegaLucky13);
+
+            BuyingInfo buyingInfoSauconyAzuraBodegaLucky13 = BuyingInfo.builder()
+                    .buyingPrice(Money.parse("USD 801.0"))
+                    .status(Status.DELIVERED)
+                    .buyingTimeStamp(LocalDateTime.now())
+                    .build();
+
+            itemInfoService.create(ItemInfo.builder()
+                    .item(sauconyAzuraBodegaLucky13)
+                    .itemCategory(ItemCategory.SNEAKERS)
+                    .price(Money.parse("USD 800.0"))
+                    .highestBid(Money.parse("USD 166.0"))
+                    .lowestAsk(Money.parse("USD 800.0"))
+                    .buyingInfo(buyingInfoSauconyAzuraBodegaLucky13)
+                    .size(itemSizeService.findOneBySizeName("12"))
+                    .releaseDate(LocalDate.of(2019, 5, 16))
+                    .condition("New")
+                    .description("The sneaker is predominantly black with dark pops of color throughout, " +
+                            "including red on the medial Saucony branding and heel, purple on the tongue, " +
+                            "and a multicolored outsole. " +
+                            "Reflective detailing is present on the toe box, while the midsole is speckled.")
+                    .brand(brandService.getBrandByName("Saucony"))
+                    .style(styleService.getStyleByName("casual"))
+                    .itemColors(ItemColors.BLACK)
+                    .build());
         }
     }
 
@@ -396,9 +454,9 @@ public class EntityDataInitializer {
         if (newsService.getAllNews().size() == 0) {
 
             newsService.create(new News(
-                    "First",
+                    "News#1 title",
                     LocalDateTime.of(2020, 8, 2, 7, 30),
-                    "News title",
+                    "News#1 title",
                     "Description",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
                             "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
@@ -408,29 +466,41 @@ public class EntityDataInitializer {
                             "mollit anim id est laborum."));
 
             newsService.create(new News(
-                    "ИМЯ НОВОСТИ - ЭТО ЧТО?",
-                    LocalDateTime.of(2020, 8, 3, 2, 23),
-                    "Заголовок новости - ясно",
+                    "News#2 title",
+                    LocalDateTime.of(2020, 8, 4, 2, 23),
+                    "News#2 title",
+                    "Описание новости - не очень ясно, но допустим",
+                    "Вопрос: что такое name в сущности News? Может, удалить?"));
+
+            newsService.create(new News(
+                    "News#3 title",
+                    LocalDateTime.of(2020, 8, 5, 2, 23),
+                    "News#3 title",
+                    "Описание новости - не очень ясно, но допустим",
+                    "Вопрос: что такое name в сущности News? Может, удалить?"));
+
+            newsService.create(new News(
+                    "News#4 title",
+                    LocalDateTime.of(2020, 8, 6, 2, 23),
+                    "News#4 title",
+                    "Описание новости - не очень ясно, но допустим",
+                    "Вопрос: что такое name в сущности News? Может, удалить?"));
+
+            newsService.create(new News(
+                    "News#5 title",
+                    LocalDateTime.of(2020, 8, 7, 2, 23),
+                    "News#5 title",
+                    "Описание новости - не очень ясно, но допустим",
+                    "Вопрос: что такое name в сущности News? Может, удалить?"));
+
+            newsService.create(new News(
+                    "News#6 title",
+                    LocalDateTime.of(2020, 8, 8, 2, 23),
+                    "News#6 title",
                     "Описание новости - не очень ясно, но допустим",
                     "Вопрос: что такое name в сущности News? Может, удалить?"));
         }
     }
-
-//    private void createSellingInfo() {
-//        if (sellingInfoService.getAll().size() == 0) {
-//
-//            for (int i = 0; i < 15; i++) {
-//                Long itemId = (long) (1 + Math.random() * 5);
-//                sellingInfoService.create(new SellingInfo(
-//                                userService.getUserById((long) (1 + Math.random() * 2)),
-//                                new ItemInfo(shoeSizeService.getAll(), Money.of(CurrencyUnit.USD, 250), Money.of(CurrencyUnit.USD, 150), Money.of(CurrencyUnit.USD, 350), itemService.getItemById(itemId)),
-//                                itemService.getItemById(itemId),
-//                                Status.DELIVERED
-//                        )
-//                );
-//            }
-//        }
-//    }
 
     private void createShoeSizes() {
         if (itemSizeService.getAll().size() == 0) {
