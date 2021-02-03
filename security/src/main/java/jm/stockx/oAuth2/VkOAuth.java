@@ -43,6 +43,9 @@ public class VkOAuth {
     @Value("${vk.clientSecret}")
     private String clientSecret;
 
+    @Value("@{vk.basicPassword}")
+    private String basicPassword;
+
     User user;
 
     public VkOAuth(UserService userService, RoleService roleService, JwtTokenProvider jwtTokenProvider) {
