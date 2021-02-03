@@ -34,6 +34,7 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
                 .getSingleResult();
     }
 
+    // TODO : использование Entity
     @Override
     public Brand getBrandByName(String name) {
         return entityManager.createQuery("" +
@@ -42,6 +43,7 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
                 .getSingleResult();
     }
 
+    // TODO: использование Entity
     @Override
     public List<Brand> getPopularBrandIn2Month() {
         LocalDateTime dateNow = LocalDateTime.now();

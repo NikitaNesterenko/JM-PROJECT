@@ -44,6 +44,7 @@ public class ItemSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements Item
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     @Override
     public List<ItemSize> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType) {
         return entityManager.createQuery(
@@ -53,6 +54,7 @@ public class ItemSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements Item
                 .getResultList();
     }
 
+    // TODO: Использование Entity
     public ItemSize findOneBySizeName(String itemSize) {
         return entityManager.createQuery("" +
                         "SELECT itemSize " +

@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Repository
 public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implements SellingInfoDAO {
 
+    // TODO: Использование Entity
     @Override
     public Double getAverageSalesValue() {
         return (Double) entityManager.createNativeQuery("" +
@@ -57,6 +58,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
+    // TODO: Использование Entity
     public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         List<SellingInfo> list = entityManager.createQuery("" +
                 "SELECT si " +
@@ -121,6 +123,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
+    // TODO: Использование Entity
     @Override
     public List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
                                                     LocalDateTime endPeriod,

@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
 
+    // TODO: Использование Entity
     @Override
     public ItemInfo getItemInfoByItemId(Long id) {
         return entityManager.createQuery("" +
@@ -24,6 +25,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     @Override
     public ItemInfo getItemInfoByItemName(String itemName) {
         return entityManager.createQuery("" +
@@ -42,6 +44,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     public ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
