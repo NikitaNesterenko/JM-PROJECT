@@ -78,10 +78,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private Set<BuyingInfo> buyingInfo;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "level_id", nullable = false)
-//    private UserLevel userLevel;
-
     public User(String firstName,
                 String lastName,
                 String email,

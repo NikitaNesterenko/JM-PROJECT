@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.sellingInfo.*;
+import jm.stockx.dto.sellinginfo.*;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;

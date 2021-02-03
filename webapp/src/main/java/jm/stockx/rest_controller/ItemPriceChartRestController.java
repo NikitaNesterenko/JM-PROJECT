@@ -21,7 +21,7 @@ public class ItemPriceChartRestController {
     }
 
     @GetMapping("/get")
-    ResponseEntity<ItemPriceChartDto> get(@RequestParam Long id) {
+    public ResponseEntity<ItemPriceChartDto> get(@RequestParam Long id) {
         return new ResponseEntity<>(service.get12LatestSales(id), HttpStatus.OK);
     }
 

@@ -2,8 +2,8 @@ package jm.stockx;
 
 import jm.stockx.api.dao.*;
 import jm.stockx.dto.item.ItemDto;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
-import jm.stockx.dto.userPortfolio.BuyingDto;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
+import jm.stockx.dto.userportfolio.BuyingDto;
 import jm.stockx.entity.*;
 import jm.stockx.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -84,7 +83,7 @@ public class ItemServiceImpl implements ItemService {
         buyingInfoDAO.add(buyingInfo);
 
         User seller = userDAO.getById(buyingDto.getBuyerId());
-        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto, itemInfo);
+        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
         sellingInfoDAO.add(sellingInfo);
@@ -105,7 +104,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto getItemDtoByItemId(Long id) {
-        return getItemDtoByItemId(id);
+        return itemDao.getItemDtoByItemId(id);
     }
 
     @Override

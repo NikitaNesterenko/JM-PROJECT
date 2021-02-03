@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import java.util.List;
-import jm.stockx.dto.allItemSales.AllItemSalesDto;
+import jm.stockx.dto.allitemsales.AllItemSalesDto;
 import jm.stockx.entity.Item;
 
 public interface AllItemSalesService {

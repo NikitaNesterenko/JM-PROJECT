@@ -33,7 +33,7 @@ import static org.mockito.BDDMockito.then;
 
 @DisplayName("UserDetailsServiceImplTest must")
 @ExtendWith(MockitoExtension.class)
-public class UserDetailsServiceImplTest {
+class UserDetailsServiceImplTest {
 
     @InjectMocks
     private UserDetailsServiceImpl userDetailsService;

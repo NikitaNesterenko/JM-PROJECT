@@ -36,7 +36,7 @@ public class ItemAdminServiceImpl implements ItemAdminService {
 
     @Override
     public void addAdminListItemInfo(List<ItemDtoAdmin> listItemAdminDto) {
-        listItemAdminDto.forEach(list -> addAdminItemInfo(list));
+        listItemAdminDto.forEach(this::addAdminItemInfo);
     }
 
 

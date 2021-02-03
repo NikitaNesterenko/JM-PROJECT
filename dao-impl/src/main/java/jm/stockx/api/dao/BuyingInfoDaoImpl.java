@@ -1,13 +1,10 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.buyingInfo.BuyingInfoDto;
+import jm.stockx.dto.buyinginfo.BuyingInfoDto;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.ItemInfo;
-import jm.stockx.entity.User;
-import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
 public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements BuyingInfoDAO {
@@ -15,7 +12,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
     @Override
     public BuyingInfoDto getBuyingInfoDtoByBuyingInfoId(Long id) {
         return entityManager.createQuery("" +
-                "SELECT NEW jm.stockx.dto.buyingInfo.BuyingInfoDto(" +
+                "SELECT NEW jm.stockx.dto.buyinginfo.BuyingInfoDto(" +
                 "b.id, " +
                 "b.buyingTimeStamp, " +
                 "b.buyingPrice," +

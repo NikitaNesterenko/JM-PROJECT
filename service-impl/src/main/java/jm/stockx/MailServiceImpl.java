@@ -42,7 +42,7 @@ public class MailServiceImpl implements MailService {
     @Value("${registration.url}")
     private String urlRegistrationLink;
 
-    private JavaMailSenderImpl javaMailSender;
+    private final JavaMailSenderImpl javaMailSender;
 
 
     @Autowired
@@ -178,6 +178,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendLastNews(List<News> news, String sourceMail, String password) {
+        //TODO тут, наверно, что-то должно быть
     }
 
 

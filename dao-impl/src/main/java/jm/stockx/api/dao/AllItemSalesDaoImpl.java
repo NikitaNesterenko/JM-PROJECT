@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.allItemSales.AllItemSalesDto;
+import jm.stockx.dto.allitemsales.AllItemSalesDto;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class AllItemSalesDaoImpl extends AbstractDAO<BuyingInfo, Long> implement
     public List<AllItemSalesDto> getAllItemSalesByItem(Item item) {
 
         return entityManager.createQuery(
-                "SELECT NEW jm.stockx.dto.allItemSales.AllItemSalesDto" +
+                "SELECT NEW jm.stockx.dto.allitemsales.AllItemSalesDto" +
                         "(" +
                         "buyInf.buyingPrice, buyInf.buyingTimeStamp, itemSize" +
                         ") " +

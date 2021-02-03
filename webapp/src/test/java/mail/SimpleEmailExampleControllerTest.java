@@ -12,8 +12,10 @@ import java.time.Month;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleEmailExampleControllerTest {
+
     @Mock
     public JavaMailSender emailSender;
+
     @Test
     public void sendSimpleEmail() {
         // Create a Simple MailMessage.
@@ -31,11 +33,10 @@ public class SimpleEmailExampleControllerTest {
     }
 
     private LocalDateTime getLocalDateTime() {
-        LocalDateTime localDateTime = LocalDateTime.of(2020,
+        return LocalDateTime.of(2020,
                 Month.of((int)(1+Math.random()*11)),
                 (int)(1 + Math.random()*30),
                 (int) (Math.random()*24),
                 (int) (Math.random()*59));
-        return localDateTime;
     }
 }

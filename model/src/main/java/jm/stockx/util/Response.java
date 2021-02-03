@@ -8,6 +8,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
+
 public class Response<T> extends HttpEntity<T> {
 
     private static boolean success;
@@ -40,8 +43,7 @@ public class Response<T> extends HttpEntity<T> {
     }
 
     public static BodyBuilder error(HttpStatus status) {
-        success = false;
-        return httpStatus(status);
+        return ok(status);
     }
 
     public static <T> Response<T> error(HttpStatus status, String text) {
@@ -54,6 +56,7 @@ public class Response<T> extends HttpEntity<T> {
         return new DefaultBuilder(status);
     }
 
+    @Nonnull
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("<");
@@ -73,6 +76,15 @@ public class Response<T> extends HttpEntity<T> {
         builder.append(headers);
         builder.append('>');
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Response<?> response = (Response<?>) o;
+        return Objects.equals(status, response.status);
     }
 
     @Override
@@ -148,7 +160,7 @@ public class Response<T> extends HttpEntity<T> {
             String text = "On error, only text";
             return (success)
                     ? new Response<>(body, this.headers, this.statusCode)
-                    : new Response<T>((T) text, this.headers, this.statusCode);
+                    : new Response<>((T) text, this.headers, this.statusCode);
         }
 
         @Override

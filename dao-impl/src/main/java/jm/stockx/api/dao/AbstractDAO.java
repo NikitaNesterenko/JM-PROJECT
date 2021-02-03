@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
+public abstract class AbstractDAO<T, P> implements GenericDao<T, P> {
 
     private final Class<T> clazz;
 
@@ -12,7 +12,7 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
     public EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
-    public AbstractDAO() {
+    protected AbstractDAO() {
         clazz = (Class<T>) ((java.lang.reflect.ParameterizedType)
                 this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
@@ -22,7 +22,7 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
         return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
-    public T getById(PK id) {
+    public T getById(P id) {
         return entityManager.find(clazz, id);
     }
 
@@ -34,7 +34,7 @@ public abstract class AbstractDAO<T, PK> implements GenericDao<T, PK> {
         return entityManager.merge(t);
     }
 
-    public void deleteById(PK id) {
+    public void deleteById(P id) {
         entityManager.remove(getById(id));
     }
 

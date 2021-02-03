@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.PaymentInfoDAO;
-import jm.stockx.dto.paymentInfo.PaymentInfoDto;
+import jm.stockx.dto.paymentinfo.PaymentInfoDto;
 import jm.stockx.entity.PaymentInfo;
 import org.springframework.stereotype.Service;
 

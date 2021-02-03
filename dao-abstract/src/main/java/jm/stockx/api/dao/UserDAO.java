@@ -4,8 +4,6 @@ import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.Item;
 import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
 
