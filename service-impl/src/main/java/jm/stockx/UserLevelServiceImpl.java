@@ -41,7 +41,7 @@ public class UserLevelServiceImpl implements UserLevelService{
         } else {
             if (result > 60) {
                 newLevel = 4;
-            }   else {
+            } else {
                 if (result > 30) {
                     newLevel = 3;
                 } else {
