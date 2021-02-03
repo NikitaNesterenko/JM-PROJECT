@@ -24,5 +24,7 @@ public interface BidService {
 
     boolean isBidByCurrentUserExist(Long bidId, Long userId);
 
-    void  updateBidPrice(String price, Long bidId);
+    void updateBidPrice(String price, Long bidId);
+
+    List<BidDto> getHighestBids();
 }

@@ -2,7 +2,6 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.BrandService;
 import jm.stockx.dto.brand.BrandDto;
-import jm.stockx.dto.news.NewsDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

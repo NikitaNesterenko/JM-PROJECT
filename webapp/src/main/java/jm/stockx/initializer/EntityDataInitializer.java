@@ -8,20 +8,19 @@ import jm.stockx.enums.ItemColors;
 import jm.stockx.enums.ItemSizeTypes;
 import jm.stockx.enums.Status;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.stream.IntStream;
 
 @Slf4j
 public class EntityDataInitializer {
 
     @Autowired
     ItemPriceChartDAO DAO;
+
     private RoleService roleService;
     private UserService userService;
     private ItemService itemService;
@@ -84,7 +83,7 @@ public class EntityDataInitializer {
         createNews();
         createItems();
 //        createSellingInfo();
-        printSales();
+//        printSales();
     }
 
     void printSales() {
@@ -176,7 +175,7 @@ public class EntityDataInitializer {
     }
 
     private void createItems() {
-        if (itemService.getAll().size() == 0) {
+        if (itemService.getAll().isEmpty()) {
 
             Item jordan14 = new SneakersItem(("Jordan 14 Retro Gym Red Toro"));
 
@@ -437,7 +436,7 @@ public class EntityDataInitializer {
                     .lowestAsk(Money.parse("USD 800.0"))
                     .buyingInfo(buyingInfoSauconyAzuraBodegaLucky13)
                     .size(itemSizeService.findOneBySizeName("12"))
-                    .releaseDate(LocalDate.of(2019, 5, 16))
+                    .releaseDate(LocalDate.of(2222, 5, 16))
                     .condition("New")
                     .description("The sneaker is predominantly black with dark pops of color throughout, " +
                             "including red on the medial Saucony branding and heel, purple on the tongue, " +
@@ -451,7 +450,7 @@ public class EntityDataInitializer {
     }
 
     private void createNews() {
-        if (newsService.getAllNews().size() == 0) {
+        if (newsService.getAllNews().isEmpty()) {
 
             newsService.create(new News(
                     "News#1 title",
