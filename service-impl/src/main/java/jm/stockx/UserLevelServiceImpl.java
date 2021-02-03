@@ -39,13 +39,15 @@ public class UserLevelServiceImpl implements UserLevelService{
         if ((result = levelProgress / 10) > 100) {
             newLevel = 5;
         } else {
-            if (result > 60) newLevel = 4;
-            else {
+            if (result > 60) {
+                newLevel = 4;
+            }   else {
                 if (result > 30) {
                     newLevel = 3;
                 } else {
-                    if (result > 10) newLevel = 2;
-                    else newLevel = 1;
+                    if (result > 10) {
+                        newLevel = 2;
+                    } else newLevel = 1;
                 }
             }
         }
@@ -55,13 +57,17 @@ public class UserLevelServiceImpl implements UserLevelService{
         if ((result = levelProgress / 10) > 100) {
             levelBalance = levelProgress - 1000;
         } else {
-            if (result > 60) levelBalance = levelProgress - 600;
-            else {
+            if (result > 60) {
+                levelBalance = levelProgress - 600;
+            } else {
                 if (result > 30) {
                     levelBalance = levelProgress - 300;
                 } else {
-                    if (result > 10) levelBalance = levelProgress - 100;
-                    else levelBalance = levelProgress;
+                    if (result > 10) {
+                        levelBalance = levelProgress - 100;
+                    } else {
+                        levelBalance = levelProgress;
+                    }
                 }
             }
         }
