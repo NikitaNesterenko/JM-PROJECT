@@ -20,9 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/bid")
-// TODO: Требуется измеение маппинга. Везде так: "/rest/api/названиеДомена"
+// TODO: Требуется изменение маппинга. Везде так: "/rest/api/названиеДомена"
 public class BidRestController {
-
     private final BidService bidService;
 
     @Autowired
