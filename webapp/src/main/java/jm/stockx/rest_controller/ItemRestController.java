@@ -1,6 +1,5 @@
 package jm.stockx.rest_controller;
 
-import com.google.gson.Gson;
 import jm.stockx.ItemInfoService;
 import jm.stockx.dto.iteminfo.ItemInfoDtoDecimal;
 import jm.stockx.dto.iteminfo.ItemSearchDto;
@@ -14,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/item")
 public class ItemRestController {
     private final ItemInfoService itemInfoService;
-    private static final Gson gson = new Gson();
 
     @Autowired
     public ItemRestController(ItemInfoService itemInfoService) {

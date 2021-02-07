@@ -10,8 +10,7 @@ import jm.stockx.*;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,9 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/rest/api/users")
 @Tag(name = "user", description = "User API")
+@Slf4j
 public class UserRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     private final UserService userService;
     private final MailService mailService;
@@ -65,7 +63,7 @@ public class UserRestController {
             })
     public Response<User> getLoggedInUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("Получен пользователь: {}", user.getUsername());
+        log.info("Получен пользователь: {}", user.getUsername());
         return Response.ok(user);
     }
 
@@ -80,7 +78,7 @@ public class UserRestController {
     public Response<?> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundException {
         User user = userService.getUserByEmail(email);
         mailService.sendRecoveryLinkToUser(user);
-        logger.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
+        log.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
         return Response.ok().build();
     }
 
@@ -96,7 +94,7 @@ public class UserRestController {
                                         @RequestParam(name = "password") String newPassword) throws RecoveryException {
 
         mailService.changePasswordByToken(link, newPassword);
-        logger.info("Пароль по адресу {} восстановлен", link);
+        log.info("Пароль по адресу {} восстановлен", link);
         return Response.ok().build();
     }
 
@@ -111,7 +109,7 @@ public class UserRestController {
     public Response<?> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundException {
 
         mailService.activateAccountByToken(code);
-        logger.info("Аккаунт активирован = {}", code);
+        log.info("Аккаунт активирован = {}", code);
         return Response.ok().build();
     }
 }
