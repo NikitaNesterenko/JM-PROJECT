@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,12 +41,9 @@ public class BuyingRestController {
 
         BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
 
-        Set<BuyingInfo> buyingInfos= new HashSet<>();
-        buyingInfos.add(buyingInfo);
-
         User user = userService.getUserByUsername(SecurityContextHolder.getContext()
                 .getAuthentication().getName());
-        user.setBuyingInfo(buyingInfos);
+        user.setBuyingInfo(Collections.singleton(buyingInfo));
         userService.updateUser(user);
 
         StringBuilder message = new StringBuilder("Congratulations! You have bought the best products:\n");
