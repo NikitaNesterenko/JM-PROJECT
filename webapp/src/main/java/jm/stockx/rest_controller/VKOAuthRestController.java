@@ -1,7 +1,7 @@
 package jm.stockx.rest_controller;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import jm.stockx.oAuth2.VkOAuth;
+import jm.stockx.oAuth2.VKOAuth;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +14,9 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/auth")
-public class VkOAuthRestController {
+public class VKOAuthRestController {
 
-        private final VkOAuth vkOAuth;
+        private final VKOAuth vkOAuth;
 
         @Value("${jwt.cookieName}")
         private String cookieName;
@@ -27,7 +27,7 @@ public class VkOAuthRestController {
         @Value("${vk.authorizeUrl}")
         private String authorizeUrl;
 
-        public VkOAuthRestController(VkOAuth vkOAuth) {
+        public VKOAuthRestController(VKOAuth vkOAuth) {
             this.vkOAuth = vkOAuth;
         }
 

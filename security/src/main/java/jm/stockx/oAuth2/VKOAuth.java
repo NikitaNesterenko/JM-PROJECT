@@ -1,6 +1,5 @@
 package jm.stockx.oAuth2;
 
-import com.github.scribejava.apis.GoogleApi20;
 import com.github.scribejava.apis.VkontakteApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -22,7 +21,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class VkOAuth {
+public class VKOAuth {
     private OAuth20Service auth20Service;
     private final UserService userService;
     private final RoleService roleService;
@@ -48,7 +47,7 @@ public class VkOAuth {
 
     User user;
 
-    public VkOAuth(UserService userService, RoleService roleService, JwtTokenProvider jwtTokenProvider) {
+    public VKOAuth(UserService userService, RoleService roleService, JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.roleService = roleService;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -59,6 +58,7 @@ public class VkOAuth {
         auth20Service = new ServiceBuilder(client_id)
                 .apiSecret(clientSecret)
                 .defaultScope(scope)
+                .responseType(response_type)
                 .callback(redirect_uri)
                 .build(VkontakteApi.instance());
     }
@@ -77,6 +77,10 @@ public class VkOAuth {
         auth20Service.signRequest(token, request);
         Response response = auth20Service.execute(request);
 
+        System.out.println();
+        System.out.println(response);
+        System.out.println();
+
         JSONObject jsonObj = new JSONObject(response.getBody());
 
         String firstName = jsonObj.optString("given_name");
@@ -94,7 +98,6 @@ public class VkOAuth {
             user.setRole(roleService.getRole("ROLE_USER"));
             userService.createUser(user);
         }
-
         return jwtTokenProvider.createToken(email, user.getRole());
     }
 
