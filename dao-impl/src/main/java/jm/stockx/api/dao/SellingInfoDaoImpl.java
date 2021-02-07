@@ -81,7 +81,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "FROM SellingInfo as si " +
                 "LEFT JOIN ItemInfo as i " +
                 "ON si.itemInfo.id = i.id " +
-                "GROUP BY i.id " +
+                "GROUP BY 1, 2, 3, 4 " +
                 "ORDER BY COUNT(si.itemInfo) DESC";
         return entityManager.createQuery(sql, ItemTopInfoDto.class)
                 .setMaxResults(maxResult)
