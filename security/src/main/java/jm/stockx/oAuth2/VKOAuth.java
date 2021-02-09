@@ -12,6 +12,7 @@ import jm.stockx.UserNotFoundException;
 import jm.stockx.UserService;
 import jm.stockx.entity.User;
 import jm.stockx.jwt.JwtTokenProvider;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -73,19 +74,15 @@ public class VKOAuth {
 
     public String getVkUserToken(OAuth2AccessToken token) throws InterruptedException, ExecutionException, IOException, UserNotFoundException {
 
-        OAuthRequest request = new OAuthRequest(Verb.GET,  "https://oauth.vk.com/authorize");
+        OAuthRequest request = new OAuthRequest(Verb.GET,  "https://api.vk.com/method/users.get?v=5.52");
         auth20Service.signRequest(token, request);
         Response response = auth20Service.execute(request);
 
-        System.out.println();
-        System.out.println(response);
-        System.out.println();
-
         JSONObject jsonObj = new JSONObject(response.getBody());
-
-        String firstName = jsonObj.optString("given_name");
-        String lastName = jsonObj.optString("family_name");
-        String email = jsonObj.optString("email");
+        JSONArray jArray = jsonObj.getJSONArray("response");
+        String firstName = jArray.getJSONObject(0).optString("first_name");
+        String lastName = jArray.getJSONObject(0).optString("last_name");
+        String email = jArray.getJSONObject(0).optString("email");
 
         if (userService.isUserExistByEmail(email)) {
             try {
