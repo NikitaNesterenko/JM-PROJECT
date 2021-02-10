@@ -24,7 +24,7 @@ public class ItemInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY,
+    @OneToOne(targetEntity = Item.class, fetch = FetchType.LAZY, optional = false,
             cascade = {
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
@@ -35,6 +35,10 @@ public class ItemInfo {
             cascade = {
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
+    @JoinTable(
+            name = "info_item_size_item",
+            joinColumns = @JoinColumn(name = "info_id"),
+            inverseJoinColumns = @JoinColumn(name = "size_id"))
     private ItemSize size;
 
     @ManyToOne(targetEntity = BuyingInfo.class, fetch = FetchType.LAZY,
@@ -42,6 +46,10 @@ public class ItemInfo {
                     CascadeType.PERSIST,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
+    @JoinTable(
+            name = "item_info_buying_info",
+            joinColumns = @JoinColumn(name = "info_id"),
+            inverseJoinColumns = @JoinColumn(name = "buying_id"))
     private BuyingInfo buyingInfo;
 
     @Columns(columns = {@Column(name = "item_currency"), @Column(name = "item_price")})
@@ -74,7 +82,10 @@ public class ItemInfo {
     private ItemCategory itemCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id")
+    @JoinTable (
+            name = "info_item_brand_item",
+            joinColumns = @JoinColumn(name = "infoId"),
+            inverseJoinColumns = @JoinColumn(name = "brandId"))
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY)
