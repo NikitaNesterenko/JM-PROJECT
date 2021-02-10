@@ -2,9 +2,9 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.ItemInfoService;
 import jm.stockx.SellingInfoService;
-import jm.stockx.dto.itemInfo.ItemInfoDtoDecimal;
-import jm.stockx.dto.itemInfo.ItemSearchDto;
-import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
+import jm.stockx.dto.iteminfo.ItemInfoDtoDecimal;
+import jm.stockx.dto.iteminfo.ItemSearchDto;
+import jm.stockx.dto.sellinginfo.ItemTopInfoDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
