@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 
-
 @Getter
 @Setter
 @NoArgsConstructor

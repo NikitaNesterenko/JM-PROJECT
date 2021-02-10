@@ -161,6 +161,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     @Override
     public User getUserById(Long id) {
         return entityManager.createQuery("" +
@@ -169,6 +170,7 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     @Override
     public User getUserByEmail(String email) {
         try {
