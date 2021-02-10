@@ -1,6 +1,5 @@
 package jm.stockx.rest_controller;
 
-import com.google.gson.Gson;
 import jm.stockx.ItemInfoService;
 import jm.stockx.dto.iteminfo.ItemInfoDtoDecimal;
 import jm.stockx.dto.iteminfo.ItemSearchDto;
@@ -12,10 +11,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/item")
+// TODO: Требуется изменение маппинга. Везде так: "/rest/api/названиеДомена"
 public class ItemRestController {
     private final ItemInfoService itemInfoService;
-    private static final Gson gson = new Gson();
-
     @Autowired
     public ItemRestController(ItemInfoService itemInfoService) {
         this.itemInfoService = itemInfoService;
@@ -27,17 +25,26 @@ public class ItemRestController {
     }
 
     @GetMapping("/allItem")
-    public ResponseEntity<List<ItemInfoDtoDecimal>> getAllItemInfo(){
+    public ResponseEntity<List<ItemInfoDtoDecimal>> getAllItemInfo() {
 
         List<ItemInfoDtoDecimal> list = itemInfoService.getAllItemInfoDtoDecimal();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/item")
-    public ResponseEntity<ItemInfoDtoDecimal> getItemInfoDtoDec(@RequestParam (name = "id") Long id){
+    public ResponseEntity<ItemInfoDtoDecimal> getItemInfoDtoDec(@RequestParam(name = "id") Long id) {
         return ResponseEntity.ok(itemInfoService.getItemInfoDtoDec(id));
     }
 
-
-
+    /**
+     * Получение самых продаваемых предметов.
+     * Используется для заполнения компонента Main Page.
+     *
+     * @return List<NewsDto>
+     */
+    @GetMapping("/mostpopular")
+    public ResponseEntity<List<ItemTopInfoDto>> getMostPopularItems() {
+        List<ItemTopInfoDto> foundTodItems = sellingInfoService.getItemTopInfoDto(5);
+        return ResponseEntity.ok(foundTodItems);
+    }
 }

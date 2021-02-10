@@ -41,7 +41,6 @@ public class BidServiceImpl implements BidService {
         return bidDAO.getBidDtoByItemNameAndUserName(itemName, userName);
     }
 
-
     @Override
     public void update(Bid bid) {
         bidDAO.update(bid);
@@ -59,11 +58,15 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public void updateBidPrice(String price, Long id) {
-        bidDAO.updateBidPrice(Money.parse(price),id);
+        bidDAO.updateBidPrice(Money.parse(price), id);
     }
 
-    public boolean isBidByCurrentUserExist(Long bidId, Long userId){
+    @Override
+    public List<BidDto> getHighestBids() {
+        return bidDAO.getHighestBids();
+    }
 
+    public boolean isBidByCurrentUserExist(Long bidId, Long userId) {
         return isBidExist(bidId) && userDAO.doesItExistEntity(userId);
     }
 

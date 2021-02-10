@@ -9,6 +9,8 @@ public interface NewsService {
 
     List<News> getAllNews();
 
+    List<NewsDto> getSixLatestNews();
+
     NewsDto getNewsDtoByNewsId(Long id);
 
     void create(News news);
@@ -20,5 +22,4 @@ public interface NewsService {
     NewsDto getNewsDtoByNewsName(String name);
 
     boolean isNewsExist(Long id);
-
 }
