@@ -42,9 +42,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 
     @Override
     public void create(ItemInfo itemInfo) {
-
         itemInfoDAO.add(itemInfo);
-
     }
 
     @Override
@@ -139,7 +137,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 
     public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize) {
         ItemSize sizeFromDb = itemSizeDAO.findOneBySizeName(itemSize);
-        return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId,sizeFromDb);
+        return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId, sizeFromDb);
     }
 
     @Override

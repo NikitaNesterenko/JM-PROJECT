@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/registration")
 public class RegistrationRestController {
-
     private final UserRegistrationService userRegistrationService;
 
     public RegistrationRestController(UserRegistrationService service) {
@@ -21,10 +20,8 @@ public class RegistrationRestController {
     }
 
     @PostMapping
-    public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) throws UserExistsException {
+    public Response<Void> registrationNewUser(@RequestBody UserRegistrationDto user) throws UserExistsException {
         userRegistrationService.registrationUser(user);
-
         return Response.ok().build();
     }
-
 }

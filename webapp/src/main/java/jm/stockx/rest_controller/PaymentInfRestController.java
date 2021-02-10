@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/paymentsinfo/")
 public class PaymentInfRestController {
-//     TODO ?
-//    private final PaymentInfoServiceImpl paymentInfoService;
-//
-//    @Autowired
-//    public PaymentInfRestController(PaymentInfoServiceImpl paymentInfoService) {
-//        this.paymentInfoService = paymentInfoService;
-//    }
+    private final PaymentInfoServiceImpl paymentInfoService;
 
+    @Autowired
+    public PaymentInfRestController(PaymentInfoServiceImpl paymentInfoService) {
+        this.paymentInfoService = paymentInfoService;
+    }
+
+    // TODO: Неясен статус метода и контроллера в целом.
     @PostMapping("/add")
-    public Response<?> addPaymentInformation(@RequestBody PaymentInfoDto paymentInfoDto) {
-       // paymentInfoService.updateFromPaymentInfoDto(paymentInfoDto);
+    public Response<Void> addPaymentInformation(@RequestBody PaymentInfoDto paymentInfoDto) {
+        // paymentInfoService.updateFromPaymentInfoDto(paymentInfoDto);
         return Response.ok().build();
     }
 }

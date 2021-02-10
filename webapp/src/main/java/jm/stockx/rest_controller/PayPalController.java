@@ -3,9 +3,10 @@ package jm.stockx.rest_controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import jm.stockx.dto.paypalintegration.PayPalOrderDto;
 import jm.stockx.PayPalServiceImpl;
-import org.springframework.http.ResponseEntity;
+import jm.stockx.dto.paypalintegration.PayPalOrderDto;
+import jm.stockx.util.Response;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,34 +27,32 @@ public class PayPalController {
      * @return ResponseEntity<String> – содержит адрес для подтверждения пользователем транзакции.
      */
     @PostMapping("/api/payment/paypal/creation")
-    public ResponseEntity<String> createPayment(@RequestBody PayPalOrderDto orderForProcessing) {
+    public Response<String> createPayment(@RequestBody PayPalOrderDto orderForProcessing) {
         try {
             Payment payment = payPalServiceImpl.createPayment(orderForProcessing);
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {
-                    return ResponseEntity.ok(link.getHref());
+                    return Response.ok().header(HttpHeaders.DATE).body(link.getHref());
                 }
             }
-
-            return ResponseEntity.noContent().build();
         } catch (PayPalRESTException e) {
             e.printStackTrace();
-            return ResponseEntity.noContent().build();
         }
+        return Response.noContent().build();
     }
 
     @PostMapping("/api/payment/paypal/execution")
-    public ResponseEntity<String> makePayment(@RequestParam("paymentId") String paymentId,
-                                              @RequestParam("PayerID") String payerId) {
+    public Response<String> makePayment(@RequestParam("paymentId") String paymentId,
+                                        @RequestParam("PayerID") String payerId) {
         try {
             Payment payment = payPalServiceImpl.executePayment(paymentId, payerId);
 
             if (payment.getState().equals("approved")) {
-                return ResponseEntity.ok("Payment approved");
+                return Response.ok("Transaction Approved");
             }
         } catch (PayPalRESTException e) {
             e.getMessage();
         }
-        return ResponseEntity.badRequest().build();
+        return Response.badRequest().build();
     }
 }

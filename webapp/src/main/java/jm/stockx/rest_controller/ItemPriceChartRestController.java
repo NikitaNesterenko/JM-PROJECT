@@ -2,9 +2,8 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.ItemPriceChartService;
 import jm.stockx.dto.ItemPriceChartDto;
+import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +20,8 @@ public class ItemPriceChartRestController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<ItemPriceChartDto> get(@RequestParam Long id) {
-        return new ResponseEntity<>(service.get12LatestSales(id), HttpStatus.OK);
+    public Response<ItemPriceChartDto> get(@RequestParam Long id) {
+        ItemPriceChartDto latestSales = service.get12LatestSales(id);
+        return Response.ok(latestSales);
     }
-
 }

@@ -19,16 +19,14 @@ public class AdminController {
     }
 
     @PostMapping("/add/item")
-    public Response<?> addItem(@RequestBody ItemDtoAdmin itemDtoAdmin) {
+    public Response<Void> addItem(@RequestBody ItemDtoAdmin itemDtoAdmin) {
         itemAdminService.addAdminItemInfo(itemDtoAdmin);
         return Response.ok().build();
     }
 
     @PostMapping("/add/listitem")
-    public Response<?> addListItem(@RequestBody List<ItemDtoAdmin> listItemDtoAdmin) {
+    public Response<Void> addListItem(@RequestBody List<ItemDtoAdmin> listItemDtoAdmin) {
         itemAdminService.addAdminListItemInfo(listItemDtoAdmin);
         return Response.ok().build();
     }
-
-
 }

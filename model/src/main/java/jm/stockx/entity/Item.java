@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 @Getter
@@ -39,6 +40,9 @@ public class Item implements Serializable {
 
     @Column(name = "name")
     private String name;
+
+    @OneToOne(optional = false, mappedBy = "item")
+    private ItemInfo itemInfo;
 
     public Item(String name) {
         this.name = name;
