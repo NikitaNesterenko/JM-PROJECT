@@ -2,7 +2,7 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.BrandService;
 import jm.stockx.dto.brand.BrandDto;
-import org.springframework.http.ResponseEntity;
+import jm.stockx.util.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +25,8 @@ public class BrandRestController {
      * @return List<BrandDto>
      */
     @GetMapping(value = "/populars")
-    public ResponseEntity<List<BrandDto>> getPopularBrands() {
+    public Response<List<BrandDto>> getPopularBrands() {
         List<BrandDto> brandsFound = brandService.getPopularBrands();
-        return ResponseEntity.ok(brandsFound);
+        return Response.ok(brandsFound);
     }
 }
