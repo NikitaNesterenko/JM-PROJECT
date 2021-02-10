@@ -12,8 +12,6 @@ import jm.stockx.dto.bid.BidDto;
 import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,13 +39,13 @@ public class BidRestController {
                     @ApiResponse(responseCode = "200", description = "successful operation"),
             }
     )
-    public Response<?> placeBid(@RequestBody BidPostDto newBid) throws BidException {
+    public Response<String> placeBid(@RequestBody BidPostDto newBid) throws BidException {
         if (bidService.isBidByCurrentUserExist(newBid.getId(), newBid.getUserId())) {
             bidService.updateBidPrice(newBid.getPrice(), newBid.getId());
-            return Response.ok(HttpStatus.ACCEPTED, "Bid price was successfully updated");
+            return Response.accepted().body("Bid price was successfully updated");
         }
         bidService.placeBid(newBid);
-        return Response.ok(HttpStatus.ACCEPTED, "Bid placed");
+        return Response.accepted().body("Bid placed");
     }
 
     /**
@@ -57,8 +55,8 @@ public class BidRestController {
      * @return List<BidDto>
      */
     @GetMapping(value = "/highest")
-    public ResponseEntity<List<BidDto>> getBids() {
+    public Response<List<BidDto>> getBids() {
         List<BidDto> highestBidsFound = bidService.getHighestBids();
-        return ResponseEntity.ok(highestBidsFound);
+        return Response.ok(highestBidsFound);
     }
 }

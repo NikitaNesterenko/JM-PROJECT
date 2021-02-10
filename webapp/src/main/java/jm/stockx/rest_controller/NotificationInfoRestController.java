@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/notification")
 public class NotificationInfoRestController {
-
     private final NotificationInfoService notificationInfoService;
 
     @Autowired
@@ -18,9 +17,8 @@ public class NotificationInfoRestController {
     }
 
     @PostMapping("/change")
-    public Response<?> changeNotificationInfo(@RequestBody NotificationInfoDTO notificationInfoDTO) {
+    public Response<Void> changeNotificationInfo(@RequestBody NotificationInfoDTO notificationInfoDTO) {
         notificationInfoService.updateField(notificationInfoDTO.getUserId(), notificationInfoDTO.getName());
         return Response.ok().build();
     }
-
 }
