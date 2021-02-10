@@ -222,50 +222,13 @@ public class EntityDataInitializer {
                     .itemColors(ItemColors.BLACK)
                     .build());
 
-            itemInfoService.create(ItemInfo.builder()
-                    .item(jordan14)
-                    .itemCategory(ItemCategory.SNEAKERS)
-                    .price(Money.parse("RUB 200.0"))
-                    .highestBid(Money.parse("RUB 222.0"))
-                    .lowestAsk(Money.parse("RUB 191.0"))
-                    .buyingInfo(buyingInfoJordan16)
-                    .size(itemSizeService.findOneBySizeName("8"))
-                    .releaseDate(LocalDate.of(2020, 7, 2))
-                    .condition("New")
-                    .description("Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
-                            "This release draws a close resemblance to the Jordan 14 Challenge Red, but instead of yellow detailing to mimic it’s " +
-                            "Ferrari inspiration, the Gym Red 14 implements white panels to create the Bulls uniform vibe.\n" +
-                            "\n" +
-                            "The Jordan 14 Gym Red Toro features a red suede upper atop a black and white sole. A black woven tongue, " +
-                            "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
-                            "retailed for $190 USD.")
-                    .brand(brandService.getBrandByName("Jordan"))
-                    .style(styleService.getStyleByName("sports"))
-                    .itemColors(ItemColors.BLACK)
-                    .build());
+            ItemInfo itemInfo = itemInfoService.get(1L);
 
-            itemInfoService.create(ItemInfo.builder()
-                    .item(jordan14)
-                    .itemCategory(ItemCategory.SNEAKERS)
-                    .price(Money.parse("RUB 200.0"))
-                    .highestBid(Money.parse("RUB 222.0"))
-                    .lowestAsk(Money.parse("RUB 191.0"))
-                    .buyingInfo(buyingInfoJordan14)
-                    .size(itemSizeService.findOneBySizeName("7"))
-                    .releaseDate(LocalDate.of(2020, 7, 2))
-                    .condition("New")
-                    .description("Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
-                            "This release draws a close resemblance to the Jordan 14 Challenge Red, but instead of yellow detailing to mimic it’s " +
-                            "Ferrari inspiration, the Gym Red 14 implements white panels to create the Bulls uniform vibe.\n" +
-                            "\n" +
-                            "The Jordan 14 Gym Red Toro features a red suede upper atop a black and white sole. A black woven tongue, " +
-                            "tire-like rubber heel tab, and arch underlay complete the design. These Jordan 14s released in July of 2020 and " +
-                            "retailed for $190 USD.")
-                    .brand(brandService.getBrandByName("Jordan"))
-                    .style(styleService.getStyleByName("sports"))
-                    .itemColors(ItemColors.BLACK)
-                    .build());
+            itemInfo.setSize(itemSizeService.findOneBySizeName("8"));
+            itemInfoService.update(itemInfo);
 
+            itemInfo.setSize(itemSizeService.findOneBySizeName("7"));
+            itemInfoService.update(itemInfo);
 
             Item adidasYeezy = new SneakersItem(("Adidas Yeezy Boost 380 Mist"));
             itemService.create(adidasYeezy);
