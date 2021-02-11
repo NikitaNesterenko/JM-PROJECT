@@ -31,6 +31,9 @@ public class VKOAuth {
     @Value("${vk.client_id}")
     private String client_id;
 
+    @Value("${vk.clientSecret}")
+    private String clientSecret;
+
     @Value("${vk.redirect_uri}")
     private String redirect_uri;
 
@@ -39,9 +42,6 @@ public class VKOAuth {
 
     @Value("${vk.response_type}")
     private String response_type;
-
-    @Value("${vk.clientSecret}")
-    private String clientSecret;
 
     @Value("@{vk.basicPassword}")
     private String basicPassword;

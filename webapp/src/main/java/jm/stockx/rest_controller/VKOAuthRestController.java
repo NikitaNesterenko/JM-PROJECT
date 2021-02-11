@@ -35,6 +35,7 @@ public class VKOAuthRestController {
         @GetMapping("/vk")
         public void vkAuth(@RequestParam String code, HttpServletResponse response) {
             try {
+
                 String jwtToken = vkOAuth.getVkUserToken(code);
 
                 response.addCookie(new Cookie(cookieName, jwtToken));
