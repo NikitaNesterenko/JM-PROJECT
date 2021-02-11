@@ -28,7 +28,6 @@ public class VkAuthorisation {
 
     @Getter
     final OAuth20Service service = new ServiceBuilder(clientId)
-
             .apiSecret(clientSecret)
             .defaultScope(customScope)
             .responseType("token")
@@ -44,7 +43,7 @@ public class VkAuthorisation {
         return service.getAccessToken(AccessTokenRequestParams.create(code).scope(customScope));
     }
 
-    public User toCreateUser(OAuth2AccessToken token, String email) throws InterruptedException, ExecutionException {
+    public User toCreateUser(OAuth2AccessToken token) throws InterruptedException, ExecutionException {
         final OAuthRequest request = new OAuthRequest(Verb.GET, protectedResourceUrl);
         service.signRequest(token, request);
         User user = null;
@@ -55,8 +54,8 @@ public class VkAuthorisation {
             String password = jArray.getJSONObject(0).optString("id");
             String firstName = jArray.getJSONObject(0).optString("first_name");
             String lastName = jArray.getJSONObject(0).optString("last_name");
-            String username = email;
-            user = new User(firstName, lastName, password);
+            String email = jArray.getJSONObject(0).optString("email");
+            user = new User(firstName, lastName, email, password);
         } catch (IOException e) {
             e.printStackTrace();
         }
