@@ -2,7 +2,6 @@ package jm.stockx.oAuth2;
 
 import com.github.scribejava.apis.VkontakteApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -68,21 +68,27 @@ public class VKOAuth {
         return auth20Service.getAuthorizationUrl();
     }
 
-    public OAuth2AccessToken getOAuthToken(String code) throws InterruptedException, ExecutionException, IOException {
-        return auth20Service.getAccessToken(code);
-    }
+    public String getVkUserToken(String code) throws InterruptedException, ExecutionException, IOException, UserNotFoundException {
 
-    public String getVkUserToken(OAuth2AccessToken token) throws InterruptedException, ExecutionException, IOException, UserNotFoundException {
-
-        OAuthRequest request = new OAuthRequest(Verb.GET,  "https://api.vk.com/method/users.get?v=5.52");
-        auth20Service.signRequest(token, request);
+        OAuthRequest request = new OAuthRequest(Verb.GET,  "https://oauth.vk.com/access_token");
+        request.addParameter("client_id", client_id);
+        request.addParameter("client_secret", clientSecret);
+        request.addParameter("redirect_uri", redirect_uri);
+        request.addParameter("code",code);
         Response response = auth20Service.execute(request);
 
         JSONObject jsonObj = new JSONObject(response.getBody());
-        JSONArray jArray = jsonObj.getJSONArray("response");
+        String token = jsonObj.optString("access_token");
+        String email = jsonObj.optString("email");
+
+        OAuthRequest request1 = new OAuthRequest(Verb.GET,  "https://api.vk.com/method/users.get?v=5.52");
+        auth20Service.signRequest(token, request1);
+        Response response1 = auth20Service.execute(request1);
+
+        JSONObject jsonObj1 = new JSONObject(response1.getBody());
+        JSONArray jArray = jsonObj1.getJSONArray("response");
         String firstName = jArray.getJSONObject(0).optString("first_name");
         String lastName = jArray.getJSONObject(0).optString("last_name");
-        String email = jArray.getJSONObject(0).optString("email");
 
         if (userService.isUserExistByEmail(email)) {
             try {
@@ -97,6 +103,4 @@ public class VKOAuth {
         }
         return jwtTokenProvider.createToken(email, user.getRole());
     }
-
-
 }

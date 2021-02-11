@@ -1,9 +1,7 @@
 package jm.stockx.rest_controller;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
 import jm.stockx.oAuth2.VKOAuth;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -35,20 +33,18 @@ public class VKOAuthRestController {
         }
 
         @GetMapping("/vk")
-        public void vkAuth(@RequestParam String code, HttpServletResponse request) {
+        public void vkAuth(@RequestParam String code, HttpServletResponse response) {
             try {
-                OAuth2AccessToken oAuth2Token = vkOAuth.getOAuthToken(code);
-                System.out.println(oAuth2Token);
-                String jwtToken = vkOAuth.getVkUserToken(oAuth2Token);
+                String jwtToken = vkOAuth.getVkUserToken(code);
 
-                request.addCookie(new Cookie(cookieName, jwtToken));
-                request.sendRedirect(successUrl);
+                response.addCookie(new Cookie(cookieName, jwtToken));
+                response.sendRedirect(successUrl);
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
 
                 try {
-                    request.sendRedirect(authorizeUrl);
+                    response.sendRedirect(authorizeUrl);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
