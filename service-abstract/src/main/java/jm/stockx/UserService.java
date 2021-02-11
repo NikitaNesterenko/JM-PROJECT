@@ -36,7 +36,7 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User getUserByEmail(String email) throws UserNotFoundException;
+    User getUserByEmail(String email);
 
     void updateUserFromDto(UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException;
 

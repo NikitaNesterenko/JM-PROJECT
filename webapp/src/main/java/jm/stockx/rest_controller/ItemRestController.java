@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/item")
-// TODO: Требуется изменение маппинга. Везде так: "/rest/api/названиеДомена"
+@RequestMapping("/rest/api/item")
 public class ItemRestController {
     private final ItemInfoService itemInfoService;
     private final SellingInfoService sellingInfoService;

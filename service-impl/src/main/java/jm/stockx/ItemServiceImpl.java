@@ -67,14 +67,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void buyItem(BuyingDto buyingDto) {
-        // TODO: payment
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
         ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId()));
         Set<ItemInfo> bougthItems = new HashSet<>();
         bougthItems.add(itemInfo);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
-        //TODO : add actual paymentInfo
 
         BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
         buyingInfo.setBoughtItemsInfo(bougthItems);

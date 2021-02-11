@@ -103,7 +103,7 @@ public class UserRestController {
             operationId = "activateAccount",
             summary = "Token received to email",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "OK: account avtivated"),
+                    @ApiResponse(responseCode = "200", description = "OK: account activated"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to activate account")
             })
     public Response<Void> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundException {

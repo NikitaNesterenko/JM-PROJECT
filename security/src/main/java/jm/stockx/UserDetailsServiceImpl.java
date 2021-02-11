@@ -29,19 +29,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-
-    //TODO переделать сесурити
     @Override
     public UserDetails loadUserByUsername(String email) {
-        User user = null;
-        try {
-            user = userService.getUserByEmail(email);
-            userService.isUserExistByEmail(email);
-        } catch (Exception e) {
+        User user = userService.getUserByEmail(email);
+        if (user == null) {
             log.info("Пользователь {} не найден", email);
             throw new UsernameNotFoundException("Unknown user: " + email);
+        } else {
+            return user;
         }
-        return user;
     }
 
     public String authenticateUser(UserLoginDto loginUser) {

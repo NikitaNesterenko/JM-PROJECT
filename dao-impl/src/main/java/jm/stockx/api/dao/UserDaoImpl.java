@@ -6,7 +6,7 @@ import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@NoArgsConstructor
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
-
-    @Autowired
-    ItemInfoDAO itemInfoDAO;
 
     @Override
     public List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id) {
@@ -56,7 +54,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "WHERE u.email = :email", Long.class)
                 .setParameter("email", email)
                 .getSingleResult();
-
         return existingValue > 0;
     }
 
@@ -166,18 +163,13 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
     }
 
-    //TODO какая-то фигня
+    // TODO: Использование Entity
     @Override
     public User getUserByEmail(String email) {
-        try {
-            return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.email =: email", User.class)
-                .setParameter("email", email)
-                .getSingleResult();
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
+        return entityManager.createQuery("" +
+            "FROM User AS u WHERE u.email =: email", User.class)
+            .setParameter("email", email)
+            .getSingleResult();
     }
 
     public void updateUserFromDto(UserPutDto userPutDto){

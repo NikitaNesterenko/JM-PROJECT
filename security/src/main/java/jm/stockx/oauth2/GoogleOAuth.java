@@ -79,11 +79,7 @@ public class GoogleOAuth {
         String email = jsonObj.optString("email");
 
         if (userService.isUserExistByEmail(email)) {
-            try {
-                user = userService.getUserByEmail(email);
-            } catch (UserNotFoundException e) {
-                e.printStackTrace();
-            }
+            user = userService.getUserByEmail(email);
         } else {
             user = new User(firstName, lastName, email, basicPassword);
             user.setRole(roleService.getRole("ROLE_USER"));
