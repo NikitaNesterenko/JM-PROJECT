@@ -24,34 +24,15 @@ import java.util.Set;
 @RequestMapping("/api/buying")
 public class BuyingRestController {
     private UserService userService;
-    private MailService mailService;
-    private BuyingInfoService buyingInfoService;
 
     @Autowired
-    public BuyingRestController(UserService userService, MailService mailService, BuyingInfoService buyingInfoService) {
+    public BuyingRestController(UserService userService) {
         this.userService = userService;
-        this.mailService = mailService;
-        this.buyingInfoService = buyingInfoService;
     }
 
     @PostMapping("/add")
     public Response<?> addBuyingInfo (@RequestBody BuyingInfoPostDto buyingInfoPostDto) {
-
-        Long id = buyingInfoService.create(buyingInfoPostDto);
-
-        BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
-
-        User user = userService.getUserByUsername(SecurityContextHolder.getContext()
-                .getAuthentication().getName());
-        user.setBuyingInfo(Collections.singleton(buyingInfo));
-        userService.updateUser(user);
-
-        StringBuilder message = new StringBuilder("Congratulations! You have bought the best products:\n");
-        for (ItemInfo i:buyingInfo.getBoughtItemsInfo()) {
-            message.append(i.getItem().getName()).append("\n");
-        }
-        mailService.sendSimpleMessage(user.getEmail(), "Your best buy!", message.toString());
-
+        userService.addBuyingInfo(buyingInfoPostDto);
         return Response.ok().build();
     }
 }
