@@ -1,12 +1,9 @@
 package jm.stockx.dto.shoesize;
 
+import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -31,5 +28,11 @@ public class ShoeSizeDto {
         this.id = shoesize.getId();
         this.size = shoesize.getSize();
         this.sizeTypes = shoesize.getSizeTypes();
+    }
+
+    public ShoeSizeDto(ItemSizeDto shoeSizeDto) {
+        this.id = shoeSizeDto.getId();
+        this.size = shoeSizeDto.getSize();
+        this.sizeTypes = shoeSizeDto.getSizeTypes();
     }
 }

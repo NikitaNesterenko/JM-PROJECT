@@ -79,12 +79,15 @@ public class BidServiceImpl implements BidService {
      */
     @Override
     public void placeBid(BidPostDto newBid) {
-        Bid bidEntity = Bid.builder()
-                .price(Money.parse(newBid.getPrice()))
-                .itemInfo(itemInfoDAO.getItemInfoByItemId(newBid.getItemInfoId()))
-                .user(userDAO.getUserById(newBid.getUserId()))
-                .success(true)
-                .build();
-        bidDAO.add(bidEntity);
+//        TODO
+//        Bid bidEntity = Bid.builder()
+//                .price(Money.parse(newBid.getPrice()))
+//                .itemInfo(itemInfoDAO.getItemInfoByItemId(newBid.getItemInfoId()))
+//                .user(userDAO.getUserById(newBid.getUserId()))
+//                .success(true)
+//                .build();
+//        bidDAO.add(bidEntity);
+//
+//        bidDAO.
     }
 }

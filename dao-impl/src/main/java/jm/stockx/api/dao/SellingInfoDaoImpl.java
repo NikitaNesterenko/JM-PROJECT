@@ -1,7 +1,7 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.sellinginfo.*;
-import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -19,13 +19,12 @@ import java.util.stream.Collectors;
 @Repository
 public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implements SellingInfoDAO {
 
-    // TODO: Использование Entity
     @Override
     public Double getAverageSalesValue() {
         return (Double) entityManager.createNativeQuery("" +
                 "SELECT AVG(si.price)" +
                 "FROM selling_info AS si " +
-                "WHERE si.order_status = 'DELIVERED'", SellingInfo.class)
+                "WHERE si.order_status = 'DELIVERED'", SellingInfoDto.class)
                 .getSingleResult();
     }
 
@@ -58,12 +57,11 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
-    // TODO: Использование Entity
     public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
-        List<SellingInfo> list = entityManager.createQuery("" +
+        List<SellingInfoDto> list = entityManager.createQuery("" +
                 "SELECT si " +
                 "FROM SellingInfo as si " +
-                "WHERE si.orderDate BETWEEN :begin AND :end", SellingInfo.class)
+                "WHERE si.orderDate BETWEEN :begin AND :end", SellingInfoDto.class)
                 .setParameter("begin", beginningPeriod)
                 .setParameter("end", endPeriod)
                 .getResultList();
@@ -123,12 +121,11 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
-    // TODO: Использование Entity
     @Override
-    public List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
-                                                    LocalDateTime endPeriod,
-                                                    ItemCategory itemCategory,
-                                                    int limit) {
+    public List<ItemDto> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
+                                                       LocalDateTime endPeriod,
+                                                       ItemCategory itemCategory,
+                                                       int limit) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.entity.Item( " +
                 "si.itemInfo.item.id, " +
@@ -138,7 +135,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "WHERE si.orderDate >= :begin AND si.orderDate <= :end " +
                 "AND si.itemInfo.itemCategory = :itemCategory " +
                 "GROUP BY si.itemInfo.item.id, si.itemInfo.item.name " +
-                "ORDER BY COUNT(si.itemInfo.item.id) DESC ", Item.class)
+                "ORDER BY COUNT(si.itemInfo.item.id) DESC ", ItemDto.class)
                 .setParameter("begin", beginningPeriod)
                 .setParameter("end", endPeriod)
                 .setParameter("itemCategory", itemCategory)

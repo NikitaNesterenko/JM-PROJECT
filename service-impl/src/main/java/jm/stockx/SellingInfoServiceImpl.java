@@ -1,13 +1,9 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
+import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.iteminfo.InfoTickerDto;
-import jm.stockx.dto.sellinginfo.AverageSalePriceDto;
-import jm.stockx.dto.sellinginfo.ItemPriceChangeDto;
-import jm.stockx.dto.sellinginfo.ItemTopInfoDto;
-import jm.stockx.dto.sellinginfo.SellerTopInfoDto;
-import jm.stockx.dto.sellinginfo.SellingItemDto;
-import jm.stockx.entity.Item;
+import jm.stockx.dto.sellinginfo.*;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
@@ -99,15 +95,15 @@ public class SellingInfoServiceImpl implements SellingInfoService {
 
     @Override
     public List<InfoTickerDto> getInfoTickerDto(ItemCategory itemCategory, LocalDateTime begin, LocalDateTime end, int limit) {
-        List<Item> topSellItems = sellingInfoDAO.getTopItemByPeriodAndCategory(begin, end, itemCategory, limit);
+        List<ItemDto> topSellItems = sellingInfoDAO.getTopItemByPeriodAndCategory(begin, end, itemCategory, limit);
         List<InfoTickerDto> infoTickerDtoList = new ArrayList<>();
 
-        for (Item item : topSellItems) {
-            List<SellingItemDto> selling = this.getSellingItemDtoByPeriodAndItemId(begin, end, item.getId());
+        for (ItemDto itemDto : topSellItems) {
+            List<SellingItemDto> selling = this.getSellingItemDtoByPeriodAndItemId(begin, end, itemDto.getId());
 
             boolean flag = !selling.get(0).getPrice().isGreaterThan(selling.get(selling.size() - 1).getPrice());
             Money price = selling.get(selling.size() - 1).getPrice();
-            String name = reductionName(item.getName());
+            String name = reductionName(itemDto.getName());
 
             infoTickerDtoList.add(new InfoTickerDto(name, price, flag));
         }

@@ -1,11 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.iteminfo.InfoTickerDto;
-import jm.stockx.dto.sellinginfo.AverageSalePriceDto;
-import jm.stockx.dto.sellinginfo.ItemPriceChangeDto;
-import jm.stockx.dto.sellinginfo.ItemTopInfoDto;
-import jm.stockx.dto.sellinginfo.SellerTopInfoDto;
-import jm.stockx.dto.sellinginfo.SellingItemDto;
+import jm.stockx.dto.sellinginfo.*;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 

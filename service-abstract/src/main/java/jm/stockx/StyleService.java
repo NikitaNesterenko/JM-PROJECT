@@ -23,5 +23,5 @@ public interface StyleService {
 
     Style getStyleById(Long id);
 
-    Style getStyleByName(String name);
+    StyleDto getStyleByName(String name);
 }

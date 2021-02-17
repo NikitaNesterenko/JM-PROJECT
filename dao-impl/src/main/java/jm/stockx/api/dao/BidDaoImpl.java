@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.bid.BidDto;
+import jm.stockx.dto.bid.BidPostDto;
 import jm.stockx.entity.Bid;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
@@ -66,4 +67,9 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 .setMaxResults(5)
                 .getResultList();
     }
+
+    //TODO
+//    public void hyeta(BidPostDto bidPostDto) {
+//        .("INSERT INTO bids");
+//    }
 }

@@ -32,11 +32,11 @@ public interface UserService {
 
     boolean isUserExist(Long id);
 
-    User getUserByUsername(String username);
+    UserDto getUserByUsername(String username);
 
     User getUserById(Long id);
 
-    User getUserByEmail(String email);
+    UserDto getUserByEmail(String email);
 
     void updateUserFromDto(UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException;
 

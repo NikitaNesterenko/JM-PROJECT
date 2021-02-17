@@ -148,9 +148,9 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public UserDto getUserByUsername(String username) {
         return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.username =: username", User.class)
+                "FROM User AS u WHERE u.username =: username", UserDto.class)
                 .setParameter("username", username)
                 .getSingleResult();
     }
@@ -163,11 +163,10 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
-    public User getUserByEmail(String email) {
+    public UserDto getUserByEmail(String email) {
         return entityManager.createQuery("" +
-            "FROM User AS u WHERE u.email =: email", User.class)
+            "FROM User AS u WHERE u.email =: email", UserDto.class)
             .setParameter("email", email)
             .getSingleResult();
     }

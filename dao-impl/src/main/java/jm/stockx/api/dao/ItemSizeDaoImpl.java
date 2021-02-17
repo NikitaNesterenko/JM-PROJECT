@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.shoesize.ShoeSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
@@ -44,22 +45,20 @@ public class ItemSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements Item
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
-    public List<ItemSize> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType) {
+    public List<ItemSizeDto> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType) {
         return entityManager.createQuery(
                 "FROM ShoeSize AS ss WHERE ss.sizeTypes =: sizeType",
-                ItemSize.class)
+                ItemSizeDto.class)
                 .setParameter("sizeType", sizeType)
                 .getResultList();
     }
 
-    // TODO: Использование Entity
-    public ItemSize findOneBySizeName(String itemSize) {
+    public ItemSizeDto findOneBySizeName(String itemSize) {
         return entityManager.createQuery("" +
                         "SELECT itemSize " +
                         "FROM ItemSize itemSize WHERE itemSize.size = :itemSize"
-                , ItemSize.class)
+                , ItemSizeDto.class)
                 .setParameter("itemSize", itemSize)
                 .getSingleResult();
     }

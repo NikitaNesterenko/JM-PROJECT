@@ -31,11 +31,10 @@ public class StyleDaoImpl extends AbstractDAO<Style, Long> implements StyleDAO {
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
-    public Style getStyleByName(String name) {
+    public StyleDto getStyleByName(String name) {
         return entityManager.createQuery("" +
-                "SELECT s FROM Style AS s WHERE s.name = : styleName", Style.class)
+                "SELECT s FROM Style AS s WHERE s.name = : styleName", StyleDto.class)
                 .setParameter("styleName", name)
                 .getSingleResult();
     }

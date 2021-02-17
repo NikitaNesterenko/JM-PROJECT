@@ -23,7 +23,7 @@ public interface BrandService {
 
     BrandDto getBrandDtoByBrandId(Long id);
 
-    Brand getBrandByName(String name);
+    BrandDto getBrandByName(String name);
 
     List<BrandDto> getPopularBrands();
 

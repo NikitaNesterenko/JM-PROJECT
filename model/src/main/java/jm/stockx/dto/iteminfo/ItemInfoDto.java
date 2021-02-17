@@ -44,5 +44,4 @@ public class ItemInfoDto {
         this.itemImgUrl = itemInfo.getItemImageUrl();
     }
 
-
 }

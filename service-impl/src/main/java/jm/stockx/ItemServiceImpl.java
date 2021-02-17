@@ -65,22 +65,23 @@ public class ItemServiceImpl implements ItemService {
         itemDao.deleteById(id);
     }
 
+    //TODO переписать метод на нативный sql
     @Override
     public void buyItem(BuyingDto buyingDto) {
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
-        ItemInfoDto itemInfoDto = new ItemInfoDto(itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId()));
-        Set<ItemInfo> bougthItems = new HashSet<>();
-        bougthItems.add(itemInfo);
+        ItemInfoDto itemInfoDto = itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId());
+        Set<ItemInfo> boughtItems = new HashSet<>();
+        boughtItems.add(itemInfo);
         Set<PaymentInfo> paymentInfo = new HashSet<>();
 
         BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
-        buyingInfo.setBoughtItemsInfo(bougthItems);
+        buyingInfo.setBoughtItemsInfo(boughtItems);
         buyingInfo.setPaymentsInfo(paymentInfo);
         buyingInfo.setStatus(Status.ACCEPTED);
         buyingInfoDAO.add(buyingInfo);
 
-        User seller = userDAO.getById(buyingDto.getBuyerId());
+        User seller = userDAO.getById(buyingDto.getSellerId());
         SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto);
         sellingInfo.setUser(seller);
         sellingInfo.setStatus(Status.ACCEPTED);
@@ -106,12 +107,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItemByName(String name) {
+    public ItemDto getItemByName(String name) {
         return itemDao.getItemByName(name);
     }
 
     @Override
-    public Item getItemById(Long id) {
+    public ItemDto getItemById(Long id) {
         return itemDao.getItemById(id);
     }
 

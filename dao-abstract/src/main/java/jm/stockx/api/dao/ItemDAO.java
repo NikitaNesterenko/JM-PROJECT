@@ -9,8 +9,8 @@ public interface ItemDAO extends GenericDao<Item, Long> {
 
     ItemDto getItemDtoByItemId(Long id);
 
-    Item getItemByName(String name);
+    ItemDto getItemByName(String name);
 
-    Item getItemById(Long id);
+    ItemDto getItemById(Long id);
 
 }

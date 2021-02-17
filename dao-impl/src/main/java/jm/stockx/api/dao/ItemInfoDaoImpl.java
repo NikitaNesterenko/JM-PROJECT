@@ -1,8 +1,10 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.iteminfo.*;
-import jm.stockx.entity.*;
+import jm.stockx.entity.Brand;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
@@ -15,22 +17,20 @@ import java.util.List;
 @Repository
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
 
-    // TODO: Использование Entity
     @Override
-    public ItemInfo getItemInfoByItemId(Long id) {
+    public ItemInfoDto getItemInfoByItemId(Long id) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
-                "WHERE i.item.id = :itemId", ItemInfo.class)
+                "WHERE i.item.id = :itemId", ItemInfoDto.class)
                 .setParameter("itemId", id)
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
-    public ItemInfo getItemInfoByItemName(String itemName) {
+    public ItemInfoDto getItemInfoByItemName(String itemName) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
-                "WHERE i.item.name = :itemName", ItemInfo.class)
+                "WHERE i.item.name = :itemName", ItemInfoDto.class)
                 .setParameter("itemName", itemName)
                 .getSingleResult();
     }
@@ -44,11 +44,10 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
-    public ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory) {
+    public ItemInfoDto getItemInfoByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
-                "WHERE i.itemCategory = :itemCategory", ItemInfo.class)
+                "WHERE i.itemCategory = :itemCategory", ItemInfoDto.class)
                 .setParameter("itemCategory", itemCategory)
                 .getSingleResult();
     }
@@ -264,7 +263,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getResultList();
     }
 
-    public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSize itemSize) {
+    public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSizeDto itemSize) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
                 "item_info.lowestAsk," +

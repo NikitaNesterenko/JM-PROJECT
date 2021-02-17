@@ -2,6 +2,8 @@ package jm.stockx;
 
 import com.stripe.model.Order;
 import jm.stockx.api.dao.TokenActivationDAO;
+import jm.stockx.dto.security.token.TokenRecoveryDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.News;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.TokenRegistration;
@@ -75,14 +77,15 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public boolean sendRecoveryLinkToUser(User user) {
+    public boolean sendRecoveryLinkToUser(UserDto user) {
         if (user.getEmail() == null) {
             return false;
         }
         String hash = UUID.randomUUID().toString();
         String hashEmail = urlRecoveryLink + hash;
         TokenRecovery token = new TokenRecovery();
-        token.setUser(user);
+//        TODO
+//        token.setUser(user);
         token.setHash(hash);
         token.setHashEmail(hashEmail);
         token.setStartTime(getCurrentDate());
@@ -119,7 +122,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean changePasswordByToken(String link, String password) throws RecoveryException {
-        TokenRecovery token = tokenRecoveryService.getTokenRecoveryByHashEmail(link);
+        TokenRecoveryDto token = tokenRecoveryService.getTokenRecoveryByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
             user.setPassword(password);

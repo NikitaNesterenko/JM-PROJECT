@@ -34,11 +34,10 @@ public class BrandDaoImpl extends AbstractDAO<Brand, Long> implements BrandDAO {
                 .getSingleResult();
     }
 
-    //  TODO : использование Entity
     @Override
-    public Brand getBrandByName(String name) {
+    public BrandDto getBrandByName(String name) {
         return entityManager.createQuery("" +
-                "SELECT b FROM Brand AS b WHERE b.name LIKE : brandName", Brand.class)
+                "SELECT b FROM Brand AS b WHERE b.name LIKE : brandName", BrandDto.class)
                 .setParameter("brandName", name)
                 .getSingleResult();
     }

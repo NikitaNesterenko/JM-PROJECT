@@ -81,7 +81,8 @@ class UserDetailsServiceImplTest {
     @DisplayName("load user properly")
     void loadUserByUsername() throws UserNotFoundException {
         String emailAddress = "admin@mail.ru";
-        given(userService.getUserByEmail(emailAddress)).willReturn(createdUser);
+//        TODO
+//        given(userService.getUserByEmail(emailAddress)).willReturn(createdUser);
 
         UserDetails foundUser = userDetailsService.loadUserByUsername(emailAddress);
 

@@ -1,11 +1,7 @@
 package jm.stockx.dto.iteminfo;
 
 import jm.stockx.entity.ItemInfo;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.joda.money.Money;
 
 import javax.validation.constraints.NotNull;

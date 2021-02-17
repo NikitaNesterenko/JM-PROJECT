@@ -8,9 +8,8 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import jm.stockx.RoleService;
-import jm.stockx.UserNotFoundException;
 import jm.stockx.UserService;
-import jm.stockx.entity.User;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.jwt.JwtTokenProvider;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +39,7 @@ public class GoogleOAuth {
     @Value("${google.callbackUrl}")
     private String callbackUrl;
 
-    private User user;
+    private UserDto user;
 
     public GoogleOAuth(UserService userService, RoleService roleService, JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
@@ -78,13 +77,14 @@ public class GoogleOAuth {
         String lastName = jsonObj.optString("family_name");
         String email = jsonObj.optString("email");
 
-        if (userService.isUserExistByEmail(email)) {
-            user = userService.getUserByEmail(email);
-        } else {
-            user = new User(firstName, lastName, email, basicPassword);
-            user.setRole(roleService.getRole("ROLE_USER"));
-            userService.createUser(user);
-        }
+//        TODO
+//        if (userService.isUserExistByEmail(email)) {
+//            user = userService.getUserByEmail(email);
+//        } else {
+//            user = new UserDto(firstName, lastName, email, basicPassword);
+//            user.setRole(roleService.getRole("ROLE_USER"));
+//            userService.createUser(user);
+//        }
 
         return jwtTokenProvider.createToken(email, user.getRole());
     }

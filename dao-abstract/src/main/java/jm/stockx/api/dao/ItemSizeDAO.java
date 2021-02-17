@@ -1,5 +1,6 @@
 package jm.stockx.api.dao;
 
+import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.shoesize.ShoeSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
@@ -11,7 +12,7 @@ public interface ItemSizeDAO extends GenericDao<ItemSize, Long> {
 
     ShoeSizeDto getShoeSizeDtoByShoeSizeId(Long id);
 
-    List<ItemSize> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType);
+    List<ItemSizeDto> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType);
 
-    ItemSize findOneBySizeName(String itemSize);
+    ItemSizeDto findOneBySizeName(String itemSize);
 }

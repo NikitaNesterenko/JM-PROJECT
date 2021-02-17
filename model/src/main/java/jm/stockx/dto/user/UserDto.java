@@ -1,19 +1,16 @@
 package jm.stockx.dto.user;
 
 import jm.stockx.entity.BuyingInfo;
+import jm.stockx.entity.Role;
 import jm.stockx.entity.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Component
 @Getter
@@ -39,6 +36,8 @@ public class UserDto {
 
     @NotBlank(message = "{data.password}")
     private String password;
+
+    private Role role;
 
     @Min(1)
     @NotNull
@@ -82,5 +81,12 @@ public class UserDto {
         this.sellerLevel = sellerLevel;
         this.vacationMode = vacationMode;
         this.localeTag = localeTag;
+    }
+
+    public UserDto(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 }

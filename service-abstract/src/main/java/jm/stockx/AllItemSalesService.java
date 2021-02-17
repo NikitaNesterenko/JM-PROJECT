@@ -1,12 +1,13 @@
 package jm.stockx;
 
-import java.util.List;
 import jm.stockx.dto.allitemsales.AllItemSalesDto;
-import jm.stockx.entity.Item;
+import jm.stockx.dto.item.ItemDto;
+
+import java.util.List;
 
 public interface AllItemSalesService {
 
-    List<AllItemSalesDto> getAllItemSalesByItem(Item item);
+    List<AllItemSalesDto> getAllItemSalesByItem(ItemDto item);
 
     List<AllItemSalesDto> getAllItemSalesById(Long id);
 
