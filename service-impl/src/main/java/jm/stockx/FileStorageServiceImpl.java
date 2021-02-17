@@ -64,6 +64,34 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
+    public String storeFile(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return "Transferred a non-existent file.";
+        } else {
+            String fileFormat = fileFormat(file.getOriginalFilename());
+            if (!fileFormat.equals(".png")) {
+                return "The file must be at .png format.";
+            }
+            String filePath = uploadPath + "main/" + "main-picture" + fileFormat;
+            String pathReturn = "main-picture";
+
+            if (!new File(uploadPath + "main/").exists()) {
+                try {
+                    Files.createDirectories(Path.of(uploadPath + "main/").toAbsolutePath().normalize());
+                } catch (IOException e) {
+                    throw new FileStorageException("This directory already exists");
+                }
+            }
+
+            try {
+                file.transferTo(Path.of(filePath));
+            } catch (IOException e) {
+                throw new FileStorageException("Couldn't store file " + file.getName() + "\nPlease try again.", e);
+            }
+            return pathReturn + "-" + hashGenerator(file.getName());
+        }
+    }
+
     @Override
     public Resource loadFileAsResource(String filename) {
         Path filePath = Path.of(uploadPath + filename).toAbsolutePath();

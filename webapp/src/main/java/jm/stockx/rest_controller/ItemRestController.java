@@ -21,7 +21,7 @@ public class ItemRestController {
     }
 
     @GetMapping("/search")
-    public List<ItemSearchDto> searchItem(@RequestParam(required = false, name = "s") String search) {
+    public List<ItemSearchDto> searchItem(@RequestParam(required = false) String search) {
         return itemInfoService.getItemSearchDtoBySearch(search);
     }
 }
