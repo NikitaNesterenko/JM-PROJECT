@@ -13,7 +13,6 @@ import jm.stockx.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/rest/api/users")
 @Tag(name = "user", description = "User API")
 public class UserRestController {
-
     private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     private final UserService userService;
@@ -44,9 +42,11 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "user successfully updated  ")
             }
     )
-    public Response<?> updateUser(@RequestBody UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException {
+    public Response<Void> updateUser(@RequestBody UserPutDto userPutDto,
+                                     @AuthenticationPrincipal User principal)
+            throws UserNotFoundException, ForbiddenException {
         userService.updateUserFromDto(userPutDto, principal);
-        return Response.ok(HttpStatus.OK).build();
+        return Response.ok().build();
     }
 
     @GetMapping(value = "/getLoggedInUser")
@@ -77,7 +77,7 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: recovery password token was send"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to send password recovery token")
             })
-    public Response<?> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundException {
+    public Response<Void> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundException {
         User user = userService.getUserByEmail(email);
         mailService.sendRecoveryLinkToUser(user);
         logger.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
@@ -92,9 +92,8 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: password recovered"),
                     @ApiResponse(responseCode = "400", description = "BAD_REQUEST: unable to recover password")
             })
-    public Response<?> passwordRecovery(@RequestParam(name = "token") String link,
-                                        @RequestParam(name = "password") String newPassword) throws RecoveryException {
-
+    public Response<Void> passwordRecovery(@RequestParam(name = "token") String link,
+                                           @RequestParam(name = "password") String newPassword) throws RecoveryException {
         mailService.changePasswordByToken(link, newPassword);
         logger.info("Пароль по адресу {} восстановлен", link);
         return Response.ok().build();
@@ -108,8 +107,7 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: account avtivated"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to activate account")
             })
-    public Response<?> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundException {
-
+    public Response<Void> activateAccountByToken(@PathVariable("code") String code) throws UserNotFoundException {
         mailService.activateAccountByToken(code);
         logger.info("Аккаунт активирован = {}", code);
         return Response.ok().build();

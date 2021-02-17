@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -29,7 +31,7 @@ import javax.persistence.Table;
 @Table(name = "items")
 @TypeDef(name = "joda_MoneyAmountWithCurrencyType", typeClass = PersistentMoneyAmountAndCurrency.class)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Item {
+public class Item implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -38,6 +40,9 @@ public class Item {
 
     @Column(name = "name")
     private String name;
+
+    @OneToOne(optional = false, mappedBy = "item")
+    private ItemInfo itemInfo;
 
     public Item(String name) {
         this.name = name;

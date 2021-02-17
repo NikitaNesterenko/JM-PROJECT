@@ -23,8 +23,8 @@ public class BrandServiceImpl implements BrandService {
         return brandDAO.getAll();
     }
 
-    public Brand getBrandById(Long id){
-       return brandDAO.getById(id);
+    public Brand getBrandById(Long id) {
+        return brandDAO.getById(id);
     }
 
     @Override
@@ -68,7 +68,12 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public List<Brand> getPopularBrandIn2Month() {
-        return brandDAO.getPopularBrandIn2Month();
+    public List<BrandDto> getPopularBrands() {
+        return brandDAO.getPopularBrands();
+    }
+
+    @Override
+    public List<BrandDto> getPopularBrandsInTwoMonths() {
+        return brandDAO.getPopularBrandsInTwoMonths();
     }
 }

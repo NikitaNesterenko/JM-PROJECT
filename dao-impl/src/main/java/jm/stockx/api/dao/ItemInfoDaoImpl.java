@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
 
+    // TODO: Использование Entity
     @Override
     public ItemInfo getItemInfoByItemId(Long id) {
         return entityManager.createQuery("" +
@@ -23,6 +25,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     @Override
     public ItemInfo getItemInfoByItemName(String itemName) {
         return entityManager.createQuery("" +
@@ -41,6 +44,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult();
     }
 
+    // TODO: Использование Entity
     public ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
@@ -306,6 +310,41 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 "AND NOT i.buyingInfo.status = 'CANCELED'", Integer.class)
                 .setParameter("id", userId)
                 .getSingleResult();
+    }
+
+    public List<ItemInfoDto> getAllItemInfoDto() {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.itemInfo.ItemInfoDto(" +
+                "i.id, " +
+                "i.price, " +
+                "i.lowestAsk, " +
+                "i.highestBid, " +
+                "i.size.size, " +
+                "i.item.id, " +
+                "i.itemImageUrl " +
+                ") " +
+                "FROM ItemInfo i", ItemInfoDto.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<ItemInfoDtoDecimal> getAllItemInfoDtoDecimal(){
+        List<ItemInfoDto> listDto = getAllItemInfoDto();
+        List<ItemInfoDtoDecimal> listDtoDecimal = new ArrayList<>();
+        for (ItemInfoDto l: listDto) {
+            listDtoDecimal.add(new ItemInfoDtoDecimal(l));
+        }
+        return listDtoDecimal;
+
+    }
+
+    @Override
+    public ItemInfoDtoDecimal getItemInfoDecByItemId(Long id) {
+        return new ItemInfoDtoDecimal(entityManager.createQuery("" +
+                "SELECT i FROM ItemInfo AS i " +
+                "WHERE i.id = :itemId", ItemInfo.class)
+                .setParameter("itemId", id)
+                .getSingleResult());
     }
 }
 
