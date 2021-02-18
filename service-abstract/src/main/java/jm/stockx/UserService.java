@@ -1,6 +1,6 @@
 package jm.stockx;
 
-import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
+import jm.stockx.dto.buyinginfo.BuyingInfoPostDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;

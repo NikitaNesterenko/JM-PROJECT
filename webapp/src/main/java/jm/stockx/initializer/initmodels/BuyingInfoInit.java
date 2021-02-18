@@ -1,6 +1,5 @@
 package jm.stockx.initializer.initmodels;
 
-import jm.stockx.BuyingInfoService;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.enums.Status;
 import lombok.RequiredArgsConstructor;

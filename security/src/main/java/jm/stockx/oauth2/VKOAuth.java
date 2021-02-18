@@ -1,4 +1,4 @@
-package jm.stockx.oAuth2;
+package jm.stockx.oauth2;
 
 import com.github.scribejava.apis.VkontakteApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -89,18 +88,18 @@ public class VKOAuth {
         JSONArray jArray = jsonObj1.getJSONArray("response");
         String firstName = jArray.getJSONObject(0).optString("first_name");
         String lastName = jArray.getJSONObject(0).optString("last_name");
-
-        if (userService.isUserExistByEmail(email)) {
-            try {
-                user = userService.getUserByEmail(email);
-            } catch (UserNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            user = new User(firstName, lastName, email, basicPassword);
-            user.setRole(roleService.getRole("ROLE_USER"));
-            userService.createUser(user);
-        }
+//    //  TODO
+//        if (userService.isUserExistByEmail(email)) {
+//            try {
+//                user = userService.getUserByEmail(email);
+//            } catch (UserNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            user = new User(firstName, lastName, email, basicPassword);
+//            user.setRole(roleService.getRole("ROLE_USER"));
+//            userService.createUser(user);
+//        }
         return jwtTokenProvider.createToken(email, user.getRole());
     }
 }

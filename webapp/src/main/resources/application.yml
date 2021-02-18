@@ -1,0 +1,106 @@
+#Payment stripe java
+STRIPE_SECRET_KEY: sk_test_51H7xNaAq6119AnCiJVIZC0aCRdu3fuvE8Jc3MnYL4JjWIp1t3psnr9CndeGv0Yj7FnF95vDovEz4XgE4bvZalW6X00LbnkvHiS
+
+#Apple ID authorisation
+apple:
+    client-id: ''
+    key-id: ''
+    team-id: ''
+
+#Google OAuth2 authorization
+google:
+    authorizeUrl: http://localhost:4444/login
+    basicPassword: '########'
+    callbackUrl: http://localhost:8080/auth/google
+    clientId: 365374457118-3q85t25h1qk3s26qdhaur5nd04p05n6a.apps.googleusercontent.com
+    clientSecret: VpA-kniDUZQZFgUqD_d6FGoP
+    successUrl: http://localhost:4444/
+
+#Security
+jwt:
+    cookieName: token
+    secret: Java20Mentor20
+    sessionTime: 86400000
+
+#Logging
+logging:
+    config: webapp/src/main/resources/logback.groovy
+
+#Payment Paypal:
+# Для генерации id и secret необходимо
+# 1. зарегистрироваться на https://developer.paypal.com/ и
+# 2. создать тестовых пользователей.
+# Иначе статус транзакций не посмотреть.
+paypal:
+    client:
+        cancelURL: http://localhost:4446
+        id: AUtWVFxs_V4b-FvOW_guDUgGYfSlp0j-1xy6tsxtYMZJbQaGIwbeTDb-BaXMXhNYm9Isa4RopGHeTXQl
+        intent: SALE
+        method: paypal
+        secret: EEU39C36SuLuR2ZfcRXHqa4m3YMkfej6chzD11XrWcen-1hNqzwKz6m0rneC2G6uddkj5r-MORYED7iK
+        successURL: http://localhost:4446/paypal/redirect
+    mode: sandbox
+
+#Password recovery
+recovery:
+    expirationDays: 1
+    url: http://localhost:8080/password-recovery/
+
+#Registration
+registration:
+    expirationDays: 1
+    url: http://localhost:8080/registration/
+
+spring:
+    datasource:
+        ## Default connection pool
+        hikari:
+            connectionTimeout: 20000
+            maximumPoolSize: 5
+        ## PostgreSQL
+        password: root
+        url: jdbc:postgresql://localhost:5432/userdb
+        username: postgres
+    jackson:
+        serialization:
+            FAIL_ON_EMPTY_BEANS: false
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        #Drop n create table again, good for testing, comment this in production
+        hibernate:
+            ddl-auto: create
+#            ddl-auto: update
+        open-in-view: true
+        show-sql: false
+    #E-mail
+    mail:
+        host: smtp.gmail.com
+        password: projectqwerty
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: jmprojectmailnew@gmail.com
+
+upload:
+    path: pictures/
+
+vaadin:
+    compatibilityMode: false
+    #For Postman using
+    devmode:
+        transpile: true
+
+#VK OAuth2 authorization
+vk:
+    client_id: 7753639
+    clientSecret: mFlhUNxibXFASYjxGg9a
+    redirect_uri: http://localhost:8080/api/auth/vk
+    scope: email
+    response_type: code
+    basicPassword: 111
+    successUrl: http://localhost:4446/
+    authorizeUrl: http://localhost:4446/login
