@@ -1,5 +1,6 @@
 package jm.stockx;
 
+import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
@@ -43,5 +44,7 @@ public interface UserService {
     Map<String, Double> getPurchaseStatisticsPercentageByUserId(Long id);
 
     boolean isUserExistByEmail(String email);
+
+    void addBuyingInfo(BuyingInfoPostDto buyingInfoPostDto);
 
 }

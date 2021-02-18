@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ItemInfoService {
 
-    List<ItemInfo> getAllNews();
+    List<ItemInfo> getAll();
 
     ItemInfo get(Long id);
 

@@ -31,7 +31,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
-    public List<ItemInfo> getAllNews() {
+    public List<ItemInfo> getAll() {
         return itemInfoDAO.getAll();
     }
 
@@ -141,7 +141,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
-    public List<ItemInfoDto> getAllItemInfoDto(){
+    public List<ItemInfoDto> getAllItemInfoDto() {
         return itemInfoDAO.getAllItemInfoDto();
     }
 
@@ -151,7 +151,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
-    public ItemInfoDtoDecimal getItemInfoDtoDec(Long id){
+    public ItemInfoDtoDecimal getItemInfoDtoDec(Long id) {
         return itemInfoDAO.getItemInfoDecByItemId(id);
     }
 
