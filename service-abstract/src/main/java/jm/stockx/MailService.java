@@ -25,5 +25,6 @@ public interface MailService {
     void sendOrderStatus (Order order, String sourceMail, String password);
 
     void sendLastNews (List<News> news, String sourceMail, String password);
+    void mailServiceUpdateUser(User user);
 
 }
