@@ -36,4 +36,5 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 //.setParameter("itemInfo", itemInfo)
                 .getSingleResult();
     }
+
 }

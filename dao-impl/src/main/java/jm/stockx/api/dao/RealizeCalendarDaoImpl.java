@@ -10,10 +10,12 @@ import java.util.List;
 public class RealizeCalendarDaoImpl extends AbstractDAO<RealizeCalendarDto, Long> implements RealizeCalendarDAO {
     @Override
     public List<RealizeCalendarDto> getSixImmediateRealizes() {
-        return entityManager.createQuery("SELECT NEW jm.stockx.dto.realizeCalendar.RealizeCalendarDto(inf) " +
-                "FROM ItemInfo inf " +
-                "WHERE inf.releaseDate >= :date")
-                .setParameter("date", LocalDate.now())
+        return entityManager.createQuery(
+                "SELECT NEW jm.stockx.dto.realizeCalendar.RealizeCalendarDto(inf) " +
+                        "FROM ItemInfo inf " +
+                        "WHERE inf.releaseDate >= :date " +
+                        "ORDER BY inf.releaseDate DESC ", RealizeCalendarDto.class)
+                .setParameter("date", LocalDate.of(2018, 1, 1))
                 .setMaxResults(6)
                 .getResultList();
     }
