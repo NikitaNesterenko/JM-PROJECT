@@ -5,6 +5,8 @@ import jm.stockx.entity.Bid;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
 
@@ -48,5 +50,20 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 .setParameter("price", price)
                 .setParameter("bidId", bidId)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<BidDto> getHighestBids() {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.bid.BidDto(" +
+                "b.id," +
+                "b.price," +
+                "b.success," +
+                "b.itemInfo.item.name," +
+                "b.user.username) " +
+                "FROM Bid AS b " +
+                "ORDER BY b.price DESC", BidDto.class)
+                .setMaxResults(5)
+                .getResultList();
     }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 @Transactional
 public class NewsServiceImpl implements NewsService {
 
-
     private final NewsDAO newsDAO;
 
     @Autowired
@@ -24,6 +23,11 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> getAllNews() {
         return newsDAO.getAll();
+    }
+
+    @Override
+    public List<NewsDto> getSixLatestNews() {
+        return newsDAO.getSixLatestNews();
     }
 
     @Override

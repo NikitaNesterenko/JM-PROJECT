@@ -28,6 +28,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 .getSingleResult();
     }
 
+    // TODO: использование Entity
     public BuyingInfo getBuyingInfoByItemInfo(ItemInfo itemInfo) {
         return entityManager.createQuery("" +
                 "SELECT b FROM ItemInfo i " +
@@ -35,4 +36,5 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 //.setParameter("itemInfo", itemInfo)
                 .getSingleResult();
     }
+
 }

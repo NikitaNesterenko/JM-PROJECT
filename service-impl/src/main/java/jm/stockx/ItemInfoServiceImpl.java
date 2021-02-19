@@ -31,7 +31,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
-    public List<ItemInfo> getAllNews() {
+    public List<ItemInfo> getAll() {
         return itemInfoDAO.getAll();
     }
 
@@ -42,9 +42,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 
     @Override
     public void create(ItemInfo itemInfo) {
-
         itemInfoDAO.add(itemInfo);
-
     }
 
     @Override
@@ -139,7 +137,22 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 
     public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize) {
         ItemSize sizeFromDb = itemSizeDAO.findOneBySizeName(itemSize);
-        return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId,sizeFromDb);
+        return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId, sizeFromDb);
+    }
+
+    @Override
+    public List<ItemInfoDto> getAllItemInfoDto() {
+        return itemInfoDAO.getAllItemInfoDto();
+    }
+
+    @Override
+    public List<ItemInfoDtoDecimal> getAllItemInfoDtoDecimal() {
+        return itemInfoDAO.getAllItemInfoDtoDecimal();
+    }
+
+    @Override
+    public ItemInfoDtoDecimal getItemInfoDtoDec(Long id) {
+        return itemInfoDAO.getItemInfoDecByItemId(id);
     }
 
 }

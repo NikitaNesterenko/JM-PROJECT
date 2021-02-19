@@ -14,21 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/registration")
 public class RegistrationRestController {
-
     private final UserRegistrationService userRegistrationService;
 
+    // TODO: Не используется. Потенциально можно убрать.
     private final UserService userService;
 
-    public RegistrationRestController(UserRegistrationService service,UserService userService ) {
+    public RegistrationRestController(UserRegistrationService service, UserService userService) {
         this.userRegistrationService = service;
         this.userService = userService;
     }
 
     @PostMapping
-    public Response<?> registrationNewUser(@RequestBody UserRegistrationDto user) throws UserExistsException {
+    public Response<Void> registrationNewUser(@RequestBody UserRegistrationDto user) throws UserExistsException {
         userRegistrationService.registrationUser(user);
-
         return Response.ok().build();
     }
-
 }

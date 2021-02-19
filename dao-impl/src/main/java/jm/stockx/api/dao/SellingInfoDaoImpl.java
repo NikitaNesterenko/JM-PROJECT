@@ -21,6 +21,7 @@ import java.util.stream.IntStream;
 @Repository
 public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implements SellingInfoDAO {
 
+    // TODO: Использование Entity
     @Override
     public Double getAverageSalesValue() {
         return (Double) entityManager.createNativeQuery("" +
@@ -59,6 +60,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
+    // TODO: Использование Entity
     public int getCountSalesForPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod) {
         List<SellingInfo> list = entityManager.createQuery("" +
                 "SELECT si " +
@@ -81,7 +83,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "FROM SellingInfo as si " +
                 "LEFT JOIN ItemInfo as i " +
                 "ON si.itemInfo.id = i.id " +
-                "GROUP BY i.id " +
+                "GROUP BY 1, 2, 3, 4 " +
                 "ORDER BY COUNT(si.itemInfo) DESC";
         return entityManager.createQuery(sql, ItemTopInfoDto.class)
                 .setMaxResults(maxResult)
@@ -123,6 +125,7 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 .getResultList();
     }
 
+    // TODO: Использование Entity
     @Override
     public List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
                                                     LocalDateTime endPeriod,
