@@ -125,7 +125,7 @@ public class MailServiceImpl implements MailService {
             User user = token.getUser();
             user.setPassword(password);
             try {
-                mailServiceUpdateUser(user);
+                userDAO.update(user);
                 tokenRecoveryService.deleteToken(token.getId());
                 return true;
             } catch (Exception e) {
@@ -179,12 +179,6 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendLastNews(List<News> news, String sourceMail, String password) {
-    }
-
-    @Override
-    public void mailServiceUpdateUser(User user) {
-        userDAO.update(user);
-
     }
 
 
