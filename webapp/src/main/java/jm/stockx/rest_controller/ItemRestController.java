@@ -29,7 +29,7 @@ public class ItemRestController {
     // TODO: Требуется изменение return type на Response.
     // Я не трогал, так как кто-то сейчас занимается рефакторингом поиска.
     @GetMapping("/search")
-    public List<ItemSearchDto> searchItem(@RequestParam(required = false, name = "s") String search) {
+    public List<ItemSearchDto> searchItem(@RequestParam(required = false) String search) {
         return itemInfoService.getItemSearchDtoBySearch(search);
     }
 
