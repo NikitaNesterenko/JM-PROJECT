@@ -89,17 +89,13 @@ public class VKOAuth {
         String firstName = jArray.getJSONObject(0).optString("first_name");
         String lastName = jArray.getJSONObject(0).optString("last_name");
 //    //  TODO
-//        if (userService.isUserExistByEmail(email)) {
-//            try {
-//                user = userService.getUserByEmail(email);
-//            } catch (UserNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            user = new User(firstName, lastName, email, basicPassword);
-//            user.setRole(roleService.getRole("ROLE_USER"));
-//            userService.createUser(user);
-//        }
+        if (userService.isUserExistByEmail(email)) {
+            user = userService.getUserByEmail(email);
+        } else {
+            user = new User(firstName, lastName, email, basicPassword);
+            user.setRole(roleService.getRole("ROLE_USER"));
+            userService.createUser(user);
+        }
         return jwtTokenProvider.createToken(email, user.getRole());
     }
 }

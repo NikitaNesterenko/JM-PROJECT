@@ -54,11 +54,20 @@ public class ItemSizeDaoImpl extends AbstractDAO<ItemSize, Long> implements Item
                 .getResultList();
     }
 
-    public ItemSizeDto findOneBySizeName(String itemSize) {
+    public ItemSizeDto findOneDtoBySizeName(String itemSize) {
         return entityManager.createQuery("" +
                         "SELECT itemSize " +
                         "FROM ItemSize itemSize WHERE itemSize.size = :itemSize"
                 , ItemSizeDto.class)
+                .setParameter("itemSize", itemSize)
+                .getSingleResult();
+    }
+
+    public ItemSize findOneBySizeName(String itemSize) {
+        return entityManager.createQuery("" +
+                        "SELECT itemSize " +
+                        "FROM ItemSize itemSize WHERE itemSize.size = :itemSize"
+                , ItemSize.class)
                 .setParameter("itemSize", itemSize)
                 .getSingleResult();
     }

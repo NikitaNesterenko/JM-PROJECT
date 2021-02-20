@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        UserDto myUser = userService.getUserByEmail(email);
+        UserDto myUser = userService.getUserDtoByEmail(email);
         if (myUser == null) {
             log.info("Пользователь {} не найден", email);
             throw new UsernameNotFoundException("Unknown user: " + email);

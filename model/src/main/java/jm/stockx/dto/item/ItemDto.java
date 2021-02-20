@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDto {
+public class ItemDto extends Item {
 
     private Long id;
 

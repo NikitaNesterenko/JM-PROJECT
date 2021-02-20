@@ -40,7 +40,7 @@ public class AllItemSalesDaoImpl extends AbstractDAO<BuyingInfo, Long> implement
 
     public List<AllItemSalesDto> getAllItemSalesById(Long itemId) {
 
-        ItemDto item = itemDAO.getItemById(itemId);
+        ItemDto item = itemDAO.getItemDtoByItemId(itemId);
         return getAllItemSalesByItem(item);
 
     }

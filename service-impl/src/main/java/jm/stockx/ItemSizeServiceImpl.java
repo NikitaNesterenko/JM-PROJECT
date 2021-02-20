@@ -31,8 +31,8 @@ public class ItemSizeServiceImpl implements ItemSizeService {
     }
 
     @Override
-    public ItemSizeDto findOneBySizeName(String sizeName) {
-        return itemSizeDAO.findOneBySizeName(sizeName);
+    public ItemSizeDto findOneDtoBySizeName(String sizeName) {
+        return itemSizeDAO.findOneDtoBySizeName(sizeName);
     }
 
     @Override

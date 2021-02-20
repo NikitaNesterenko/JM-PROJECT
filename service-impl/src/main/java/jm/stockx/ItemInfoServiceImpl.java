@@ -136,7 +136,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize) {
-        ItemSizeDto sizeFromDb = itemSizeDAO.findOneBySizeName(itemSize);
+        ItemSizeDto sizeFromDb = itemSizeDAO.findOneDtoBySizeName(itemSize);
         return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId, sizeFromDb);
     }
 

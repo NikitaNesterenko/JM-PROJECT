@@ -34,19 +34,19 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
     }
 
     @Override
-    public ItemDto getItemByName(String name) {
+    public Item getItemByName(String name) {
         return entityManager.createQuery("" +
                 "SELECT i FROM Item i " +
-                "WHERE i.name = : name ", ItemDto.class)
+                "WHERE i.name = : name ", Item.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }
 
     @Override
-    public ItemDto getItemById(Long id) {
+    public Item getItemById(Long id) {
         return entityManager.createQuery("" +
                 "SELECT i FROM Item i " +
-                "WHERE i.id = : id ", ItemDto.class)
+                "WHERE i.id = : id ", Item.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }

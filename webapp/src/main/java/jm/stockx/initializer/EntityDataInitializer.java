@@ -65,8 +65,8 @@ public class EntityDataInitializer implements CommandLineRunner {
         createShoeSizes();
         createItems();
         //        TODO
-//        createItemInfo();
-//        createSellingInfo();
+        createItemInfo();
+        createSellingInfo();
         createBids();
         createNews();
     }
@@ -115,18 +115,18 @@ public class EntityDataInitializer implements CommandLineRunner {
     }
 
 //    TODO
-//    private void createItemInfo() {
-//        if (itemInfoService.getAll().isEmpty()) {
-//            itemInfoInit.initializeItemInfos();
-//        }
-//    }
+    private void createItemInfo() {
+        if (itemInfoService.getAll().isEmpty()) {
+            itemInfoInit.initializeItemInfos();
+        }
+    }
 
 //    TODO
-//    private void createSellingInfo() {
-//        if (sellingInfoService.getAll().isEmpty()) {
-//            sellingInfoInit.initializeSellingInfos();
-//        }
-//    }
+    private void createSellingInfo() {
+        if (sellingInfoService.getAll().isEmpty()) {
+            sellingInfoInit.initializeSellingInfos();
+        }
+    }
 
     private void createBids() {
         if (bidService.getAll().isEmpty()) {

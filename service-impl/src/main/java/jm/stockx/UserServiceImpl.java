@@ -5,8 +5,6 @@ import jm.stockx.dto.buyinginfo.BuyingInfoPostDto;
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -97,7 +94,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByUsername(String username) {
-        return userDao.getUserByUsername(username);
+        return userDao.getUserDtoByUsername(username);
+    }
+
+    @Override
+    public UserDto getUserDtoById(Long id) {
+        return userDao.getUserDtoById(id);
     }
 
     @Override
@@ -106,7 +108,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByEmail(String email) {
+    public UserDto getUserDtoByEmail(String email) {
+        return userDao.getUserDtoByEmail(email);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
     }
 

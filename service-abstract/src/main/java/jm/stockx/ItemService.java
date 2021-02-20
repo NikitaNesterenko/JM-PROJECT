@@ -26,7 +26,7 @@ public interface ItemService {
 
     ItemDto getItemDtoByItemId(Long id);
 
-    ItemDto getItemByName(String name);
+    Item getItemByName(String name);
 
-    ItemDto getItemById(Long id);
+    Item getItemById(Long id);
 }

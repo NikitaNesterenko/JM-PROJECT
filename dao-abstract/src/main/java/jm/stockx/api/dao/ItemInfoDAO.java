@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
-    ItemInfoDto getItemInfoByItemId(Long itemId);
+    ItemInfo getItemInfoByItemId(Long itemId);
 
     ItemInfoDto getItemInfoByItemName(String itemName);
 

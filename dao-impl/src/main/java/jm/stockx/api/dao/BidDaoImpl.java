@@ -67,8 +67,4 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 .getResultList();
     }
 
-    //TODO
-//    public void hyeta(BidPostDto bidPostDto) {
-//        .("INSERT INTO bids");
-//    }
 }

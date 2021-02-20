@@ -18,11 +18,15 @@ public interface UserDAO extends GenericDao<User, Long> {
 
     UserDto getUserDtoByUserId(Long id);
 
-    UserDto getUserByUsername(String username);
+    UserDto getUserDtoByUsername(String username);
 
     User getUserById(Long id);
 
-    UserDto getUserByEmail(String email);
+    UserDto getUserDtoById(Long id);
+
+    UserDto getUserDtoByEmail(String email);
+
+    User getUserByEmail(String email);
 
     void updateUserFromDto(UserPutDto userPutDto);
   

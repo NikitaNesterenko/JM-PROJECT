@@ -25,9 +25,17 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 .getSingleResult();
     }
 
-    public BuyingInfoDto getBuyingInfoByItemInfo(ItemInfo itemInfo) {
+//    TODO переделать запрос, использовать параметр
+    public BuyingInfoDto getBuyingInfoDtoByItemInfo(ItemInfo itemInfo) {
         return entityManager.createQuery("" +
-                "SELECT b FROM ItemInfo i " +
+                "SELECT NEW jm.stockx.dto.buyinginfo.BuyingInfoDto(" +
+                "b.id, " +
+                "b.buyingTimeStamp, " +
+                "b.buyingPrice," +
+                "b.boughtItemsInfo," +
+                "b.paymentsInfo," +
+                "b.status)" +
+                "FROM ItemInfo i " +
                 "JOIN i.buyingInfo b", BuyingInfoDto.class)
                 //.setParameter("itemInfo", itemInfo)
                 .getSingleResult();

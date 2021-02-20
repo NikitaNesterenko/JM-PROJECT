@@ -8,5 +8,5 @@ public interface BuyingInfoDAO extends GenericDao<BuyingInfo, Long> {
 
     BuyingInfoDto getBuyingInfoDtoByBuyingInfoId(Long id);
 
-    BuyingInfoDto getBuyingInfoByItemInfo(ItemInfo itemInfo);
+    BuyingInfoDto getBuyingInfoDtoByItemInfo(ItemInfo itemInfo);
 }

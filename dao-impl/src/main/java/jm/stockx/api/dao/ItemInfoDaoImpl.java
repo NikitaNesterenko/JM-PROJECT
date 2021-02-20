@@ -18,19 +18,19 @@ import java.util.List;
 public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements ItemInfoDAO {
 
     @Override
-    public ItemInfoDto getItemInfoByItemId(Long id) {
+    public ItemInfo getItemInfoByItemId(Long id) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
-                "WHERE i.item.id = :itemId", ItemInfoDto.class)
+                "WHERE i.item.id = :itemId", ItemInfo.class)
                 .setParameter("itemId", id)
                 .getSingleResult();
     }
 
     @Override
-    public ItemInfoDto getItemInfoByItemName(String itemName) {
+    public ItemInfo getItemInfoByItemName(String itemName) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
-                "WHERE i.item.name = :itemName", ItemInfoDto.class)
+                "WHERE i.item.name = :itemName", ItemInfo.class)
                 .setParameter("itemName", itemName)
                 .getSingleResult();
     }

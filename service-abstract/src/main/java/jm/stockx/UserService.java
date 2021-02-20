@@ -35,9 +35,13 @@ public interface UserService {
 
     UserDto getUserByUsername(String username);
 
+    UserDto getUserDtoById(Long id);
+
     User getUserById(Long id);
 
-    UserDto getUserByEmail(String email);
+    UserDto getUserDtoByEmail(String email);
+
+    User getUserByEmail(String email);
 
     void updateUserFromDto(UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException;
 

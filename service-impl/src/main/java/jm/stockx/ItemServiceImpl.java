@@ -107,15 +107,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto getItemByName(String name) {
+    public Item getItemByName(String name) {
         return itemDao.getItemByName(name);
     }
 
     @Override
-    public ItemDto getItemById(Long id) {
+    public Item getItemById(Long id) {
         return itemDao.getItemById(id);
     }
-
-
-
 }

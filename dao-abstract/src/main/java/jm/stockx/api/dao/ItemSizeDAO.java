@@ -14,5 +14,7 @@ public interface ItemSizeDAO extends GenericDao<ItemSize, Long> {
 
     List<ItemSizeDto> getShoeSizeDtoByShoeSizeType(ItemSizeTypes sizeType);
 
-    ItemSizeDto findOneBySizeName(String itemSize);
+    ItemSizeDto findOneDtoBySizeName(String itemSize);
+
+    ItemSize findOneBySizeName(String itemSize);
 }

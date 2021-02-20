@@ -148,9 +148,20 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public UserDto getUserByUsername(String username) {
+    public UserDto getUserDtoByUsername(String username) {
         return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.username =: username", UserDto.class)
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
+                "u.firstName," +
+                "u.lastName," +
+                "u.email," +
+                "u.username," +
+                "u.password," +
+                "u.sellerLevel," +
+                "u.vacationMode," +
+                "u.localeTag" +
+                ")" +
+                "FROM User AS u " +
+                "WHERE u.username =: username", UserDto.class)
                 .setParameter("username", username)
                 .getSingleResult();
     }
@@ -164,11 +175,49 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public UserDto getUserByEmail(String email) {
+    public UserDto getUserDtoById(Long id) {
         return entityManager.createQuery("" +
-            "FROM User AS u WHERE u.email =: email", UserDto.class)
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
+                "u.firstName," +
+                "u.lastName," +
+                "u.email," +
+                "u.username," +
+                "u.password," +
+                "u.sellerLevel," +
+                "u.vacationMode," +
+                "u.localeTag" +
+                ")" +
+                "FROM User AS u " +
+                "WHERE u.id =: id", UserDto.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    @Override
+    public UserDto getUserDtoByEmail(String email) {
+        return entityManager.createQuery("" +
+                "SELECT NEW jm.stockx.dto.user.UserDto(" +
+                "u.firstName," +
+                "u.lastName," +
+                "u.email," +
+                "u.username," +
+                "u.password," +
+                "u.sellerLevel," +
+                "u.vacationMode," +
+                "u.localeTag" +
+                ")" +
+                "FROM User AS u " +
+                "WHERE u.email =: email", UserDto.class)
             .setParameter("email", email)
             .getSingleResult();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return entityManager.createQuery("" +
+                "FROM User AS u WHERE u.email =: email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
     }
 
     public void updateUserFromDto(UserPutDto userPutDto){

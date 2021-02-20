@@ -9,7 +9,7 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import jm.stockx.RoleService;
 import jm.stockx.UserService;
-import jm.stockx.dto.user.UserDto;
+import jm.stockx.entity.User;
 import jm.stockx.jwt.JwtTokenProvider;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class GoogleOAuth {
     @Value("${google.callbackUrl}")
     private String callbackUrl;
 
-    private UserDto user;
+    private User user;
 
     public GoogleOAuth(UserService userService, RoleService roleService, JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
@@ -78,13 +78,13 @@ public class GoogleOAuth {
         String email = jsonObj.optString("email");
 
 //        TODO
-//        if (userService.isUserExistByEmail(email)) {
-//            user = userService.getUserByEmail(email);
-//        } else {
-//            user = new UserDto(firstName, lastName, email, basicPassword);
-//            user.setRole(roleService.getRole("ROLE_USER"));
-//            userService.createUser(user);
-//        }
+        if (userService.isUserExistByEmail(email)) {
+            user = userService.getUserByEmail(email);
+        } else {
+            user = new User(firstName, lastName, email, basicPassword);
+            user.setRole(roleService.getRole("ROLE_USER"));
+            userService.createUser(user);
+        }
 
         return jwtTokenProvider.createToken(email, user.getRole());
     }

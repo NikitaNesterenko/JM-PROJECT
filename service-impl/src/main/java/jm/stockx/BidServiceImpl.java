@@ -79,7 +79,7 @@ public class BidServiceImpl implements BidService {
      */
     @Override
     public void placeBid(BidPostDto newBid) {
-//        TODO
+//        TODO поменять на инсерт в дао
 //        Bid bidEntity = Bid.builder()
 //                .price(Money.parse(newBid.getPrice()))
 //                .itemInfo(itemInfoDAO.getItemInfoByItemId(newBid.getItemInfoId()))
@@ -88,6 +88,5 @@ public class BidServiceImpl implements BidService {
 //                .build();
 //        bidDAO.add(bidEntity);
 //
-//        bidDAO.
     }
 }

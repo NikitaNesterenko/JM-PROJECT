@@ -97,7 +97,7 @@ class UserDetailsServiceImplTest {
     @DisplayName("throw exception loadUserByUsername if user was not found")
     void loadUserByUsernameThrowsExceptions() {
         String emailAddress = "adm12in@mail.ru";
-        given(userService.getUserByEmail(emailAddress))
+        given(userService.getUserDtoByEmail(emailAddress))
                 .willThrow(new UserNotFoundException());
 
         assertThrows(

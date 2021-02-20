@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface ItemSizeService {
 
-    ItemSizeDto findOneBySizeName(String sizeName);
+    ItemSizeDto findOneDtoBySizeName(String sizeName);
 
     Set<ItemSize> getAll();
 
