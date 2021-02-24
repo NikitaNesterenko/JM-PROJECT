@@ -37,7 +37,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 "b.status)" +
                 "FROM ItemInfo i " +
                 "JOIN i.buyingInfo b", BuyingInfoDto.class)
-                //.setParameter("itemInfo", itemInfo)
+//                .setParameter("itemInfo", itemInfo)
                 .getSingleResult();
     }
 
