@@ -78,7 +78,7 @@ public class UserRestController {
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to send password recovery token")
             })
     public Response<Void> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundException {
-        UserDto user = userService.getUserDtoByEmail(email);
+        User user = userService.getUserByEmail(email);
         mailService.sendRecoveryLinkToUser(user);
         log.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);
         return Response.ok().build();

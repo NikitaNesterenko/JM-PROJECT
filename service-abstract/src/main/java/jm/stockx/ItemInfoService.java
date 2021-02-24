@@ -29,9 +29,9 @@ public interface ItemInfoService {
 
     List<ItemSearchDto> getItemSearchDtoBySearch(String search);
 
-    ItemInfoDto getItemInfoByItemId(Long itemId);
+    ItemInfo getItemInfoByItemId(Long itemId);
 
-    ItemInfoDto getItemInfoByItemName(String itemName);
+    ItemInfo getItemInfoByItemName(String itemName);
 
     List<ReleaseItemInfoDto> getReleaseItemDtoByPeriod(LocalDateTime beginningPeriod, LocalDateTime endPeriod);
 

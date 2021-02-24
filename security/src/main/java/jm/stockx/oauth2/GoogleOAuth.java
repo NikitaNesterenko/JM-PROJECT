@@ -77,7 +77,6 @@ public class GoogleOAuth {
         String lastName = jsonObj.optString("family_name");
         String email = jsonObj.optString("email");
 
-//        TODO
         if (userService.isUserExistByEmail(email)) {
             user = userService.getUserByEmail(email);
         } else {

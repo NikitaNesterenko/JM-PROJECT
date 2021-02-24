@@ -2,7 +2,6 @@ import jm.stockx.MailServiceImpl;
 import jm.stockx.RecoveryException;
 import jm.stockx.TokenRecoveryService;
 import jm.stockx.UserService;
-import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.User;
 import org.junit.Test;
@@ -36,7 +35,7 @@ public class MailServiceTest {
 
     @Test
     public void sendRecoveryLinkToUserTest() {
-        UserDto user = new UserDto();
+        User user = new User();
         user.setEmail("testEmail");
         assertTrue(mailService.sendRecoveryLinkToUser(user));
     }
@@ -48,7 +47,7 @@ public class MailServiceTest {
 
     @Test
     public void doNotSendRecoveryLinkToNullEmailTest() {
-        UserDto user = new UserDto();
+        User user = new User();
         assertFalse(mailService.sendRecoveryLinkToUser(user));
     }
 

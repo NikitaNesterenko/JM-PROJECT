@@ -1,6 +1,5 @@
 package jm.stockx.dto.shoesize;
 
-import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
 import lombok.*;
@@ -30,9 +29,4 @@ public class ShoeSizeDto {
         this.sizeTypes = shoesize.getSizeTypes();
     }
 
-    public ShoeSizeDto(ItemSizeDto shoeSizeDto) {
-        this.id = shoeSizeDto.getId();
-        this.size = shoeSizeDto.getSize();
-        this.sizeTypes = shoeSizeDto.getSizeTypes();
-    }
 }

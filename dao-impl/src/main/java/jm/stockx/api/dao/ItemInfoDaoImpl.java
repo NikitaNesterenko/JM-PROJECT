@@ -1,10 +1,10 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.iteminfo.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
@@ -44,7 +44,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult();
     }
 
-    public ItemInfoDto getItemInfoByItemCategory(ItemCategory itemCategory) {
+    public ItemInfoDto getItemInfoDtoByItemCategory(ItemCategory itemCategory) {
         return entityManager.createQuery("" +
                 "SELECT i FROM ItemInfo AS i " +
                 "WHERE i.itemCategory = :itemCategory", ItemInfoDto.class)
@@ -263,7 +263,7 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getResultList();
     }
 
-    public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSizeDto itemSize) {
+    public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, ItemSize itemSize) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.SizeInfoDto(" +
                 "item_info.lowestAsk," +

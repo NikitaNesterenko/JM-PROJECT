@@ -81,8 +81,7 @@ class UserDetailsServiceImplTest {
     @DisplayName("load user properly")
     void loadUserByUsername() throws UserNotFoundException {
         String emailAddress = "admin@mail.ru";
-//        TODO
-//        given(userService.getUserByEmail(emailAddress)).willReturn(createdUser);
+        given(userService.getUserByEmail(emailAddress)).willReturn(createdUser);
 
         UserDetails foundUser = userDetailsService.loadUserByUsername(emailAddress);
 
@@ -97,7 +96,7 @@ class UserDetailsServiceImplTest {
     @DisplayName("throw exception loadUserByUsername if user was not found")
     void loadUserByUsernameThrowsExceptions() {
         String emailAddress = "adm12in@mail.ru";
-        given(userService.getUserDtoByEmail(emailAddress))
+        given(userService.getUserDtoByUserEmail(emailAddress))
                 .willThrow(new UserNotFoundException());
 
         assertThrows(

@@ -1,7 +1,6 @@
 package jm.stockx;
 
 
-import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.shoesize.ShoeSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
@@ -11,7 +10,7 @@ import java.util.Set;
 
 public interface ItemSizeService {
 
-    ItemSizeDto findOneDtoBySizeName(String sizeName);
+    ItemSize findOneBySizeName(String sizeName);
 
     Set<ItemSize> getAll();
 

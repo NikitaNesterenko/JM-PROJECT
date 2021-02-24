@@ -88,7 +88,6 @@ public class VKOAuth {
         JSONArray jArray = jsonObj1.getJSONArray("response");
         String firstName = jArray.getJSONObject(0).optString("first_name");
         String lastName = jArray.getJSONObject(0).optString("last_name");
-//    //  TODO
         if (userService.isUserExistByEmail(email)) {
             user = userService.getUserByEmail(email);
         } else {

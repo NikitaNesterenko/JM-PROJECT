@@ -33,13 +33,7 @@ public interface UserService {
 
     boolean isUserExist(Long id);
 
-    UserDto getUserByUsername(String username);
-
-    UserDto getUserDtoById(Long id);
-
     User getUserById(Long id);
-
-    UserDto getUserDtoByEmail(String email);
 
     User getUserByEmail(String email);
 

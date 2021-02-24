@@ -63,7 +63,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BrandDto getBrandByName(String name) {
+    public Brand getBrandByName(String name) {
         return brandDAO.getBrandByName(name);
     }
 

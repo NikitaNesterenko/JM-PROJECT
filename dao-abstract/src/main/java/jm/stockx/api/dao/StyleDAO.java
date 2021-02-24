@@ -8,5 +8,5 @@ public interface StyleDAO extends GenericDao<Style, Long> {
 
     StyleDto getStyleDtoByStyleId(Long id);
 
-    StyleDto getStyleByName(String name);
+    Style getStyleByName(String name);
 }

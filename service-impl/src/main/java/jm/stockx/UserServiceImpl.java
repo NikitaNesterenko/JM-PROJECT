@@ -93,23 +93,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByUsername(String username) {
-        return userDao.getUserDtoByUsername(username);
-    }
-
-    @Override
-    public UserDto getUserDtoById(Long id) {
-        return userDao.getUserDtoById(id);
-    }
-
-    @Override
     public User getUserById(Long id) {
         return userDao.getUserById(id);
-    }
-
-    @Override
-    public UserDto getUserDtoByEmail(String email) {
-        return userDao.getUserDtoByEmail(email);
     }
 
     @Override
@@ -148,7 +133,7 @@ public class UserServiceImpl implements UserService {
 //
 //        BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
 //
-////      TODO
+////      TODO кто-то меняет
 //        User user = getUserByUsername(SecurityContextHolder.getContext()
 //                .getAuthentication().getName());
 //        user.setBuyingInfo(Collections.singleton(buyingInfo));

@@ -10,7 +10,7 @@ public interface BrandDAO extends GenericDao<Brand, Long> {
 
     BrandDto getBrandDtoByBrandId(Long id);
 
-    BrandDto getBrandByName(String name);
+    Brand getBrandByName(String name);
 
     List<BrandDto> getPopularBrands();
 

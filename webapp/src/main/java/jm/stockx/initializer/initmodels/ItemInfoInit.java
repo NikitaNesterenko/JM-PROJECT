@@ -30,7 +30,6 @@ public class ItemInfoInit {
     private final ItemService itemService;
     private final ItemInfoService itemInfoService;
 
-//    TODO
     public void initializeItemInfos() {
         Map<String, ItemInfo> itemsForCreation = createItemsForInitialization();
         itemsForCreation.values().forEach(itemInfoService::create);
@@ -45,7 +44,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 272.0"))
                 .lowestAsk(Money.parse("USD 204.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfoAdidasYeezyBoost380MistBI"))
-                .size(itemSizeService.findOneDtoBySizeName("9"))
+                .size(itemSizeService.findOneBySizeName("9"))
                 .releaseDate(LocalDate.of(2020, 3, 25))
                 .condition("New")
                 .description("Yeezy added a new colorway to their Boost 380 product line with the adidas Yeezy Boost 380 Mist, " +
@@ -69,7 +68,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 500.0"))
                 .lowestAsk(Money.parse("USD 1402.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("converseAllStar70sHiKithxCocaColaBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("10.5"))
+                .size(itemSizeService.findOneBySizeName("10.5"))
                 .releaseDate(LocalDate.of(2018, 7, 17))
                 .condition("New")
                 .description("Joining together with Coca-Cola and Converse in July 2018, " +
@@ -91,7 +90,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 241.0"))
                 .lowestAsk(Money.parse("USD 167.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfojordan1RetroHighBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("11"))
+                .size(itemSizeService.findOneBySizeName("11"))
                 .releaseDate(LocalDate.of(2019, 8, 17))
                 .condition("New")
                 .description("Jordan Brand adds a twist to a classic with the Air Jordan 1 WMNS Satin “Black Toe”, now available on StockX. " +
@@ -113,7 +112,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 237.0"))
                 .lowestAsk(Money.parse("USD 195.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfoJordan4RetroWinterizedBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("10"))
+                .size(itemSizeService.findOneBySizeName("10"))
                 .releaseDate(LocalDate.of(2019, 12, 21))
                 .condition("New")
                 .description("Jordan Brand spins an iconic design for winter with the Jordan 4 Retro Winterized Loyal Blue, " +
@@ -134,7 +133,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 222.0"))
                 .lowestAsk(Money.parse("USD 191.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfojordan14RetroGymRedToroBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("9"))
+                .size(itemSizeService.findOneBySizeName("9"))
                 .releaseDate(LocalDate.of(2020, 7, 2))
                 .condition("New")
                 .description("Jordan Brand released a new Chicago Bulls themed colorway with the Jordan 14 Retro Gym Red Toro, now available on StockX. " +
@@ -157,7 +156,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("EUR 3380.0"))
                 .lowestAsk(Money.parse("EUR 4945.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingLouisVuittonDonKanyeRedBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("8"))
+                .size(itemSizeService.findOneBySizeName("8"))
                 .releaseDate(LocalDate.of(2009, 7, 3))
                 .condition("New")
                 .description("The Kanye West x Louis Vuitton Don 'Red' features a premium red leather upper with matching suede overlays.")
@@ -174,7 +173,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 1787.0"))
                 .lowestAsk(Money.parse("USD 9654.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfoNewBalance990v3JJJJoundBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("11"))
+                .size(itemSizeService.findOneBySizeName("11"))
                 .releaseDate(LocalDate.of(2018, 12, 3))
                 .condition("New")
                 .description("The neutral colorway is in keeping with Justin Saunders' signature aesthetic, " +
@@ -192,7 +191,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 213.0"))
                 .lowestAsk(Money.parse("USD 166.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfoNikeReactBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("10"))
+                .size(itemSizeService.findOneBySizeName("10"))
                 .releaseDate(LocalDate.of(2018, 6, 14))
                 .condition("New")
                 .description("Since first being spotted on the runway during a Paris Fashion Week Show in March, " +
@@ -213,7 +212,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("USD 166.0"))
                 .lowestAsk(Money.parse("USD 800.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("buyingInfoSauconyAzuraBodegaLucky13BI1"))
-                .size(itemSizeService.findOneDtoBySizeName("12"))
+                .size(itemSizeService.findOneBySizeName("12"))
                 .releaseDate(LocalDate.of(2019, 5, 16))
                 .condition("New")
                 .description("The sneaker is predominantly black with dark pops of color throughout, " +
@@ -233,7 +232,7 @@ public class ItemInfoInit {
                 .highestBid(Money.parse("EUR 2249.0"))
                 .lowestAsk(Money.parse("EUR 124.0"))
                 .buyingInfo(buyingInfoInit.createBuyingInfoForInitialization().get("vansEraSupremeJeanPaulGaultierBurgundyBI1"))
-                .size(itemSizeService.findOneDtoBySizeName("10.5"))
+                .size(itemSizeService.findOneBySizeName("10.5"))
                 .releaseDate(LocalDate.of(2019, 11, 1))
                 .condition("New")
                 .description("Supreme x Vans sneakers in beautiful design in collaboration with the trademark brand Jean Paul Gaultier.")

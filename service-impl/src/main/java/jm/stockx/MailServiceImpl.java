@@ -77,15 +77,14 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public boolean sendRecoveryLinkToUser(UserDto user) {
+    public boolean sendRecoveryLinkToUser(User user) {
         if (user.getEmail() == null) {
             return false;
         }
         String hash = UUID.randomUUID().toString();
         String hashEmail = urlRecoveryLink + hash;
         TokenRecovery token = new TokenRecovery();
-//        TODO
-//        token.setUser(user);
+        token.setUser(user);
         token.setHash(hash);
         token.setHashEmail(hashEmail);
         token.setStartTime(getCurrentDate());

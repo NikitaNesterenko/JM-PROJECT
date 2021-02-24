@@ -13,7 +13,7 @@ public interface MailService {
 
     void sendSimpleMessageFrom(String to, String from, String password, String subject, String text);
 
-    boolean sendRecoveryLinkToUser(UserDto user);
+    boolean sendRecoveryLinkToUser(User user);
 
     boolean sendRegistrationLinkToUser(User user);
 

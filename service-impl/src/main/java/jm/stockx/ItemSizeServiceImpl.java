@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.ItemSizeDAO;
-import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.shoesize.ShoeSizeDto;
 import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemSizeTypes;
@@ -31,8 +30,8 @@ public class ItemSizeServiceImpl implements ItemSizeService {
     }
 
     @Override
-    public ItemSizeDto findOneDtoBySizeName(String sizeName) {
-        return itemSizeDAO.findOneDtoBySizeName(sizeName);
+    public ItemSize findOneBySizeName(String sizeName) {
+        return itemSizeDAO.findOneBySizeName(sizeName);
     }
 
     @Override

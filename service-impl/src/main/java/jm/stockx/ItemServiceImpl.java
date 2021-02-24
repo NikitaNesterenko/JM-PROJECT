@@ -70,7 +70,7 @@ public class ItemServiceImpl implements ItemService {
     public void buyItem(BuyingDto buyingDto) {
         User buyer = userDAO.getById(buyingDto.getBuyerId());
         ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
-        ItemInfoDto itemInfoDto = itemInfoDAO.getItemInfoByItemId(buyingDto.getItemId());
+        ItemInfoDto itemInfoDto = itemInfoDAO.getItemInfoDtoByItemId(buyingDto.getItemId());
         Set<ItemInfo> boughtItems = new HashSet<>();
         boughtItems.add(itemInfo);
         Set<PaymentInfo> paymentInfo = new HashSet<>();

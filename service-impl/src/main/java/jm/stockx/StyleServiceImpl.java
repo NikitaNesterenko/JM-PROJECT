@@ -59,7 +59,7 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    public StyleDto getStyleByName(String name) {
+    public Style getStyleByName(String name) {
         return styleDao.getStyleByName(name);
     }
 

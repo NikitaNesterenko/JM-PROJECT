@@ -2,12 +2,12 @@ package jm.stockx;
 
 import jm.stockx.api.dao.ItemInfoDAO;
 import jm.stockx.api.dao.ItemSizeDAO;
-import jm.stockx.dto.ItemSizeDto;
 import jm.stockx.dto.SizeInfoDto;
 import jm.stockx.dto.iteminfo.*;
 import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
+import jm.stockx.entity.ItemSize;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +56,12 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     @Override
-    public ItemInfoDto getItemInfoByItemId(Long itemId) {
+    public ItemInfo getItemInfoByItemId(Long itemId) {
         return itemInfoDAO.getItemInfoByItemId(itemId);
     }
 
     @Override
-    public ItemInfoDto getItemInfoByItemName(String itemName) {
+    public ItemInfo getItemInfoByItemName(String itemName) {
         return itemInfoDAO.getItemInfoByItemName(itemName);
     }
 
@@ -136,7 +136,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
     }
 
     public SizeInfoDto getItemInfoDtoByIdAndSize(Long itemId, String itemSize) {
-        ItemSizeDto sizeFromDb = itemSizeDAO.findOneDtoBySizeName(itemSize);
+        ItemSize sizeFromDb = itemSizeDAO.findOneBySizeName(itemSize);
         return itemInfoDAO.getItemInfoDtoByIdAndSize(itemId, sizeFromDb);
     }
 

@@ -64,7 +64,6 @@ public class EntityDataInitializer implements CommandLineRunner {
         createBrands();
         createShoeSizes();
         createItems();
-        //        TODO
         createItemInfo();
         createSellingInfo();
         createBids();
@@ -114,14 +113,12 @@ public class EntityDataInitializer implements CommandLineRunner {
         }
     }
 
-//    TODO
     private void createItemInfo() {
         if (itemInfoService.getAll().isEmpty()) {
             itemInfoInit.initializeItemInfos();
         }
     }
 
-//    TODO
     private void createSellingInfo() {
         if (sellingInfoService.getAll().isEmpty()) {
             sellingInfoInit.initializeSellingInfos();
