@@ -14,9 +14,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.anyString;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class MailServiceTest {
@@ -64,7 +63,7 @@ public class MailServiceTest {
         TokenRecovery token = new TokenRecovery();
         token.setHashEmail("hashEmail");
         token.setStartTime(new Date());
-//        TODO
+//        TODO Cannot resolve method 'thenReturn(jm.stockx.entity.TokenRecovery)'
 //        when(tokenService.getTokenRecoveryByHashEmail("link")).thenReturn(token);
         assertFalse(mailService.changePasswordByToken("link", anyString()));
     }
@@ -77,7 +76,7 @@ public class MailServiceTest {
         token.setUser(new User());
         token.setHashEmail("hashEmail");
         token.setStartTime(new Date());
-//        TODO
+//        TODO Cannot resolve method 'thenReturn(jm.stockx.entity.TokenRecovery)'
 //        when(tokenService.getTokenRecoveryByHashEmail("link")).thenReturn(token);
         assertTrue(mailService.changePasswordByToken("link", anyString()));
     }

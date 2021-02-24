@@ -38,7 +38,7 @@ public class TokenRecoveryServiceTest {
 
     @Test
     public void getTokenByHashEmailTest() {
-//        TODO
+//        TODO Cannot resolve method 'thenReturn(jm.stockx.entity.TokenRecovery)'
 //        when(tokenDao.getTokenRecoveryByHashEmail(any())).thenReturn(token);
         assertEquals(tokenService.getTokenRecoveryByHashEmail(any()), token);
         verify(tokenDao).getTokenRecoveryByHashEmail(any());
