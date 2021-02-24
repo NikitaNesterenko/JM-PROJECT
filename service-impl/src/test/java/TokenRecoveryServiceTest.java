@@ -1,6 +1,6 @@
-import jm.stockx.entity.TokenRecovery;
 import jm.stockx.TokenRecoveryServiceImpl;
 import jm.stockx.api.dao.TokenRecoveryDAO;
+import jm.stockx.entity.TokenRecovery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,7 +38,8 @@ public class TokenRecoveryServiceTest {
 
     @Test
     public void getTokenByHashEmailTest() {
-        when(tokenDao.getTokenRecoveryByHashEmail(any())).thenReturn(token);
+//        TODO Cannot resolve method 'thenReturn(jm.stockx.entity.TokenRecovery)'
+//        when(tokenDao.getTokenRecoveryByHashEmail(any())).thenReturn(token);
         assertEquals(tokenService.getTokenRecoveryByHashEmail(any()), token);
         verify(tokenDao).getTokenRecoveryByHashEmail(any());
     }

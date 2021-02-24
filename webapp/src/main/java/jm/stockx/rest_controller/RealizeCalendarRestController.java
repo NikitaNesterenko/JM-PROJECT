@@ -1,7 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.RealizeCalendarService;
-import jm.stockx.dto.realizeCalendar.RealizeCalendarDto;
+import jm.stockx.dto.realizecalendar.RealizeCalendarDto;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

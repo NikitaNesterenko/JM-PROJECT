@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.*;
+import jm.stockx.dto.iteminfo.*;
 import jm.stockx.dto.page.PageDto;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;

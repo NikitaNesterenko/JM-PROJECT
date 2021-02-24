@@ -8,12 +8,11 @@ import org.springframework.stereotype.Repository;
 public class TokenRecoveryDaoImpl extends AbstractDAO<TokenRecovery, Long> implements TokenRecoveryDAO {
 
     @Override
-    public TokenRecovery getTokenRecoveryByHashEmail(String hashEmail) {
+    public TokenRecoveryDto getTokenRecoveryByHashEmail(String hashEmail) {
 
-        // TODO: Использование Entity
         return entityManager.createQuery("" +
                 "FROM TokenRecovery AS t " +
-                "WHERE t.hashEmail = :hashEmail", TokenRecovery.class)
+                "WHERE t.hashEmail = :hashEmail", TokenRecoveryDto.class)
                 .setParameter("hashEmail", hashEmail)
                 .getSingleResult();
     }

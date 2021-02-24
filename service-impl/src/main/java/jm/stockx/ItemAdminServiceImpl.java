@@ -22,6 +22,7 @@ public class ItemAdminServiceImpl implements ItemAdminService {
         this.itemService = itemService;
     }
 
+//    TODO ?
     @Override
     public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) {
         Item item = new Item(itemDtoAdmin.getName());
@@ -36,7 +37,7 @@ public class ItemAdminServiceImpl implements ItemAdminService {
 
     @Override
     public void addAdminListItemInfo(List<ItemDtoAdmin> listItemAdminDto) {
-        listItemAdminDto.forEach(list -> addAdminItemInfo(list));
+        listItemAdminDto.forEach(this::addAdminItemInfo);
     }
 
 

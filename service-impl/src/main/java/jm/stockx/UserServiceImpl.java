@@ -1,12 +1,10 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
-import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
+import jm.stockx.dto.buyinginfo.BuyingInfoPostDto;
 import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,16 +28,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserDAO userDao;
     private BuyingInfoService buyingInfoService;
-    private MailService mailService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDao, BuyingInfoService buyingInfoService, MailService mailService) {
+    public UserServiceImpl(UserDAO userDao, BuyingInfoService buyingInfoService) {
         this.userDao = userDao;
         this.buyingInfoService = buyingInfoService;
-        this.mailService = mailService;
     }
 
     @Override
@@ -98,22 +93,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userDao.getUserByUsername(username);
-    }
-
-    @Override
     public User getUserById(Long id) {
         return userDao.getUserById(id);
     }
 
     @Override
-    public User getUserByEmail(String email) throws UserNotFoundException {
-        User user = userDao.getUserByEmail(email);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
     }
 
     @Override
@@ -143,19 +129,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addBuyingInfo(BuyingInfoPostDto buyingInfoPostDto) {
 
-        Long id = buyingInfoService.create(buyingInfoPostDto);
-
-        BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
-
-        User user = getUserByUsername(SecurityContextHolder.getContext()
-                .getAuthentication().getName());
-        user.setBuyingInfo(Collections.singleton(buyingInfo));
-        updateUser(user);
-
-        StringBuilder message = new StringBuilder("Congratulations! You have bought the best products:\n");
-        for (ItemInfo i:buyingInfo.getBoughtItemsInfo()) {
-            message.append(i.getItem().getName()).append("\n");
-        }
-        mailService.sendSimpleMessage(user.getEmail(), "Your best buy!", message.toString());
+//        Long id = buyingInfoService.create(buyingInfoPostDto);
+//
+//        BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
+//
+////      TODO кто-то меняет
+//        User user = getUserByUsername(SecurityContextHolder.getContext()
+//                .getAuthentication().getName());
+//        user.setBuyingInfo(Collections.singleton(buyingInfo));
+//        updateUser(user);
+//
+//        StringBuilder message = new StringBuilder("Congratulations! You have bought the best products:\n");
+//        for (ItemInfo i:buyingInfo.getBoughtItemsInfo()) {
+//            message.append(i.getItem().getName()).append("\n");
+//        }
+//        mailService.sendSimpleMessage(user.getEmail(), "Your best buy!", message.toString());
     }
 }

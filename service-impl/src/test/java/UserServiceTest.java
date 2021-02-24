@@ -52,7 +52,7 @@ public class UserServiceTest {
         User user = new User(firstName, lastName, email, username, password, sellerLevel, vacationMode, localeTag);
         Mockito.when(userDao.getUserDtoByUserUsername(Mockito.anyString()))
                 .thenReturn(new UserDto(user));
-        User fromTest = userService.getUserByUsername("name");
+        UserDto fromTest = userService.getUserDtoByUserUsername("name");
         Assert.assertEquals(username, fromTest.getUsername());
     }
 

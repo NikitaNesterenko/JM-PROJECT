@@ -1,11 +1,7 @@
 package jm.stockx.dto.user;
 
 import jm.stockx.entity.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;

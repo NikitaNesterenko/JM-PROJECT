@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/bid")
-// TODO: Требуется изменение маппинга. Везде так: "/rest/api/названиеДомена"
+@RequestMapping(value = "/rest/api/bid")
 public class BidRestController {
     private final BidService bidService;
 

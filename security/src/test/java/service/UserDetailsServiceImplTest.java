@@ -33,7 +33,7 @@ import static org.mockito.BDDMockito.then;
 
 @DisplayName("UserDetailsServiceImplTest must")
 @ExtendWith(MockitoExtension.class)
-public class UserDetailsServiceImplTest {
+class UserDetailsServiceImplTest {
 
     @InjectMocks
     private UserDetailsServiceImpl userDetailsService;
@@ -96,7 +96,7 @@ public class UserDetailsServiceImplTest {
     @DisplayName("throw exception loadUserByUsername if user was not found")
     void loadUserByUsernameThrowsExceptions() {
         String emailAddress = "adm12in@mail.ru";
-        given(userService.getUserByEmail(emailAddress))
+        given(userService.getUserDtoByUserEmail(emailAddress))
                 .willThrow(new UserNotFoundException());
 
         assertThrows(

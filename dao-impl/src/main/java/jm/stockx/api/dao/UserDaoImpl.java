@@ -4,12 +4,9 @@ import jm.stockx.dto.item.ItemPurchaseDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserEmailDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.BuyingInfo;
-import jm.stockx.entity.Item;
-import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import jm.stockx.enums.ItemCategory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
@@ -18,10 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@NoArgsConstructor
 public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
-
-    @Autowired
-    ItemInfoDAO itemInfoDAO;
 
     @Override
     public List<ItemPurchaseDto> getPurchaseStatisticsByUserId(Long id) {
@@ -59,7 +54,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 "WHERE u.email = :email", Long.class)
                 .setParameter("email", email)
                 .getSingleResult();
-
         return existingValue > 0;
     }
 
@@ -154,15 +148,6 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return entityManager.createQuery("" +
-                "FROM User AS u WHERE u.username =: username", User.class)
-                .setParameter("username", username)
-                .getSingleResult();
-    }
-
-    // TODO: Использование Entity
-    @Override
     public User getUserById(Long id) {
         return entityManager.createQuery("" +
                 "FROM User AS u WHERE u.id =: id", User.class)
@@ -170,18 +155,12 @@ public class UserDaoImpl extends AbstractDAO<User, Long> implements UserDAO {
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
     public User getUserByEmail(String email) {
-        try {
-            return entityManager.createQuery("" +
+        return entityManager.createQuery("" +
                 "FROM User AS u WHERE u.email =: email", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
     }
 
     public void updateUserFromDto(UserPutDto userPutDto){

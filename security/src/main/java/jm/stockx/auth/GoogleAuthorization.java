@@ -20,30 +20,30 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class GoogleAuthorization {
 
-    public final String protectedResourceUrl = "https://www.googleapis.com/plus/v1/people/me";
-    final String clientId = "347711318147-es57tksl762b63c5dhk7oq47kqmfrvph.apps.googleusercontent.com";
-    final String clientSecret = "PwPnyCvAefTCs-kA2DwRt1PR";
-    final String customScope = "profile";
+    public static final String PROTECTED_RESOURCE_URL = "https://www.googleapis.com/plus/v1/people/me";
+    static final String CLIENT_ID = "347711318147-es57tksl762b63c5dhk7oq47kqmfrvph.apps.googleusercontent.com";
+    static final String CLIENT_SECRET = "PwPnyCvAefTCs-kA2DwRt1PR";
+    static final String CUSTOM_SCOPE = "profile";
 
     @Getter
-    final OAuth20Service service = new ServiceBuilder(clientId)
-            .apiSecret(clientSecret)
-            .defaultScope(customScope)
+    final OAuth20Service service = new ServiceBuilder(CLIENT_ID)
+            .apiSecret(CLIENT_SECRET)
+            .defaultScope(CUSTOM_SCOPE)
             .responseType("token")
             .callback("http://localhost:8080/authorization/returnCodeGoogle")
             .build(GoogleApi20.instance());
 
     @Getter
     final String authorizationUrl = service.createAuthorizationUrlBuilder()
-            .scope(customScope)
+            .scope(CUSTOM_SCOPE)
             .build();
 
     public OAuth2AccessToken getGoogleOAuth2AccessToken (String code) throws InterruptedException, ExecutionException, IOException {
-        return service.getAccessToken(AccessTokenRequestParams.create(code).scope(customScope));
+        return service.getAccessToken(AccessTokenRequestParams.create(code).scope(CUSTOM_SCOPE));
     }
 
-    public User getGoogleUser(OAuth2AccessToken token, String email) throws InterruptedException, ExecutionException {
-        final OAuthRequest request = new OAuthRequest(Verb.GET, protectedResourceUrl);
+    public User getGoogleUser(OAuth2AccessToken token) throws InterruptedException, ExecutionException {
+        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
         service.signRequest(token, request);
         User user = null;
 
@@ -53,7 +53,6 @@ public class GoogleAuthorization {
             String password = jArray.getJSONObject(0).optString("sub");
             String firstName = jArray.getJSONObject(0).optString("given_name");
             String lastName = jArray.getJSONObject(0).optString("family_name");
-            String username = email;
             user = new User(firstName, lastName, password);
         } catch (IOException e) {
             e.printStackTrace();

@@ -3,7 +3,6 @@ package jm.stockx;
 import jm.stockx.dto.currency.CurrencyDto;
 import jm.stockx.entity.Currency;
 
-import java.util.List;
 import java.util.Set;
 
 public interface CurrencyService {

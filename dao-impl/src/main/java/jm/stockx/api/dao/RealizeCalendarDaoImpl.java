@@ -1,6 +1,6 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.realizeCalendar.RealizeCalendarDto;
+import jm.stockx.dto.realizecalendar.RealizeCalendarDto;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

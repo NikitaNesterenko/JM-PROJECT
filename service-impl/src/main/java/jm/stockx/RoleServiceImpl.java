@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.RoleDAO;
-import jm.stockx.dto.security.role.RoleDto;
 import jm.stockx.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto getRoleDtoByRoleId(Long id) {
-        return roleDAO.getRoleDtoByRoleId(id);
+    public Role getRoleByRoleId(Long id) {
+        return roleDAO.getRoleByRoleId(id);
     }
 
     @Override
@@ -46,8 +45,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto getRoleDtoByRoleName(String roleName) {
-        return roleDAO.getRoleDtoByRoleName(roleName);
+    public Role getRoleByRoleName(String roleName) {
+        return roleDAO.getRoleByRoleName(roleName);
     }
 
     @Override

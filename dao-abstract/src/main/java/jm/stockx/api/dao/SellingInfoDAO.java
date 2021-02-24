@@ -1,7 +1,7 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.sellingInfo.*;
-import jm.stockx.entity.Item;
+import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.sellinginfo.*;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 
@@ -21,10 +21,10 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
 
     List<SellingItemDto> getAllSellingItemDtoToCurrentDate(Long itemId);
 
-    List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
-                                            LocalDateTime endPeriod,
-                                            ItemCategory itemCategory,
-                                            int limit);
+    List<ItemDto> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,
+                                                LocalDateTime endPeriod,
+                                                ItemCategory itemCategory,
+                                                int limit);
 
     List<SellingItemDto> getSellingItemDtoByPeriodAndItemId(LocalDateTime begin, LocalDateTime end, Long itemId);
 

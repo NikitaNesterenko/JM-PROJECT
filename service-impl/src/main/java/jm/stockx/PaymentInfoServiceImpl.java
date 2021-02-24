@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.PaymentInfoDAO;
-import jm.stockx.dto.paymentInfo.PaymentInfoDto;
+import jm.stockx.dto.paymentinfo.PaymentInfoDto;
 import jm.stockx.entity.PaymentInfo;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +14,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService{
         this.paymentInfoDAO = paymentInfoDAO;
     }
 
+//    TODO ?
     @Override
     public void addPaymentInfoFromPaymentInfoDto(PaymentInfoDto paymentInfoDto) {
         paymentInfoDAO.add(new PaymentInfo(paymentInfoDto.getId(), paymentInfoDto.getCardNumber(),

@@ -1,9 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.FileStorageService;
-import jm.stockx.ItemAdminDtoException;
 import jm.stockx.ItemAdminService;
-import jm.stockx.MailService;
 import jm.stockx.dto.item.ItemDtoAdmin;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +16,10 @@ import java.util.List;
 public class AdminController {
     private final ItemAdminService itemAdminService;
 
-    // TODO: Не используется. Потенциально можено убрать.
-    private MailService mailService;
-    private FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public AdminController(ItemAdminService itemAdminService, MailService mailService, FileStorageService fileStorageService) {
-        this.mailService = mailService;
+    public AdminController(ItemAdminService itemAdminService, FileStorageService fileStorageService) {
         this.itemAdminService = itemAdminService;
         this.fileStorageService = fileStorageService;
     }

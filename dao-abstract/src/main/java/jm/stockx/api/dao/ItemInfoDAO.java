@@ -2,7 +2,7 @@ package jm.stockx.api.dao;
 
 
 import jm.stockx.dto.SizeInfoDto;
-import jm.stockx.dto.itemInfo.*;
+import jm.stockx.dto.iteminfo.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.ItemSize;
@@ -21,7 +21,7 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
 
     ItemCategory getItemCategoryByReleaseDate(LocalDate releaseDate);
 
-    ItemInfo getItemInfoByItemCategory(ItemCategory itemCategory);
+    ItemInfoDto getItemInfoDtoByItemCategory(ItemCategory itemCategory);
 
     List<ItemInfoCardDto> getItemInfoCardDtoByItemCategory(ItemCategory category);
 

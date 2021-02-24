@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "NotificationInfo")
@@ -98,9 +99,6 @@ public class NotificationInfo implements Serializable {
 
     @Column(name = "collectibles_news")
     private boolean collectiblesNews = false;
-
-    public NotificationInfo() {
-    }
 
     public void setUser(User user) {
         this.user = user;

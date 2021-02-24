@@ -1,10 +1,6 @@
 package jm.stockx.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;

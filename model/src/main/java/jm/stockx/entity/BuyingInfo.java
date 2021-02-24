@@ -1,14 +1,8 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -16,7 +10,6 @@ import org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrenc
 import org.joda.money.Money;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 

@@ -1,11 +1,7 @@
 package jm.stockx.dto.brand;
 
 import jm.stockx.entity.Brand;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 

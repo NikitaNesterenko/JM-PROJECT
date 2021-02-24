@@ -1,7 +1,7 @@
 package jm.stockx;
 
 import jm.stockx.api.dao.BuyingInfoDAO;
-import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
+import jm.stockx.dto.buyinginfo.BuyingInfoPostDto;
 import jm.stockx.entity.BuyingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,7 @@ public class BuyingInfoServiceImpl implements BuyingInfoService {
         buyingInfoDAO.add(buyingInfo);
     }
 
+//    TODO переписать на запрос
     @Override
     public Long create(BuyingInfoPostDto buyingInfoPostDto) {
         BuyingInfo buyingInfo = BuyingInfo.builder()

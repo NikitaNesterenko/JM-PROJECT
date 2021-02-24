@@ -1,11 +1,7 @@
 package jm.stockx.dto.style;
 
 import jm.stockx.entity.Style;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 

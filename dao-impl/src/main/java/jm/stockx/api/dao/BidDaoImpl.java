@@ -66,4 +66,5 @@ public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
                 .setMaxResults(5)
                 .getResultList();
     }
+
 }

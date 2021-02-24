@@ -2,11 +2,7 @@ package jm.stockx.dto.security.token;
 
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;

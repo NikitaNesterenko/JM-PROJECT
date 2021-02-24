@@ -2,6 +2,8 @@ package jm.stockx;
 
 import com.stripe.model.Order;
 import jm.stockx.api.dao.TokenActivationDAO;
+import jm.stockx.dto.security.token.TokenRecoveryDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.News;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.TokenRegistration;
@@ -42,7 +44,7 @@ public class MailServiceImpl implements MailService {
     @Value("${registration.url}")
     private String urlRegistrationLink;
 
-    private JavaMailSenderImpl javaMailSender;
+    private final JavaMailSenderImpl javaMailSender;
 
 
     @Autowired
@@ -119,7 +121,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public boolean changePasswordByToken(String link, String password) throws RecoveryException {
-        TokenRecovery token = tokenRecoveryService.getTokenRecoveryByHashEmail(link);
+        TokenRecoveryDto token = tokenRecoveryService.getTokenRecoveryByHashEmail(link);
         if (token != null && isValidToken(token.getStartTime())) {
             User user = token.getUser();
             user.setPassword(password);
@@ -178,6 +180,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendLastNews(List<News> news, String sourceMail, String password) {
+        //TODO тут, наверно, что-то должно быть
     }
 
 

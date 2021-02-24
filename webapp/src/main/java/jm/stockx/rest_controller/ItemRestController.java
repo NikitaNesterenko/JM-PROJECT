@@ -2,9 +2,9 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.ItemInfoService;
 import jm.stockx.SellingInfoService;
-import jm.stockx.dto.itemInfo.ItemInfoDtoDecimal;
-import jm.stockx.dto.itemInfo.ItemSearchDto;
-import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
+import jm.stockx.dto.iteminfo.ItemInfoDtoDecimal;
+import jm.stockx.dto.iteminfo.ItemSearchDto;
+import jm.stockx.dto.sellinginfo.ItemTopInfoDto;
 import jm.stockx.util.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/item")
-// TODO: Требуется изменение маппинга. Везде так: "/rest/api/названиеДомена"
+@RequestMapping("/rest/api/item")
 public class ItemRestController {
     private final ItemInfoService itemInfoService;
     private final SellingInfoService sellingInfoService;
@@ -26,11 +25,10 @@ public class ItemRestController {
         this.sellingInfoService = sellingInfoService;
     }
 
-    // TODO: Требуется изменение return type на Response.
-    // Я не трогал, так как кто-то сейчас занимается рефакторингом поиска.
     @GetMapping("/search")
-    public List<ItemSearchDto> searchItem(@RequestParam(required = false) String search) {
-        return itemInfoService.getItemSearchDtoBySearch(search);
+    public Response<List<ItemSearchDto>> searchItem(@RequestParam(required = false, name = "s") String search) {
+        List<ItemSearchDto> list = itemInfoService.getItemSearchDtoBySearch(search);
+        return Response.ok(list);
     }
 
     @GetMapping("/allItem")

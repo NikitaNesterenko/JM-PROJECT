@@ -1,9 +1,8 @@
 package jm.stockx;
 
-import jm.stockx.dto.buyingInfo.BuyingInfoPostDto;
+import jm.stockx.dto.buyinginfo.BuyingInfoPostDto;
 import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
-import jm.stockx.entity.Currency;
 import jm.stockx.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,11 +33,9 @@ public interface UserService {
 
     boolean isUserExist(Long id);
 
-    User getUserByUsername(String username);
-
     User getUserById(Long id);
 
-    User getUserByEmail(String email) throws UserNotFoundException;
+    User getUserByEmail(String email);
 
     void updateUserFromDto(UserPutDto userPutDto, @AuthenticationPrincipal User principal) throws UserNotFoundException, ForbiddenException;
 

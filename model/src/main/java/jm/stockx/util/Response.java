@@ -1,6 +1,9 @@
 package jm.stockx.util;
 
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
@@ -14,13 +17,6 @@ import java.util.Objects;
  * @param <T> тип тела
  */
 public class Response<T> extends HttpEntity<T> {
-
-    /**
-     * Флаг, указывающий на успешность выполнения операции.
-     */
-    // TODO: Потенциально требуется удаление.
-    //  Смысла в данном флаге нет.
-    private static boolean success;
 
     private final Object status;
 
@@ -104,7 +100,6 @@ public class Response<T> extends HttpEntity<T> {
      * @return Созданный Builder
      */
     public static BodyBuilder ok() {
-        success = true;
         return httpStatus(HttpStatus.OK);
     }
 
@@ -116,20 +111,6 @@ public class Response<T> extends HttpEntity<T> {
     public static <T> Response<T> ok(T body) {
         return ok().body(body);
     }
-
-    // TODO: Нет смысла возвращать 200, когда выполнение не было удачным.
-    //  Требуется удаление.
-//    public static BodyBuilder ok(HttpStatus status) {
-//        success = false;
-//        return httpStatus(status);
-//    }
-
-    // TODO: Нет смысла возвращать 200, когда выполнение не было удачным,
-    //  тем более, когда параметр лист подается иной статус. Требуется удаление.
-//    public static <T> Response<T> ok(HttpStatus status, T body) {
-//        BodyBuilder builder = new DefaultBuilder(status);
-//        return builder.ok(body);
-//    }
 
     /**
      * Builder для возврата статуса ACCEPTED.
@@ -146,7 +127,6 @@ public class Response<T> extends HttpEntity<T> {
      * @return Созданный Builder статус 204 (NO_CONTENT)
      */
     public static BodyBuilder noContent() {
-        success = false;
         return httpStatus(HttpStatus.NO_CONTENT);
     }
 
@@ -156,7 +136,6 @@ public class Response<T> extends HttpEntity<T> {
      * @return Созданный Builder статус 400 (BAD_REQUEST)
      */
     public static BodyBuilder badRequest() {
-        success = false;
         return httpStatus(HttpStatus.BAD_REQUEST);
     }
 
@@ -166,7 +145,6 @@ public class Response<T> extends HttpEntity<T> {
      * @return Созданный Builder с заданным статусом
      */
     public static BodyBuilder error(HttpStatus status) {
-        success = false;
         return httpStatus(status);
     }
 
@@ -176,7 +154,6 @@ public class Response<T> extends HttpEntity<T> {
      * @return Созданный Builder с заданным статусом и сообщением
      */
     public static <T> Response<T> error(HttpStatus status, String text) {
-        success = false;
         BodyBuilder builder = httpStatus(status);
         return (Response<T>) builder.message(text);
     }

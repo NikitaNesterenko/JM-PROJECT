@@ -1,7 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.ItemInfoService;
-import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.util.Response;
 import org.springframework.web.bind.annotation.PostMapping;

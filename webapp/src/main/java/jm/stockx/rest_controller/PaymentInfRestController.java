@@ -1,7 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.PaymentInfoServiceImpl;
-import jm.stockx.dto.paymentInfo.PaymentInfoDto;
+import jm.stockx.dto.paymentinfo.PaymentInfoDto;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

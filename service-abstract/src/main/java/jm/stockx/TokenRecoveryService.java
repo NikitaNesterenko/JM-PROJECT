@@ -11,6 +11,6 @@ public interface TokenRecoveryService {
 
     TokenRecoveryDto getTokenRecoveryDtoByTokenRecoveryId(Long id);
 
-    TokenRecovery getTokenRecoveryByHashEmail(String hashEmail);
+    TokenRecoveryDto getTokenRecoveryByHashEmail(String hashEmail);
 
 }

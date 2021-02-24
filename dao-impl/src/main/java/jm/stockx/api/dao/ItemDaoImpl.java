@@ -2,10 +2,7 @@ package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.entity.Item;
-import jm.stockx.enums.ItemCategory;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
@@ -36,7 +33,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
     public Item getItemByName(String name) {
         return entityManager.createQuery("" +
@@ -46,7 +42,6 @@ public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
                 .getSingleResult();
     }
 
-    // TODO: Использование Entity
     @Override
     public Item getItemById(Long id) {
         return entityManager.createQuery("" +

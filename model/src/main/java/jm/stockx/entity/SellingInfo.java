@@ -1,13 +1,8 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.itemInfo.ItemInfoDto;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.enums.Status;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -66,8 +61,7 @@ public class SellingInfo {
     }
 
     public SellingInfo(User user,
-                       ItemInfoDto itemInfoDto,
-                       ItemInfo item) {
+                       ItemInfoDto itemInfoDto) {
         this.user = user;
         this.price = itemInfoDto.getPrice();
         this.orderDate = LocalDateTime.now();

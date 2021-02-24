@@ -79,6 +79,7 @@ public class BidServiceImpl implements BidService {
      */
     @Override
     public void placeBid(BidPostDto newBid) {
+//        TODO поменять на инсерт в дао
         Bid bidEntity = Bid.builder()
                 .price(Money.parse(newBid.getPrice()))
                 .itemInfo(itemInfoDAO.getItemInfoByItemId(newBid.getItemInfoId()))

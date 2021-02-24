@@ -34,7 +34,7 @@ public class TokenRecoveryServiceImpl implements TokenRecoveryService {
     }
 
     @Override
-    public TokenRecovery getTokenRecoveryByHashEmail(String hash) {
+    public TokenRecoveryDto getTokenRecoveryByHashEmail(String hash) {
         return tokenDao.getTokenRecoveryByHashEmail(hash);
     }
 }

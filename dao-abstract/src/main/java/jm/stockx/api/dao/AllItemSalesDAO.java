@@ -1,13 +1,13 @@
 package jm.stockx.api.dao;
 
-import java.util.List;
+import jm.stockx.dto.allitemsales.AllItemSalesDto;
+import jm.stockx.dto.item.ItemDto;
 
-import jm.stockx.dto.allItemSales.AllItemSalesDto;
-import jm.stockx.entity.Item;
+import java.util.List;
 
 public interface AllItemSalesDAO {
 
-    List<AllItemSalesDto> getAllItemSalesByItem(Item item);
+    List<AllItemSalesDto> getAllItemSalesByItem(ItemDto item);
 
     List<AllItemSalesDto> getAllItemSalesById(Long itemId);
 
