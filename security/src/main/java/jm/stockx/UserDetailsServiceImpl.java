@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import jm.stockx.dto.security.UserLoginDto;
-import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.User;
 import jm.stockx.jwt.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -32,16 +31,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        UserDto myUser = userService.getUserDtoByUserEmail(email);
+        User myUser = userService.getUserByEmail(email);
         if (myUser == null) {
             log.info("Пользователь {} не найден", email);
             throw new UsernameNotFoundException("Unknown user: " + email);
         } else {
-            return User.builder().
-                    username(myUser.getUsername()).
-                    password(myUser.getPassword()).
-                    role(myUser.getRole()).
-                    build();
+            return myUser;
         }
     }
 

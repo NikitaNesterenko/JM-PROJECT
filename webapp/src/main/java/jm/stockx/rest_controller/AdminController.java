@@ -1,7 +1,6 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.FileStorageService;
-import jm.stockx.ItemAdminDtoException;
 import jm.stockx.ItemAdminService;
 import jm.stockx.dto.item.ItemDtoAdmin;
 import jm.stockx.util.Response;
@@ -17,10 +16,10 @@ import java.util.List;
 public class AdminController {
     private final ItemAdminService itemAdminService;
 
-    private FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public AdminController(ItemAdminService itemAdminService) {
+    public AdminController(ItemAdminService itemAdminService, FileStorageService fileStorageService) {
         this.itemAdminService = itemAdminService;
         this.fileStorageService = fileStorageService;
     }
