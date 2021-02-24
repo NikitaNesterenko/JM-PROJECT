@@ -4,6 +4,6 @@ import jm.stockx.entity.PaymentInfo;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PaymentIfoDaoImpl extends AbstractDAO<PaymentInfo, Long> implements PaymentInfoDAO {
+public class PaymentInfoDaoImpl extends AbstractDAO<PaymentInfo, Long> implements PaymentInfoDAO {
 //    TODO пусто
 }

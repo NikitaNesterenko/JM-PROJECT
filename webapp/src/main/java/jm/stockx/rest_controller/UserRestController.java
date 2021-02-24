@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jm.stockx.*;
-import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.user.UserPutDto;
 import jm.stockx.entity.User;
 import jm.stockx.util.Response;
@@ -77,7 +76,7 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "OK: recovery password token was send"),
                     @ApiResponse(responseCode = "400", description = "NOT_FOUND: unable to send password recovery token")
             })
-    public Response<Void> sendRecoveryLinkToEmail(@PathVariable("email") String email) throws UserNotFoundException {
+    public Response<Void> sendRecoveryLinkToEmail(@PathVariable("email") String email) {
         User user = userService.getUserByEmail(email);
         mailService.sendRecoveryLinkToUser(user);
         log.info("Отправлен запрос на восстановление пароля пользователю с email = {}", email);

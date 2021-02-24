@@ -23,6 +23,7 @@ public class BuyingInfoServiceImpl implements BuyingInfoService {
         buyingInfoDAO.add(buyingInfo);
     }
 
+//    TODO переписать на запрос
     @Override
     public Long create(BuyingInfoPostDto buyingInfoPostDto) {
         BuyingInfo buyingInfo = BuyingInfo.builder()

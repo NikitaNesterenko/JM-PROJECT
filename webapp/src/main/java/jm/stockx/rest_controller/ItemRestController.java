@@ -25,11 +25,10 @@ public class ItemRestController {
         this.sellingInfoService = sellingInfoService;
     }
 
-    // TODO: Требуется изменение return type на Response.
-    // Я не трогал, так как кто-то сейчас занимается рефакторингом поиска.
     @GetMapping("/search")
-    public List<ItemSearchDto> searchItem(@RequestParam(required = false, name = "s") String search) {
-        return itemInfoService.getItemSearchDtoBySearch(search);
+    public Response<List<ItemSearchDto>> searchItem(@RequestParam(required = false, name = "s") String search) {
+        List<ItemSearchDto> list = itemInfoService.getItemSearchDtoBySearch(search);
+        return Response.ok(list);
     }
 
     @GetMapping("/allItem")

@@ -22,6 +22,7 @@ public class ItemAdminServiceImpl implements ItemAdminService {
         this.itemService = itemService;
     }
 
+//    TODO ?
     @Override
     public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) {
         Item item = new Item(itemDtoAdmin.getName());

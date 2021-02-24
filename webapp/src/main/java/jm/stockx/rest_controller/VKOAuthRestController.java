@@ -1,6 +1,7 @@
 package jm.stockx.rest_controller;
 
 import jm.stockx.oauth2.VKOAuth;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class VKOAuthRestController {
@@ -45,12 +47,12 @@ public class VKOAuthRestController {
                 response.sendRedirect(successUrl);
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-
+                log.error(e.getMessage());
                 try {
                     response.sendRedirect(authorizeUrl);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
+                    log.error(ioException.getMessage());
                 }
             }
         }

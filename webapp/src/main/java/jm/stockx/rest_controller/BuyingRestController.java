@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/buying")
 public class BuyingRestController {
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public BuyingRestController(UserService userService) {
