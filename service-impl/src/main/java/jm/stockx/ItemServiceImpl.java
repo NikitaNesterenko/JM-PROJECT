@@ -66,6 +66,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     //TODO переписать метод на нативный sql
+    // id sql - посмотри на таблицу и инсерти нужные поля
     @Override
     public void buyItem(BuyingDto buyingDto) {
         User buyer = userDAO.getById(buyingDto.getBuyerId());

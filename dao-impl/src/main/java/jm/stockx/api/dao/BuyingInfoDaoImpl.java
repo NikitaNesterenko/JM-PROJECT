@@ -25,6 +25,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 .getSingleResult();
     }
 
+    // тут джоин переписывается с ON id
 //    TODO переделать запрос, использовать параметр
     public BuyingInfoDto getBuyingInfoDtoByItemInfo(ItemInfo itemInfo) {
         return entityManager.createQuery("" +

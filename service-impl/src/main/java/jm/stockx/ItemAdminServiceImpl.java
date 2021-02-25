@@ -23,6 +23,8 @@ public class ItemAdminServiceImpl implements ItemAdminService {
     }
 
 //    TODO ?
+
+    // из дто взять поля и инсерт запрос
     @Override
     public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) {
         Item item = new Item(itemDtoAdmin.getName());
