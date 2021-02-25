@@ -20,6 +20,7 @@ public class PaymentInfRestController {
     }
 
     // TODO: Неясен статус метода и контроллера в целом.
+    // тут заглушки, не трогать
     @PostMapping("/add")
     public Response<Void> addPaymentInformation(@RequestBody PaymentInfoDto paymentInfoDto) {
         // paymentInfoService.updateFromPaymentInfoDto(paymentInfoDto);

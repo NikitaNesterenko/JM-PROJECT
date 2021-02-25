@@ -22,7 +22,7 @@ public class BuyingInfoServiceImpl implements BuyingInfoService {
     public void create(BuyingInfo buyingInfo) {
         buyingInfoDAO.add(buyingInfo);
     }
-
+// Получаешь айди всех сущностей что есть и просто инсерт sql
 //    TODO переписать на запрос
     @Override
     public Long create(BuyingInfoPostDto buyingInfoPostDto) {

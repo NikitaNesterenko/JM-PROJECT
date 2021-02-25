@@ -63,7 +63,9 @@ public class MailServiceTest {
         TokenRecovery token = new TokenRecovery();
         token.setHashEmail("hashEmail");
         token.setStartTime(new Date());
+        // Тесты все закоментить, что щас не валидны, будем переписывать
 //        TODO Cannot resolve method 'thenReturn(jm.stockx.entity.TokenRecovery)'
+        // тест коммент
 //        when(tokenService.getTokenRecoveryByHashEmail("link")).thenReturn(token);
         assertFalse(mailService.changePasswordByToken("link", anyString()));
     }

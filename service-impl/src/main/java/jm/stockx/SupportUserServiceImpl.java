@@ -23,6 +23,7 @@ public class SupportUserServiceImpl implements SupportUserService {
     }
 
 //    TODO ?
+    // не править
     @Override
     public void askQuestionByUser(CallbackFormDto callbackFormDto) {
 
