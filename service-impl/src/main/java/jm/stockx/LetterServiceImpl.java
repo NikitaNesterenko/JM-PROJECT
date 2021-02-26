@@ -3,42 +3,33 @@ package jm.stockx;
 import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class LetterServiceImpl  implements LetterService{
+    private final ItemInfoService itemInfoService;
+
+    @Autowired
+    public LetterServiceImpl(ItemInfoService itemInfoService) {
+        this.itemInfoService = itemInfoService;
+    }
+
     @Override
     public String createBuyingLetter(User user, BuyingInfo buyingInfo) {
         String date1 = buyingInfo.getBuyingTimeStamp().toLocalDate().toString();
         String date2 = buyingInfo.getBuyingTimeStamp().toLocalDate().plusDays(10L).toString();
 
-        String head = "<!DOCTYPE html>\n" +
+        String head = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
                 "</head>";
 
         String style = "<style>\n" +
-                "        .head{\n" +
-                "            font-size: 15px;\n" +
-                "            height: 20%;\n" +
-                "            background: green;\n" +
-                "            display: flex;\n" +
-                "        }\n" +
-                "        .E{\n" +
-                "            margin-left: 5%;\n" +
-                "            color: white;\n" +
-                "            font-size: 15px;\n" +
-                "        }\n" +
-                "        .date1{\n" +
-                "            margin-left: 5%;\n" +
-                "        }\n" +
-                "        .c1{\n" +
-                "            text-align: left;\n" +
-                "        }\n" +
-                "\n" +
-                "\n" +
-                "        .grid-container {\n" +
+                "  .grid-container {\n" +
                 "  display: grid;\n" +
                 "  grid-template-areas: \"post-6 post-5\"; \n" +
                 "  grid-template-rows: repeat(3, 100px);\n" +
@@ -51,20 +42,14 @@ public class LetterServiceImpl  implements LetterService{
                 ".post-6 {           \n" +
                 "  grid-area: post-6;\n" +
                 "}\n" +
-                ".niz{\n" +
-                "    background: green;\n" +
-                "    text-align: center;\n" +
-                "    color: white;\n" +
-                "    padding: 10px;\n" +
-                "}\n" +
                 "</style>";
 
         String body1 = "<body style=\"width: 30%;\">\n" +
-                "<div class=\"head\">\n" +
-                "<img src=\"https://stockx-assets.imgix.net/logo/stockx_homepage_logo_dark.svg\" style=\"width: 80px; height: 60px;\" alt=\"\">\n" +
-                "<p class=\"E\">ESTIMATED ARRIVAL<br>AT YOUR DOOR:</p>\n" +
-                "<p style=\"display: flex; font-size: 25px; color: white;\">\n" +
-                "  " + date1 + " - " + date2 +
+                "<div style=\"font-size: 15px; height: 20%; background: green; display: flex;\">\n" +
+                "<img src=\"cid:StockXLogo\" style=\"width: 80px; height: 60px; display: inline-block;\" alt=\"\">\n" +
+                "<p style=\"margin-bottom: 0%; margin-left: 5px; color: white; font-size: 15px; background-color: green; display: inline-block;\">ESTIMATED ARRIVAL<br>  AT YOUR DOOR:</p>\n" +
+                "<p style=\"margin-top: auto; margin-left: 5px; display: flex; font-size: 25px; color: white; background-color: green; margin-bottom: auto; display: inline-block;\">\n" +
+                date1 + " - " + date2 +
                 "</p>\n" +
                 "</div>";
 
@@ -97,14 +82,15 @@ public class LetterServiceImpl  implements LetterService{
 
         String body2 = "<div>\n" +
                 "        <h1 style=\"text-align: center;\">Order Confirmation</h1>\n" +
-                "        <p class=\"c1\">Congrats! Your latest StockX purchase is on the way. You can expect to receive it by " + date2 + ".\n" +
+                "        <p style=\"text-align: left;\">Congrats! Your latest StockX purchase is on the way. You can expect to receive it by " + date2 + ".\n" +
                 "            To check the current status and delivery tracking of your order, visit <a href=\"http://localhost:4446/\"\n" +
                 "                style=\"color: yellowgreen; text-decoration: none;\">stockx.com/buying.</a></p>\n" +
                 "        <p style=\"text-align: left;\">Due to the global impact of COVID-19, your order may run into unexpected delays.\n" +
                 "        </p>\n" +
                 "    </div>";
 
-        StringBuilder items = null;
+        StringBuilder items = new StringBuilder();
+
         for (ItemInfo i:buyingInfo.getBoughtItemsInfo()) {
             items.append("    <div style=\"display: grid;\" class=\"grid-container\">\n" +
                     "        <img src=\"" + i.getItemImageUrl() + "\" alt=\"\" style=\"width: 200px; height: 200px;\" class=\"post-6\">\n" +
@@ -120,7 +106,7 @@ public class LetterServiceImpl  implements LetterService{
                     "                <br>Shipping: $40\n" +
                     "                <br>________________________\n" +
                     "            <br>TOTAL PAYMENT: $276.90\n" +
-                    "            <br><input type=\"button\" value=\"View Order\" style=\"background: black; color: white;\">\n" +
+                    "            <br><button onclick=\"" + "http://localhost:4446/order?id=" + buyingInfo.getId() + "\" style=\"background: black; color: white;\">View Order</button>\n" +
                     "            </p>\n" +
                     "        </div>\n" +
                     "    </div>");
@@ -140,10 +126,10 @@ public class LetterServiceImpl  implements LetterService{
                 "            </a>\n" +
                 "        </ul>\n" +
                 "    </div>" +
-                "    <div class=\"niz\">\n" +
-                "        <a href=\"\" style=\"color: white; text-decoration: none;\">Email Settings</a> | <a href=\"\"\n" +
-                "            style=\"color: white; text-decoration: none;\">Help</a> | <a href=\"\"\n" +
-                "            style=\"color: white; text-decoration: none;\">Jobs</a>\n" +
+                "    <div style=\"background: green; text-align: center; color: white; padding: 10px;\">\n" +
+                "        <a href=\"\" style=\"color: white; background-color: green; text-decoration: none;\">Email Settings</a> | <a href=\"\"\n" +
+                "            style=\"color: white; background-color: green; text-decoration: none;\">Help</a> | <a href=\"\"\n" +
+                "            style=\"color: white; background-color: green; text-decoration: none;\">Jobs</a>\n" +
                 "    </div>\n" +
                 "</body>\n" +
                 "\n" +

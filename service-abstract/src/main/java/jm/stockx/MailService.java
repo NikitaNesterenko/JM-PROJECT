@@ -26,4 +26,6 @@ public interface MailService {
 
     void sendLastNews (List<News> news, String sourceMail, String password);
 
+    void sendHtmlMessageWithLogo (String to, String subject, String html);
+
 }

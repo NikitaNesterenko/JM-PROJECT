@@ -154,11 +154,7 @@ public class UserServiceImpl implements UserService {
         user.setBuyingInfo(Collections.singleton(buyingInfo));
         updateUser(user);
 
-        StringBuilder message = new StringBuilder("Congratulations! You have bought the best products:\n");
-        for (ItemInfo i:buyingInfo.getBoughtItemsInfo()) {
-            message.append(i.getItem().getName()).append("\n");
-        }
-        mailService.sendSimpleMessage(user.getEmail(), "Your best buy!", letterService.createBuyingLetter(user, buyingInfo));
+        mailService.sendHtmlMessageWithLogo(user.getEmail(), "Your best buy!", letterService.createBuyingLetter(user, buyingInfo));
     }
 
 }
