@@ -5,6 +5,8 @@ import jm.stockx.entity.Item;
 
 public interface ItemDAO extends GenericDao<Item, Long> {
 
+    Long addItemByItemName(String name);
+
     ItemDto getItemDtoByItemName(String name);
 
     ItemDto getItemDtoByItemId(Long id);

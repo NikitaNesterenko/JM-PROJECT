@@ -22,8 +22,6 @@ public class SupportUserServiceImpl implements SupportUserService {
         this.supportQuestionDAO = supportQuestionDAO;
     }
 
-//    TODO ?
-    // не править
     @Override
     public void askQuestionByUser(CallbackFormDto callbackFormDto) {
 

@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PaymentInfoDaoImpl extends AbstractDAO<PaymentInfo, Long> implements PaymentInfoDAO {
-//    TODO пусто
-    // ничего не делать
+
 }

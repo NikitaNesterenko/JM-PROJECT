@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.SizeInfoDto;
+import jm.stockx.dto.item.ItemDtoAdmin;
 import jm.stockx.dto.iteminfo.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
@@ -344,6 +345,21 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 "WHERE i.id = :itemId", ItemInfo.class)
                 .setParameter("itemId", id)
                 .getSingleResult());
+    }
+
+//    TODO
+    @Override
+    public void addItemInfo(Long itemId, ItemDtoAdmin itemDtoAdmin) {
+        entityManager.createNativeQuery("" +
+                "INSERT INTO item_info (" +
+                "item_price, item_currency, release_date, item_id, item_image_url) " +
+                "VALUES (:1, :2, :3, :4, :5);")
+                .setParameter("1", itemDtoAdmin.getPrice().getAmount().toString())
+                .setParameter("2", itemDtoAdmin.getPrice().getCurrencyUnit().toString())
+                .setParameter("3", itemDtoAdmin.getDateRelease().toString())
+                .setParameter("4", itemId)
+                .setParameter("5", itemDtoAdmin.getImageUrl())
+                .executeUpdate();
     }
 }
 

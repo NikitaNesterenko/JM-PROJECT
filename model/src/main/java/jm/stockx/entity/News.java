@@ -36,7 +36,7 @@ public class News {
     @Lob
     private String text;
 
-    @Column(name = "imageUrl")
+    @Column(name = "image_url")
     private String imageUrl;
 
     public News(

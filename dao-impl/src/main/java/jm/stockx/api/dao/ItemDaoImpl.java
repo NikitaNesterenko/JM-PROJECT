@@ -7,6 +7,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
+//    TODO
+    @Override
+    public Long addItemByItemName(String name) {
+        return (Long) entityManager.createNativeQuery("" +
+                "INSERT INTO items (name) VALUES (:1) RETURNING id")
+                .setParameter("1", name)
+                .getSingleResult();
+    }
+
     @Override
     public ItemDto getItemDtoByItemName(String name) {
         return entityManager.createQuery("" +

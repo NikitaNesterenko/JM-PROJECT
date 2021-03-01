@@ -180,8 +180,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendLastNews(List<News> news, String sourceMail, String password) {
-        //TODO тут, наверно, что-то должно быть
-        // пока ничего не делаем
+
     }
 
 

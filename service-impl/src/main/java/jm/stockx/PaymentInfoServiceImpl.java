@@ -14,8 +14,6 @@ public class PaymentInfoServiceImpl implements PaymentInfoService{
         this.paymentInfoDAO = paymentInfoDAO;
     }
 
-//    TODO ?
-    // Не править
     @Override
     public void addPaymentInfoFromPaymentInfoDto(PaymentInfoDto paymentInfoDto) {
         paymentInfoDAO.add(new PaymentInfo(paymentInfoDto.getId(), paymentInfoDto.getCardNumber(),

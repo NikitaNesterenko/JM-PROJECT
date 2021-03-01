@@ -36,7 +36,7 @@ public class Bid {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "itemInfo_id", referencedColumnName = "id")
+    @JoinColumn(name = "item_info_id", referencedColumnName = "id")
     private ItemInfo itemInfo;
 
     public Bid(Money price, Boolean success, User user, ItemInfo itemInfo) {

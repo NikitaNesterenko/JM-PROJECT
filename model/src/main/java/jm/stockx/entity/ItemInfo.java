@@ -19,6 +19,7 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Builder
+@Table(name = "item_info")
 public class ItemInfo implements Serializable {
 
     @Id
@@ -85,8 +86,8 @@ public class ItemInfo implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable (
             name = "info_item_brand_item",
-            joinColumns = @JoinColumn(name = "infoId"),
-            inverseJoinColumns = @JoinColumn(name = "brandId"))
+            joinColumns = @JoinColumn(name = "info_id"),
+            inverseJoinColumns = @JoinColumn(name = "brand_id"))
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY)

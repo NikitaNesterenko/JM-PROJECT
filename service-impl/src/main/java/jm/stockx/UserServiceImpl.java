@@ -133,7 +133,6 @@ public class UserServiceImpl implements UserService {
 //
 //        BuyingInfo buyingInfo = buyingInfoService.getBuyingInfoById(id);
 //
-////      TODO кто-то меняет
 //        User user = getUserByUsername(SecurityContextHolder.getContext()
 //                .getAuthentication().getName());
 //        user.setBuyingInfo(Collections.singleton(buyingInfo));

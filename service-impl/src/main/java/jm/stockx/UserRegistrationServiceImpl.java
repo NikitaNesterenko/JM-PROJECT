@@ -31,8 +31,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         }
         String password = passwordGeneratorService.generatePassword(8);
 
-//        TODO ?
-        // не править
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), password);
         newUser.setRole(roleService.getRole("ROLE_USER"));
         newUser.setActive(true);

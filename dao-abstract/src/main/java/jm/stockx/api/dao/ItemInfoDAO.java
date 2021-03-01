@@ -2,6 +2,7 @@ package jm.stockx.api.dao;
 
 
 import jm.stockx.dto.SizeInfoDto;
+import jm.stockx.dto.item.ItemDtoAdmin;
 import jm.stockx.dto.iteminfo.*;
 import jm.stockx.entity.Brand;
 import jm.stockx.entity.ItemInfo;
@@ -60,5 +61,7 @@ public interface ItemInfoDAO extends GenericDao<ItemInfo, Long> {
     List<ItemInfoDtoDecimal> getAllItemInfoDtoDecimal();
 
     ItemInfoDtoDecimal getItemInfoDecByItemId(Long id);
+
+    void addItemInfo(Long itemId, ItemDtoAdmin itemDtoAdmin);
 
 }

@@ -35,7 +35,6 @@ import java.util.Optional;
 
 @Service
 public class AppleIdAuthorization {
-     // пока ничего
     //todo настройки при регистации приложения от apple. прописать в application.properties
     @Value("${apple.key-id}")
     private  String keyId;
@@ -51,7 +50,6 @@ public class AppleIdAuthorization {
     private static final String APPLE_KEYS_URL = "https://appleid.apple.com/auth/keys";
     private static final String APPLE_AUTH_URL = "https://appleid.apple.com/auth/authorize";
     //todo В документации указано, что параметр redirect_uri:
-    // НЕ ТРОГАТЬ
     // (Required) The URI to which the authorization redirects. It must include a domain name, and can’t be an IP address or localhost.
     private static final String REDIRECT_URI = "http://localhost:8080/authorization/appleReturnCode";
     private static final String RESPONSE_TYPE = "code,id_token";
@@ -59,7 +57,6 @@ public class AppleIdAuthorization {
 
     private PrivateKey getPrivateKey() throws IOException {
         //todo путь к физическому файлу-ключу, полученному при регистации приложения от apple
-        // НЕ ТРОГАТЬ
         String path = new ClassPathResource("apple/AuthKey.p8").getFile().getAbsolutePath();
 
         PrivateKeyInfo object;

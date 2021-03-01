@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "NotificationInfo")
+@Table(name = "notification_info")
 public class NotificationInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,10 @@ public class NotificationInfo implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "bidding_new_lowestAsk")
+    @Column(name = "bidding_new_lowest_ask")
     private boolean biddingNewLowestAsk = true;
 
-    @Column(name = "bidding_new_highestBid")
+    @Column(name = "bidding_new_highest_bid")
     private boolean biddingNewHighestBid = true;
 
     @Column(name = "bid_expiring")
