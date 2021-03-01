@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements BuyingInfoDAO {
 
-//    TODO
+//    TODO // почему вайл вместо фор - разделить на приват методы
     @Override
     public Long addBuyingInfo(BuyingInfoPostDto buyingInfoPostDto) {
         Long id = (Long) entityManager.createNativeQuery("" +
@@ -45,7 +45,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
         return id;
     }
 
-//    TODO не доделал
+//    TODO не доделал доделай
     @Override
     public void addBuyingInfo(BuyingDto buyingDto) {
         entityManager.createNativeQuery("" +
@@ -75,7 +75,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 .getSingleResult();
     }
 
-//    TODO
+//    TODO джоин по айди, а не сущности
     public BuyingInfoDto getBuyingInfoDtoByItemInfo(ItemInfo itemInfo) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.buyinginfo.BuyingInfoDto(" +
