@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements BuyingInfoDAO {
 
-//    TODO разбить на несколько методов
+//    TODO
     @Override
     public Long addBuyingInfo(BuyingInfoPostDto buyingInfoPostDto) {
         Long id = (Long) entityManager.createNativeQuery("" +
@@ -75,7 +75,7 @@ public class BuyingInfoDaoImpl extends AbstractDAO<BuyingInfo, Long> implements 
                 .getSingleResult();
     }
 
-//    TODO done
+//    TODO
     public BuyingInfoDto getBuyingInfoDtoByItemInfo(ItemInfo itemInfo) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.buyinginfo.BuyingInfoDto(" +
