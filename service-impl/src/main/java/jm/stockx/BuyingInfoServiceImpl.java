@@ -23,7 +23,6 @@ public class BuyingInfoServiceImpl implements BuyingInfoService {
         buyingInfoDAO.add(buyingInfo);
     }
 
-//    TODO done
     @Override
     public Long create(BuyingInfoPostDto buyingInfoPostDto) {
         return buyingInfoDAO.addBuyingInfo(buyingInfoPostDto);

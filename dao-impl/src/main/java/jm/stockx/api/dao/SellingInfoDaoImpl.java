@@ -1,9 +1,13 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.dto.sellinginfo.*;
+import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
+import jm.stockx.enums.Status;
+import org.bouncycastle.crypto.prng.RandomGenerator;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
@@ -13,11 +17,30 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 
 @Repository
 public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implements SellingInfoDAO {
+
+    @Override
+    public void addSellingInfo(ItemInfoDto itemInfo, Long sellerId) {
+        final Random random = new Random();
+        int orderNumber = random.nextInt(999999);
+        entityManager.createNativeQuery("INSERT INTO selling_info " +
+                "(order_date, order_number, selling_info_currency, " +
+                "selling_info_price, order_status, item_id, user_id) " +
+                "VALUES (:1, :2, :3, :4, :5, :6, :7)")
+                .setParameter("1", LocalDateTime.now())
+                .setParameter("2", String.format("%06d", orderNumber))
+                .setParameter("3", itemInfo.getPrice().getCurrencyUnit().toString())
+                .setParameter("4", itemInfo.getPrice().getAmount().toString())
+                .setParameter("5", Status.ACCEPTED)
+                .setParameter("6", itemInfo.getId())
+                .setParameter("7", sellerId)
+                .executeUpdate();
+    }
 
     @Override
     public Double getAverageSalesValue() {

@@ -50,28 +50,4 @@ public class SellingInfo {
     @Type(type = "joda_MoneyAmountWithCurrencyType")
     private Money price;
 
-    public SellingInfo(User user,
-                       ItemInfo itemInfo,
-                       Status status) {
-        this.user = user;
-        this.itemInfo = itemInfo;
-        this.price = itemInfo.getPrice();
-        this.orderDate = LocalDateTime.now();
-        this.status = status;
-    }
-
-    public SellingInfo(User user,
-                       ItemInfoDto itemInfoDto) {
-        this.user = user;
-        this.price = itemInfoDto.getPrice();
-        this.orderDate = LocalDateTime.now();
-    }
-
-    public SellingInfo(User user,
-                       ItemInfo itemInfo,
-                       Long orderNumber,
-                       Status status) {
-        this(user, itemInfo, status);
-        this.orderNumber = orderNumber;
-    }
 }

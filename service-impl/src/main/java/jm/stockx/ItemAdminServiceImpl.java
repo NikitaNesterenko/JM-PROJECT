@@ -22,7 +22,6 @@ public class ItemAdminServiceImpl implements ItemAdminService {
         this.itemInfoDAO = itemInfoDAO;
     }
 
-//    TODO done
     @Override
     public void addAdminItemInfo(ItemDtoAdmin itemDtoAdmin) {
         Long itemId = itemDAO.addItemByItemName(itemDtoAdmin.getName());

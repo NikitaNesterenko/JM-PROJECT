@@ -1,6 +1,7 @@
 package jm.stockx.api.dao;
 
 import jm.stockx.dto.item.ItemDto;
+import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.dto.sellinginfo.*;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
@@ -9,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
+
+    void addSellingInfo(ItemInfoDto itemInfo, Long sellerId);
+
     Double getAverageSalesValue();
 
     SellingInfoDto getSellingInfoDtoBySellingInfoId(Long id);

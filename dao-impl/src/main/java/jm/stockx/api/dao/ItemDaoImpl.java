@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ItemDaoImpl extends AbstractDAO<Item, Long> implements ItemDAO {
 
-//    TODO
     @Override
     public Long addItemByItemName(String name) {
         return (Long) entityManager.createNativeQuery("" +

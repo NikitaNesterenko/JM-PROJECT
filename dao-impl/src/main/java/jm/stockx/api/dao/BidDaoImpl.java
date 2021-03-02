@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public class BidDaoImpl extends AbstractDAO<Bid, Long> implements BidDAO {
 
-//TODO
     @Override
     public void addBid(BidPostDto bidPostDto) {
         entityManager.createNativeQuery("" +

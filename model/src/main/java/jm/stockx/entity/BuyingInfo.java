@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.*;
 import org.hibernate.annotations.Columns;
@@ -55,8 +54,4 @@ public class BuyingInfo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public BuyingInfo(ItemInfoDto itemInfoDto) {
-        this.buyingTimeStamp = LocalDateTime.now();
-        this.buyingPrice = itemInfoDto.getPrice();
-    }
 }

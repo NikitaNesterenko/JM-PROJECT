@@ -3,6 +3,7 @@ package jm.stockx;
 import jm.stockx.api.dao.*;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.iteminfo.ItemInfoDto;
+import jm.stockx.dto.user.UserDto;
 import jm.stockx.dto.userportfolio.BuyingDto;
 import jm.stockx.entity.*;
 import jm.stockx.enums.Status;
@@ -65,32 +66,17 @@ public class ItemServiceImpl implements ItemService {
         itemDao.deleteById(id);
     }
 
-    //TODO переписать метод на нативный sql
-    // id sql - посмотри на таблицу и инсерти нужные поля
     @Override
     public void buyItem(BuyingDto buyingDto) {
-        User buyer = userDAO.getById(buyingDto.getBuyerId());
-        ItemInfo itemInfo = itemInfoDAO.getById(buyingDto.getItemId());
         ItemInfoDto itemInfoDto = itemInfoDAO.getItemInfoDtoByItemId(buyingDto.getItemId());
-        Set<ItemInfo> boughtItems = new HashSet<>();
-        boughtItems.add(itemInfo);
-        Set<PaymentInfo> paymentInfo = new HashSet<>();
+        buyingInfoDAO.addBuyingInfo(itemInfoDto);
 
-        BuyingInfo buyingInfo = new BuyingInfo(itemInfoDto);
-        buyingInfo.setBoughtItemsInfo(boughtItems);
-        buyingInfo.setPaymentsInfo(paymentInfo);
-        buyingInfo.setStatus(Status.ACCEPTED);
-        buyingInfoDAO.add(buyingInfo);
+        sellingInfoDAO.addSellingInfo(itemInfoDto, buyingDto.getSellerId());
 
-        User seller = userDAO.getById(buyingDto.getSellerId());
-        SellingInfo sellingInfo = new SellingInfo(seller, itemInfoDto);
-        sellingInfo.setUser(seller);
-        sellingInfo.setStatus(Status.ACCEPTED);
-        sellingInfoDAO.add(sellingInfo);
-
-        mailService.sendSimpleMessage(buyer.getEmail(), "You've bought item!", itemInfo.toString());
+        UserDto buyer = userDAO.getUserDtoByUserId(buyingDto.getBuyerId());
+        mailService.sendSimpleMessage(
+                buyer.getEmail(), "You've bought item!", itemInfoDto.toString());
     }
-
 
     @Override
     public boolean isItemExist(Long id) {

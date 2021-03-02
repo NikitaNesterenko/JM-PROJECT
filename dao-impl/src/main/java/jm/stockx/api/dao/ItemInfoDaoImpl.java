@@ -347,7 +347,6 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
                 .getSingleResult());
     }
 
-//    TODO
     @Override
     public void addItemInfo(Long itemId, ItemDtoAdmin itemDtoAdmin) {
         entityManager.createNativeQuery("" +
