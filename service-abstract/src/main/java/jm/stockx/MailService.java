@@ -1,7 +1,6 @@
 package jm.stockx;
 
 import com.stripe.model.Order;
-import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.News;
 import jm.stockx.entity.User;
 

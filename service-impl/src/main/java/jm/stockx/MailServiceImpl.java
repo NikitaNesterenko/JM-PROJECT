@@ -3,7 +3,6 @@ package jm.stockx;
 import com.stripe.model.Order;
 import jm.stockx.api.dao.TokenActivationDAO;
 import jm.stockx.dto.security.token.TokenRecoveryDto;
-import jm.stockx.dto.user.UserDto;
 import jm.stockx.entity.News;
 import jm.stockx.entity.TokenRecovery;
 import jm.stockx.entity.TokenRegistration;

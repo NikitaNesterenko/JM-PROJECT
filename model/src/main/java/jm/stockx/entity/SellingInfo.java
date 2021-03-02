@@ -1,6 +1,5 @@
 package jm.stockx.entity;
 
-import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.enums.Status;
 import lombok.*;
 import org.hibernate.annotations.Columns;

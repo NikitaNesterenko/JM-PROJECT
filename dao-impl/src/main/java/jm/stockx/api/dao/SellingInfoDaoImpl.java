@@ -3,11 +3,9 @@ package jm.stockx.api.dao;
 import jm.stockx.dto.item.ItemDto;
 import jm.stockx.dto.iteminfo.ItemInfoDto;
 import jm.stockx.dto.sellinginfo.*;
-import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 import jm.stockx.enums.Status;
-import org.bouncycastle.crypto.prng.RandomGenerator;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
 
