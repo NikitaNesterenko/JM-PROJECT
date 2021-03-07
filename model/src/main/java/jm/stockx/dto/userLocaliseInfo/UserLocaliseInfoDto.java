@@ -6,8 +6,6 @@ import jm.stockx.enums.UserCurrency;
 import jm.stockx.enums.UserLanguage;
 import lombok.*;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -32,7 +30,6 @@ public class UserLocaliseInfoDto {
     private String userName;
 
     public UserLocaliseInfoDto(UserLocaliseInfo userLocaliseInfo) {
-//        this.id = userLocaliseInfo.getId();
         this.userCountry = userLocaliseInfo.getUserCountry();
         this.userCurrency = userLocaliseInfo.getUserCurrency();
         this.userLanguage = userLocaliseInfo.getUserLanguage();

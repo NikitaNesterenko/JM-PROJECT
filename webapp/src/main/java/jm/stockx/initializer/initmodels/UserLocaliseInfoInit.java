@@ -1,9 +1,7 @@
 package jm.stockx.initializer.initmodels;
 
 import jm.stockx.UserLocaliseInfoService;
-import jm.stockx.UserService;
 import jm.stockx.dto.userLocaliseInfo.UserLocaliseInfoPostDto;
-import jm.stockx.entity.UserLocaliseInfo;
 import jm.stockx.enums.UserCountry;
 import jm.stockx.enums.UserCurrency;
 import jm.stockx.enums.UserLanguage;
@@ -63,8 +61,6 @@ public class UserLocaliseInfoInit {
     }
 
     private void accept (UserLocaliseInfoPostDto userLocaliseInfoPostDto) {
-
-            userLocaliseInfoService.placeUserLocaliseInfo(userLocaliseInfoPostDto);
-
+        userLocaliseInfoService.placeUserLocaliseInfo(userLocaliseInfoPostDto);
     }
 }
