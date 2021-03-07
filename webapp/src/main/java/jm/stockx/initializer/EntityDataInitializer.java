@@ -27,6 +27,7 @@ public class EntityDataInitializer implements CommandLineRunner {
     private final SellingInfoInit sellingInfoInit;
     private final NewsInit newsInit;
     private final BidInit bidInit;
+    private final UserLocaliseInfoInit userLocaliseInfoInit;
 
     private final RoleService roleService;
     private final UserService userService;
@@ -39,6 +40,7 @@ public class EntityDataInitializer implements CommandLineRunner {
     private final SellingInfoService sellingInfoService;
     private final BidService bidService;
     private final NewsService newsService;
+    private final UserLocaliseInfoService userLocaliseInfoService;
 
     @Override
     public void run(String... args) {
@@ -68,6 +70,7 @@ public class EntityDataInitializer implements CommandLineRunner {
         createSellingInfo();
         createBids();
         createNews();
+        createUserLocaliseInfos();
     }
 
     private void createRoles() {
@@ -134,6 +137,12 @@ public class EntityDataInitializer implements CommandLineRunner {
     private void createNews() {
         if (newsService.getAllNews().isEmpty()) {
             newsInit.initializeNews();
+        }
+    }
+
+    private void createUserLocaliseInfos() {
+        if (userLocaliseInfoService.getAll().isEmpty()) {
+            userLocaliseInfoInit.initializeUserLocaliseInfos();
         }
     }
 }
