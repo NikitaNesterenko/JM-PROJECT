@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 public class PriceConvertationServiceImpl implements PriceConvertationService{
 
     @Override
-    public BigDecimal convert(BigDecimal price, String fromCurrency, String toCurrency) {
-        String request = "https://api.coingate.com/v2/rates/merchant/" + fromCurrency + "/" + toCurrency;
+    public BigDecimal convert(BigDecimal price, String toCurrency) {
+        String request = "https://api.coingate.com/v2/rates/merchant/USD/" + toCurrency;
         String result = "-1";
         HttpGet httpRequest = new HttpGet(request);
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {

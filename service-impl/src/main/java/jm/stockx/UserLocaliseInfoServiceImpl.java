@@ -2,8 +2,6 @@ package jm.stockx;
 
 import jm.stockx.api.dao.UserDAO;
 import jm.stockx.api.dao.UserLocaliseInfoDAO;
-import jm.stockx.dto.userLocaliseInfo.UserLocaliseInfoDto;
-import jm.stockx.dto.userLocaliseInfo.UserLocaliseInfoPostDto;
 import jm.stockx.entity.UserLocaliseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,23 +38,7 @@ public class UserLocaliseInfoServiceImpl implements UserLocaliseInfoService{
     }
 
     @Override
-    public void deleteByUserName(String userName) {
-        userLocaliseInfoDAO.deleteByUserName(userName);
-    }
-
-    @Override
-    public UserLocaliseInfoDto getUserLocaliseInfoDtoByUserName(String userName) {
-        return userLocaliseInfoDAO.getUserLocaliseInfoDtoByUserName(userName);
-    }
-
-    @Override
-    public void placeUserLocaliseInfo(UserLocaliseInfoPostDto userLocaliseInfoPostDto) {
-        UserLocaliseInfo userLocaliseInfo = UserLocaliseInfo.builder()
-                .userCountry(userLocaliseInfoPostDto.getUserCountry())
-                .userCurrency(userLocaliseInfoPostDto.getUserCurrency())
-                .userLanguage(userLocaliseInfoPostDto.getUserLanguage())
-                .user(userDAO.getUserById(userLocaliseInfoPostDto.getUserId()))
-                .build();
-        userLocaliseInfoDAO.add(userLocaliseInfo);
+    public String getMoneyTagByUserId(Long id) {
+        return userLocaliseInfoDAO.getMoneyTagByUserId(id);
     }
 }

@@ -1,7 +1,5 @@
 package jm.stockx;
 
-import jm.stockx.dto.userLocaliseInfo.UserLocaliseInfoDto;
-import jm.stockx.dto.userLocaliseInfo.UserLocaliseInfoPostDto;
 import jm.stockx.entity.UserLocaliseInfo;
 
 import java.util.List;
@@ -14,9 +12,6 @@ public interface UserLocaliseInfoService {
 
     void update(UserLocaliseInfo userLocaliseInfo);
 
-    void deleteByUserName(String userName);
+    String getMoneyTagByUserId(Long id);
 
-    UserLocaliseInfoDto getUserLocaliseInfoDtoByUserName (String userName);
-
-    void placeUserLocaliseInfo(UserLocaliseInfoPostDto userLocaliseInfoPostDto);
 }
