@@ -45,8 +45,8 @@ public class UserInit {
                 "admin",
                 (byte) 100,
                 false,
-                "ru",
-                "admin@apple.id");
+                "admin@apple.id",
+                "ru");
         admin.setActive(true);
         admin.setRole(roleService.getRole("ROLE_ADMIN"));
 
@@ -58,8 +58,8 @@ public class UserInit {
                 .password("pass")
                 .sellerLevel((byte) 10)
                 .vacationMode(true)
-                .appleUserId("en")
-                .localeTag("user1@apple.id")
+                .appleUserId("user1@apple.id")
+                .localeTag("en")
                 .role(roleService.getRole(ROLE_USER))
                 .active(false)
                 .build();
@@ -72,8 +72,8 @@ public class UserInit {
                 .password("pass")
                 .sellerLevel((byte) 37)
                 .vacationMode(false)
-                .appleUserId("en")
-                .localeTag("user2@apple.id")
+                .appleUserId("user2@apple.id")
+                .localeTag("en")
                 .role(roleService.getRole(ROLE_USER))
                 .active(true)
                 .build();
@@ -86,8 +86,8 @@ public class UserInit {
                 .password("pass")
                 .sellerLevel((byte) 99)
                 .vacationMode(false)
-                .appleUserId("en")
-                .localeTag("ryan@apple.id")
+                .appleUserId("ryan@apple.id")
+                .localeTag("en")
                 .role(roleService.getRole(ROLE_USER))
                 .active(true)
                 .build();

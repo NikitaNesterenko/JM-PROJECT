@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,4 +35,11 @@ public class UserLocaliseInfo {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    public UserLocaliseInfo(UserCountry userCountry, UserCurrency userCurrency, UserLanguage userLanguage, User user) {
+        this.userCountry = userCountry;
+        this.userCurrency = userCurrency;
+        this.userLanguage = userLanguage;
+        this.user = user;
+    }
 }
