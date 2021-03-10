@@ -10,7 +10,7 @@ public class UserLocaliseInfoDAOImpl extends AbstractDAO<UserLocaliseInfo, Long>
     public void deleteByUserName(String userName) {
         entityManager.createQuery("" +
                 "DELETE FROM UserLocaliseInfo " +
-                "WHERE user.username =: username")
+                "WHERE UserLocaliseInfo.user.username =: username")
                 .setParameter("username", userName)
                 .executeUpdate();
     }
@@ -23,8 +23,8 @@ public class UserLocaliseInfoDAOImpl extends AbstractDAO<UserLocaliseInfo, Long>
                 "l.userCurrency," +
                 "l.userLanguage," +
                 "l.user.username)" +
-                "FROM UserLocaliseInfo AS l, User AS u " +
-                "WHERE u.username =: username", UserLocaliseInfoDto.class)
+                "FROM UserLocaliseInfo AS l " +
+                "WHERE l.user.username =: username", UserLocaliseInfoDto.class)
                 .setParameter("username", userName)
                 .getSingleResult();
     }
