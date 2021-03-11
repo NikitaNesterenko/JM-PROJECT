@@ -2,10 +2,7 @@ package jm.stockx;
 
 import com.stripe.model.Order;
 import jm.stockx.api.dao.TokenActivationDAO;
-import jm.stockx.entity.News;
-import jm.stockx.entity.TokenRecovery;
-import jm.stockx.entity.TokenRegistration;
-import jm.stockx.entity.User;
+import jm.stockx.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,12 +11,19 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -27,7 +31,7 @@ public class MailServiceImpl implements MailService {
 
     public final JavaMailSender emailSender;
 
-    public final UserService userService;
+//    public final UserService userService;
 
     public final TokenRecoveryService tokenRecoveryService;
 
@@ -47,10 +51,11 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService,
-                           UserService userService, TokenActivationDAO tokenActivation, JavaMailSenderImpl javaMailSender) {
+                           //UserService userService,
+                           TokenActivationDAO tokenActivation, JavaMailSenderImpl javaMailSender) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
-        this.userService = userService;
+        //this.userService = userService;
         this.tokenActivation = tokenActivation;
         this.javaMailSender = javaMailSender;
     }
@@ -124,7 +129,7 @@ public class MailServiceImpl implements MailService {
             User user = token.getUser();
             user.setPassword(password);
             try {
-                userService.updateUser(user);
+                //userService.updateUser(user);
                 tokenRecoveryService.deleteToken(token.getId());
                 return true;
             } catch (Exception e) {
@@ -180,5 +185,33 @@ public class MailServiceImpl implements MailService {
     public void sendLastNews(List<News> news, String sourceMail, String password) {
     }
 
+    @Override
+    public void sendHtmlMessageWithLogo (String to, String subject, String html) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to, false));
+            mimeMessage.setSubject(subject);
+
+            MimeMultipart multipart = new MimeMultipart("related");
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(html, "text/html");
+
+            multipart.addBodyPart(messageBodyPart);
+
+            messageBodyPart = new MimeBodyPart();
+            DataSource fileDataSource = new FileDataSource("d://images/StockXLogo.png");
+            messageBodyPart.setDataHandler(new DataHandler(fileDataSource));
+            messageBodyPart.setHeader("Content-ID","<StockXLogo>");
+
+            multipart.addBodyPart(messageBodyPart);
+
+            mimeMessage.setContent(multipart);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(mimeMessage);
+    }
 
 }
