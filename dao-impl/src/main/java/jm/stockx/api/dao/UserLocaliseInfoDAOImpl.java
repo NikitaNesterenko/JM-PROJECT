@@ -14,4 +14,5 @@ public class UserLocaliseInfoDAOImpl extends AbstractDAO<UserLocaliseInfo, Long>
                 .getSingleResult()
                 .toString();
     }
+
 }

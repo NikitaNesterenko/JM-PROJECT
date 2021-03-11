@@ -2,9 +2,10 @@ package jm.stockx.rest_controller;
 
 import jm.stockx.AllItemSalesService;
 import jm.stockx.dto.allItemSales.AllItemSalesDto;
+import jm.stockx.entity.User;
 import jm.stockx.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,9 @@ public class AllItemSalesRestController {
 
     @GetMapping("/sales/*")
     public Response<List<AllItemSalesDto>> getSales(@RequestParam Long id) {
-        List<AllItemSalesDto> list = allItemSalesService.getAllItemSalesById(id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = user.getId();
+        List<AllItemSalesDto> list = allItemSalesService.getAllItemSalesById(id, userId);
         return Response.ok(list);
     }
 }

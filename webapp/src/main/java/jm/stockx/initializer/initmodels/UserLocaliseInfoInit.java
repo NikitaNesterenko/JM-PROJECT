@@ -1,10 +1,11 @@
 package jm.stockx.initializer.initmodels;
 
 import jm.stockx.UserLocaliseInfoService;
-import jm.stockx.dto.userLocaliseInfo.UserLocaliseInfoPostDto;
+import jm.stockx.UserService;
+import jm.stockx.api.dao.UserDAO;
+import jm.stockx.entity.UserLocaliseInfo;
 import jm.stockx.enums.UserCountry;
 import jm.stockx.enums.UserCurrency;
-import jm.stockx.enums.UserLanguage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,49 +19,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserLocaliseInfoInit {
     private final UserLocaliseInfoService userLocaliseInfoService;
+    private final UserDAO userDAO;
 
     public void initializeUserLocaliseInfos () {
-        List<UserLocaliseInfoPostDto> infoListForCreation = createUserLocaliseInfoForInitialisation();
-        infoListForCreation.forEach(this::accept);
+        List<UserLocaliseInfo> infoListForCreation = createUserLocaliseInfoForInitialisation();
+        infoListForCreation.forEach(userLocaliseInfoService::create);
     }
 
-    private List<UserLocaliseInfoPostDto> createUserLocaliseInfoForInitialisation() {
-        UserLocaliseInfoPostDto info1 = UserLocaliseInfoPostDto.builder()
-                .id(1L)
+    private List<UserLocaliseInfo> createUserLocaliseInfoForInitialisation() {
+        System.out.println(userDAO.getUserById(1L));
+        UserLocaliseInfo info1 = UserLocaliseInfo.builder()
                 .userCountry(UserCountry.ALBANIA)
                 .userCurrency(UserCurrency.USD)
-                .userLanguage(UserLanguage.ENGLISH)
-                .userId(1L)
+                .user(userDAO.getUserById(1L))
                 .build();
 
-        UserLocaliseInfoPostDto info2 = UserLocaliseInfoPostDto.builder()
-                .id(2L)
+        UserLocaliseInfo info2 = UserLocaliseInfo.builder()
                 .userCountry(UserCountry.RUSSIA)
                 .userCurrency(UserCurrency.RUB)
-                .userLanguage(UserLanguage.RUSSIAN)
-                .userId(2L)
+                .user(userDAO.getUserById(2L))
                 .build();
 
-        UserLocaliseInfoPostDto info3 = UserLocaliseInfoPostDto.builder()
-                .id(3L)
+        UserLocaliseInfo info3 = UserLocaliseInfo.builder()
                 .userCountry(UserCountry.RUSSIA)
                 .userCurrency(UserCurrency.RUB)
-                .userLanguage(UserLanguage.RUSSIAN)
-                .userId(3L)
+                .user(userDAO.getUserById(3L))
                 .build();
 
-        UserLocaliseInfoPostDto info4 = UserLocaliseInfoPostDto.builder()
-                .id(4L)
+        UserLocaliseInfo info4 = UserLocaliseInfo.builder()
                 .userCountry(UserCountry.FRANCE)
                 .userCurrency(UserCurrency.EUR)
-                .userLanguage(UserLanguage.FRENCH)
-                .userId(4L)
+                .user(userDAO.getUserById(4L))
                 .build();
 
         return Arrays.asList(info1, info2, info3, info4);
     }
 
-    private void accept (UserLocaliseInfoPostDto userLocaliseInfoPostDto) {
-        userLocaliseInfoService.placeUserLocaliseInfo(userLocaliseInfoPostDto);
-    }
 }
