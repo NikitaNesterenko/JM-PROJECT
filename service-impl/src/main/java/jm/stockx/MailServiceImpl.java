@@ -2,7 +2,12 @@ package jm.stockx;
 
 import com.stripe.model.Order;
 import jm.stockx.api.dao.TokenActivationDAO;
-import jm.stockx.entity.*;
+import jm.stockx.api.dao.UserDAO;
+import jm.stockx.entity.News;
+import jm.stockx.entity.TokenRecovery;
+import jm.stockx.entity.TokenRegistration;
+import jm.stockx.entity.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,7 +36,7 @@ public class MailServiceImpl implements MailService {
 
     public final JavaMailSender emailSender;
 
-//    public final UserService userService;
+    public final UserDAO userDAO;
 
     public final TokenRecoveryService tokenRecoveryService;
 
@@ -51,11 +56,12 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     public MailServiceImpl(JavaMailSender emailSender, TokenRecoveryService tokenRecoveryService,
-                           //UserService userService,
-                           TokenActivationDAO tokenActivation, JavaMailSenderImpl javaMailSender) {
+
+                           UserDAO userDAO, TokenActivationDAO tokenActivation, JavaMailSenderImpl javaMailSender) {
         this.emailSender = emailSender;
         this.tokenRecoveryService = tokenRecoveryService;
-        //this.userService = userService;
+        this.userDAO = userDAO;
+
         this.tokenActivation = tokenActivation;
         this.javaMailSender = javaMailSender;
     }
@@ -129,7 +135,7 @@ public class MailServiceImpl implements MailService {
             User user = token.getUser();
             user.setPassword(password);
             try {
-                //userService.updateUser(user);
+                userDAO.update(user);
                 tokenRecoveryService.deleteToken(token.getId());
                 return true;
             } catch (Exception e) {
