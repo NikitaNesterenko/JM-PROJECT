@@ -32,15 +32,17 @@ public class UserServiceImpl implements UserService {
     private final UserDAO userDao;
     private BuyingInfoService buyingInfoService;
     private MailService mailService;
+    private LetterService letterService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDao, BuyingInfoService buyingInfoService, MailService mailService) {
+    public UserServiceImpl(UserDAO userDao, BuyingInfoService buyingInfoService, MailService mailService, LetterService letterService) {
         this.userDao = userDao;
         this.buyingInfoService = buyingInfoService;
         this.mailService = mailService;
+        this.letterService = letterService;
     }
 
     @Override
@@ -152,10 +154,7 @@ public class UserServiceImpl implements UserService {
         user.setBuyingInfo(Collections.singleton(buyingInfo));
         updateUser(user);
 
-        StringBuilder message = new StringBuilder("Congratulations! You have bought the best products:\n");
-        for (ItemInfo i:buyingInfo.getBoughtItemsInfo()) {
-            message.append(i.getItem().getName()).append("\n");
-        }
-        mailService.sendSimpleMessage(user.getEmail(), "Your best buy!", message.toString());
+        mailService.sendHtmlMessageWithLogo(user.getEmail(), "Your best buy!", letterService.createBuyingLetter(user, buyingInfo));
     }
+
 }
