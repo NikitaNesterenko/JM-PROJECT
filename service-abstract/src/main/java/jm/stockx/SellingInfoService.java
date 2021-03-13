@@ -6,6 +6,7 @@ import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.UserWithMostSalesDto;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 
@@ -40,5 +41,6 @@ public interface SellingInfoService {
 
     AverageSalePriceDto getAverageItemPriceById(Long itemId);
 
+    List<UserWithMostSalesDto> getUsersWithMostSales();
 
 }
