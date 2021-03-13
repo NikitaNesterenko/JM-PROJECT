@@ -91,6 +91,23 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
     }
 
     @Override
+    public List<ItemTopSeillingInfoDto> getItemTopSeillingInfoDto(int maxResult) {
+        String sql = "" +
+                "SELECT NEW jm.stockx.dto.sellingInfo.ItemTopSeillingInfoDto(" +
+                "i.id, " +
+                "i.item.name, " +
+                "COUNT(si.itemInfo)) " +
+                "FROM SellingInfo as si " +
+                "LEFT JOIN ItemInfo as i " +
+                "ON si.itemInfo.id = i.id " +
+                "GROUP BY 1, 2 " +
+                "ORDER BY COUNT(si.itemInfo) DESC";
+        return entityManager.createQuery(sql, ItemTopSeillingInfoDto.class)
+                .setMaxResults(maxResult)
+                .getResultList();
+    }
+
+    @Override
     public List<SellingItemDto> getSellingItemDtoByPeriodAndItemId(LocalDateTime begin, LocalDateTime end, Long itemId) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.sellingInfo.SellingItemDto( " +
