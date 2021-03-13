@@ -2,11 +2,7 @@ package jm.stockx;
 
 import jm.stockx.api.dao.SellingInfoDAO;
 import jm.stockx.dto.itemInfo.InfoTickerDto;
-import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
-import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
-import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
-import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.*;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
@@ -129,6 +125,11 @@ public class SellingInfoServiceImpl implements SellingInfoService {
         AverageSalePriceDto averageSalePriceDto = sellingInfoDAO.getAverageItemPriceById(itemId);
         averageSalePriceDto.setDifferenceInPrice(calculatePercentDifferenceInPrice(averageSalePriceDto.getCurrentPrice().getAmount(),averageSalePriceDto.getAveragePrice().getAmount()));
         return averageSalePriceDto;
+    }
+
+    @Override
+    public List<ItemTopSeillingInfoDto> getItemTopSeillingInfoDto(int maxResult) {
+        return sellingInfoDAO.getItemTopSeillingInfoDto(maxResult);
     }
 
     private double calculatePercentDifferenceInPrice(BigDecimal current, BigDecimal average){

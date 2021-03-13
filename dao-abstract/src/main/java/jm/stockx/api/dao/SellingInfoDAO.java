@@ -19,6 +19,8 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
 
     List<ItemTopInfoDto> getItemTopInfoDto(int maxResult);
 
+    List<ItemTopSeillingInfoDto> getItemTopSeillingInfoDto(int maxResult);
+
     List<SellingItemDto> getAllSellingItemDtoToCurrentDate(Long itemId);
 
     List<Item> getTopItemByPeriodAndCategory(LocalDateTime beginningPeriod,

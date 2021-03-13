@@ -5,6 +5,7 @@ import jm.stockx.SellingInfoService;
 import jm.stockx.dto.itemInfo.ItemInfoDtoDecimal;
 import jm.stockx.dto.itemInfo.ItemSearchDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
+import jm.stockx.dto.sellingInfo.ItemTopSeillingInfoDto;
 import jm.stockx.util.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +56,14 @@ public class ItemRestController {
     public Response<List<ItemTopInfoDto>> getMostPopularItems() {
         List<ItemTopInfoDto> foundTodItems = sellingInfoService.getItemTopInfoDto(5);
         return Response.ok(foundTodItems);
+    }
+
+    /**
+     * список ДТО итемов, от большего количество продаж к меньшеу с указанием колиства продаж
+     */
+    @GetMapping("/mostseilling")
+    public Response<List<ItemTopSeillingInfoDto>> getMostSeillingItems() {
+        List<ItemTopSeillingInfoDto> foundTopSeilling = sellingInfoService.getItemTopSeillingInfoDto(100);
+        return Response.ok(foundTopSeilling);
     }
 }
