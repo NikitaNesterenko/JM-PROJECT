@@ -7,6 +7,7 @@ import jm.stockx.dto.sellingInfo.ItemPriceChangeDto;
 import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
 import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.UserWithMostSalesDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
@@ -134,4 +135,10 @@ public class SellingInfoServiceImpl implements SellingInfoService {
     private double calculatePercentDifferenceInPrice(BigDecimal current, BigDecimal average){
         return (average.doubleValue() - current.doubleValue()) / current.doubleValue() * 100;
     }
+
+    @Override
+    public List<UserWithMostSalesDto> getUsersWithMostSales() {
+        return sellingInfoDAO.getUsersWithMostSales();
+    }
+
 }
