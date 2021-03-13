@@ -33,4 +33,6 @@ public interface SellingInfoDAO extends GenericDao<SellingInfo, Long> {
     List<SellingCountDto> getSellingCountDtoLastYear(Long itemId);
 
     int getCountOfUserSalesByUserId(Long userId);
+
+    List<UserWithMostSalesDto> getUsersWithMostSales();
 }

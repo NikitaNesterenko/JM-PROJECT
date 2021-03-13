@@ -1,21 +1,24 @@
 package jm.stockx.api.dao;
 
-import jm.stockx.dto.sellingInfo.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import jm.stockx.dto.sellingInfo.AverageSalePriceDto;
+import jm.stockx.dto.sellingInfo.ItemTopInfoDto;
+import jm.stockx.dto.sellingInfo.SellerTopInfoDto;
+import jm.stockx.dto.sellingInfo.SellingCountDto;
+import jm.stockx.dto.sellingInfo.SellingInfoDto;
+import jm.stockx.dto.sellingInfo.SellingItemDto;
+import jm.stockx.dto.sellingInfo.UserWithMostSalesDto;
 import jm.stockx.entity.Item;
 import jm.stockx.entity.SellingInfo;
 import jm.stockx.enums.ItemCategory;
 import org.joda.money.Money;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 @Repository
@@ -217,5 +220,23 @@ public class SellingInfoDaoImpl extends AbstractDAO<SellingInfo, Long> implement
                 "AND NOT si.status = 'CANCELED'", Integer.class)
                 .setParameter("userId", userId)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<UserWithMostSalesDto> getUsersWithMostSales() {
+        String sql = "" +
+            "SELECT NEW jm.stockx.dto.sellingInfo.UserWithMostSalesDto(" +
+            "u.id, " +
+            "CONCAT(u.firstName, ' ', u.lastName), " +
+            "COUNT(si.user)) " +
+            "FROM SellingInfo as si " +
+            "LEFT JOIN User as u " +
+            "ON si.user.id = u.id " +
+            "GROUP BY u.id " +
+            "ORDER BY COUNT(si.itemInfo) DESC";
+
+        return entityManager.createQuery(sql, UserWithMostSalesDto.class)
+            .setMaxResults(20)
+            .getResultList();
     }
 }
