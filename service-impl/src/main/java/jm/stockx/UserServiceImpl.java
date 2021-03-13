@@ -9,6 +9,7 @@ import jm.stockx.entity.BuyingInfo;
 import jm.stockx.entity.ItemInfo;
 import jm.stockx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDao, BuyingInfoService buyingInfoService, MailService mailService) {
+    public UserServiceImpl(UserDAO userDao, BuyingInfoService buyingInfoService, @Lazy(true) MailService mailService) {
         this.userDao = userDao;
         this.buyingInfoService = buyingInfoService;
         this.mailService = mailService;
