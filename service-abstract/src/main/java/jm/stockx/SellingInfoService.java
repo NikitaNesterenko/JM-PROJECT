@@ -16,6 +16,10 @@ public interface SellingInfoService {
 
     Double getAverageSalesValue();
 
+    Double getMinSalesValue(Long id);
+
+    Double getMaxSalesValue(Long id);
+
     List<SellingInfo> getAll();
 
     SellingInfo get(Long id);
